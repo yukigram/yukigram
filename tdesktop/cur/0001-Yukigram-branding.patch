@@ -1,0 +1,406 @@
+From c35035b523faa90fdfd27b89d798d4c6fbbfdea4 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 02:58:42 +0300
+Subject: [PATCH 01/27] Yukigram branding
+
+---
+ Telegram/CMakeLists.txt                       | 37 ++++++-------------
+ Telegram/Resources/art/yukigram.svg           |  6 +++
+ Telegram/Resources/qrc/telegram/telegram.qrc  |  3 +-
+ Telegram/SourceFiles/boxes/about_box.cpp      |  4 +-
+ Telegram/SourceFiles/core/launcher.cpp        |  2 +-
+ Telegram/SourceFiles/core/version.h           |  4 +-
+ Telegram/SourceFiles/intro/intro_start.cpp    |  2 +-
+ .../platform/linux/specific_linux.cpp         | 14 +++----
+ .../sections/settings_notifications.cpp       |  2 +-
+ Telegram/SourceFiles/window/main_window.cpp   |  2 +-
+ .../SourceFiles/window/window_main_menu.cpp   |  4 +-
+ Telegram/build/changelog2appstream.py         |  2 +-
+ ...top.desktop => io.github.yukigram.desktop} | 18 ++++-----
+ ...fo.xml => io.github.yukigram.metainfo.xml} | 14 +++----
+ lib/xdg/io.github.yukigram.service            |  3 ++
+ lib/xdg/org.telegram.desktop.service          |  3 --
+ 16 files changed, 57 insertions(+), 63 deletions(-)
+ create mode 100644 Telegram/Resources/art/yukigram.svg
+ rename lib/xdg/{org.telegram.desktop.desktop => io.github.yukigram.desktop} (56%)
+ rename lib/xdg/{org.telegram.desktop.metainfo.xml => io.github.yukigram.metainfo.xml} (95%)
+ create mode 100644 lib/xdg/io.github.yukigram.service
+ delete mode 100644 lib/xdg/org.telegram.desktop.service
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index 738c93e4d9..bb62ac1340 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -2078,7 +2078,7 @@ else()
+         set(bundle_identifier "com.tdesktop.Telegram")
+     endif()
+     set(bundle_entitlements "Telegram.entitlements")
+-    set(output_name "Telegram")
++    set(output_name "yukigram")
+ endif()
+ 
+ if (CMAKE_GENERATOR STREQUAL Xcode)
+@@ -2124,7 +2124,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+ if (APPLE
+     OR is_multi_config
+     OR NOT CMAKE_EXECUTABLE_SUFFIX STREQUAL ""
+-    OR NOT "${output_name}" STREQUAL "Telegram")
++    OR NOT "${output_name}" STREQUAL "yukigram")
+     set(output_folder ${CMAKE_BINARY_DIR})
+ else()
+     set(output_folder ${CMAKE_BINARY_DIR}/bin)
+@@ -2298,28 +2298,15 @@ endif()
+ 
+ if (LINUX AND DESKTOP_APP_USE_PACKAGED)
+     include(GNUInstallDirs)
+-    configure_file("../lib/xdg/org.telegram.desktop.service" "${CMAKE_CURRENT_BINARY_DIR}/org.telegram.desktop.service" @ONLY)
+-    configure_file("../lib/xdg/org.telegram.desktop.metainfo.xml" "${CMAKE_CURRENT_BINARY_DIR}/org.telegram.desktop.metainfo.xml" @ONLY)
+-    generate_appstream_changelog(Telegram "${CMAKE_SOURCE_DIR}/changelog.txt" "${CMAKE_CURRENT_BINARY_DIR}/org.telegram.desktop.metainfo.xml")
++    configure_file("../lib/xdg/io.github.yukigram.service" "${CMAKE_CURRENT_BINARY_DIR}/io.github.yukigram.service" @ONLY)
++    configure_file("../lib/xdg/io.github.yukigram.metainfo.xml" "${CMAKE_CURRENT_BINARY_DIR}/io.github.yukigram.metainfo.xml" @ONLY)
++    generate_appstream_changelog(Telegram "${CMAKE_SOURCE_DIR}/changelog.txt" "${CMAKE_CURRENT_BINARY_DIR}/io.github.yukigram.metainfo.xml")
+     install(TARGETS Telegram RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" BUNDLE DESTINATION "${CMAKE_INSTALL_BINDIR}")
+-    install(FILES "Resources/art/icon16.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/16x16/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/art/icon16@2x.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/16x16@2/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/art/icon32.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/32x32/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/art/icon32@2x.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/32x32@2/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/art/icon48.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/48x48/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/art/icon48@2x.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/48x48@2/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/art/icon64.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/64x64/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/art/icon64@2x.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/64x64@2/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/art/icon128.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/128x128/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/art/icon128@2x.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/128x128@2/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/art/icon256.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/256x256/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/art/icon256@2x.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/256x256@2/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/art/icon512.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/512x512/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/art/icon512@2x.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/512x512@2/apps" RENAME "org.telegram.desktop.png")
+-    install(FILES "Resources/icons/tray_monochrome.svg" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/symbolic/apps" RENAME "org.telegram.desktop-symbolic.svg")
+-    install(FILES "Resources/icons/tray_monochrome_attention.svg" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/symbolic/apps" RENAME "org.telegram.desktop-attention-symbolic.svg")
+-    install(FILES "Resources/icons/tray_monochrome_mute.svg" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/symbolic/apps" RENAME "org.telegram.desktop-mute-symbolic.svg")
+-    install(FILES "../lib/xdg/org.telegram.desktop.desktop" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications")
+-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/org.telegram.desktop.service" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/dbus-1/services")
+-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/org.telegram.desktop.metainfo.xml" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/metainfo")
++    install(FILES "Resources/art/yukigram.svg" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps" RENAME "io.github.yukigram.svg")
++    install(FILES "Resources/icons/tray_monochrome.svg" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/symbolic/apps" RENAME "io.github.yukigram-symbolic.svg")
++    install(FILES "Resources/icons/tray_monochrome_attention.svg" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/symbolic/apps" RENAME "io.github.yukigram-attention-symbolic.svg")
++    install(FILES "Resources/icons/tray_monochrome_mute.svg" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/symbolic/apps" RENAME "io.github.yukigram-mute-symbolic.svg")
++    install(FILES "../lib/xdg/io.github.yukigram.desktop" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications")
++    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/io.github.yukigram.service" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/dbus-1/services")
++    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/io.github.yukigram.metainfo.xml" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/metainfo")
+ endif()
+diff --git a/Telegram/Resources/art/yukigram.svg b/Telegram/Resources/art/yukigram.svg
+new file mode 100644
+index 0000000000..e9ddc94952
+--- /dev/null
++++ b/Telegram/Resources/art/yukigram.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Based on https://openclipart.org/detail/248175/paperplane -->
++<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
++    <circle cx="8" cy="8" r="7.5" fill="#111" />
++    <path d="M2,8.625l2.5,0.9375L5.75,13l1.788-2.3875L10.75,11.75l1.25-8.75L2,8.625zM6.481,10.15l-0.5725,1.553l-0.6787-1.9487l5.251-4.769L6.481,10.15z" fill="#eee" />
++</svg>
+diff --git a/Telegram/Resources/qrc/telegram/telegram.qrc b/Telegram/Resources/qrc/telegram/telegram.qrc
+index fd3f69e5ed..27ec7f6a1d 100644
+--- a/Telegram/Resources/qrc/telegram/telegram.qrc
++++ b/Telegram/Resources/qrc/telegram/telegram.qrc
+@@ -7,6 +7,7 @@
+     <file alias="art/affiliate_logo.png">../../art/affiliate_logo.png</file>
+     <file alias="art/logo_256.png">../../art/logo_256.png</file>
+     <file alias="art/logo_256_no_margin.png">../../art/logo_256_no_margin.png</file>
++    <file alias="art/yukigram.svg">../../art/yukigram.svg</file>
+     <file alias="art/themeimage.jpg">../../art/themeimage.jpg</file>
+     <file alias="art/round_placeholder.jpg">../../art/round_placeholder.jpg</file>
+     <file alias="art/cocoon.webp">../../art/cocoon.webp</file>
+@@ -61,6 +62,6 @@
+   </qresource>
+   <qresource prefix="/misc">
+     <file alias="default_shortcuts-custom.json">../../default_shortcuts-custom.json</file>
+-    <file alias="org.telegram.desktop.desktop">../../../../lib/xdg/org.telegram.desktop.desktop</file>
++    <file alias="io.github.yukigram.desktop">../../../../lib/xdg/io.github.yukigram.desktop</file>
+   </qresource>
+ </RCC>
+diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
+index 06ff4addaf..fc5304e30a 100644
+--- a/Telegram/SourceFiles/boxes/about_box.cpp
++++ b/Telegram/SourceFiles/boxes/about_box.cpp
+@@ -49,7 +49,7 @@ rpl::producer<TextWithEntities> Text2() {
+ 		lt_github_link,
+ 		rpl::single(tr::link(
+ 			"GitHub",
+-			"https://github.com/telegramdesktop/tdesktop")),
++			"https://github.com/yukigram/yukigram")),
+ 		tr::marked);
+ }
+ 
+@@ -63,7 +63,7 @@ rpl::producer<TextWithEntities> Text3() {
+ } // namespace
+ 
+ void AboutBox(not_null<Ui::GenericBox*> box) {
+-	box->setTitle(u"Telegram Desktop"_q);
++	box->setTitle(u"Yukigram"_q);
+ 
+ 	auto layout = box->verticalLayout();
+ 
+diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
+index d56d1d50b6..42d1ee80e0 100644
+--- a/Telegram/SourceFiles/core/launcher.cpp
++++ b/Telegram/SourceFiles/core/launcher.cpp
+@@ -335,7 +335,7 @@ void Launcher::init() {
+ 	prepareSettings();
+ 	initQtMessageLogging();
+ 
+-	QApplication::setApplicationName(u"TelegramDesktop"_q);
++	QApplication::setApplicationName(u"Yukigram"_q);
+ 
+ #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+ 	// fallback session management is useless for tdesktop since it doesn't have
+diff --git a/Telegram/SourceFiles/core/version.h b/Telegram/SourceFiles/core/version.h
+index b68b287ebc..19074fbca2 100644
+--- a/Telegram/SourceFiles/core/version.h
++++ b/Telegram/SourceFiles/core/version.h
+@@ -20,8 +20,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ // used in Updater.cpp and Setup.iss for Windows
+ constexpr auto AppId = "{53F49750-6209-4FBF-9CA8-7A333C87D1ED}"_cs;
+ constexpr auto AppNameOld = "Telegram Win (Unofficial)"_cs;
+-constexpr auto AppName = "Telegram Desktop"_cs;
+-constexpr auto AppFile = "Telegram"_cs;
++constexpr auto AppName = "Yukigram"_cs;
++constexpr auto AppFile = "yukigram"_cs;
+ constexpr auto AppVersion = 6007003;
+ constexpr auto AppVersionStr = "6.7.3";
+ constexpr auto AppBetaVersion = false;
+diff --git a/Telegram/SourceFiles/intro/intro_start.cpp b/Telegram/SourceFiles/intro/intro_start.cpp
+index d1b835a09a..a871886d76 100644
+--- a/Telegram/SourceFiles/intro/intro_start.cpp
++++ b/Telegram/SourceFiles/intro/intro_start.cpp
+@@ -24,7 +24,7 @@ StartWidget::StartWidget(
+ 	not_null<Data*> data)
+ : Step(parent, account, data, true) {
+ 	setMouseTracking(true);
+-	setTitleText(rpl::single(u"Telegram Desktop"_q));
++	setTitleText(rpl::single(u"Yukigram"_q));
+ 	setDescriptionText(tr::lng_intro_about());
+ 	show();
+ }
+diff --git a/Telegram/SourceFiles/platform/linux/specific_linux.cpp b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
+index cc9e032979..94be22f83b 100644
+--- a/Telegram/SourceFiles/platform/linux/specific_linux.cpp
++++ b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
+@@ -234,7 +234,7 @@ bool GenerateDesktopFile(
+ 	DEBUG_LOG(("App Info: placing .desktop file to %1").arg(targetPath));
+ 	if (!QDir(targetPath).exists()) QDir().mkpath(targetPath);
+ 
+-	const auto sourceFile = u":/misc/org.telegram.desktop.desktop"_q;
++	const auto sourceFile = u":/misc/io.github.yukigram.desktop"_q;
+ 	const auto targetFile = targetPath
+ 		+ QGuiApplication::desktopFileName()
+ 		+ u".desktop"_q;
+@@ -373,7 +373,7 @@ bool GenerateDesktopFile(
+ 		hashMd5Hex(d.constData(), d.size(), md5Hash);
+ 
+ 		if (!Core::Launcher::Instance().customWorkingDir()) {
+-			QFile::remove(u"%1org.telegram.desktop._%2.desktop"_q.arg(
++			QFile::remove(u"%1io.github.yukigram._%2.desktop"_q.arg(
+ 				targetPath,
+ 				md5Hash));
+ 
+@@ -382,7 +382,7 @@ bool GenerateDesktopFile(
+ 			hashMd5Hex(exePath.constData(), exePath.size(), md5Hash);
+ 		}
+ 
+-		QFile::remove(u"%1org.telegram.desktop.%2.desktop"_q.arg(
++		QFile::remove(u"%1io.github.yukigram.%2.desktop"_q.arg(
+ 			targetPath,
+ 			md5Hash));
+ 	}
+@@ -441,7 +441,7 @@ bool GenerateServiceFile(bool silent = false) {
+ 		const auto d = QFile::encodeName(QDir(cWorkingDir()).absolutePath());
+ 		hashMd5Hex(d.constData(), d.size(), md5Hash);
+ 
+-		QFile::remove(u"%1org.telegram.desktop._%2.service"_q.arg(
++		QFile::remove(u"%1io.github.yukigram._%2.service"_q.arg(
+ 			targetPath,
+ 			md5Hash));
+ 	}
+@@ -489,7 +489,7 @@ void InstallLauncher() {
+ 	const auto icon = appIcons + ApplicationIconName() + u".png"_q;
+ 	QFile::remove(icon);
+ 	QFile::remove(icons + u"telegram.png"_q);
+-	if (QFile::copy(u":/gui/art/logo_256.png"_q, icon)) {
++	if (QFile::copy(u":/gui/art/yukigram.svg"_q, icon)) {
+ 		DEBUG_LOG(("App Info: Icon copied to '%1'").arg(icon));
+ 	}
+ 
+@@ -738,11 +738,11 @@ void start() {
+ 		}
+ 
+ 		if (!Core::UpdaterDisabled()) {
+-			return u"org.telegram.desktop._%1"_q.arg(
++			return u"io.github.yukigram._%1"_q.arg(
+ 				Core::Launcher::Instance().instanceHash().constData());
+ 		}
+ 
+-		return u"org.telegram.desktop"_q;
++		return u"io.github.yukigram"_q;
+ 	}());
+ 
+ 	LOG(("App ID: %1").arg(QGuiApplication::desktopFileName()));
+diff --git a/Telegram/SourceFiles/settings/sections/settings_notifications.cpp b/Telegram/SourceFiles/settings/sections/settings_notifications.cpp
+index 81242142ad..be84e4c7e9 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_notifications.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_notifications.cpp
+@@ -492,7 +492,7 @@ void NotificationsCount::prepareNotificationSampleLarge() {
+ 		p.setPen(st::dialogsNameFg);
+ 		p.setFont(st::msgNameFont);
+ 
+-		auto notifyTitle = st::msgNameFont->elided(u"Telegram Desktop"_q, rectForName.width());
++		auto notifyTitle = st::msgNameFont->elided(u"Yukigram"_q, rectForName.width());
+ 		p.drawText(rectForName.left(), rectForName.top() + st::msgNameFont->ascent, notifyTitle);
+ 
+ 		st::notifyClose.icon.paint(p, w - st::notifyClosePos.x() - st::notifyClose.width + st::notifyClose.iconPosition.x(), st::notifyClosePos.y() + st::notifyClose.iconPosition.y(), w);
+diff --git a/Telegram/SourceFiles/window/main_window.cpp b/Telegram/SourceFiles/window/main_window.cpp
+index 51da6eb006..ba46d1bad5 100644
+--- a/Telegram/SourceFiles/window/main_window.cpp
++++ b/Telegram/SourceFiles/window/main_window.cpp
+@@ -835,7 +835,7 @@ void MainWindow::updateTitle() {
+ 		: Dialogs::Key();
+ 	const auto thread = key ? key.thread() : nullptr;
+ 	if (!thread) {
+-		setTitle((user.isEmpty() ? u"Telegram"_q : user) + added);
++		setTitle((user.isEmpty() ? u"Yukigram"_q : user) + added);
+ 		return;
+ 	}
+ 	const auto history = thread->owningHistory();
+diff --git a/Telegram/SourceFiles/window/window_main_menu.cpp b/Telegram/SourceFiles/window/window_main_menu.cpp
+index 16a5705ee7..e672f011cb 100644
+--- a/Telegram/SourceFiles/window/window_main_menu.cpp
++++ b/Telegram/SourceFiles/window/window_main_menu.cpp
+@@ -384,8 +384,8 @@ MainMenu::MainMenu(
+ 	parentResized();
+ 
+ 	_telegram->setMarkedText(tr::link(
+-		u"Telegram Desktop"_q,
+-		u"https://desktop.telegram.org"_q));
++		u"Yukigram"_q,
++		u"https://github.com/yukigram/yukigram"_q));
+ 	_telegram->setLinksTrusted();
+ 	_version->setMarkedText(
+ 		tr::link(
+diff --git a/Telegram/build/changelog2appstream.py b/Telegram/build/changelog2appstream.py
+index 9879db9807..edf349aba6 100755
+--- a/Telegram/build/changelog2appstream.py
++++ b/Telegram/build/changelog2appstream.py
+@@ -66,7 +66,7 @@ def update_metadata(metadata_path, changelog, max_items=None):
+ def main():
+     ap = argparse.ArgumentParser("Parse Telegram changelog")
+     ap.add_argument("-c", "--changelog-path", default="changelog.txt")
+-    ap.add_argument("-m", "--metadata-path", default="lib/xdg/org.telegram.desktop.metainfo.xml")
++    ap.add_argument("-m", "--metadata-path", default="lib/xdg/io.github.yukigram.metainfo.xml")
+     ap.add_argument("-n", "--num-releases", type=int, default=None)
+     args = ap.parse_args()
+     update_metadata(args.metadata_path,
+diff --git a/lib/xdg/org.telegram.desktop.desktop b/lib/xdg/io.github.yukigram.desktop
+similarity index 56%
+rename from lib/xdg/org.telegram.desktop.desktop
+rename to lib/xdg/io.github.yukigram.desktop
+index 73ca5cc2d5..8956aba6de 100644
+--- a/lib/xdg/org.telegram.desktop.desktop
++++ b/lib/xdg/io.github.yukigram.desktop
+@@ -1,15 +1,15 @@
+ [Desktop Entry]
+-Name=Telegram
+-Comment=New era of messaging
+-TryExec=Telegram
+-Exec=Telegram -- %U
+-Icon=org.telegram.desktop
++Name=Yukigram
++Comment=Telegram Desktop, patched
++TryExec=yukigram
++Exec=yukigram -- %U
++Icon=io.github.yukigram
+ Terminal=false
+-StartupWMClass=TelegramDesktop
++StartupWMClass=Yukigram
+ Type=Application
+ Categories=Chat;Network;InstantMessaging;Qt;
+ MimeType=x-scheme-handler/tg;x-scheme-handler/tonsite;
+-Keywords=tg;chat;im;messaging;messenger;sms;tdesktop;
++Keywords=tg;chat;im;messaging;messenger;sms;tdesktop;telegram;
+ Actions=quit;
+ DBusActivatable=true
+ SingleMainWindow=true
+@@ -17,6 +17,6 @@ X-GNOME-UsesNotifications=true
+ X-GNOME-SingleWindow=true
+ 
+ [Desktop Action quit]
+-Exec=Telegram -quit
+-Name=Quit Telegram
++Exec=yukigram -quit
++Name=Quit Yukigram
+ Icon=application-exit
+diff --git a/lib/xdg/org.telegram.desktop.metainfo.xml b/lib/xdg/io.github.yukigram.metainfo.xml
+similarity index 95%
+rename from lib/xdg/org.telegram.desktop.metainfo.xml
+rename to lib/xdg/io.github.yukigram.metainfo.xml
+index 0fec02f170..7ab19e0511 100644
+--- a/lib/xdg/org.telegram.desktop.metainfo.xml
++++ b/lib/xdg/io.github.yukigram.metainfo.xml
+@@ -1,10 +1,10 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <component type="desktop">
+-    <id>org.telegram.desktop</id>
++    <id>io.github.yukigram</id>
+     <metadata_license>CC0-1.0</metadata_license>
+     <project_license>GPL-3.0</project_license>
+-    <name>Telegram</name>
+-    <summary>New era of messaging</summary>
++    <name>Yukigram</name>
++    <summary>Telegram Desktop, patched</summary>
+     <description>
+         <p>Pure instant messaging — simple, fast, secure, and synced across all your devices. One of the world's top 10 most downloaded apps with over 500 million active users.</p>
+         <p>FAST: Telegram is the fastest messaging app on the market, connecting people via a unique, distributed network of data centers around the globe.</p>
+@@ -26,7 +26,7 @@
+     <developer id="org.telegram"><name>Telegram FZ-LLC</name></developer>
+     <url type="homepage">https://desktop.telegram.org/</url>
+     <url type="faq">https://telegram.org/faq</url>
+-    <url type="bugtracker">https://github.com/telegramdesktop/tdesktop/issues</url>
++    <url type="bugtracker">https://github.com/yukigram/yukigram/issues</url>
+     <url type="translate">https://translations.telegram.org/</url>
+     <url type="vcs-browser">https://github.com/telegramdesktop/tdesktop</url>
+     <url type="contribute">https://github.com/telegramdesktop/tdesktop/blob/dev/.github/CONTRIBUTING.md</url>
+@@ -106,10 +106,10 @@
+         <content_attribute id="money-gambling">none</content_attribute>
+         <content_attribute id="money-advertising">moderate</content_attribute>
+     </content_rating>
+-    <launchable type="desktop-id">org.telegram.desktop.desktop</launchable>
++    <launchable type="desktop-id">io.github.yukigram.desktop</launchable>
+     <provides>
+-        <binary>Telegram</binary>
+-        <dbus type="session">org.telegram.desktop</dbus>
++        <binary>yukigram</binary>
++        <dbus type="session">io.github.yukigram</dbus>
+         <mediatype>x-scheme-handler/tg</mediatype>
+         <mediatype>x-scheme-handler/tonsite</mediatype>
+     </provides>
+diff --git a/lib/xdg/io.github.yukigram.service b/lib/xdg/io.github.yukigram.service
+new file mode 100644
+index 0000000000..dd13628023
+--- /dev/null
++++ b/lib/xdg/io.github.yukigram.service
+@@ -0,0 +1,3 @@
++[D-BUS Service]
++Name=io.github.yukigram
++Exec=@CMAKE_INSTALL_FULL_BINDIR@/yukigram
+diff --git a/lib/xdg/org.telegram.desktop.service b/lib/xdg/org.telegram.desktop.service
+deleted file mode 100644
+index 8935a4fa83..0000000000
+--- a/lib/xdg/org.telegram.desktop.service
++++ /dev/null
+@@ -1,3 +0,0 @@
+-[D-BUS Service]
+-Name=org.telegram.desktop
+-Exec=@CMAKE_INSTALL_FULL_BINDIR@/Telegram
+-- 
+2.53.0
+

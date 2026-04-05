@@ -1,0 +1,58 @@
+From 0aa4ba878cb0f8785ca51e3cfe76236bb0e2aa9a Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 03:22:05 +0300
+Subject: [PATCH 11/27] Hide similar channels on join message
+
+This patch is broken, unfortunately
+---
+ .../history/view/media/history_view_similar_channels.cpp    | 6 +++---
+ .../history/view/media/history_view_similar_channels.h      | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Telegram/SourceFiles/history/view/media/history_view_similar_channels.cpp b/Telegram/SourceFiles/history/view/media/history_view_similar_channels.cpp
+index 2309d67572..bf01212af1 100644
+--- a/Telegram/SourceFiles/history/view/media/history_view_similar_channels.cpp
++++ b/Telegram/SourceFiles/history/view/media/history_view_similar_channels.cpp
+@@ -135,7 +135,7 @@ void SimilarChannels::clickHandlerPressedChanged(
+ }
+ 
+ void SimilarChannels::draw(Painter &p, const PaintContext &context) const {
+-	if (!_toggled) {
++	if (_toggled) {
+ 		return;
+ 	}
+ 	const auto large = Ui::BubbleCornerRounding::Large;
+@@ -527,7 +527,7 @@ QSize SimilarChannels::countOptimalSize() {
+ 	_moreThumbnailsValid = 0;
+ 	using Flag = ChannelDataFlag;
+ 	_toggled = (channel->flags() & Flag::SimilarExpanded) ? 1 : 0;
+-	if (_empty || !_toggled) {
++	if (_empty || _toggled) {
+ 		return {};
+ 	}
+ 
+@@ -605,7 +605,7 @@ QSize SimilarChannels::countOptimalSize() {
+ }
+ 
+ QSize SimilarChannels::countCurrentSize(int newWidth) {
+-	if (!_toggled) {
++	if (_toggled) {
+ 		return {};
+ 	}
+ 	_scrollMax = std::max(int(_fullWidth) - newWidth, 0);
+diff --git a/Telegram/SourceFiles/history/view/media/history_view_similar_channels.h b/Telegram/SourceFiles/history/view/media/history_view_similar_channels.h
+index 138373914e..55d2412f26 100644
+--- a/Telegram/SourceFiles/history/view/media/history_view_similar_channels.h
++++ b/Telegram/SourceFiles/history/view/media/history_view_similar_channels.h
+@@ -46,7 +46,7 @@ public:
+ 		return true;
+ 	}
+ 	bool isDisplayed() const override {
+-		return !_empty && _toggled;
++		return !_empty && !_toggled;
+ 	}
+ 
+ 	void unloadHeavyPart() override;
+-- 
+2.53.0
+

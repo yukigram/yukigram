@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: CC0-1.0
+# SPDX-FileCopyrightText: none
+version = 1
+
+# TODO: replace `WITH LicenseRef` to `WITH AdditionRef` when supported and/or devendor exception when database is updated.
+
+[[annotations]]
+path = "tdesktop/cur/*.patch"
+precedence = "aggregate"
+SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
+SPDX-FileCopyrightText = "Yukigram contributors"
+
+[[annotations]]
+path = [
+    "tdesktop/cur/*-Handle-tg-openmessage-and-tg-user-links.patch",
+    "tdesktop/cur/*-Show-messages-from-user.patch",
+    "tdesktop/cur/*-Show-time-with-seconds.patch",
+    "tdesktop/cur/*-Show-sticker-pack-owner.patch",
+    "tdesktop/cur/*-Quick-Recent-Actions-button.patch",
+    "tdesktop/cur/*-Quick-Admin-list-button.patch",
+    "tdesktop/cur/*-Show-message-id.patch",
+    "tdesktop/cur/*-Increase-maxSignatureSize.patch",
+]
+SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
+SPDX-FileCopyrightText = "Yukigram contributors, 64Gram contributors <https://github.com/TDesktop-x64/tdesktop>"
+
+[[annotations]]
+path = [".gitignore", ".gitmodules", "npins/sources.json", "README.md"]
+SPDX-License-Identifier = "CC0-1.0"
+SPDX-FileCopyrightText = "none"
+
+[[annotations]]
+path = ["*.nix"]
+SPDX-License-Identifier = "CC0-1.0 OR Unlicense"
+SPDX-FileCopyrightText = "Yukigram contributors"
+
+[[annotations]]
+path = "npins/default.nix"
+SPDX-License-Identifier = "MIT"
+SPDX-FileCopyrightText = "npins contributors <https://github.com/andir/npins>"
+
+[[annotations]]
+path = "flatpak/0001-Yukigram.patch"
+SPDX-License-Identifier = "MIT"
+SPDX-FileCopyrightText = "Yukigram contributors"

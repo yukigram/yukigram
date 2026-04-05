@@ -1,0 +1,36 @@
+From 615362fe3fab215d763f6808aaa9e0e1171e85b6 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 19:19:37 +0300
+Subject: [PATCH] Yukigram
+
+---
+ org.telegram.desktop.yml | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/org.telegram.desktop.yml b/org.telegram.desktop.yml
+index 46cddb6..c731b41 100644
+--- a/org.telegram.desktop.yml
++++ b/org.telegram.desktop.yml
+@@ -1,8 +1,8 @@
+-id: org.telegram.desktop
++id: io.github.yukigram
+ runtime: org.gnome.Platform
+ runtime-version: '49'
+ sdk: org.gnome.Sdk
+-command: Telegram
++command: yukigram
+ finish-args:
+   - --share=ipc
+   - --share=network
+@@ -363,5 +363,8 @@ modules:
+       - type: shell
+         commands:
+           - sed -i '/-Werror/d' Telegram/ThirdParty/dispatch/cmake/modules/DispatchCompilerWarnings.cmake
++      - type: patch
++        path: ../../tdesktop
++        use-git-am: true
+     cleanup:
+       - /share/icons/hicolor/512x512@2
+-- 
+2.53.0
+

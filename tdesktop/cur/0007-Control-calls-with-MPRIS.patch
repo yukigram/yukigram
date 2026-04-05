@@ -1,0 +1,198 @@
+From caecbbfb78c130b256712074d49f320eee696786 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 03:10:55 +0300
+Subject: [PATCH 07/27] Control calls with MPRIS
+
+- play, pause, play-pause -> accept
+- next, prev, stop, quit -> hangup
+
+Report call state as playback state in MPRIS
+State mapping:
+* WaitingUserConfirmation, Busy -> Stopped
+* ExchangingKeys, Established -> Playing
+* everything else -> Paused
+
+Co-Authored-By: Sonya Sireneva <sleirsgoevy@gmail.com>
+---
+ Telegram/SourceFiles/calls/calls_instance.cpp | 100 +++++++++++++++++-
+ Telegram/SourceFiles/calls/calls_instance.h   |   9 ++
+ .../settings/settings_experimental.cpp        |   2 +
+ 3 files changed, 110 insertions(+), 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/calls/calls_instance.cpp b/Telegram/SourceFiles/calls/calls_instance.cpp
+index 42c7806086..2b66813668 100644
+--- a/Telegram/SourceFiles/calls/calls_instance.cpp
++++ b/Telegram/SourceFiles/calls/calls_instance.cpp
+@@ -6,6 +6,8 @@ For license and copyright information please follow this link:
+ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ */
+ #include "calls/calls_instance.h"
++#include "base/platform/base_platform_system_media_controls.h"
++#include "base/options.h"
+ 
+ #include "calls/calls_call.h"
+ #include "calls/group/calls_group_common.h"
+@@ -53,8 +55,18 @@ constexpr auto kServerConfigUpdateTimeoutMs = 24 * 3600 * crl::time(1000);
+ using CallSound = Call::Delegate::CallSound;
+ using GroupCallSound = GroupCall::Delegate::GroupCallSound;
+ 
++base::options::toggle MprisCallHangup({
++	.id = kOptionMprisCallHangup,
++	.name = "Use MPRIS for call hangup",
++	.description = "Hangup with Prev/Next. Simple and elegant, especially on PostmarketOS",
++	.restartRequired = true,
++});
++
+ } // namespace
+ 
++const char kOptionMprisCallHangup[]
++	= "mpris-call-hangup";
++
+ class Instance::Delegate final
+ 	: public Call::Delegate
+ 	, public GroupCall::Delegate {
+@@ -184,7 +196,93 @@ Instance::Instance()
+ : _delegate(std::make_unique<Delegate>(this))
+ , _cachedDhConfig(std::make_unique<DhConfig>())
+ , _chooseJoinAs(std::make_unique<Group::ChooseJoinAsProcess>())
+-, _startWithRtmp(std::make_unique<Group::StartRtmpProcess>()) {
++, _startWithRtmp(std::make_unique<Group::StartRtmpProcess>())
++, _controls(std::make_unique<base::Platform::SystemMediaControls>()) {
++
++	using Command = base::Platform::SystemMediaControls::Command;
++
++	_controls->commandRequests() | rpl::filter([](auto unused) { return MprisCallHangup.value(); }) | rpl::on_next([=](Command command) {
++		switch (command) {
++		case Command::PlayPause: [[fallthrough]];
++		case Command::Play: [[fallthrough]];
++		case Command::Pause: {
++			if (_currentCall) {
++				_currentCall->answer();
++			}
++		} break;
++		case Command::Next: [[fallthrough]];
++		case Command::Previous: [[fallthrough]];
++		case Command::Stop: [[fallthrough]];
++		case Command::Quit: {
++			if (_currentCall) {
++				_currentCall->hangup();
++			}
++			if (_currentGroupCall) {
++				_currentGroupCall->hangup();
++			}
++		} break;
++		}
++	}, _lifetime);
++
++	const auto format_peer_link = [](const QString &username, const PeerId id) {
++		if (username.isEmpty()) {
++			return "tg-id#" + QString::number(id.value & PeerId::kChatTypeMask);
++		} else {
++			return "t.me/" + username;
++		}
++	};
++
++	const auto set_title = [=](const QString &username, const PeerId id, const QString &displayname) {
++		_controls->setTitle(QString("%1 -- %2").arg(displayname).arg(format_peer_link(username, id)));
++	};
++
++	const auto setup_controls = [=](bool enabled) {
++		_controls->setEnabled(enabled);
++		_controls->setIsPlayPauseEnabled(true);
++		_controls->setIsNextEnabled(true);
++		_controls->setIsPreviousEnabled(true);
++		_controls->setIsStopEnabled(true);
++	};
++
++	const auto update_call_state = [=](Call::State state) {
++		if (state == Call::State::WaitingUserConfirmation || state == Call::State::Busy) {
++			_controls->setPlaybackStatus(base::Platform::SystemMediaControls::PlaybackStatus::Stopped);
++		} else if (state == Call::State::ExchangingKeys || state == Call::State::Established) {
++			_controls->setPlaybackStatus(base::Platform::SystemMediaControls::PlaybackStatus::Playing);
++		} else {
++			_controls->setPlaybackStatus(base::Platform::SystemMediaControls::PlaybackStatus::Paused);
++		}
++	};
++
++	currentCallValue() | rpl::filter([](auto unused) { return MprisCallHangup.value(); }) | rpl::on_next([=](Call *current_call) {
++		setup_controls(current_call);
++		if (!current_call) {
++			return;
++		}
++
++		const bool isIncoming = current_call->type() == Call::Type::Incoming;
++		_controls->setArtist(isIncoming ? "Incoming call" : "Outgoing call");
++
++		const auto &user = current_call->user();
++		set_title(user->username(), user->id, user->firstName);
++		update_call_state(current_call->state());
++
++		current_call->stateValue() | rpl::filter([](auto unused) { return MprisCallHangup.value(); }) | rpl::on_next(update_call_state, current_call->lifetime());
++	}, _lifetime);
++
++	currentGroupCallValue() | rpl::filter([](auto unused) { return MprisCallHangup.value(); }) | rpl::on_next([=](GroupCall *current_call) {
++		setup_controls(current_call);
++		if (!current_call) {
++			return;
++		}
++
++		_controls->setArtist("Group call");
++
++		const auto &peer = current_call->peer();
++		set_title(peer->username(), peer->id, peer->name());
++		_controls->setPlaybackStatus(base::Platform::SystemMediaControls::PlaybackStatus::Playing);
++
++	}, _lifetime);
+ }
+ 
+ Instance::~Instance() {
+diff --git a/Telegram/SourceFiles/calls/calls_instance.h b/Telegram/SourceFiles/calls/calls_instance.h
+index 4742827c69..179b1b6b5e 100644
+--- a/Telegram/SourceFiles/calls/calls_instance.h
++++ b/Telegram/SourceFiles/calls/calls_instance.h
+@@ -9,6 +9,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ 
+ #include "mtproto/sender.h"
+ 
++namespace base::Platform {
++class SystemMediaControls;
++} // namespace base::Platform
++
+ namespace crl {
+ class semaphore;
+ } // namespace crl
+@@ -231,6 +235,11 @@ private:
+ 		not_null<Main::Session*>,
+ 		std::vector<base::weak_ptr<GroupCall>>> _streams;
+ 
++	const std::unique_ptr<base::Platform::SystemMediaControls> _controls;
++	rpl::lifetime _lifetime;
++
+ };
+ 
++extern const char kOptionMprisCallHangup[];
++
+ } // namespace Calls
+diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
+index cc030db479..d212419fdd 100644
+--- a/Telegram/SourceFiles/settings/settings_experimental.cpp
++++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
+@@ -25,6 +25,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "core/application.h"
+ #include "core/launcher.h"
+ #include "core/sandbox.h"
++#include "calls/calls_instance.h"
+ #include "chat_helpers/tabbed_panel.h"
+ #include "dialogs/dialogs_widget.h"
+ #include "dialogs/ui/dialogs_layout.h"
+@@ -225,6 +226,7 @@ void SetupExperimental(
+ 	addToggle(Core::kOptionSkipUrlSchemeRegister);
+ 	addToggle(Core::kOptionDeadlockDetector);
+ 	addToggle(Window::kOptionExternalMediaViewer);
++	addToggle(Calls::kOptionMprisCallHangup);
+ 	addToggle(Window::kOptionNewWindowsSizeAsFirst);
+ 	addToggle(MTP::details::kOptionPreferIPv6);
+ 	if (base::options::lookup<bool>(kOptionFastButtonsMode).value()) {
+-- 
+2.53.0
+

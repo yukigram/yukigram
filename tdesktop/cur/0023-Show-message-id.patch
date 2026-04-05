@@ -1,0 +1,51 @@
+From 8317c37c378aa1743baddced7e2200c61afd79d7 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Sat, 4 Apr 2026 18:50:05 +0300
+Subject: [PATCH 23/27] Show message id
+
+This patch is adapted from 64Gram.
+Original author: c0re100 <corehusky@gmail.com>
+---
+ .../SourceFiles/history/view/history_view_bottom_info.cpp   | 6 +++++-
+ .../SourceFiles/history/view/history_view_bottom_info.h     | 1 +
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
+index 0c134643af..48da001973 100644
+--- a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
+@@ -457,7 +457,8 @@ void BottomInfo::layoutDateText() {
+ 	const auto prefix = !author.isEmpty() ? u", "_q : QString();
+ 	const auto date = edited + ((_data.flags & Data::Flag::ForwardedDate)
+ 		? Ui::FormatDateTimeSavedFrom(_data.date)
+-		: QLocale().toString(_data.date.time(), QLocale::system().timeFormat(QLocale::LongFormat).remove("t")));
++		: QLocale().toString(_data.date.time(), QLocale::system().timeFormat(QLocale::LongFormat).remove("t")))
++		+ _data.msgId;
+ 	const auto afterAuthor = prefix + date;
+ 	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
+ 	const auto authorWidth = st::msgDateFont->width(author);
+@@ -678,6 +679,9 @@ BottomInfo::Data BottomInfoDataFromMessage(not_null<Message*> message) {
+ 	if (item->isScheduled()) {
+ 		result.scheduleRepeatPeriod = item->scheduleRepeatPeriod();
+ 	}
++	if (item->fullId().msg > 0) {
++		result.msgId = QString(" (%1)").arg(item->fullId().msg.bare);
++	}
+ 	if (!forwarded) {
+ 		return result;
+ 	}
+diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.h b/Telegram/SourceFiles/history/view/history_view_bottom_info.h
+index ef3d261c86..81e2f918b2 100644
+--- a/Telegram/SourceFiles/history/view/history_view_bottom_info.h
++++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.h
+@@ -50,6 +50,7 @@ public:
+ 
+ 		QDateTime date;
+ 		QString author;
++		QString msgId;
+ 		EffectId effectId = 0;
+ 		int64 tonStake = 0;
+ 		int stars = 0;
+-- 
+2.53.0
+

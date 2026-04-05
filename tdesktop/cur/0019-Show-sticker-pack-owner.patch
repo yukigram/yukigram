@@ -1,0 +1,67 @@
+From 0de73b491d62c5a15bbf9f7db162a6189c54db98 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Sat, 4 Apr 2026 14:53:18 +0300
+Subject: [PATCH 19/27] Show sticker pack owner
+
+This patch is adapted from 64Gram.
+Original author: c0re100 <corehusky@gmail.com>
+---
+ .../SourceFiles/boxes/sticker_set_box.cpp     | 21 +++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/Telegram/SourceFiles/boxes/sticker_set_box.cpp b/Telegram/SourceFiles/boxes/sticker_set_box.cpp
+index 15eb12186e..d7a2bd4c9d 100644
+--- a/Telegram/SourceFiles/boxes/sticker_set_box.cpp
++++ b/Telegram/SourceFiles/boxes/sticker_set_box.cpp
+@@ -62,6 +62,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "styles/style_info.h"
+ #include "styles/style_menu_icons.h"
+ #include "styles/style_premium.h"
++#include "window/window_session_controller.h"
+ 
+ #include <QtWidgets/QApplication>
+ #include <QtGui/QClipboard>
+@@ -771,6 +772,24 @@ void StickerSetBox::updateButtons() {
+ 					&st::menuIconReorder);
+ 			});
+ 		}();
++		const auto author = [=] {
++			auto ownerId = _inner->setId() >> 32;
++			if ((_inner->setId() >> 16 & 0xff) == 0x3f) {
++				ownerId |= 0x80000000;
++			}
++			if (_inner->setId() >> 24 & 0xff) {
++				ownerId += 0x100000000;
++			}
++			const auto peer = _session->data().peerLoaded(static_cast<PeerId>(ownerId));
++			if (peer != nullptr) {
++				if (const auto window = _session->tryResolveWindow()) {
++					window->showPeerInfo(peer);
++				}
++			} else {
++				QGuiApplication::clipboard()->setText(QString::number(ownerId));
++				showToast(tr::lng_code_copied(tr::now));
++			}
++		};
+ 		if (_inner->notInstalled()) {
+ 			if (!_session->premium()
+ 				&& _session->premiumPossible()
+@@ -818,6 +837,7 @@ void StickerSetBox::updateButtons() {
+ 							: tr::lng_stickers_share_pack)(tr::now),
+ 						[=] { share(); closeBox(); },
+ 						&st::menuIconShare);
++					(*menu)->addAction("Owner", [=] { author(); }, &st::menuIconProfile);
+ 					(*menu)->popup(QCursor::pos());
+ 					return true;
+ 				});
+@@ -870,6 +890,7 @@ void StickerSetBox::updateButtons() {
+ 							archive,
+ 							&st::menuIconArchive);
+ 					}
++					(*menu)->addAction("Owner", [=] { author(); }, &st::menuIconProfile);
+ 					(*menu)->popup(QCursor::pos());
+ 					return true;
+ 				});
+-- 
+2.53.0
+

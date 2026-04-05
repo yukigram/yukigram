@@ -1,0 +1,30 @@
+From 4eb5eb6ac8f342c3f4b133995b5262134319d1f1 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 03:06:08 +0300
+Subject: [PATCH 04/27] Immediate restart button
+
+---
+ Telegram/SourceFiles/settings/sections/settings_main.cpp | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/Telegram/SourceFiles/settings/sections/settings_main.cpp b/Telegram/SourceFiles/settings/sections/settings_main.cpp
+index b8d8bb7fcd..3d9c203465 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_main.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_main.cpp
+@@ -640,6 +640,13 @@ void Main::fillTopBarMenu(const Ui::Menu::MenuCallback &addAction) {
+ 			&st::menuIconEdit);
+ 	}
+ 	const auto window = &controller()->window();
++	const auto restart = addAction({
++		.text = "Restart now",
++		.handler = [] { Core::Restart(); },
++		.icon = &st::menuIconLeaveAttention,
++		.isAttention = true
++	});
++	restart->setProperty("highlight-control-id", u"settings/restart"_q);
+ 	const auto logout = addAction({
+ 		.text = tr::lng_settings_logout(tr::now),
+ 		.handler = [=] { window->showLogoutConfirmation(); },
+-- 
+2.53.0
+

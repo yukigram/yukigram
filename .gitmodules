@@ -1,0 +1,3 @@
+[submodule "flatpak/org.telegram.desktop"]
+	path = flatpak/org.telegram.desktop
+	url = https://github.com/flathub/org.telegram.desktop

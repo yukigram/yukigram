@@ -1,0 +1,25 @@
+{
+  "pins": {
+    "nixpak": {
+      "type": "Git",
+      "repository": {
+        "type": "Forgejo",
+        "server": "https://codeberg.org/",
+        "owner": "sylfn",
+        "repo": "nixpak"
+      },
+      "branch": "local",
+      "submodules": false,
+      "revision": "0a0e41a66333e190259d43793b5d7981425d78ee",
+      "url": "https://codeberg.org/sylfn/nixpak/archive/0a0e41a66333e190259d43793b5d7981425d78ee.tar.gz",
+      "hash": "sha256-b4kysKqNLscmSn/LVbEF2irhFseMvITtXXKdvnwRy9s="
+    },
+    "nixpkgs": {
+      "type": "Channel",
+      "name": "nixos-unstable",
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.05pre972949.6201e203d095/nixexprs.tar.xz",
+      "hash": "sha256-ByAX1LkhCwZ94+KnFAmnJSMAvui7kgCxjHgUHsWAbfI="
+    }
+  },
+  "version": 7
+}

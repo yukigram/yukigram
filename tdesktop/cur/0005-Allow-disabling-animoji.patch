@@ -1,0 +1,87 @@
+From f84fc5ec0b135e4dbaf045fe2caa2c7c79aab61c Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 03:07:17 +0300
+Subject: [PATCH 05/27] Allow disabling animoji
+
+---
+ .../history/view/history_view_element.cpp           | 13 ++++++++++++-
+ .../SourceFiles/history/view/history_view_element.h |  2 ++
+ .../SourceFiles/settings/settings_experimental.cpp  |  2 ++
+ 3 files changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
+index e568895c74..9fffde43eb 100644
+--- a/Telegram/SourceFiles/history/view/history_view_element.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
+@@ -28,6 +28,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "history/history.h"
+ #include "history/history_item_components.h"
+ #include "history/history_item_helpers.h"
++#include "base/options.h"
+ #include "base/unixtime.h"
+ #include "boxes/premium_preview_box.h"
+ #include "core/application.h"
+@@ -468,8 +469,18 @@ int KeyboardStyle::minButtonWidth(
+ 	return result;
+ }
+ 
++base::options::toggle DisableAnimoji({
++   .id = kOptionDisableAnimoji,
++   .name = "Disable animated big emoji",
++   .description = "They don't respect emoji pack setting",
++   .restartRequired = true,
++});
++
+ } // namespace
+ 
++const char kOptionDisableAnimoji[]
++	= "disable-animoji";
++
+ std::unique_ptr<Ui::PathShiftGradient> MakePathShiftGradient(
+ 		not_null<const Ui::ChatStyle*> st,
+ 		Fn<void()> update) {
+@@ -1543,7 +1554,7 @@ void Element::refreshMedia(Element *replacing) {
+ 		const auto emoji = isolatedEmoji();
+ 		const auto emojiStickers = &history()->session().emojiStickersPack();
+ 		const auto skipPremiumEffect = false;
+-		if (const auto sticker = emojiStickers->stickerForEmoji(emoji)) {
++		if (const auto sticker = emojiStickers->stickerForEmoji(emoji); sticker && (!DisableAnimoji.value())) {
+ 			auto content = std::make_unique<Sticker>(
+ 				this,
+ 				sticker.document,
+diff --git a/Telegram/SourceFiles/history/view/history_view_element.h b/Telegram/SourceFiles/history/view/history_view_element.h
+index 08a1e3d55e..244e5215a4 100644
+--- a/Telegram/SourceFiles/history/view/history_view_element.h
++++ b/Telegram/SourceFiles/history/view/history_view_element.h
+@@ -93,6 +93,8 @@ enum class ElementChatMode : char {
+ 	Narrow, // monoforum with left tabs
+ };
+ 
++extern const char kOptionDisableAnimoji[];
++
+ class Element;
+ class ElementDelegate {
+ public:
+diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
+index 57747c20d5..a8a3cf0b44 100644
+--- a/Telegram/SourceFiles/settings/settings_experimental.cpp
++++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
+@@ -38,6 +38,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "window/main_window.h"
+ #include "window/window_peer_menu.h"
+ #include "window/window_session_controller.h"
++#include "history/view/history_view_element.h"
+ #include "window/window_controller.h"
+ #include "window/notifications_manager.h"
+ #include "info/info_flexible_scroll.h"
+@@ -232,6 +233,7 @@ void SetupExperimental(
+ 	addToggle(Info::kAlternativeScrollProcessing);
+ 	addToggle(kModerateCommonGroups);
+ 	addToggle(kForceComposeSearchOneColumn);
++	addToggle(HistoryView::kOptionDisableAnimoji);
+ 	addToggle(ChatHelpers::kOptionUnlimitedRecentStickers);
+ }
+ 
+-- 
+2.53.0
+

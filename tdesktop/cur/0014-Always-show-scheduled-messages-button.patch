@@ -1,0 +1,86 @@
+From ad284015ab91bf556adba80bfff62306f1fa264c Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 04:45:03 +0300
+Subject: [PATCH 14/27] Always show scheduled messages button
+
+---
+ Telegram/SourceFiles/history/history_widget.cpp     | 13 ++++++++++++-
+ Telegram/SourceFiles/history/history_widget.h       |  3 +++
+ .../SourceFiles/settings/settings_experimental.cpp  |  2 ++
+ 3 files changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
+index 31be1ad830..f82ee13566 100644
+--- a/Telegram/SourceFiles/history/history_widget.cpp
++++ b/Telegram/SourceFiles/history/history_widget.cpp
+@@ -6,6 +6,7 @@ For license and copyright information please follow this link:
+ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ */
+ #include "history/history_widget.h"
++#include "base/options.h"
+ 
+ #include "api/api_editing.h"
+ #include "api/api_bot.h"
+@@ -200,6 +201,16 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include <QtGui/QWindow>
+ #include <QtCore/QMimeData>
+ 
++base::options::toggle AlwaysShowScheduled({
++	.id = kOptionAlwaysShowScheduled,
++	.name = "Always show scheduled messages button",
++	.description = "No need to hack around",
++	.restartRequired = true,
++});
++
++const char kOptionAlwaysShowScheduled[]
++	= "always-show-scheduled";
++
+ namespace {
+ 
+ constexpr auto kMessagesPerPageFirst = 30;
+@@ -3266,7 +3277,7 @@ void HistoryWidget::setupScheduledToggle() {
+ }
+ 
+ void HistoryWidget::refreshScheduledToggle() {
+-	const auto has = _history
++	const auto has = AlwaysShowScheduled.value() || _history
+ 		&& _canSendMessages
+ 		&& (session().scheduledMessages().count(_history) > 0);
+ 	if (!_scheduled && has) {
+diff --git a/Telegram/SourceFiles/history/history_widget.h b/Telegram/SourceFiles/history/history_widget.h
+index d002f39a9d..6efa634502 100644
+--- a/Telegram/SourceFiles/history/history_widget.h
++++ b/Telegram/SourceFiles/history/history_widget.h
+@@ -6,6 +6,9 @@ For license and copyright information please follow this link:
+ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ */
+ #pragma once
++#include "base/options.h"
++extern base::options::toggle AlwaysShowScheduled;
++extern const char kOptionAlwaysShowScheduled[];
+ 
+ #include "history/view/controls/history_view_compose_media_edit_manager.h"
+ #include "history/view/history_view_corner_buttons.h"
+diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
+index c4db0a7ea9..6f1bc3a214 100644
+--- a/Telegram/SourceFiles/settings/settings_experimental.cpp
++++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
+@@ -32,6 +32,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "dialogs/ui/dialogs_layout.h"
+ #include "history/history_item_components.h"
+ #include "info/profile/info_profile_actions.h"
++#include "history/history_widget.h"
+ #include "lang/lang_keys.h"
+ #include "mainwindow.h"
+ #include "mainwidget.h"
+@@ -221,6 +222,7 @@ void SetupExperimental(
+ 	addToggle(kOptionWideMessages);
+ 	addToggle(Webview::kOptionWebviewDebugEnabled);
+ 	addToggle(Webview::kOptionWebviewLegacyEdge);
++	addToggle(kOptionAlwaysShowScheduled);
+ 	addToggle(kOptionAutoScrollInactiveChat);
+ 	addToggle(Window::Notifications::kOptionHideReplyButton);
+ 	addToggle(Window::Notifications::kOptionCustomNotification);
+-- 
+2.53.0
+
