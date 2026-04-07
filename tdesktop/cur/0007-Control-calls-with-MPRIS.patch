@@ -1,4 +1,4 @@
-From caecbbfb78c130b256712074d49f320eee696786 Mon Sep 17 00:00:00 2001
+From 53d562228253ee5fef23e4f60c2e72de378a07c0 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:10:55 +0300
 Subject: [PATCH 07/27] Control calls with MPRIS
@@ -174,10 +174,10 @@ index 4742827c69..179b1b6b5e 100644
 +
  } // namespace Calls
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index cc030db479..d212419fdd 100644
+index 0b65d03f82..97066cbcff 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -25,6 +25,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -26,6 +26,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "core/application.h"
  #include "core/launcher.h"
  #include "core/sandbox.h"
@@ -185,7 +185,7 @@ index cc030db479..d212419fdd 100644
  #include "chat_helpers/tabbed_panel.h"
  #include "dialogs/dialogs_widget.h"
  #include "dialogs/ui/dialogs_layout.h"
-@@ -225,6 +226,7 @@ void SetupExperimental(
+@@ -226,6 +227,7 @@ void SetupExperimental(
  	addToggle(Core::kOptionSkipUrlSchemeRegister);
  	addToggle(Core::kOptionDeadlockDetector);
  	addToggle(Window::kOptionExternalMediaViewer);

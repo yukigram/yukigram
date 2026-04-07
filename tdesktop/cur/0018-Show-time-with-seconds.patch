@@ -1,4 +1,4 @@
-From de718c9354a690bc692aea9eeaa6f22ae89096ce Mon Sep 17 00:00:00 2001
+From 310898197fda17a0e05232ab97085a77d93acb77 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Sat, 4 Apr 2026 14:42:25 +0300
 Subject: [PATCH 18/27] Show time with seconds
@@ -65,7 +65,7 @@ index 211a343f8a..97995a65f1 100644
  		}).first;
  		fullSize += i->second.time.size()
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
-index 5777ba7b68..0863034782 100644
+index 4682c93d59..b8b3489c2d 100644
 --- a/Telegram/SourceFiles/history/history_item.cpp
 +++ b/Telegram/SourceFiles/history/history_item.cpp
 @@ -1331,11 +1331,19 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
@@ -88,7 +88,7 @@ index 5777ba7b68..0863034782 100644
  	_text = std::move(prepared.text);
  	data->textLinks = std::move(prepared.links);
  	if (had) {
-@@ -7647,7 +7655,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
+@@ -7659,7 +7667,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
  	};
  	const auto time = QLocale().toString(
  		scheduled.time(),
@@ -111,10 +111,10 @@ index 1dcb93feb4..0c134643af 100644
  	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
  	const auto authorWidth = st::msgDateFont->width(author);
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 3efe1b33bc..bc02724938 100644
+index 51069e8f08..a09173781a 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-@@ -2668,7 +2668,7 @@ TextForMimeData ListWidget::getSelectedText() const {
+@@ -2686,7 +2686,7 @@ TextForMimeData ListWidget::getSelectedText() const {
  			not_null<HistoryItem*> item,
  			TextForMimeData &&unwrapped) {
  		auto time = QString("[%1] ").arg(

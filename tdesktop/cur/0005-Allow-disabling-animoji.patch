@@ -1,4 +1,4 @@
-From f84fc5ec0b135e4dbaf045fe2caa2c7c79aab61c Mon Sep 17 00:00:00 2001
+From 31eab1509f72ad39742bb6b5bdc3fc236a69c3da Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:07:17 +0300
 Subject: [PATCH 05/27] Allow disabling animoji
@@ -10,7 +10,7 @@ Subject: [PATCH 05/27] Allow disabling animoji
  3 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index e568895c74..9fffde43eb 100644
+index 6b884a5bd2..3f971ccf4f 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -28,6 +28,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -26,10 +26,10 @@ index e568895c74..9fffde43eb 100644
  }
  
 +base::options::toggle DisableAnimoji({
-+   .id = kOptionDisableAnimoji,
-+   .name = "Disable animated big emoji",
-+   .description = "They don't respect emoji pack setting",
-+   .restartRequired = true,
++	.id = kOptionDisableAnimoji,
++	.name = "Disable animated big emoji",
++	.description = "They don't respect emoji pack setting",
++	.restartRequired = true,
 +});
 +
  } // namespace
@@ -50,7 +50,7 @@ index e568895c74..9fffde43eb 100644
  				this,
  				sticker.document,
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.h b/Telegram/SourceFiles/history/view/history_view_element.h
-index 08a1e3d55e..244e5215a4 100644
+index f790f1ace5..10e6d349d9 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.h
 +++ b/Telegram/SourceFiles/history/view/history_view_element.h
 @@ -93,6 +93,8 @@ enum class ElementChatMode : char {
@@ -63,10 +63,10 @@ index 08a1e3d55e..244e5215a4 100644
  class ElementDelegate {
  public:
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 57747c20d5..a8a3cf0b44 100644
+index 31315bdae3..af2dd0b35c 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -38,6 +38,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "window/main_window.h"
  #include "window/window_peer_menu.h"
  #include "window/window_session_controller.h"
@@ -74,14 +74,14 @@ index 57747c20d5..a8a3cf0b44 100644
  #include "window/window_controller.h"
  #include "window/notifications_manager.h"
  #include "info/info_flexible_scroll.h"
-@@ -232,6 +233,7 @@ void SetupExperimental(
+@@ -233,6 +234,7 @@ void SetupExperimental(
  	addToggle(Info::kAlternativeScrollProcessing);
  	addToggle(kModerateCommonGroups);
  	addToggle(kForceComposeSearchOneColumn);
 +	addToggle(HistoryView::kOptionDisableAnimoji);
  	addToggle(ChatHelpers::kOptionUnlimitedRecentStickers);
+ 	addToggle(Ui::kOptionHideAiButton);
  }
- 
 -- 
 2.53.0
 

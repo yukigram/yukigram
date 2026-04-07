@@ -1,7 +1,7 @@
-From dd9209a98127b82182a532b690a20d74045881af Mon Sep 17 00:00:00 2001
+From f871b54268bd5129635c847b3f46a1d4af8836cd Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Mon, 6 Apr 2026 14:52:44 +0300
-Subject: [PATCH 27/27] Forward/Copy/Steal shortcuts
+Subject: [PATCH 26/27] Forward/Copy/Steal shortcuts
 
 ---
  Telegram/SourceFiles/core/shortcuts.cpp       |  7 ++++
@@ -124,10 +124,10 @@ index 17ae0779cc..2c0e0c32a9 100644
  	[[nodiscard]] auto reactionButtonParameters(
  		not_null<const Element*> view,
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 67f8cfae2e..ec74fd448f 100644
+index 61194df5c4..3818bed56b 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -9446,7 +9446,7 @@ bool HistoryWidget::updateCanSendMessage() {
+@@ -9445,7 +9445,7 @@ bool HistoryWidget::updateCanSendMessage() {
  	return true;
  }
  
@@ -136,7 +136,7 @@ index 67f8cfae2e..ec74fd448f 100644
  	if (!_list) {
  		return;
  	}
-@@ -9455,7 +9455,7 @@ void HistoryWidget::forwardSelected() {
+@@ -9454,7 +9454,7 @@ void HistoryWidget::forwardSelected() {
  		if (const auto strong = weak.get()) {
  			strong->clearSelected();
  		}
@@ -159,10 +159,10 @@ index 6efa634502..28c261be8d 100644
  	void clearSelected();
  
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index b1883ae8fb..6e62806132 100644
+index 3f3cbfda6d..f0deb2ba5e 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
-@@ -2852,7 +2852,8 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(
+@@ -2856,7 +2856,8 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(
  base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  		std::shared_ptr<ChatHelpers::Show> show,
  		Data::ForwardDraft &&draft,
@@ -172,7 +172,7 @@ index b1883ae8fb..6e62806132 100644
  	const auto session = &show->session();
  	const auto owner = &session->data();
  	const auto itemsList = owner->idsToItems(draft.ids);
-@@ -3073,6 +3074,8 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3081,6 +3082,8 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  		boxRaw->setForwardOptions({
  			.sendersCount = sendersCount,
  			.captionsCount = captionsCount,
@@ -181,7 +181,7 @@ index b1883ae8fb..6e62806132 100644
  		});
  		show->showBox(std::move(box));
  		auto state = State{ boxRaw, controllerRaw };
-@@ -3380,21 +3383,25 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3388,21 +3391,25 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  		not_null<Window::SessionNavigation*> navigation,
  		Data::ForwardDraft &&draft,

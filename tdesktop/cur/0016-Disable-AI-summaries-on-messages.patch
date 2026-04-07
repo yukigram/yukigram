@@ -1,4 +1,4 @@
-From f64b12398385011bdf5f0ef792182532e2974d9e Mon Sep 17 00:00:00 2001
+From 21dd6e01ec7f15a819a2575e3550edc7d9ce980f Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 14:50:08 +0300
 Subject: [PATCH 16/27] Disable AI summaries on messages
@@ -8,10 +8,10 @@ Subject: [PATCH 16/27] Disable AI summaries on messages
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 2a32e8df2b..42b4e43d17 100644
+index 5342798a07..399aad1de8 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
-@@ -5296,7 +5296,7 @@ const HistoryMessageEdited *Message::displayedEditBadge() const {
+@@ -5492,7 +5492,7 @@ const HistoryMessageEdited *Message::displayedEditBadge() const {
  }
  
  void Message::ensureSummarizeButton() const {

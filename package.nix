@@ -6,9 +6,9 @@ telegram-desktop.override {
   pname = "yukigram";
   unwrapped = telegram-desktop.unwrapped.overrideAttrs (final: prev: {
     name = "yukigram-unwrapped";
-    version = "6.7.3";
+    version = "6.7.5";
     src = prev.src.overrideAttrs {
-      hash = "sha256-trLw/vSa4+UvsXNKj++kBO8DMy/5yp7UPDvh+wMG4EA=";
+      hash = "sha256-HsXNTZY/+Xz7pIT7durOd5T/u7jML0rVBOPb4pnIXow=";
     };
     patches = let
       readDir' = d: lib.pipe d [builtins.readDir builtins.attrNames (map (lib.path.append d))];

@@ -1,4 +1,4 @@
-From df353ba8aa63eed507565e2377773ea6cbeda80c Mon Sep 17 00:00:00 2001
+From 73170eb65da9fa69ad9acd867edc76114922cb90 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 15:02:59 +0300
 Subject: [PATCH 17/27] Show messages from user
@@ -21,10 +21,10 @@ Original author: c0re100 <corehusky@gmail.com>
  create mode 100644 Telegram/SourceFiles/facades.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index bb62ac1340..d48a5e700c 100644
+index cc0fb6f630..7c14471004 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1872,6 +1872,8 @@ PRIVATE
+@@ -1874,6 +1874,8 @@ PRIVATE
      apiwrap.cpp
      apiwrap.h
      config.h

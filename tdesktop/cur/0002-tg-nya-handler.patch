@@ -1,4 +1,4 @@
-From a46fe9ea9a79d47185ac828635c27c7e32a9258d Mon Sep 17 00:00:00 2001
+From aab06b28c12689c89b87717f03aa55738721bf11 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 02:59:31 +0300
 Subject: [PATCH 02/27] tg://nya handler
@@ -8,10 +8,10 @@ Subject: [PATCH 02/27] tg://nya handler
  1 file changed, 12 insertions(+)
 
 diff --git a/Telegram/SourceFiles/core/local_url_handlers.cpp b/Telegram/SourceFiles/core/local_url_handlers.cpp
-index 6626de2f3e..ea7b3d7c96 100644
+index b3ea2eedb6..9c5e311d25 100644
 --- a/Telegram/SourceFiles/core/local_url_handlers.cpp
 +++ b/Telegram/SourceFiles/core/local_url_handlers.cpp
-@@ -1624,6 +1624,14 @@ bool ResolveOAuth(
+@@ -1634,6 +1634,14 @@ bool ResolveOAuth(
  	return true;
  }
  
@@ -26,7 +26,7 @@ index 6626de2f3e..ea7b3d7c96 100644
  } // namespace
  
  bool TryRouterForLocalUrl(
-@@ -1634,6 +1642,10 @@ bool TryRouterForLocalUrl(
+@@ -1644,6 +1652,10 @@ bool TryRouterForLocalUrl(
  
  const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
  	static auto Result = std::vector<LocalUrlHandler>{

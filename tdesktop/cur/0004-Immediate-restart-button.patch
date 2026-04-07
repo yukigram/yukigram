@@ -1,4 +1,4 @@
-From 4eb5eb6ac8f342c3f4b133995b5262134319d1f1 Mon Sep 17 00:00:00 2001
+From 968a8a8748bc826d92ec237847bf0eeed817b282 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:06:08 +0300
 Subject: [PATCH 04/27] Immediate restart button
@@ -8,7 +8,7 @@ Subject: [PATCH 04/27] Immediate restart button
  1 file changed, 7 insertions(+)
 
 diff --git a/Telegram/SourceFiles/settings/sections/settings_main.cpp b/Telegram/SourceFiles/settings/sections/settings_main.cpp
-index b8d8bb7fcd..3d9c203465 100644
+index 52bb5fe4b2..b044a81d35 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_main.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_main.cpp
 @@ -640,6 +640,13 @@ void Main::fillTopBarMenu(const Ui::Menu::MenuCallback &addAction) {

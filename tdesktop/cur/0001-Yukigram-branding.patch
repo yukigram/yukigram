@@ -1,4 +1,4 @@
-From c35035b523faa90fdfd27b89d798d4c6fbbfdea4 Mon Sep 17 00:00:00 2001
+From 7e18c5563018176b9f46827434f5a55db33b9c9c Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 02:58:42 +0300
 Subject: [PATCH 01/27] Yukigram branding
@@ -28,10 +28,10 @@ Subject: [PATCH 01/27] Yukigram branding
  delete mode 100644 lib/xdg/org.telegram.desktop.service
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 738c93e4d9..bb62ac1340 100644
+index a737da8da0..cc0fb6f630 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -2078,7 +2078,7 @@ else()
+@@ -2080,7 +2080,7 @@ else()
          set(bundle_identifier "com.tdesktop.Telegram")
      endif()
      set(bundle_entitlements "Telegram.entitlements")
@@ -40,7 +40,7 @@ index 738c93e4d9..bb62ac1340 100644
  endif()
  
  if (CMAKE_GENERATOR STREQUAL Xcode)
-@@ -2124,7 +2124,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+@@ -2126,7 +2126,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
  if (APPLE
      OR is_multi_config
      OR NOT CMAKE_EXECUTABLE_SUFFIX STREQUAL ""
@@ -49,7 +49,7 @@ index 738c93e4d9..bb62ac1340 100644
      set(output_folder ${CMAKE_BINARY_DIR})
  else()
      set(output_folder ${CMAKE_BINARY_DIR}/bin)
-@@ -2298,28 +2298,15 @@ endif()
+@@ -2300,28 +2300,15 @@ endif()
  
  if (LINUX AND DESKTOP_APP_USE_PACKAGED)
      include(GNUInstallDirs)
@@ -121,7 +121,7 @@ index fd3f69e5ed..27ec7f6a1d 100644
    </qresource>
  </RCC>
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
-index 06ff4addaf..fc5304e30a 100644
+index 738ad20837..7f82948f63 100644
 --- a/Telegram/SourceFiles/boxes/about_box.cpp
 +++ b/Telegram/SourceFiles/boxes/about_box.cpp
 @@ -49,7 +49,7 @@ rpl::producer<TextWithEntities> Text2() {
@@ -156,7 +156,7 @@ index d56d1d50b6..42d1ee80e0 100644
  #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
  	// fallback session management is useless for tdesktop since it doesn't have
 diff --git a/Telegram/SourceFiles/core/version.h b/Telegram/SourceFiles/core/version.h
-index b68b287ebc..19074fbca2 100644
+index 944baf38af..1fbf0d955e 100644
 --- a/Telegram/SourceFiles/core/version.h
 +++ b/Telegram/SourceFiles/core/version.h
 @@ -20,8 +20,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -167,8 +167,8 @@ index b68b287ebc..19074fbca2 100644
 -constexpr auto AppFile = "Telegram"_cs;
 +constexpr auto AppName = "Yukigram"_cs;
 +constexpr auto AppFile = "yukigram"_cs;
- constexpr auto AppVersion = 6007003;
- constexpr auto AppVersionStr = "6.7.3";
+ constexpr auto AppVersion = 6007005;
+ constexpr auto AppVersionStr = "6.7.5";
  constexpr auto AppBetaVersion = false;
 diff --git a/Telegram/SourceFiles/intro/intro_start.cpp b/Telegram/SourceFiles/intro/intro_start.cpp
 index d1b835a09a..a871886d76 100644

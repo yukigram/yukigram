@@ -19,7 +19,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. No copy restrictions (forward restrictions are still in place)
 1. Option to force single-column mobile-like layout
 1. Use [OpenStreetMap] instead of Google Maps when opening a location
-1. Hide "similar channels" popup on "you joined this channel" message (broken)
+1. Hide "similar channels" popup on "you joined this channel" message
 1. Option to use wide messages
 1. Allow more than 3/6 accounts
 1. Option to always show "scheduled messages" button
@@ -33,15 +33,39 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. Disable registering url schemes and remove litter in `~/.local/share/applications`
 1. Show message id
 1. Increase maxSignatureSize to accomodate time with seconds and message id
-1. Disable AI editor button
 1. Larger stickers and round video messages
 1. Shortcuts for forward (Alt+F), copy (Alt+C) and copy media only (Alt+Shift+C)
     (only works if "select recepient" is used, not "open chat with settings")
+1. Disable AI compose button by default
 
 Some patches are originating from [64Gram].
 
 [OpenStreetMap]: https://openstreetmap.org
 [64Gram]: https://github.com/TDesktop-x64/tdesktop
+
+## Missing features
+
+Contributions welcome!
+
+- Client-side user muting (as in 64Gram)
+- Disable Cocoon AI summary in Instant View
+- Collapsed chats in dialogs view (as in Kotatogram)
+- Ability to change font size
+- Ability to change monospace font
+    (probably requires submodule patching)
+- Compile-time option to use QtWebEngine for Instant View
+    (requires submodule patching)
+- KDE Platform in flatpak manifest instead of building patched Qt
+    (requires QtWebEngine or reincarnating [org.telegram.desktop.webview])
+
+[org.telegram.desktop.webview]: https://github.com/flathub/org.telegram.desktop.webview
+
+## Known bugs
+
+- "Similar channels" disabling patch is broken
+- "UTC+00:00:01" instead of readable timezone name ([nixpak#201])
+
+[nixpak#201]: https://github.com/nixpak/nixpak/issues/205
 
 ## Patches?
 
@@ -58,6 +82,13 @@ and for easier code understanding.
 
 Please inspect these patches yourselves to make sure that you really trust the code.
 
+Note that due to limitations of [`git am`][git-am]
+and heavy use of submodules in upstream tdesktop,
+it is currently not possible to patch submodules.
+Support for such patching may be added in the future,
+when it will be really necessary.
+
+[git-am]: https://git-scm.com/docs/git-am
 [range-diff]: https://git-scm.com/docs/git-range-diff
 
 ## Installation
@@ -162,7 +193,9 @@ Nix package update steps:
 4. test `./result/bin/yukigram`
 
 Flatpak manifest update steps:
-1. update submodule to newer version
+1. update submodule to newer version.
+    If there is no newer version merged,
+    create a patch updating tdesktop manually.
 2. roundtrip the patch with `git am -3` and `git format-patch`
     to make sure it applies cleanly
 3. (optionally) build with `flatpak-builder --ccache`

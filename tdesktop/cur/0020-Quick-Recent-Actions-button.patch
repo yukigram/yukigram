@@ -1,4 +1,4 @@
-From 43cae5cc7e40eeb5c2e7938e73b4afc0488fb946 Mon Sep 17 00:00:00 2001
+From d4915355666410096b9a3dd376c8c2e95a4d2453 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Sat, 4 Apr 2026 15:01:06 +0300
 Subject: [PATCH 20/27] Quick Recent Actions button
@@ -33,7 +33,7 @@ index 0000000000..220814e44b
 +    " stroke="#fff" fill="#0000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
 +</svg>
 diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
-index bc5b2aec74..8243c322ce 100644
+index 6545f70d32..8a58550976 100644
 --- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 @@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -52,7 +52,7 @@ index bc5b2aec74..8243c322ce 100644
  , _infoToggle(this, st::topBarInfo)
  , _menuToggle(this, st::topBarMenuToggle)
  , _titlePeerText(st::windowMinWidth / 3)
-@@ -154,6 +156,10 @@ TopBarWidget::TopBarWidget(
+@@ -159,6 +161,10 @@ TopBarWidget::TopBarWidget(
  	_groupCall->setClickedCallback([=] { groupCall(); });
  	_menuToggle->addClickHandler([=](auto) { showPeerMenu(); });
  	_menuToggle->setAcceptBoth(true, true);
@@ -63,7 +63,7 @@ index bc5b2aec74..8243c322ce 100644
  	_infoToggle->setClickedCallback([=] { toggleInfoSection(); });
  	_back->setAcceptBoth();
  	_back->addClickHandler([=](Qt::MouseButton) {
-@@ -1179,6 +1185,10 @@ void TopBarWidget::updateControlsGeometry() {
+@@ -1184,6 +1190,10 @@ void TopBarWidget::updateControlsGeometry() {
  		_infoToggle->moveToRight(_rightTaken, otherButtonsTop);
  		_rightTaken += _infoToggle->width();
  	}
@@ -74,7 +74,7 @@ index bc5b2aec74..8243c322ce 100644
  	if (!_call->isHidden() || !_groupCall->isHidden()) {
  		_call->moveToRight(_rightTaken, otherButtonsTop);
  		_groupCall->moveToRight(_rightTaken, otherButtonsTop);
-@@ -1304,6 +1314,24 @@ void TopBarWidget::updateControlsVisibility() {
+@@ -1309,6 +1319,24 @@ void TopBarWidget::updateControlsVisibility() {
  		&& !isOneColumn
  		&& _controller->canShowThirdSection()
  		&& !_chooseForReportReason);
@@ -112,7 +112,7 @@ index fab04e6309..ca334d876b 100644
  	object_ptr<Ui::IconButton> _menuToggle;
  	base::unique_qptr<Ui::PopupMenu> _menu;
 diff --git a/Telegram/SourceFiles/info/info.style b/Telegram/SourceFiles/info/info.style
-index 837637739c..8b6c848d0b 100644
+index f3d0b09f01..894693d85a 100644
 --- a/Telegram/SourceFiles/info/info.style
 +++ b/Telegram/SourceFiles/info/info.style
 @@ -1072,6 +1072,10 @@ topBarInfo: IconButton(topBarSearch) {

@@ -1,4 +1,4 @@
-From 2416344a15cfbd8514f098b940a47fac19b908e9 Mon Sep 17 00:00:00 2001
+From faf7c3052eab59cd813a31fa7b016b76271db579 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:16:20 +0300
 Subject: [PATCH 09/27] Allow forcing single-column layout
@@ -25,10 +25,10 @@ index 38cd8a033d..3f2c1b741e 100644
  		//if (session().settings().tabbedSelectorSectionEnabled()
  		//	&& chatWidth >= _history->minimalWidthForTabbedSelectorSection()) {
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index d212419fdd..6453824f87 100644
+index 97066cbcff..f588c05c07 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -38,6 +38,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "mtproto/session_private.h"
  #include "webview/webview_embed.h"
  #include "window/main_window.h"
@@ -36,7 +36,7 @@ index d212419fdd..6453824f87 100644
  #include "window/window_peer_menu.h"
  #include "window/window_session_controller.h"
  #include "history/view/history_view_element.h"
-@@ -233,6 +234,7 @@ void SetupExperimental(
+@@ -234,6 +235,7 @@ void SetupExperimental(
  		addToggle(kOptionFastButtonsMode);
  	}
  	addToggle(Window::kOptionDisableTouchbar);

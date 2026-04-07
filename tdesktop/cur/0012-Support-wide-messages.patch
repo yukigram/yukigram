@@ -1,4 +1,4 @@
-From 9b8ed9760e0a1590e0e49fcac5e7d6d8857afd90 Mon Sep 17 00:00:00 2001
+From 089816947381c60d77041665f415c97aedf937fb Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:22:31 +0300
 Subject: [PATCH 12/27] Support wide messages
@@ -96,7 +96,7 @@ index 3a8c42982f..17ae0779cc 100644
  #include "base/timer.h"
  #include "data/data_report.h"
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 9fffde43eb..6927e3ec4c 100644
+index 3f971ccf4f..9586c5f1f0 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -26,6 +26,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -117,7 +117,7 @@ index 9fffde43eb..6927e3ec4c 100644
  			maxwidth,
  			st::msgMaxWidth
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 278307f041..3efe1b33bc 100644
+index 88ac50002f..51069e8f08 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -128,7 +128,7 @@ index 278307f041..3efe1b33bc 100644
  #include "history/history_item.h"
  #include "history/history_item_components.h"
  #include "history/history_item_helpers.h"
-@@ -4011,7 +4012,7 @@ void ListWidget::mouseActionUpdate() {
+@@ -4029,7 +4030,7 @@ void ListWidget::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = view->width();
@@ -138,7 +138,7 @@ index 278307f041..3efe1b33bc 100644
  					}
  					auto widthForDate = maxwidth - st::msgServiceMargin.left() - st::msgServiceMargin.left();
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 6ee796edf3..2a32e8df2b 100644
+index d4c80735cd..5342798a07 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -15,6 +15,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -149,7 +149,7 @@ index 6ee796edf3..2a32e8df2b 100644
  #include "history/history_item_components.h"
  #include "history/history_item_helpers.h"
  #include "history/view/media/history_view_media_generic.h"
-@@ -4877,7 +4878,9 @@ QRect Message::countGeometry() const {
+@@ -4922,7 +4923,9 @@ QRect Message::countGeometry() const {
  	//	contentLeft += st::msgPhotoSkip - (hmaxwidth - hwidth);
  	}
  	accumulate_min(contentWidth, maxWidth());
@@ -159,7 +159,7 @@ index 6ee796edf3..2a32e8df2b 100644
  	if (mediaWidth < contentWidth) {
  		const auto textualWidth = bubbleTextualWidth();
  		if (mediaWidth < textualWidth
-@@ -5006,8 +5009,10 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -5064,8 +5067,10 @@ int Message::resizeContentGetHeight(int newWidth) {
  		}
  	}
  	accumulate_min(contentWidth, maxWidth());
@@ -171,12 +171,12 @@ index 6ee796edf3..2a32e8df2b 100644
  	const auto textualWidth = bubbleTextualWidth();
  	if (mediaDisplayed) {
  		media->resizeGetHeight(contentWidth);
-@@ -5046,7 +5051,7 @@ int Message::resizeContentGetHeight(int newWidth) {
- 			_reactions->resizeGetHeight(textWidth);
+@@ -5105,7 +5110,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  		}
  
--		if (contentWidth == maxWidth()) {
-+		if (!WideMessages.value() && contentWidth == maxWidth()) {
+ 		const auto appearing = Get<TextAppearing>();
+-		if (contentWidth == maxWidth() && !appearing) {
++		if (!WideMessages.value() && contentWidth == maxWidth() && !appearing) {
  			if (mediaDisplayed) {
  				if (check) {
  					newHeight += check->resizeGetHeight(contentWidth) + st::mediaInBubbleSkip;
@@ -390,10 +390,10 @@ index 5950801174..8e56bca917 100644
  	auto newHeight = 0;
  
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 6453824f87..c4db0a7ea9 100644
+index f588c05c07..2dae6059bb 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -24,6 +24,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -25,6 +25,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "boxes/moderate_messages_box.h"
  #include "core/application.h"
  #include "core/launcher.h"
@@ -401,7 +401,7 @@ index 6453824f87..c4db0a7ea9 100644
  #include "core/sandbox.h"
  #include "calls/calls_instance.h"
  #include "chat_helpers/tabbed_panel.h"
-@@ -217,6 +218,7 @@ void SetupExperimental(
+@@ -218,6 +219,7 @@ void SetupExperimental(
  	addToggle(Info::Profile::kOptionShowChannelJoinedBelowAbout);
  	addToggle(Ui::kOptionUseSmallMsgBubbleRadius);
  	addToggle(Media::Player::kOptionDisableAutoplayNext);

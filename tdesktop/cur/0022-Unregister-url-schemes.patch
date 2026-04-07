@@ -1,4 +1,4 @@
-From 0f03b2d4606aab85bf1548ab8380f7489ab945bb Mon Sep 17 00:00:00 2001
+From 9ba5192e42b2652853bdb1fbf6a98e30a124dcf5 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Sat, 4 Apr 2026 18:42:15 +0300
 Subject: [PATCH 22/27] Unregister url schemes
