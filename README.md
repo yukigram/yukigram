@@ -120,18 +120,25 @@ git apply ../0001-Yukigram.patch
 flatpak-builder --ccache --force-clean build org.telegram.desktop.yml
 ```
 
-### with nix without flakes
+### with nix
 
 Binary cache for pinned nixpkgs planned
 
 #### nixpak (locked nixpkgs)
 
+without flakes:
 ```nix
 import <yukigram> {}
 ```
 
+with flakes:
+```nix
+yukigram.packages.${system}.default
+```
+
 #### nixpak (custom options)
 
+without flakes:
 ```nix
 import <yukigram> {
     nixpkgs = <nixpkgs>;
@@ -144,15 +151,25 @@ import <yukigram> {
 }
 ```
 
+with flakes:
+```nix
+yukigram.packages.${system}.default.override {
+    nixpkgs = my-pinned-nixpkgs;
+    # or
+    pkgs = my-pkgs;
+
+    customNixpakConfig = {
+        sockets.pulse = false;
+    };
+}
+```
+
 #### non-isolated package
 
+without flakes:
 ```nix
 pkgs.callPackage <yukigram/package.nix> {}
 ```
-
-### with nix with flakes
-
-Support planned
 
 ### on PostmarketOS
 
