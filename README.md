@@ -38,7 +38,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
     (only works if "select recepient" is used, not "open chat with settings")
 1. Disable AI compose button by default
 
-Some patches are originating from [64Gram].
+Some patches originate from [64Gram].
 
 [OpenStreetMap]: https://openstreetmap.org
 [64Gram]: https://github.com/TDesktop-x64/tdesktop
@@ -70,15 +70,15 @@ Contributions welcome!
 ## Patches?
 
 Most clients (all of them?) are _forks_,
-and most of forks don't bother rebasing their changes over and over,
+and most forks don't bother rebasing their changes over and over,
 and instead opt for introducing merge commits
 to be on par with upstream changes.
-This makes history and changes harder to track and analyze.
+This makes history and changes harder to track and audit.
 Patch-based approach is, in a way,
 a rebase-workflow but without commits,
 and with [range-diff] included,
 allowing to more precisely track how patches evolve over time
-and for easier code understanding.
+and understand code easier.
 
 Please inspect these patches yourselves to make sure that you really trust the code.
 
@@ -86,7 +86,7 @@ Note that due to limitations of [`git am`][git-am]
 and heavy use of submodules in upstream tdesktop,
 it is currently not possible to patch submodules.
 Support for such patching may be added in the future,
-when it will be really necessary.
+when it becomes essential.
 
 [git-am]: https://git-scm.com/docs/git-am
 [range-diff]: https://git-scm.com/docs/git-range-diff
@@ -157,7 +157,7 @@ Support planned
 ### on PostmarketOS
 
 Support planned.
-Meanwhile, use [Nix] or Flatpak.
+In the meantime, use [Nix] or Flatpak.
 
 ### with other package manager
 
@@ -169,7 +169,7 @@ with your selection of patches.
 [Nixpak]: https://github.com/nixpak/nixpak
 [Nix]: https://lix.systems
 
-## Forward-porting
+## Updating to newer versions
 
 Patchset supports only one version out of the box.
 This version is indicated in commit message and in tag name.
@@ -184,7 +184,7 @@ git format-patch -o ../yukigram/tdesktop/cur $TAG && cd ../yukigram && git add .
 ```
 
 If any patches were dropped, reordered, or added,
-please change this file accordingly.
+please change the list in the README accordingly.
 
 Nix package update steps:
 1. change version in `package.nix` and set hash to `lib.fakeHash`
