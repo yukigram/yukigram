@@ -1,0 +1,13 @@
+diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
+index 7f82948f63..427393b603 100644
+--- a/Telegram/SourceFiles/boxes/about_box.cpp
++++ b/Telegram/SourceFiles/boxes/about_box.cpp
+@@ -163,7 +163,7 @@ QString currentVersionText() {
+ #ifdef _DEBUG
+ 	result += " DEBUG";
+ #endif
+-	return result;
++	return result + " (@commit)";
+ }
+ 
+ void ArchiveHintBox(

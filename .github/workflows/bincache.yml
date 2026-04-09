@@ -1,0 +1,176 @@
+name: Binary cache
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+
+  flatpak:
+    name: Flatpak repository
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
+    container:
+      image: ghcr.io/andyholmes/flatter/gnome:49
+      options: --privileged
+      volumes:
+        - /opt/hostedtoolcache:/hostedtoolcache
+
+    steps:
+      - name: Free up disk space
+        shell: bash
+        run: |
+          rm -rf /hostedtoolcache/*
+          df -h
+
+      - name: Clone
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Fix cloned repo
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Flatpak dependencies
+        run: |
+          flatpak install --noninteractive org.freedesktop.Sdk.Extension.llvm21/x86_64/25.08
+
+      - name: Patches
+        run: |
+          commit=$(git describe --abbrev=12 HEAD)
+          sed -i s/@commit/$commit/ tdesktop/version.patch
+
+          pushd flatpak/org.telegram.desktop
+          git apply ../0001-Yukigram.patch
+          popd
+
+          echo ARCH="$(uname -m)" >> $GITHUB_ENV
+
+      - name: Build
+        id: flatpak
+        uses: andyholmes/flatter@main
+        with:
+          files: |
+            flatpak/org.telegram.desktop/org.telegram.desktop.yml
+          arch: ${{ env.ARCH }}
+
+      - uses: actions/upload-artifact@v7
+        name: Upload artifact
+        with:
+          name: flatpak-${{ env.ARCH }}
+          path: ${{ steps.flatpak.outputs.repository }}
+
+  nixos:
+    name: NixOS binary cache build
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: nixbuild/nix-quick-install-action@v34
+        name: Install Nix
+
+      - name: Clone
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Build packages
+        env:
+          NIX_BINARY_CACHE_KEY: ${{ secrets.NIX_BINARY_CACHE_KEY }}
+        run: |
+          set -exuo pipefail
+
+          export NIX_PATH=nixpkgs=$(nix-shell -I nixpkgs=channel:nixos-unstable -E 'with import <nixpkgs> {}; mkShellNoCC { packages = [npins]; }' --run 'npins get-path nixpkgs')
+
+          nix-build -j0 --keep-going || true
+          find /nix/store -maxdepth 1 -mindepth 1 | sort > paths-from-nixos-cache.txt
+          nix-build -E 'with import <nixpkgs> {}; closureInfo { rootPaths = [ (import ./. {}) ]; }'
+
+          echo "$NIX_BINARY_CACHE_KEY" > bincache-key.priv
+          nix --extra-experimental-features nix-command key convert-secret-to-public < bincache-key.priv > bincache-key.pub
+
+          nix-shell -p nix-serve --run 'NIX_SECRET_KEY_FILE=$PWD/bincache-key.priv nix-serve &'
+          while ! curl http://127.0.0.1:5000/; do sleep 1; done
+
+          mkdir -p out/nar
+          wget http://127.0.0.1:5000/nix-cache-info -O out/nix-cache-info
+          comm -13 paths-from-nixos-cache.txt result/store-paths | sed 's:/nix/store/\([^-]*\)-.*:\1:' | while read path; do
+            wget http://127.0.0.1:5000/$path.narinfo -O out/$path.narinfo
+            nar="$(grep '^URL: ' out/$path.narinfo | cut -d ' ' -f 2-2)"
+            wget http://127.0.0.1:5000/$nar -O out/$nar
+          done
+
+          FLAKE='(builtins.getFlake "git+file://'$(pwd)'?rev=${{ github.sha }}")'
+          nix-hash --to-base32 "$(nix --extra-experimental-features 'nix-command flakes' eval --raw --expr "$FLAKE.narHash")" > out/narHash
+          cp bincache-key.pub out/narPublicKey
+
+          echo ARCH="$(uname -m)" >> $GITHUB_ENV
+
+      - uses: actions/upload-artifact@v7
+        name: Upload artifact
+        with:
+          name: nixos-${{ env.ARCH }}
+          path: out
+
+  website:
+    name: Website for hosting the repositories
+    needs: [flatpak, nixos]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v8
+        name: Download artifacts
+
+      - name: Prepare website structure
+        run: |
+          set -exuo pipefail
+
+          mkdir website
+          for i in nixos-x86_64 nixos-aarch64 flatpak-x86_64; do
+            cp -r $i/. website/
+          done
+
+          cat > website/index.html << EOF
+          <html>
+          <head>
+          <title>Yukigram builds</title>
+          <meta charset="utf-8"/>
+          </head>
+          <body>
+          <h1>Yukigram builds for NixOS</h1>
+          <p>Specify <code>git+https://github.com/${{ github.event.repository.full_name }}</code> as the input URL in your flake.</p>
+          <p>Alternatively, you can import the Yukigram package on a non-flake system as follows:</p>
+          <pre>import (fetchFromGitHub {
+            owner = "yukigram";
+            repo = "yukigram";
+            rev = "${{ github.sha }}";
+            sha256 = "$(cat website/narHash)";
+          }) {}</pre>
+          <h2>Binary cache</h2>
+          <p>To use the binary cache, specify <code>https://yukigram.github.io/yukigram</code> as an extra substituter, and <code>$(cat website/narPublicKey)</code> as an extra trusted key. Note that the binary cache is only provided for the Nixpkgs version pinned in the flake.</p>
+          <h1>Yukigram flatpak repository</h1>
+          <pre>flatpak remote-add --user --if-not-exists yukigram https://yukigram.github.io/yukigram/index.flatpakrepo
+          flatpak install io.github.yukigram</pre>
+          </body>
+          </html>
+          EOF
+          rm -f website/narHash website/narPublicKey
+
+      - uses: actions/upload-pages-artifact@v4
+        name: Upload artifact
+        with:
+          path: website
+
+      - name: Deploy GitHub Pages site
+        if: github.ref == 'refs/heads/main'
+        uses: actions/deploy-pages@v5

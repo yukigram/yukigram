@@ -109,7 +109,10 @@ instead of plain binaries.
 
 #### with binary caches
 
-Support planned
+```shell
+flatpak remote-add --user --if-not-exists yukigram https://yukigram.github.io/yukigram/index.flatpakrepo
+flatpak install io.github.yukigram
+```
 
 #### manual build
 
@@ -122,7 +125,9 @@ flatpak-builder --ccache --force-clean build org.telegram.desktop.yml
 
 ### with nix
 
-Binary cache for pinned nixpkgs planned
+See [this page][nix-bincache] for details on how to set up binary caches.
+
+[nix-bincache]: https://yukigram.github.io/yukigram
 
 #### nixpak (locked nixpkgs)
 

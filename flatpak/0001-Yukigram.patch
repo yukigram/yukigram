@@ -22,13 +22,15 @@ index 46cddb6..c731b41 100644
  finish-args:
    - --share=ipc
    - --share=network
-@@ -363,5 +363,8 @@ modules:
+@@ -363,5 +363,10 @@ modules:
        - type: shell
          commands:
            - sed -i '/-Werror/d' Telegram/ThirdParty/dispatch/cmake/modules/DispatchCompilerWarnings.cmake
 +      - type: patch
 +        path: ../../tdesktop
 +        use-git-am: true
++      - type: patch
++        path: ../../tdesktop/version.patch
      cleanup:
        - /share/icons/hicolor/512x512@2
 -- 
