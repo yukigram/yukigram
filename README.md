@@ -225,8 +225,13 @@ Flatpak manifest update steps:
 
 If both nix and flatpak packages are updated,
 commit message can be changed to simply `$TAG`,
-dropping "patches only",
-and a tag should be added.
+dropping "patches only".
+
+Commits with "patches only" mark are *not* tested
+and may contain bugs fixed in next commits.
+
+A tag should be added when the version is sufficiently tested
+and is generally ready to be used.
 
 ## Updating patchset
 
@@ -234,6 +239,7 @@ and a tag should be added.
     in `Telegram/SourceFiles/boxes/about_box.cpp`
 2. tag a new version with increased fourth component
     (v6.7.5 -> v6.7.5.1 -> v6.7.5.2)
+3. push `main` branch, and then push corresponding tag
 
 ## Previous versions
 
