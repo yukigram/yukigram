@@ -1,4 +1,8 @@
 {
+  nixConfig = {
+    extra-substituters = ["https://yukigram.github.io/yukigram"];
+    extra-trusted-public-keys = ["yukigram-nixos-binary-cache:JY9MpP2ESUmPx3cfIpcSRpBK9HQ1/mzHemsvjv1aiYU="];
+  };
   outputs = {...}: let
     makeOverridable = func: defargs:
       (func defargs)
