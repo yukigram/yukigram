@@ -1,4 +1,4 @@
-From 089816947381c60d77041665f415c97aedf937fb Mon Sep 17 00:00:00 2001
+From bca78a1293bb70f3485b49cbb5ff11c49d41b2dc Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:22:31 +0300
 Subject: [PATCH 12/27] Support wide messages

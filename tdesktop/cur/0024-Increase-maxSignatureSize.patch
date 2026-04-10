@@ -1,4 +1,4 @@
-From 27e3c18b33fe687b289641d7c8cea9b1699559dc Mon Sep 17 00:00:00 2001
+From d809ad81227e5a68702147360d3336808024b413 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Sat, 4 Apr 2026 18:50:05 +0300
 Subject: [PATCH 24/27] Increase maxSignatureSize

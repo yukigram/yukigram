@@ -1,4 +1,4 @@
-From 7e18c5563018176b9f46827434f5a55db33b9c9c Mon Sep 17 00:00:00 2001
+From e4830acfd398c8147a3a5bec14907d8feb67433c Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 02:58:42 +0300
 Subject: [PATCH 01/27] Yukigram branding
@@ -7,7 +7,7 @@ Subject: [PATCH 01/27] Yukigram branding
  Telegram/CMakeLists.txt                       | 37 ++++++-------------
  Telegram/Resources/art/yukigram.svg           |  6 +++
  Telegram/Resources/qrc/telegram/telegram.qrc  |  3 +-
- Telegram/SourceFiles/boxes/about_box.cpp      |  4 +-
+ Telegram/SourceFiles/boxes/about_box.cpp      |  5 ++-
  Telegram/SourceFiles/core/launcher.cpp        |  2 +-
  Telegram/SourceFiles/core/version.h           |  4 +-
  Telegram/SourceFiles/intro/intro_start.cpp    |  2 +-
@@ -20,7 +20,7 @@ Subject: [PATCH 01/27] Yukigram branding
  ...fo.xml => io.github.yukigram.metainfo.xml} | 14 +++----
  lib/xdg/io.github.yukigram.service            |  3 ++
  lib/xdg/org.telegram.desktop.service          |  3 --
- 16 files changed, 57 insertions(+), 63 deletions(-)
+ 16 files changed, 58 insertions(+), 63 deletions(-)
  create mode 100644 Telegram/Resources/art/yukigram.svg
  rename lib/xdg/{org.telegram.desktop.desktop => io.github.yukigram.desktop} (56%)
  rename lib/xdg/{org.telegram.desktop.metainfo.xml => io.github.yukigram.metainfo.xml} (95%)
@@ -121,7 +121,7 @@ index fd3f69e5ed..27ec7f6a1d 100644
    </qresource>
  </RCC>
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
-index 738ad20837..7f82948f63 100644
+index 738ad20837..202bcc8503 100644
 --- a/Telegram/SourceFiles/boxes/about_box.cpp
 +++ b/Telegram/SourceFiles/boxes/about_box.cpp
 @@ -49,7 +49,7 @@ rpl::producer<TextWithEntities> Text2() {
@@ -133,12 +133,13 @@ index 738ad20837..7f82948f63 100644
  		tr::marked);
  }
  
-@@ -63,7 +63,7 @@ rpl::producer<TextWithEntities> Text3() {
+@@ -63,7 +63,8 @@ rpl::producer<TextWithEntities> Text3() {
  } // namespace
  
  void AboutBox(not_null<Ui::GenericBox*> box) {
 -	box->setTitle(u"Telegram Desktop"_q);
-+	box->setTitle(u"Yukigram"_q);
++	const auto commit_info = "@commit";
++	box->setTitle(u"Yukigram "_q + (commit_info[0] != '@' ? commit_info : "v6.7.5"));
  
  	auto layout = box->verticalLayout();
  

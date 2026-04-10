@@ -1,4 +1,4 @@
-From f871b54268bd5129635c847b3f46a1d4af8836cd Mon Sep 17 00:00:00 2001
+From 172c2c9bc1b1f6f0bf79d7908cebc1add2dfb675 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Mon, 6 Apr 2026 14:52:44 +0300
 Subject: [PATCH 26/27] Forward/Copy/Steal shortcuts

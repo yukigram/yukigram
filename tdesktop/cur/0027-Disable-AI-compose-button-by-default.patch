@@ -1,4 +1,4 @@
-From b2142eb26c409facb959460a7f16978422b7d649 Mon Sep 17 00:00:00 2001
+From 4827ddd97b9dc8615ff6fb6973a2fe7e48b2b5d3 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Wed, 8 Apr 2026 14:10:43 +0300
 Subject: [PATCH 27/27] Disable AI compose button by default

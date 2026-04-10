@@ -1,4 +1,4 @@
-From faf7c3052eab59cd813a31fa7b016b76271db579 Mon Sep 17 00:00:00 2001
+From 8306da2b6ac7a9ad08467dc924fe143d9d7f495f Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:16:20 +0300
 Subject: [PATCH 09/27] Allow forcing single-column layout

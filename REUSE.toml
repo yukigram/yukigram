@@ -5,7 +5,7 @@ version = 1
 # TODO: replace `WITH LicenseRef` to `WITH AdditionRef` when supported and/or devendor exception when database is updated.
 
 [[annotations]]
-path = ["tdesktop/cur/*.patch", "tdesktop/version.patch"]
+path = "tdesktop/cur/*.patch"
 precedence = "aggregate"
 SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors"

@@ -227,6 +227,13 @@ commit message can be changed to simply `$TAG`,
 dropping "patches only",
 and a tag should be added.
 
+## Updating patchset
+
+1. change title of about box to reflect new version
+    in `Telegram/SourceFiles/boxes/about_box.cpp`
+2. tag a new version with increased fourth component
+    (v6.7.5 -> v6.7.5.1 -> v6.7.5.2)
+
 ## Previous versions
 
 Versions of Yukigram up to (and including) 6.4.1.1 are deprecated
