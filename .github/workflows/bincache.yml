@@ -1,7 +1,9 @@
 name: Binary cache
 on:
   push:
-  pull_request:
+    tags:
+      - v*
+  workflow_dispatch:
 permissions:
   contents: read
   pages: write
@@ -10,6 +12,7 @@ permissions:
 jobs:
 
   flatpak:
+    if: github.event_name != 'workflow_dispatch'
     name: Flatpak repository
     strategy:
       matrix:
@@ -123,6 +126,7 @@ jobs:
           path: out
 
   website:
+    if: github.event_name != 'workflow_dispatch'
     name: Website for hosting the repositories
     needs: [flatpak, nixos]
     runs-on: ubuntu-latest
@@ -172,5 +176,4 @@ jobs:
           path: website
 
       - name: Deploy GitHub Pages site
-        if: github.ref == 'refs/heads/main'
         uses: actions/deploy-pages@v5
