@@ -1,7 +1,7 @@
 From 407246ba781595856c5b4bd760e9fba17fb277fe Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 15:02:59 +0300
-Subject: [PATCH 17/27] Show messages from user
+Subject: [PATCH 17/28] Show messages from user
 
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>

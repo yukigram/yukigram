@@ -37,6 +37,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. Shortcuts for forward (Alt+F), copy (Alt+C) and copy media only (Alt+Shift+C)
     (only works if "select recepient" is used, not "open chat with settings")
 1. Disable AI compose button by default
+1. Disable D-Bus activation (unbreak `.desktop` launching under non-GNOME)
 
 Some patches originate from [64Gram].
 

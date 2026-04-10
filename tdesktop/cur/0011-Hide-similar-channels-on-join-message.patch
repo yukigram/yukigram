@@ -1,7 +1,7 @@
 From 4da643047d1a30c5575a44e6017a618f0018120a Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:22:05 +0300
-Subject: [PATCH 11/27] Hide similar channels on join message
+Subject: [PATCH 11/28] Hide similar channels on join message
 
 This patch is broken, unfortunately
 ---

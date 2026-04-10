@@ -1,7 +1,7 @@
 From 66e2129b47b006d95219c34f1bca839a3db90b6d Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Sat, 4 Apr 2026 14:42:25 +0300
-Subject: [PATCH 18/27] Show time with seconds
+Subject: [PATCH 18/28] Show time with seconds
 
 This commit also adds time to service messages
 
