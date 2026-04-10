@@ -1,4 +1,4 @@
-From dcb0195e6b9852aeb5910e6fc437bb60c0c477e4 Mon Sep 17 00:00:00 2001
+From 95fb8ee5af4fa1f5ed8cc2758fda699fe5b2cad6 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 14:50:08 +0300
 Subject: [PATCH 16/27] Disable AI summaries on messages

@@ -1,4 +1,4 @@
-From b0a4bec9d5be8c25b87f64d8a20eaf99002e68ad Mon Sep 17 00:00:00 2001
+From b926e2059bdbea7d3526e2bfb38f502a9a2fdf31 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:10:55 +0300
 Subject: [PATCH 07/27] Control calls with MPRIS

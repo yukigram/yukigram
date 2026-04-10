@@ -1,4 +1,4 @@
-From 6262168d9acb56cd0a8f37b05707828e49ae6810 Mon Sep 17 00:00:00 2001
+From d4e896d092ba216cc3d015907a68d01959228e7a Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:07:17 +0300
 Subject: [PATCH 05/27] Allow disabling animoji

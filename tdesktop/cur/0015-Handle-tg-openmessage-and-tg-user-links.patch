@@ -1,4 +1,4 @@
-From 125c3905db1810af14cb294ea8d2d4eb509f27f2 Mon Sep 17 00:00:00 2001
+From ddc9a136059eb1272be18fbda4580c35739a1d70 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 04:53:12 +0300
 Subject: [PATCH 15/27] Handle tg://openmessage and tg://user links
