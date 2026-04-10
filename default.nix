@@ -6,7 +6,7 @@
   nixpak ? import sources.nixpak,
   lib ? pkgs.lib,
   mkNixPak ? config: nixpak.lib.nixpak {inherit lib pkgs;} {inherit config;},
-  appId ? "io.github.yukirgam",
+  appId ? "io.github.yukigram",
   customNixpakConfig ? {},
 }:
 (mkNixPak {
