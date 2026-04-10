@@ -50,6 +50,7 @@ jobs:
         run: |
           commit=$(git describe --abbrev=12 HEAD)
           sed -i s/@commit/$commit/ tdesktop/cur/0001-Yukigram-branding.patch
+          sed -i s/@commit/$commit/ flatpak/0001-Yukigram.patch
 
           pushd flatpak/org.telegram.desktop
           git apply ../0001-Yukigram.patch
