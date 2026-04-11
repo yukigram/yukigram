@@ -49,11 +49,18 @@ Some patches originate from [64Gram].
 
 Contributions welcome!
 
+- Unify "show messages from user" from 64Gram and "Search messages" from tdesktop
+    (in userpic context menu in chat history)
+- Clickable links in user bio
+- Ban button for join requests
+- Hide "Join chat" bottom button when it is possible to send messages without joining
+    (e.g. in linked discussion groups)
 - Client-side user muting (as in 64Gram)
 - Disable Cocoon AI summary in Instant View
 - Collapsed chats in dialogs view (as in Kotatogram)
 - Ability to change font size
 - Ability to change monospace font
+    (or use one from xdg-desktop-portal-gtk)
     (probably requires submodule patching)
 - Compile-time option to use QtWebEngine for Instant View
     (requires submodule patching)
