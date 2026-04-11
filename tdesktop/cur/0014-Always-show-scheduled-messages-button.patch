@@ -1,7 +1,7 @@
-From 67d636fae6451a1189f017c2beffad563048b2b3 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 04:45:03 +0300
-Subject: [PATCH 14/29] Always show scheduled messages button
+Subject: [PATCH] Always show scheduled messages button
 
 ---
  Telegram/SourceFiles/history/history_widget.cpp     | 13 ++++++++++++-

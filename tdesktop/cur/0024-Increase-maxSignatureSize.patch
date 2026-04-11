@@ -1,7 +1,7 @@
-From 3431e750aa96124b5c10b717bc4d31cec075dfdc Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Sat, 4 Apr 2026 18:50:05 +0300
-Subject: [PATCH 24/29] Increase maxSignatureSize
+Subject: [PATCH] Increase maxSignatureSize
 
 This patch is adapted from 64Gram.
 Original author: Js0n <29531167+JasonKhew96@users.noreply.github.com>

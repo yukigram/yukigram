@@ -1,7 +1,7 @@
-From 97d8e030cd3362493a6c0285882189ca17fc759b Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:07:17 +0300
-Subject: [PATCH 05/29] Allow disabling animoji
+Subject: [PATCH] Allow disabling animoji
 
 ---
  .../history/view/history_view_element.cpp           | 13 ++++++++++++-

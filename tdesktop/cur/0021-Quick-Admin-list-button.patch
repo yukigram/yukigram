@@ -1,7 +1,7 @@
-From cdddfaf44f86152a34a7597ba595e7730f7662fe Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Sat, 4 Apr 2026 15:03:22 +0300
-Subject: [PATCH 21/29] Quick Admin list button
+Subject: [PATCH] Quick Admin list button
 
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>

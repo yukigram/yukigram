@@ -1,7 +1,7 @@
-From ee02899578310f6532ce38ed31df1aa9b78804ff Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:15:50 +0300
-Subject: [PATCH 08/29] Remove copy restrictions
+Subject: [PATCH] Remove copy restrictions
 
 ---
  .../SourceFiles/history/history_inner_widget.cpp  |  5 +++--

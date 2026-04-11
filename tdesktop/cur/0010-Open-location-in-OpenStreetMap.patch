@@ -1,7 +1,7 @@
-From 7520f7ac53acdc1b4dbde3e28dbabcc770aaae10 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:18:36 +0300
-Subject: [PATCH 10/29] Open location in OpenStreetMap
+Subject: [PATCH] Open location in OpenStreetMap
 
 ---
  .../SourceFiles/history/history_location_manager.cpp     | 9 +++------

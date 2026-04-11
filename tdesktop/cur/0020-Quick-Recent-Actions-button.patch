@@ -1,7 +1,7 @@
-From 4c125f3dd81c86c34a2749013ea3bbf3ba7894d1 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Sat, 4 Apr 2026 15:01:06 +0300
-Subject: [PATCH 20/29] Quick Recent Actions button
+Subject: [PATCH] Quick Recent Actions button
 
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>

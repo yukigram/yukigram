@@ -1,7 +1,7 @@
-From 63155f843869a8f2249852806ea021c469a86c2c Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 02:59:31 +0300
-Subject: [PATCH 02/29] tg://nya handler
+Subject: [PATCH] tg://nya handler
 
 ---
  Telegram/SourceFiles/core/local_url_handlers.cpp | 12 ++++++++++++

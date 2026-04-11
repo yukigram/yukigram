@@ -1,7 +1,7 @@
-From 7782fa6a9f28570765763d4a70cfb4baa650a922 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Sat, 11 Apr 2026 15:29:06 +0300
-Subject: [PATCH 29/29] Show member join date
+Subject: [PATCH] Show member join date
 
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>

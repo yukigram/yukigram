@@ -1,7 +1,7 @@
-From e4fc4cfe88f76405fb3f97564dc6aac5bc9f8573 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:06:08 +0300
-Subject: [PATCH 04/29] Immediate restart button
+Subject: [PATCH] Immediate restart button
 
 ---
  Telegram/SourceFiles/settings/sections/settings_main.cpp | 7 +++++++

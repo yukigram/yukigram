@@ -211,7 +211,8 @@ git clone https://github.com/telegramdesktop/tdesktop && cd tdesktop
 TAG=v6.7.3 # Do not skip patch and pre-release versions
 git checkout $TAG && git submodule update --recursive && git am -3 ../yukigram/tdesktop/
 # fix am conflicts
-git format-patch -o ../yukigram/tdesktop/cur $TAG && cd ../yukigram && git add . && git commit -m "$TAG: patches only"
+git format-patch --zero-commit -N -o ../yukigram/tdesktop/cur $TAG
+cd ../yukigram && git add . && git commit -m "$TAG: patches only"
 ```
 
 If any patches were dropped, reordered, or added,
