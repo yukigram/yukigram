@@ -1,7 +1,7 @@
-From 58c4ea9b85d29df5057b097f940bc7e997b4a1ad Mon Sep 17 00:00:00 2001
+From 3b4187494a3148f70adb3b1bb16f98e9be191bde Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Sat, 4 Apr 2026 18:42:15 +0300
-Subject: [PATCH 22/28] Unregister url schemes
+Subject: [PATCH 22/29] Unregister url schemes
 
 Useless. Portable Linux mode is not supported, and provided .desktop
 file handles them just fine.

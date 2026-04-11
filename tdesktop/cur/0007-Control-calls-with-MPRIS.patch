@@ -1,7 +1,7 @@
-From b926e2059bdbea7d3526e2bfb38f502a9a2fdf31 Mon Sep 17 00:00:00 2001
+From 7f948281961fbcfaaa09267ffc72f084db5f2866 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:10:55 +0300
-Subject: [PATCH 07/28] Control calls with MPRIS
+Subject: [PATCH 07/29] Control calls with MPRIS
 
 - play, pause, play-pause -> accept
 - next, prev, stop, quit -> hangup

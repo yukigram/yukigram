@@ -1,7 +1,7 @@
-From 909b9325c3bfd2b43357e6c0ce52d2d0a9acfdc4 Mon Sep 17 00:00:00 2001
+From baca5f2ffe5f0fa8187e4a6fbfdbda9e323a139d Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:16:20 +0300
-Subject: [PATCH 09/28] Allow forcing single-column layout
+Subject: [PATCH 09/29] Allow forcing single-column layout
 
 ---
  Telegram/SourceFiles/mainwidget.cpp                 |  2 +-

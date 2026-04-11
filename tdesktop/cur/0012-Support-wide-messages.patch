@@ -1,7 +1,7 @@
-From be276fb697a1ef457dc355d2fe42f0ffb6c0be69 Mon Sep 17 00:00:00 2001
+From b1ca7b38a65c2e6074ad687c80a462a8e16010b4 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:22:31 +0300
-Subject: [PATCH 12/28] Support wide messages
+Subject: [PATCH 12/29] Support wide messages
 
 ---
  Telegram/SourceFiles/data/data_media_types.cpp      |  3 ++-

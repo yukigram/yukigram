@@ -1,7 +1,7 @@
-From 80fb7f5d95dab70d22dd394f587292c0f9aac1d8 Mon Sep 17 00:00:00 2001
+From cebf1b3ae116e7021393be92323577fe2f93b0db Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Mon, 6 Apr 2026 02:29:13 +0300
-Subject: [PATCH 25/28] Increase max media sizes
+Subject: [PATCH 25/29] Increase max media sizes
 
 ---
  Telegram/SourceFiles/ui/chat/chat.style | 6 +++---

@@ -38,6 +38,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
     (only works if "select recepient" is used, not "open chat with settings")
 1. Disable AI compose button by default
 1. Disable D-Bus activation (unbreak `.desktop` launching under non-GNOME)
+1. Show channel/group member join date
 
 Some patches originate from [64Gram].
 
