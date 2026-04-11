@@ -402,6 +402,8 @@ index 8935a4fa83..0000000000
 -[D-BUS Service]
 -Name=org.telegram.desktop
 -Exec=@CMAKE_INSTALL_FULL_BINDIR@/Telegram
+
+base-commit: ca3eb7dca4fbbe0ec12df8145c13157f245535e1
 -- 
 2.53.0
 
