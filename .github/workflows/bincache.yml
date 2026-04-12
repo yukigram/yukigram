@@ -67,6 +67,7 @@ jobs:
           files: |
             flatpak/org.telegram.desktop/org.telegram.desktop.yml
           arch: ${{ env.ARCH }}
+          cache-key: ''
 
       - uses: actions/upload-artifact@v7
         name: Upload artifact
