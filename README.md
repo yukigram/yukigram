@@ -127,6 +127,9 @@ flatpak install io.github.yukigram
 
 ```shell
 git submodule update --init --recursive
+commit=$(git describe --abbrev=12 HEAD)
+sed -i s/@commit/$commit/ tdesktop/cur/0001-Yukigram-branding.patch  # if building from git
+sed -i s/@commit/$commit/ flatpak/0001-Yukigram.patch
 cd flatpak/org.telegram.desktop
 git apply ../0001-Yukigram.patch
 flatpak-builder --ccache --force-clean build org.telegram.desktop.yml
