@@ -25,7 +25,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. Option to always show "scheduled messages" button
 1. tg://openmessage and tg://user links support
 1. Disable AI long message summary button
-1. "Show messages from user" button in context menu
+1. "Search messages from" button in more context menus
 1. Show time with seconds
 1. Show sticker/emoji pack owner
 1. Quick recent actions button
@@ -49,8 +49,6 @@ Some patches originate from [64Gram].
 
 Contributions welcome!
 
-- Unify "show messages from user" from 64Gram and "Search messages" from tdesktop
-    (in userpic context menu in chat history)
 - Clickable links in user bio
 - Ban button for join requests
 - Hide "Join chat" bottom button when it is possible to send messages without joining
