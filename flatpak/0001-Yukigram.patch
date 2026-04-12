@@ -31,7 +31,7 @@ index 46cddb6..c731b41 100644
 +        use-git-am: true
 +      - type: shell
 +        commands:
-+          - echo cache this step only if patches are the same: @commit
++          - echo cache this step only if patches are the same @commit
      cleanup:
        - /share/icons/hicolor/512x512@2
 -- 
