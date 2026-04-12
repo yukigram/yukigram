@@ -31,7 +31,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. Quick recent actions button
 1. Quick admin list button
 1. Disable registering url schemes and remove litter in `~/.local/share/applications`
-1. Show message id
+1. Option to show message id
 1. Increase maxSignatureSize to accomodate time with seconds and message id
 1. Larger stickers and round video messages
 1. Shortcuts for forward (Alt+F), copy (Alt+C) and copy media only (Alt+Shift+C)
