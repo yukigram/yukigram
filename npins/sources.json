@@ -10,9 +10,9 @@
       },
       "branch": "local",
       "submodules": false,
-      "revision": "0a0e41a66333e190259d43793b5d7981425d78ee",
-      "url": "https://codeberg.org/sylfn/nixpak/archive/0a0e41a66333e190259d43793b5d7981425d78ee.tar.gz",
-      "hash": "sha256-b4kysKqNLscmSn/LVbEF2irhFseMvITtXXKdvnwRy9s="
+      "revision": "279e466362550891de667d14be983f73c97343ea",
+      "url": "https://codeberg.org/sylfn/nixpak/archive/279e466362550891de667d14be983f73c97343ea.tar.gz",
+      "hash": "sha256-qDowU0QgUZBNRlflxzflrriqyvd2d6kNDShLcQ30Q2E="
     },
     "nixpkgs": {
       "type": "Channel",
