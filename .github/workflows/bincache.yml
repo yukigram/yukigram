@@ -52,11 +52,11 @@ jobs:
 
           commit=$(git describe --abbrev=12 HEAD)
           sed -i s/@commit/$commit/ tdesktop/cur/0001-Yukigram-branding.patch
-          sed -i s/@commit/$commit/ flatpak/0001-Yukigram.patch
+          sed -i s/@commit/$commit/ flatpak/cur/0001-Yukigram.patch
 
-          pushd flatpak/org.telegram.desktop
-          git apply ../0001-Yukigram.patch
-          popd
+          # `git am` requires committer name/email
+          # -C flag changes working directory and requires absolute paths, which are harder to glob
+          cat flatpak/cur/*.patch | git -C flatpak/org.telegram.desktop apply
 
           echo ARCH="$(uname -m)" >> $GITHUB_ENV
 
