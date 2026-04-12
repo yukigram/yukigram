@@ -1,14 +1,14 @@
-From 615362fe3fab215d763f6808aaa9e0e1171e85b6 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 19:19:37 +0300
 Subject: [PATCH] Yukigram
 
 ---
- org.telegram.desktop.yml | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ org.telegram.desktop.yml | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/org.telegram.desktop.yml b/org.telegram.desktop.yml
-index 46cddb6..c731b41 100644
+index de25555..44e718a 100644
 --- a/org.telegram.desktop.yml
 +++ b/org.telegram.desktop.yml
 @@ -1,8 +1,8 @@
@@ -34,6 +34,8 @@ index 46cddb6..c731b41 100644
 +          - echo cache this step only if patches are the same @commit
      cleanup:
        - /share/icons/hicolor/512x512@2
+
+base-commit: 6ad3cb1f7629a6650c6438848546aef0a4dd6e90
 -- 
 2.53.0
 

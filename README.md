@@ -64,7 +64,7 @@ Contributions welcome!
     (probably requires submodule patching)
 - Compile-time option to use QtWebEngine for Instant View
     (requires submodule patching)
-- KDE Platform in flatpak manifest instead of building patched Qt
+- Instant view in flatpak
     (requires QtWebEngine or reincarnating [org.telegram.desktop.webview])
 
 [org.telegram.desktop.webview]: https://github.com/flathub/org.telegram.desktop.webview
@@ -115,6 +115,11 @@ or by creating a custom [Nixpak])
 instead of plain binaries.
 
 ### with flatpak
+
+Flatpak builds use KDE platform,
+which does not have neither WebKitGTK nor patched Qt.
+To use upstream-like build with Qt patches,
+drop a patch from `flatpak/cur/`.
 
 #### with binary caches
 

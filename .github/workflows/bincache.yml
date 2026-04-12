@@ -20,7 +20,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     container:
-      image: ghcr.io/andyholmes/flatter/gnome:49
+      image: ghcr.io/andyholmes/flatter/kde:6.10
       options: --privileged
       volumes:
         - /opt/hostedtoolcache:/hostedtoolcache

@@ -1,0 +1,57 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Sun, 12 Apr 2026 18:17:40 +0300
+Subject: [PATCH] Use KDE platform
+
+---
+ org.telegram.desktop.yml | 29 +++--------------------------
+ 1 file changed, 3 insertions(+), 26 deletions(-)
+
+diff --git a/org.telegram.desktop.yml b/org.telegram.desktop.yml
+index 44e718a..901f6b3 100644
+--- a/org.telegram.desktop.yml
++++ b/org.telegram.desktop.yml
+@@ -1,7 +1,7 @@
+ id: io.github.yukigram
+-runtime: org.gnome.Platform
+-runtime-version: '49'
+-sdk: org.gnome.Sdk
++runtime: org.kde.Platform
++runtime-version: '6.10'
++sdk: org.kde.Sdk
+ command: yukigram
+ finish-args:
+   - --share=ipc
+@@ -268,29 +268,6 @@ modules:
+     cleanup:
+       - '*'
+ 
+-  - name: qt
+-    buildsystem: cmake-ninja
+-    builddir: true
+-    config-opts:
+-      - -DBUILD_SHARED_LIBS=OFF
+-      - -DBUILD_WITH_PCH=OFF
+-      - -DQT_BUILD_SUBMODULES=qtbase;qtdeclarative;qtimageformats;qtshadertools;qtsvg;qtwayland
+-      - -DQT_QPA_PLATFORMS=wayland;xcb
+-      - -DFEATURE_glibc_fortify_source=OFF
+-      - -DINPUT_openssl=linked
+-    sources:
+-      - type: archive
+-        url: https://download.qt.io/archive/qt/6.11/6.11.0/single/qt-everywhere-src-6.11.0.tar.xz
+-        sha256: acf3b3db04c9e5d0820e8324b097320388954c297cee83d2bd698789234f68a4
+-        x-checker-data:
+-          type: anitya
+-          project-id: 7927
+-          url-template: https://download.qt.io/archive/qt/$major.$minor/$version/single/qt-everywhere-src-$version.tar.xz
+-      - qtbase.json
+-      - qtwayland.json
+-    cleanup:
+-      - '*'
+-
+   - name: tg_owt
+     buildsystem: cmake-ninja
+     builddir: true
+-- 
+2.53.0
+
