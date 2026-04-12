@@ -12,7 +12,6 @@ permissions:
 jobs:
 
   flatpak:
-    if: github.event_name != 'workflow_dispatch'
     name: Flatpak repository
     strategy:
       matrix:
