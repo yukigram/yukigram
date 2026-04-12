@@ -48,6 +48,8 @@ jobs:
 
       - name: Patches
         run: |
+          set -exuo pipefail
+
           commit=$(git describe --abbrev=12 HEAD)
           sed -i s/@commit/$commit/ tdesktop/cur/0001-Yukigram-branding.patch
           sed -i s/@commit/$commit/ flatpak/0001-Yukigram.patch
