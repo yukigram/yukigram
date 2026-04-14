@@ -4,6 +4,11 @@ on:
     tags:
       - v*
   workflow_dispatch:
+    inputs:
+      short_run:
+        description: 'Do a short run instead of normal one (10 minutes)'
+        required: true
+        type: boolean
 permissions:
   contents: read
   pages: write
@@ -12,6 +17,7 @@ permissions:
 jobs:
 
   flatpak:
+    timeout-minutes: ${{ github.event.inputs.short_run && 10 || 360 }}
     name: Flatpak repository
     strategy:
       matrix:
@@ -75,6 +81,7 @@ jobs:
           path: ${{ steps.flatpak.outputs.repository }}
 
   nixos:
+    timeout-minutes: ${{ github.event.inputs.short_run && 10 || 360 }}
     name: NixOS binary cache build
     strategy:
       matrix:
