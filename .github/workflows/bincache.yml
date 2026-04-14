@@ -173,7 +173,7 @@ jobs:
           EOF
           rm -f website/narHash website/narPublicKey
 
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v5
         name: Upload artifact
         with:
           path: website
