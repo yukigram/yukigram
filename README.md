@@ -53,6 +53,9 @@ Some patches originate from [64Gram] and [Kotatogram].
 
 Contributions welcome!
 
+- Separate settings group instead of Experimental settings
+- Yukigram settings search support
+- Old-style spoilers (solid color, as in Telegram X)
 - Ban button for join requests
 - Hide "Join chat" bottom button when it is possible to send messages without joining
     (e.g. in linked discussion groups)
