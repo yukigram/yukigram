@@ -75,6 +75,7 @@ Contributions welcome!
 
 ## Known bugs
 
+- "Has unofficial client" icon won't show unless the user profile has already been opened before
 - "Similar channels" disabling patch is broken
 - "UTC+00:00:01" instead of readable timezone name ([nixpak#201])
 - "Telegram is working in Screen Reader mode" even without screen reader ([tdesktop#30511])
