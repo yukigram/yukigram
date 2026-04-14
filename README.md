@@ -40,6 +40,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. Disable D-Bus activation (unbreak `.desktop` launching under non-GNOME)
 1. Show channel/group member join date
 1. Unshare phone number by default when adding contact
+1. Clickable links in user bio
 
 Some patches originate from [64Gram].
 
@@ -50,7 +51,6 @@ Some patches originate from [64Gram].
 
 Contributions welcome!
 
-- Clickable links in user bio
 - Ban button for join requests
 - Hide "Join chat" bottom button when it is possible to send messages without joining
     (e.g. in linked discussion groups)
