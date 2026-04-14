@@ -1,17 +1,17 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
-Date: Tue, 14 Apr 2026 19:29:20 +0300
+Date: Wed, 15 Apr 2026 00:05:31 +0300
 Subject: [PATCH] Show user type icon in username in chat
 
 This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
 ---
- .../history/view/history_view_message.cpp     | 49 ++++++++++++++++++-
- Telegram/SourceFiles/ui/chat/chat.style       | 13 +++++
- 2 files changed, 61 insertions(+), 1 deletion(-)
+ .../history/view/history_view_message.cpp     | 47 ++++++++++++++++++-
+ Telegram/SourceFiles/ui/chat/chat.style       | 11 +++++
+ 2 files changed, 57 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 399aad1de8..5e2dd1895d 100644
+index 399aad1de8..303056ee2a 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -72,6 +72,21 @@ const auto kPsaTooltipPrefix = "cloud_lng_tooltip_psa_";
@@ -46,7 +46,7 @@ index 399aad1de8..5e2dd1895d 100644
  				accumulate_max(maxWidth, namew);
  			} else if (via && !displayForwardedFrom()) {
  				accumulate_max(maxWidth, st::msgPadding.left() + via->maxWidth + st::msgPadding.right());
-@@ -1727,6 +1745,34 @@ void Message::paintFromName(
+@@ -1727,6 +1745,32 @@ void Message::paintFromName(
  		availableWidth -= st::msgPadding.right() + badgeWidth;
  	}
  
@@ -64,8 +64,6 @@ index 399aad1de8..5e2dd1895d 100644
 +					return st::msgNameDeletedIcon;
 +				} else if (user->isBot() && !user->isSupport() && !user->isRepliesChat()) {
 +					return st::msgNameBotIcon;
-+				} else if (user->unofficialSecurityRisk()) {
-+					return st::msgNameUnofficialIcon;
 +				}
 +			}
 +		}
@@ -81,7 +79,7 @@ index 399aad1de8..5e2dd1895d 100644
  	const auto stm = context.messageStyle();
  	const auto from = item->displayFrom();
  	const auto info = from ? nullptr : item->displayHiddenSenderInfo();
-@@ -3186,6 +3232,7 @@ bool Message::getStateFromName(
+@@ -3186,6 +3230,7 @@ bool Message::getStateFromName(
  			availableWidth -= st::msgPadding.right() + badgeWidth;
  		}
  		const auto item = data();
@@ -89,7 +87,7 @@ index 399aad1de8..5e2dd1895d 100644
  		const auto from = item->displayFrom();
  		const auto nameText = [&]() -> const Ui::Text::String * {
  			if (from) {
-@@ -3218,7 +3265,7 @@ bool Message::getStateFromName(
+@@ -3218,7 +3263,7 @@ bool Message::getStateFromName(
  		}
  		if (point.x() >= availableLeft
  			&& point.x() < availableLeft + availableWidth
@@ -99,10 +97,10 @@ index 399aad1de8..5e2dd1895d 100644
  			recordLinkRipplePoint(point, trect.topLeft());
  			_fromLinkRipplePointSet = 1;
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index b1270a0f0b..f1ce650231 100644
+index b1270a0f0b..5112bf5cf6 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
-@@ -745,6 +745,19 @@ historyCommentsOpenInSelected: icon {{ "history_comments_open", msgFileThumbLink
+@@ -745,6 +745,17 @@ historyCommentsOpenInSelected: icon {{ "history_comments_open", msgFileThumbLink
  historyCommentsOpenOut: icon {{ "history_comments_open", msgFileThumbLinkOutFg }};
  historyCommentsOpenOutSelected: icon {{ "history_comments_open", msgFileThumbLinkOutFgSelected }};
  
@@ -116,8 +114,6 @@ index b1270a0f0b..f1ce650231 100644
 +msgNameDeletedIconSelected: icon {{ "dialogs/dialogs_sending", attentionButtonFgOver, point(4px, 4px) }};
 +msgNameForumIcon: icon {{ "dialogs/dialogs_forum", historyPeer4NameFg, point(1px, 4px) }};
 +msgNameForumIconSelected: icon {{ "dialogs/dialogs_forum", historyPeer4NameFgSelected, point(1px, 4px) }};
-+msgNameUnofficialIcon: icon {{ "dialogs/mini_tag_lock", attentionButtonFg, point(1px, 1px) }};
-+msgNameUnofficialIconSelected: icon {{ "dialogs/mini_tag_lock", attentionButtonFgOver, point(1px, 1px) }};
 +
  historyGroupCallUserpics: GroupCallUserpics {
  	size: 32px;

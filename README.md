@@ -41,7 +41,8 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. Show channel/group member join date
 1. Unshare phone number by default when adding contact
 1. Clickable links in user bio
-1. Bot/chat/channel/forum/deleted/"has unofficial client" icon near username in chat list
+1. Bot/chat/channel/forum/deleted icon near username in chat list
+1. "Has unofficial client" icon near username in chat list
 
 Some patches originate from [64Gram] and [Kotatogram].
 
