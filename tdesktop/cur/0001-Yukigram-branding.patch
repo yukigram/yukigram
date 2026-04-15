@@ -28,10 +28,10 @@ Subject: [PATCH] Yukigram branding
  delete mode 100644 lib/xdg/org.telegram.desktop.service
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index a737da8da0..cc0fb6f630 100644
+index a1fae40a00..41f2f399a2 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -2080,7 +2080,7 @@ else()
+@@ -2083,7 +2083,7 @@ else()
          set(bundle_identifier "com.tdesktop.Telegram")
      endif()
      set(bundle_entitlements "Telegram.entitlements")
@@ -40,7 +40,7 @@ index a737da8da0..cc0fb6f630 100644
  endif()
  
  if (CMAKE_GENERATOR STREQUAL Xcode)
-@@ -2126,7 +2126,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+@@ -2129,7 +2129,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
  if (APPLE
      OR is_multi_config
      OR NOT CMAKE_EXECUTABLE_SUFFIX STREQUAL ""
@@ -49,7 +49,7 @@ index a737da8da0..cc0fb6f630 100644
      set(output_folder ${CMAKE_BINARY_DIR})
  else()
      set(output_folder ${CMAKE_BINARY_DIR}/bin)
-@@ -2300,28 +2300,15 @@ endif()
+@@ -2303,28 +2303,15 @@ endif()
  
  if (LINUX AND DESKTOP_APP_USE_PACKAGED)
      include(GNUInstallDirs)
@@ -121,7 +121,7 @@ index fd3f69e5ed..27ec7f6a1d 100644
    </qresource>
  </RCC>
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
-index 738ad20837..e11a864ff9 100644
+index 738ad20837..32ded1a9eb 100644
 --- a/Telegram/SourceFiles/boxes/about_box.cpp
 +++ b/Telegram/SourceFiles/boxes/about_box.cpp
 @@ -49,7 +49,7 @@ rpl::producer<TextWithEntities> Text2() {
@@ -139,12 +139,12 @@ index 738ad20837..e11a864ff9 100644
  void AboutBox(not_null<Ui::GenericBox*> box) {
 -	box->setTitle(u"Telegram Desktop"_q);
 +	const auto commit_info = "@commit";
-+	box->setTitle(u"Yukigram "_q + (commit_info[0] != '@' ? commit_info : "v6.7.5.5"));
++	box->setTitle(u"Yukigram "_q + (commit_info[0] != '@' ? commit_info : "v6.7.6"));
  
  	auto layout = box->verticalLayout();
  
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
-index d56d1d50b6..42d1ee80e0 100644
+index f0e5120aa7..19372beb15 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
 +++ b/Telegram/SourceFiles/core/launcher.cpp
 @@ -335,7 +335,7 @@ void Launcher::init() {
@@ -157,7 +157,7 @@ index d56d1d50b6..42d1ee80e0 100644
  #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
  	// fallback session management is useless for tdesktop since it doesn't have
 diff --git a/Telegram/SourceFiles/core/version.h b/Telegram/SourceFiles/core/version.h
-index 944baf38af..1fbf0d955e 100644
+index 6606e8738a..626fd2f4c7 100644
 --- a/Telegram/SourceFiles/core/version.h
 +++ b/Telegram/SourceFiles/core/version.h
 @@ -20,8 +20,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -168,8 +168,8 @@ index 944baf38af..1fbf0d955e 100644
 -constexpr auto AppFile = "Telegram"_cs;
 +constexpr auto AppName = "Yukigram"_cs;
 +constexpr auto AppFile = "yukigram"_cs;
- constexpr auto AppVersion = 6007005;
- constexpr auto AppVersionStr = "6.7.5";
+ constexpr auto AppVersion = 6007006;
+ constexpr auto AppVersionStr = "6.7.6";
  constexpr auto AppBetaVersion = false;
 diff --git a/Telegram/SourceFiles/intro/intro_start.cpp b/Telegram/SourceFiles/intro/intro_start.cpp
 index d1b835a09a..a871886d76 100644
@@ -403,7 +403,7 @@ index 8935a4fa83..0000000000
 -Name=org.telegram.desktop
 -Exec=@CMAKE_INSTALL_FULL_BINDIR@/Telegram
 
-base-commit: ca3eb7dca4fbbe0ec12df8145c13157f245535e1
+base-commit: 668a91bd15a99351704056df6abcfca002fa8e54
 -- 
 2.53.0
 

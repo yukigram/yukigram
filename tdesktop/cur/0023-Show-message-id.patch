@@ -84,10 +84,10 @@ index ef3d261c86..7c9013e598 100644
  		int64 tonStake = 0;
  		int stars = 0;
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 9586c5f1f0..c8a67c0515 100644
+index 37b4db077c..cbdc94b8ea 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
-@@ -709,6 +709,9 @@ QString DateTooltipText(not_null<Element*> view) {
+@@ -710,6 +710,9 @@ QString DateTooltipText(not_null<Element*> view) {
  	if (const auto stars = item->out() ? item->starsPaid() : 0) {
  		dateText += '\n' + tr::lng_you_paid_stars(tr::now, lt_count, stars);
  	}

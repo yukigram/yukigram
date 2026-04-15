@@ -11,12 +11,12 @@ Original author: RadRussianRus <radrussianrus@gmail.com>
  2 files changed, 57 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 399aad1de8..303056ee2a 100644
+index 17e4ed3bf0..df1f3fc1bf 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
-@@ -72,6 +72,21 @@ const auto kPsaTooltipPrefix = "cloud_lng_tooltip_psa_";
- constexpr auto kFullLineAppearDuration = crl::time(300);
- constexpr auto kLineHeightAppearDuration = crl::time(100);
+@@ -133,6 +133,21 @@ void ApplyRevealGradient(
+ 	}
+ }
  
 +bool HasChatTypeIcon(HistoryItem *item) {
 +	if (!item->isPost() && item->displayFrom()) {
@@ -36,7 +36,7 @@ index 399aad1de8..303056ee2a 100644
  struct SecondRightAction {
  	std::unique_ptr<Ui::RippleAnimation> ripple;
  	ClickHandlerPtr link;
-@@ -826,6 +841,9 @@ QSize Message::performCountOptimalSize() {
+@@ -907,6 +922,9 @@ QSize Message::performCountOptimalSize() {
  				if (Has<RightBadge>()) {
  					namew += st::msgPadding.right() + rightBadgeWidth();
  				}
@@ -44,9 +44,9 @@ index 399aad1de8..303056ee2a 100644
 +					namew += st::dialogsChatTypeSkip;
 +				}
  				accumulate_max(maxWidth, namew);
+ 				accumulate_max(nonTextMax, namew);
  			} else if (via && !displayForwardedFrom()) {
- 				accumulate_max(maxWidth, st::msgPadding.left() + via->maxWidth + st::msgPadding.right());
-@@ -1727,6 +1745,32 @@ void Message::paintFromName(
+@@ -1827,6 +1845,32 @@ void Message::paintFromName(
  		availableWidth -= st::msgPadding.right() + badgeWidth;
  	}
  
@@ -79,7 +79,7 @@ index 399aad1de8..303056ee2a 100644
  	const auto stm = context.messageStyle();
  	const auto from = item->displayFrom();
  	const auto info = from ? nullptr : item->displayHiddenSenderInfo();
-@@ -3186,6 +3230,7 @@ bool Message::getStateFromName(
+@@ -3286,6 +3330,7 @@ bool Message::getStateFromName(
  			availableWidth -= st::msgPadding.right() + badgeWidth;
  		}
  		const auto item = data();
@@ -87,7 +87,7 @@ index 399aad1de8..303056ee2a 100644
  		const auto from = item->displayFrom();
  		const auto nameText = [&]() -> const Ui::Text::String * {
  			if (from) {
-@@ -3218,7 +3263,7 @@ bool Message::getStateFromName(
+@@ -3318,7 +3363,7 @@ bool Message::getStateFromName(
  		}
  		if (point.x() >= availableLeft
  			&& point.x() < availableLeft + availableWidth
@@ -97,10 +97,10 @@ index 399aad1de8..303056ee2a 100644
  			recordLinkRipplePoint(point, trect.topLeft());
  			_fromLinkRipplePointSet = 1;
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index b1270a0f0b..5112bf5cf6 100644
+index b93977c3d1..2880fe4b1a 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
-@@ -745,6 +745,17 @@ historyCommentsOpenInSelected: icon {{ "history_comments_open", msgFileThumbLink
+@@ -758,6 +758,17 @@ historyCommentsOpenInSelected: icon {{ "history_comments_open", msgFileThumbLink
  historyCommentsOpenOut: icon {{ "history_comments_open", msgFileThumbLinkOutFg }};
  historyCommentsOpenOutSelected: icon {{ "history_comments_open", msgFileThumbLinkOutFgSelected }};
  

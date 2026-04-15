@@ -33,7 +33,7 @@ index 0000000000..220814e44b
 +    " stroke="#fff" fill="#0000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
 +</svg>
 diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
-index 6545f70d32..8a58550976 100644
+index 6397d451cc..ed63280083 100644
 --- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 @@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -63,7 +63,7 @@ index 6545f70d32..8a58550976 100644
  	_infoToggle->setClickedCallback([=] { toggleInfoSection(); });
  	_back->setAcceptBoth();
  	_back->addClickHandler([=](Qt::MouseButton) {
-@@ -1184,6 +1190,10 @@ void TopBarWidget::updateControlsGeometry() {
+@@ -1189,6 +1195,10 @@ void TopBarWidget::updateControlsGeometry() {
  		_infoToggle->moveToRight(_rightTaken, otherButtonsTop);
  		_rightTaken += _infoToggle->width();
  	}
@@ -74,7 +74,7 @@ index 6545f70d32..8a58550976 100644
  	if (!_call->isHidden() || !_groupCall->isHidden()) {
  		_call->moveToRight(_rightTaken, otherButtonsTop);
  		_groupCall->moveToRight(_rightTaken, otherButtonsTop);
-@@ -1309,6 +1319,24 @@ void TopBarWidget::updateControlsVisibility() {
+@@ -1314,6 +1324,24 @@ void TopBarWidget::updateControlsVisibility() {
  		&& !isOneColumn
  		&& _controller->canShowThirdSection()
  		&& !_chooseForReportReason);

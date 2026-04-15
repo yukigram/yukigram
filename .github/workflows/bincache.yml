@@ -49,7 +49,7 @@ jobs:
 
       - name: Flatpak dependencies
         run: |
-          flatpak install --noninteractive org.freedesktop.Sdk.Extension.llvm21/x86_64/25.08
+          flatpak install --noninteractive org.freedesktop.Sdk.Extension.llvm22/x86_64/25.08
 
       - name: Patches
         run: |

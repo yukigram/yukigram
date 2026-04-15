@@ -8,10 +8,10 @@ Subject: [PATCH] Disable AI compose button by default
  1 file changed, 1 insertion(+)
 
 diff --git a/Telegram/SourceFiles/ui/controls/compose_ai_button_factory.cpp b/Telegram/SourceFiles/ui/controls/compose_ai_button_factory.cpp
-index 8601b9a2ef..724eba6909 100644
+index ed640d242b..4f7b0e7e0f 100644
 --- a/Telegram/SourceFiles/ui/controls/compose_ai_button_factory.cpp
 +++ b/Telegram/SourceFiles/ui/controls/compose_ai_button_factory.cpp
-@@ -26,6 +26,7 @@ base::options::toggle HideAiButtonOption({
+@@ -30,6 +30,7 @@ base::options::toggle HideAiButtonOption({
  	.id = kOptionHideAiButton,
  	.name = "Hide AI button",
  	.description = "Hide the AI Tools button in message compose fields.",

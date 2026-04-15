@@ -10,7 +10,7 @@ Subject: [PATCH] Allow disabling animoji
  3 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 6b884a5bd2..3f971ccf4f 100644
+index 1b595c77a8..5e6eaba01f 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -28,6 +28,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -21,7 +21,7 @@ index 6b884a5bd2..3f971ccf4f 100644
  #include "base/unixtime.h"
  #include "boxes/premium_preview_box.h"
  #include "core/application.h"
-@@ -468,8 +469,18 @@ int KeyboardStyle::minButtonWidth(
+@@ -469,8 +470,18 @@ int KeyboardStyle::minButtonWidth(
  	return result;
  }
  
@@ -40,7 +40,7 @@ index 6b884a5bd2..3f971ccf4f 100644
  std::unique_ptr<Ui::PathShiftGradient> MakePathShiftGradient(
  		not_null<const Ui::ChatStyle*> st,
  		Fn<void()> update) {
-@@ -1543,7 +1554,7 @@ void Element::refreshMedia(Element *replacing) {
+@@ -1544,7 +1555,7 @@ void Element::refreshMedia(Element *replacing) {
  		const auto emoji = isolatedEmoji();
  		const auto emojiStickers = &history()->session().emojiStickersPack();
  		const auto skipPremiumEffect = false;
@@ -50,7 +50,7 @@ index 6b884a5bd2..3f971ccf4f 100644
  				this,
  				sticker.document,
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.h b/Telegram/SourceFiles/history/view/history_view_element.h
-index f790f1ace5..10e6d349d9 100644
+index b95b8371b6..82e3e49025 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.h
 +++ b/Telegram/SourceFiles/history/view/history_view_element.h
 @@ -93,6 +93,8 @@ enum class ElementChatMode : char {

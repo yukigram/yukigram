@@ -8,13 +8,13 @@ Subject: [PATCH] Use KDE platform
  1 file changed, 3 insertions(+), 26 deletions(-)
 
 diff --git a/org.telegram.desktop.yml b/org.telegram.desktop.yml
-index 44e718a..901f6b3 100644
+index 181d6b5..23398f5 100644
 --- a/org.telegram.desktop.yml
 +++ b/org.telegram.desktop.yml
 @@ -1,7 +1,7 @@
  id: io.github.yukigram
 -runtime: org.gnome.Platform
--runtime-version: '49'
+-runtime-version: '50'
 -sdk: org.gnome.Sdk
 +runtime: org.kde.Platform
 +runtime-version: '6.10'
@@ -22,7 +22,7 @@ index 44e718a..901f6b3 100644
  command: yukigram
  finish-args:
    - --share=ipc
-@@ -268,29 +268,6 @@ modules:
+@@ -241,29 +241,6 @@ modules:
      cleanup:
        - '*'
  

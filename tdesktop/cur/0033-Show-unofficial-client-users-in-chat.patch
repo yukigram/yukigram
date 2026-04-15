@@ -9,10 +9,10 @@ Subject: [PATCH] Show unofficial client users in chat
  2 files changed, 5 insertions(+)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 303056ee2a..372b52cce4 100644
+index df1f3fc1bf..00cd58429b 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
-@@ -79,6 +79,7 @@ bool HasChatTypeIcon(HistoryItem *item) {
+@@ -140,6 +140,7 @@ bool HasChatTypeIcon(HistoryItem *item) {
  			return true;
  		} else if (const auto user = from->asUser()) {
  			if (user->isInaccessible()
@@ -20,7 +20,7 @@ index 303056ee2a..372b52cce4 100644
  				|| (user->isBot() && !user->isSupport() && !user->isRepliesChat())) {
  				return true;
  			}
-@@ -1759,6 +1760,8 @@ void Message::paintFromName(
+@@ -1859,6 +1860,8 @@ void Message::paintFromName(
  					return st::msgNameDeletedIcon;
  				} else if (user->isBot() && !user->isSupport() && !user->isRepliesChat()) {
  					return st::msgNameBotIcon;
@@ -30,10 +30,10 @@ index 303056ee2a..372b52cce4 100644
  			}
  		}
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index 5112bf5cf6..f1ce650231 100644
+index 2880fe4b1a..e3f46b0cde 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
-@@ -755,6 +755,8 @@ msgNameDeletedIcon: icon {{ "dialogs/dialogs_sending", attentionButtonFg, point(
+@@ -768,6 +768,8 @@ msgNameDeletedIcon: icon {{ "dialogs/dialogs_sending", attentionButtonFg, point(
  msgNameDeletedIconSelected: icon {{ "dialogs/dialogs_sending", attentionButtonFgOver, point(4px, 4px) }};
  msgNameForumIcon: icon {{ "dialogs/dialogs_forum", historyPeer4NameFg, point(1px, 4px) }};
  msgNameForumIconSelected: icon {{ "dialogs/dialogs_forum", historyPeer4NameFgSelected, point(1px, 4px) }};

@@ -8,21 +8,21 @@ Subject: [PATCH] Yukigram
  1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/org.telegram.desktop.yml b/org.telegram.desktop.yml
-index de25555..44e718a 100644
+index dec4e4d..181d6b5 100644
 --- a/org.telegram.desktop.yml
 +++ b/org.telegram.desktop.yml
 @@ -1,8 +1,8 @@
 -id: org.telegram.desktop
 +id: io.github.yukigram
  runtime: org.gnome.Platform
- runtime-version: '49'
+ runtime-version: '50'
  sdk: org.gnome.Sdk
 -command: Telegram
 +command: yukigram
  finish-args:
    - --share=ipc
    - --share=network
-@@ -363,5 +363,11 @@ modules:
+@@ -336,5 +336,11 @@ modules:
        - type: shell
          commands:
            - sed -i '/-Werror/d' Telegram/ThirdParty/dispatch/cmake/modules/DispatchCompilerWarnings.cmake
@@ -35,7 +35,7 @@ index de25555..44e718a 100644
      cleanup:
        - /share/icons/hicolor/512x512@2
 
-base-commit: 6ad3cb1f7629a6650c6438848546aef0a4dd6e90
+base-commit: bc966c9ab34aa6a4abecfd12bb52f2f8aa6370ca
 -- 
 2.53.0
 

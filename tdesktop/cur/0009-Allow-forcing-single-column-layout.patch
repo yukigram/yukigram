@@ -12,10 +12,10 @@ Subject: [PATCH] Allow forcing single-column layout
  5 files changed, 20 insertions(+), 2 deletions(-)
 
 diff --git a/Telegram/SourceFiles/mainwidget.cpp b/Telegram/SourceFiles/mainwidget.cpp
-index 38cd8a033d..3f2c1b741e 100644
+index beac8028dd..b8d42a2c8d 100644
 --- a/Telegram/SourceFiles/mainwidget.cpp
 +++ b/Telegram/SourceFiles/mainwidget.cpp
-@@ -2855,7 +2855,7 @@ void MainWidget::updateWindowAdaptiveLayout() {
+@@ -2866,7 +2866,7 @@ void MainWidget::updateWindowAdaptiveLayout() {
  
  	// Check if we are in a single-column layout in a wide enough window
  	// for the normal layout. If so, switch to the normal layout.
@@ -97,10 +97,10 @@ index 9a6421e312..aff3aedddd 100644
  public:
  	enum class WindowLayout {
 diff --git a/Telegram/SourceFiles/window/window_session_controller.cpp b/Telegram/SourceFiles/window/window_session_controller.cpp
-index d9c24641e9..613e77e437 100644
+index 9f1fa45258..4b8fbffe42 100644
 --- a/Telegram/SourceFiles/window/window_session_controller.cpp
 +++ b/Telegram/SourceFiles/window/window_session_controller.cpp
-@@ -2486,6 +2486,7 @@ auto SessionController::computeColumnLayout() const -> ColumnLayout {
+@@ -2492,6 +2492,7 @@ auto SessionController::computeColumnLayout() const -> ColumnLayout {
  	auto dialogsWidth = 0, chatWidth = 0, thirdWidth = 0;
  
  	auto useOneColumnLayout = [&] {

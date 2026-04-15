@@ -10,10 +10,10 @@ Original author: Js0n <29531167+JasonKhew96@users.noreply.github.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index 6b20b8ac41..13a2836189 100644
+index 56fe6cbc44..d4d242cd0d 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
-@@ -216,7 +216,7 @@ maxStickerSize: 224px;
+@@ -217,7 +217,7 @@ maxStickerSize: 224px;
  maxAnimatedEmojiSize: 112px;
  maxGifSize: 320px;
  maxVideoMessageSize: 240px;
