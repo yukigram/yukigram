@@ -19,7 +19,6 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. No copy restrictions (forward restrictions are still in place)
 1. Option to force single-column mobile-like layout
 1. Use [OpenStreetMap] instead of Google Maps when opening a location
-1. Hide "similar channels" popup on "you joined this channel" message
 1. Option to use wide messages
 1. Allow more than 3/6 accounts
 1. Option to always show "scheduled messages" button
@@ -54,6 +53,7 @@ Some patches originate from [64Gram] and [Kotatogram].
 
 Contributions welcome!
 
+- Don't open "similar channels" popup on join message automatically
 - Separate settings group instead of Experimental settings
 - Yukigram settings search support
 - Old-style spoilers (solid color, as in Telegram X)
@@ -77,7 +77,6 @@ Contributions welcome!
 ## Known bugs
 
 - "Has unofficial client" icon won't show unless the user profile has already been opened before
-- "Similar channels" disabling patch is broken
 - "UTC+00:00:01" instead of readable timezone name ([nixpak#201])
 - "Telegram is working in Screen Reader mode" even without screen reader ([tdesktop#30511])
 
