@@ -57,7 +57,6 @@ Contributions welcome!
 
 - Separate settings group instead of Experimental settings
 - Yukigram settings search support
-- Old-style spoilers (solid color, as in Telegram X)
 - Ban button for join requests
 - Hide "Join chat" bottom button when it is possible to send messages without joining
     (e.g. in linked discussion groups)
@@ -68,6 +67,9 @@ Contributions welcome!
 - Ability to change monospace font
     (or use one from xdg-desktop-portal-gtk)
     (probably requires submodule patching)
+- Old-style spoilers
+    (solid color, as in Telegram X)
+    (requires submodule patching)
 - Compile-time option to use QtWebEngine for Instant View
     (requires submodule patching)
 - Instant view in flatpak
