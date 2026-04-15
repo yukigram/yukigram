@@ -1,0 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Wed, 15 Apr 2026 22:33:48 +0300
+Subject: [PATCH] Hide similar channels on join message by default
+
+---
+ Telegram/SourceFiles/apiwrap.cpp | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/apiwrap.cpp b/Telegram/SourceFiles/apiwrap.cpp
+index 03c9e7ec49..8a4f09ecfb 100644
+--- a/Telegram/SourceFiles/apiwrap.cpp
++++ b/Telegram/SourceFiles/apiwrap.cpp
+@@ -1801,7 +1801,6 @@ void ApiWrap::joinChannel(not_null<ChannelData*> channel) {
+ 
+ 		using Flag = ChannelDataFlag;
+ 		chatParticipants().loadSimilarPeers(channel);
+-		channel->setFlags(channel->flags() | Flag::SimilarExpanded);
+ 	}
+ }
+ 
+-- 
+2.53.0
+

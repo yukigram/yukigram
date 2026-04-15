@@ -42,6 +42,8 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. Clickable links in user bio
 1. Bot/chat/channel/forum/deleted icon near username in chat list
 1. "Has unofficial client" icon near username in chat list
+1. Hide "similar channels" section on channel join message by default
+    (it can still be toggled by clicking on join message itself)
 
 Some patches originate from [64Gram] and [Kotatogram].
 
@@ -53,7 +55,6 @@ Some patches originate from [64Gram] and [Kotatogram].
 
 Contributions welcome!
 
-- Don't open "similar channels" popup on join message automatically
 - Separate settings group instead of Experimental settings
 - Yukigram settings search support
 - Old-style spoilers (solid color, as in Telegram X)
