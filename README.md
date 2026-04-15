@@ -44,11 +44,13 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. "Has unofficial client" icon near username in chat list
 1. Hide "similar channels" section on channel join message by default
     (it can still be toggled by clicking on join message itself)
+1. Show date of forwarded messages without hover
 
-Some patches originate from [64Gram] and [Kotatogram].
+Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 
 [OpenStreetMap]: https://openstreetmap.org
 [64Gram]: https://github.com/TDesktop-x64/tdesktop
+[Forkgram]: https://github.com/forkgram/tdesktop
 [Kotatogram]: https://github.com/kotatogram/kotatogram-desktop
 
 ## Missing features

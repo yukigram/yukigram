@@ -32,6 +32,13 @@ SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exc
 SPDX-FileCopyrightText = "Yukigram contributors, Kotatogram contributors <https://github.com/kotatogram/kotatogram-desktop>"
 
 [[annotations]]
+path = [
+    "tdesktop/cur/*-Show-forwarded-message-date.patch",
+]
+SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
+SPDX-FileCopyrightText = "Yukigram contributors, Forkgram contributors <https://github.com/forkgram/tdesktop>"
+
+[[annotations]]
 path = [".gitignore", ".gitmodules", "npins/sources.json", "README.md"]
 SPDX-License-Identifier = "CC0-1.0"
 SPDX-FileCopyrightText = "none"
