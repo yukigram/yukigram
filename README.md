@@ -45,6 +45,8 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. Hide "similar channels" section on channel join message by default
     (it can still be toggled by clicking on join message itself)
 1. Show date of forwarded messages without hover
+1. Hide "Join group" bottom button when it is possible to send messages without joining
+    (e.g. in linked discussion groups)
 
 Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 
@@ -57,11 +59,11 @@ Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 
 Contributions welcome!
 
+- Show "open chat" button in group information box
+    (where join/mute/report/leave buttons are and description is)
 - Separate settings group instead of Experimental settings
 - Yukigram settings search support
 - Ban button for join requests
-- Hide "Join chat" bottom button when it is possible to send messages without joining
-    (e.g. in linked discussion groups)
 - Client-side user muting (as in 64Gram)
 - Disable Cocoon AI summary in Instant View
 - Collapsed chats in dialogs view (as in Kotatogram)
