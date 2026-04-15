@@ -1,93 +1,79 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
-Date: Wed, 15 Apr 2026 00:05:31 +0300
+Date: Wed, 15 Apr 2026 22:19:06 +0300
 Subject: [PATCH] Show user type icon in username in chat
 
 This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
 ---
- .../history/view/history_view_message.cpp     | 47 ++++++++++++++++++-
- Telegram/SourceFiles/ui/chat/chat.style       | 11 +++++
- 2 files changed, 57 insertions(+), 1 deletion(-)
+ .../history/view/history_view_message.cpp     | 33 ++++++++++++++++++-
+ Telegram/SourceFiles/ui/chat/chat.style       | 11 +++++++
+ 2 files changed, 43 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 17e4ed3bf0..df1f3fc1bf 100644
+index 17e4ed3bf0..61cbf11a4f 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
-@@ -133,6 +133,21 @@ void ApplyRevealGradient(
+@@ -133,6 +133,26 @@ void ApplyRevealGradient(
  	}
  }
  
-+bool HasChatTypeIcon(HistoryItem *item) {
++std::optional<style::icon> ChatTypeIcon(HistoryItem *item) {
 +	if (!item->isPost() && item->displayFrom()) {
 +		const auto from = item->displayFrom();
-+		if (from->isChat() || from->isMegagroup() || from->isForum() || from->isChannel()) {
-+			return true;
++		if (from->isChat() || from->isMegagroup()) {
++			return st::msgNameChatIcon;
++		} else if (from->isChannel()) {
++			return st::msgNameChannelIcon;
++		} else if (from->isForum()) {
++			return st::msgNameForumIcon;
 +		} else if (const auto user = from->asUser()) {
-+			if (user->isInaccessible()
-+				|| (user->isBot() && !user->isSupport() && !user->isRepliesChat())) {
-+				return true;
++			if (user->isInaccessible()) {
++				return st::msgNameDeletedIcon;
++			} else if (user->isBot() && !user->isSupport() && !user->isRepliesChat()) {
++				return st::msgNameBotIcon;
 +			}
 +		}
 +	}
-+	return false;
-+}
++	return {};
++};
 +
  struct SecondRightAction {
  	std::unique_ptr<Ui::RippleAnimation> ripple;
  	ClickHandlerPtr link;
-@@ -907,6 +922,9 @@ QSize Message::performCountOptimalSize() {
+@@ -907,6 +927,9 @@ QSize Message::performCountOptimalSize() {
  				if (Has<RightBadge>()) {
  					namew += st::msgPadding.right() + rightBadgeWidth();
  				}
-+				if (HasChatTypeIcon(item)) {
-+					namew += st::dialogsChatTypeSkip;
++				if (const auto icon = ChatTypeIcon(item)) {
++					namew += icon->width() + st::dialogsChatTypeSkip;
 +				}
  				accumulate_max(maxWidth, namew);
  				accumulate_max(nonTextMax, namew);
  			} else if (via && !displayForwardedFrom()) {
-@@ -1827,6 +1845,32 @@ void Message::paintFromName(
+@@ -1827,6 +1850,12 @@ void Message::paintFromName(
  		availableWidth -= st::msgPadding.right() + badgeWidth;
  	}
  
-+	const auto chatTypeIcon = [&]() -> std::optional<style::icon> {
-+		if (!item->isPost() && item->displayFrom()) {
-+			const auto from = item->displayFrom();
-+			if (from->isChat() || from->isMegagroup()) {
-+				return st::msgNameChatIcon;
-+			} else if (from->isChannel()) {
-+				return st::msgNameChannelIcon;
-+			} else if (from->isForum()) {
-+				return st::msgNameForumIcon;
-+			} else if (const auto user = from->asUser()) {
-+				if (user->isInaccessible()) {
-+					return st::msgNameDeletedIcon;
-+				} else if (user->isBot() && !user->isSupport() && !user->isRepliesChat()) {
-+					return st::msgNameBotIcon;
-+				}
-+			}
-+		}
-+		return {};
-+	}();
-+
-+	if (chatTypeIcon) {
-+		chatTypeIcon->paint(p, QPoint(availableLeft, trect.top()), availableWidth);
-+		availableLeft += chatTypeIcon->width() + st::dialogsChatTypeSkip;
-+		availableWidth -= chatTypeIcon->width() + st::dialogsChatTypeSkip;
++	if (const auto icon = ChatTypeIcon(item)) {
++		icon->paint(p, QPoint(availableLeft, trect.top()), availableWidth);
++		availableLeft += icon->width() + st::dialogsChatTypeSkip;
++		availableWidth -= icon->width() + st::dialogsChatTypeSkip;
 +	}
 +
  	const auto stm = context.messageStyle();
  	const auto from = item->displayFrom();
  	const auto info = from ? nullptr : item->displayHiddenSenderInfo();
-@@ -3286,6 +3330,7 @@ bool Message::getStateFromName(
+@@ -3286,6 +3315,8 @@ bool Message::getStateFromName(
  			availableWidth -= st::msgPadding.right() + badgeWidth;
  		}
  		const auto item = data();
-+		const auto chatIconWidth = HasChatTypeIcon(item) ? st::dialogsChatTypeSkip : 0;
++		const auto chatIcon = ChatTypeIcon(item);
++		const auto chatIconWidth = chatIcon ? chatIcon->width() + st::dialogsChatTypeSkip : 0;
  		const auto from = item->displayFrom();
  		const auto nameText = [&]() -> const Ui::Text::String * {
  			if (from) {
-@@ -3318,7 +3363,7 @@ bool Message::getStateFromName(
+@@ -3318,7 +3349,7 @@ bool Message::getStateFromName(
  		}
  		if (point.x() >= availableLeft
  			&& point.x() < availableLeft + availableWidth
