@@ -23,7 +23,10 @@ import ./. {
           dontUnpack = true;
           dontStrip = true;
           dontFixup = true;
-          installPhase = "install -Dm0755 $src $out/bin/yukigram";
+          installPhase = ''
+            mkdir -p $out/bin
+            ln -s $src $out/bin/yukigram
+          '';
         })
       ];
       executableName = "yukigram";
