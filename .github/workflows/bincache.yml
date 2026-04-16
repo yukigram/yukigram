@@ -64,7 +64,7 @@ jobs:
 
       - name: Pull container
         run:
-          docker pull ghcr.io/telegramdesktop/tdesktop/centos_env:latest
+          docker pull ghcr.io/telegramdesktop/tdesktop/centos_env@sha256:892f22d6d6b7c9f62ea5b3c71223e488452fc5b0a22790c5f26f9a4579d3a330
 
       - name: Build
         run: |
