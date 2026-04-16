@@ -82,3 +82,13 @@ local/bin/yukigram
 ```
 
 Data is stored somewhere under `~/.var/app/io.github.yukigram.devel`.
+
+## Installing previous versions from artifacts
+
+### with flatpak
+
+Make a backup of your data!
+Downgrading versions is not supported.
+
+1. Download artifact named `flatpak-x86_64` and unpack
+2. `sudo flatpak install path/to/folder/containing/index.flatpakrepo/ io.github.yukigram`
