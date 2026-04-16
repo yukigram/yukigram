@@ -1,6 +1,9 @@
 import ./. {
   appId = "io.github.yukigram.devel";
-  customNixpakConfig = {pkgs, ...}: {
+  customNixpakConfig = let
+    path = toString ../yukigram-worktree/out/Debug;
+  in {pkgs, ...}: {
+    bubblewrap.bind.ro = [path];
     app.package = with pkgs; lib.mkForce (buildFHSEnv {
       name = "yukigram-dev-env";
       targetPkgs = p: with p; [
@@ -17,20 +20,9 @@ import ./. {
         libGL
         webkitgtk_4_1
         dbus
-        (stdenv.mkDerivation {
-          name = "yukigram-dev";
-          src = ../yukigram-worktree/out/Debug/yukigram;
-          dontUnpack = true;
-          dontStrip = true;
-          dontFixup = true;
-          installPhase = ''
-            mkdir -p $out/bin
-            ln -s $src $out/bin/yukigram
-          '';
-        })
       ];
       executableName = "yukigram";
-      runScript = "yukigram";
+      runScript = path + "/yukigram";
     });
   };
 }
