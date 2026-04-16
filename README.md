@@ -203,56 +203,6 @@ with your selection of patches.
 [Nixpak]: https://github.com/nixpak/nixpak
 [Nix]: https://lix.systems
 
-## Updating to newer versions
-
-Patchset supports only one version out of the box.
-This version is indicated in commit message and in tag name.
-For updating patchset to newer versions, use
-
-```shell
-git clone https://github.com/telegramdesktop/tdesktop && cd tdesktop
-TAG=v6.7.3 # Do not skip patch and pre-release versions
-git checkout $TAG && git submodule update --recursive && git am -3 ../yukigram/tdesktop/
-# fix am conflicts
-git format-patch --zero-commit -N -o ../yukigram/tdesktop/cur --base $TAG $TAG
-cd ../yukigram && git add . && git commit -m "$TAG: patches only"
-```
-
-If any patches were dropped, reordered, or added,
-please change the list in the README accordingly.
-
-Nix package update steps:
-1. change version in `package.nix` and set hash to `lib.fakeHash`
-2. fail a build once to get the correct hash
-3. build again with `nix-build --argstr appId io.github.yukigram.devel`
-4. test `./result/bin/yukigram`
-
-Flatpak manifest update steps:
-1. update submodule to newer version.
-    If there is no newer version merged,
-    create a patch updating tdesktop manually.
-2. roundtrip the patch with `git am -3` and `git format-patch`
-    to make sure it applies cleanly
-3. (optionally) build with `flatpak-builder --ccache`
-
-If both nix and flatpak packages are updated,
-commit message can be changed to simply `$TAG`,
-dropping "patches only".
-
-Commits with "patches only" mark are *not* tested
-and may contain bugs fixed in next commits.
-
-A tag should be added when the version is sufficiently tested
-and is generally ready to be used.
-
-## Updating patchset
-
-1. change title of about box to reflect new version
-    in `Telegram/SourceFiles/boxes/about_box.cpp`
-2. tag a new version with increased fourth component
-    (v6.7.5 -> v6.7.5.1 -> v6.7.5.2)
-3. push `main` branch, and then push corresponding tag
-
 ## Previous versions
 
 Versions of Yukigram up to (and including) 6.4.1.1 are deprecated
