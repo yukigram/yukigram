@@ -16,7 +16,7 @@ permissions:
 jobs:
 
   binary:
-    timeout-minutes: ${{ github.event.inputs.short_run && 10 || 360 }}
+    timeout-minutes: ${{ inputs.short_run && 10 || 360 }}
     name: Linux binary
     strategy:
       matrix:
@@ -156,7 +156,7 @@ jobs:
           path: yukigram/flatpak/repo
 
   nixos:
-    timeout-minutes: ${{ github.event.inputs.short_run && 10 || 360 }}
+    timeout-minutes: ${{ inputs.short_run && 10 || 360 }}
     name: NixOS binary cache build
     strategy:
       matrix:
