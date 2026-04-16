@@ -91,4 +91,6 @@ Make a backup of your data!
 Downgrading versions is not supported.
 
 1. Download artifact named `flatpak-x86_64` and unpack
-2. `sudo flatpak install path/to/folder/containing/index.flatpakrepo/ io.github.yukigram`
+2. `flatpak install --user .../flatpak-x86_64/ io.github.yukigram`
+
+For development versions, use `io.github.yukigram.devel`
