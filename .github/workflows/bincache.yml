@@ -154,6 +154,17 @@ jobs:
             io.github.yukigram.yml
           popd
 
+      - name: Generate index.flatpakrepo
+        run: |
+          cat >yukigram/flatpak/repo/index.flatpakrepo <<EOF
+          [Flatpak Repo]
+          Title=Yukigram
+          Description=Patched Telegram Desktop
+          Url=https://yukigram.github.io/yukigram
+          Homepage=https://t.me/yukigram
+          Icon=https://raw.githubusercontent.com/flatpak/flatpak/main/flatpak.png
+          EOF
+
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
