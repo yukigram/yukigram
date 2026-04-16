@@ -9,6 +9,7 @@ keep this list consistent with files in tdesktop/cur/
 use `1.` as list marker to make diffs shorter in case of drops or reorders
 -->
 1. Yukigram branding
+1. Yukigram build support
 1. tg://nya link support
 1. No sponsored messages
 1. Immediate restart button

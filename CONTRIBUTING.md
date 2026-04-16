@@ -32,16 +32,23 @@ and is generally ready to be used.
 
 1. change version in `package.nix` and set hash to `lib.fakeHash`
 2. fail a build once to get the correct hash
-3. build again with `nix-build --argstr appId io.github.yukigram.devel`
-4. test `./result/bin/yukigram`
+3. (optional) build again with `nix-build --argstr appId io.github.yukigram.devel`
 
 ### Updating Flatpak manifest
 
 1. update tdesktop version in `.github/workflows/bincache.yml`
 2. go to [org.telegram.desktop] and update changed permissions
-3. check `Telegram/CMakeLists.txt` for changed "install" procedure
 
-## Updating patchset version without tdesktop
+[org.telegram.desktop]: https://github.com/flathub/org.telegram.desktop
+
+### Updating build support
+
+1. check [centos_env] for latest tag and update in `build.sh`
+2. check `Telegram/CMakeLists.txt` and update `install.sh`
+
+[centos_env]: https://github.com/telegramdesktop/tdesktop/pkgs/container/tdesktop%2Fcentos_env/versions
+
+### Updating patchset version
 
 1. change title of about box to reflect new version
     in `Telegram/SourceFiles/boxes/about_box.cpp`
@@ -70,8 +77,7 @@ Builds:
 ```shell
 cd yukigram-worktree
 git checkout --detach $COMMIT && git submodule update --recursive
-# Perform steps "Pull container" and "Build" of `binary` job in `bincache` workflow
-# Replacing CONFIG=Release with CONFIG=Debug adds debuginfo, but makes binary *much* larger
+CONFIG=Debug ./build.sh
 ```
 
 Run:
@@ -82,6 +88,16 @@ local/bin/yukigram
 ```
 
 Data is stored somewhere under `~/.var/app/io.github.yukigram.devel`.
+
+## Manual flatpak builds
+
+```shell
+cd yukigram-worktree
+./build.sh
+./install.sh
+cd ../yukigram/flatpak
+flatpak-builder --force-clean build io.github.yukigram.yml
+```
 
 ## Installing previous versions from artifacts
 

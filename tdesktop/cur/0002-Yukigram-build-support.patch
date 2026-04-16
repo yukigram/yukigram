@@ -1,0 +1,53 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Thu, 16 Apr 2026 20:50:31 +0300
+Subject: [PATCH] Yukigram build support
+
+---
+ build.sh   | 14 ++++++++++++++
+ install.sh | 12 ++++++++++++
+ 2 files changed, 26 insertions(+)
+ create mode 100755 build.sh
+ create mode 100755 install.sh
+
+diff --git a/build.sh b/build.sh
+new file mode 100755
+index 0000000000..1bc764a7c9
+--- /dev/null
++++ b/build.sh
+@@ -0,0 +1,14 @@
++#!/usr/bin/env bash
++set -exuo pipefail
++TTYFLAGS=
++if tty -s; then
++    TTYFLAGS=-it
++fi
++docker run --rm $TTYFLAGS \
++    -u $(id -u) \
++    -v "$PWD:/usr/src/tdesktop" \
++    -e CONFIG=${CONFIG:-Release} \
++    ghcr.io/telegramdesktop/tdesktop/centos_env@sha256:892f22d6d6b7c9f62ea5b3c71223e488452fc5b0a22790c5f26f9a4579d3a330 \
++    /usr/src/tdesktop/Telegram/build/docker/centos_env/build.sh \
++    -D TDESKTOP_API_ID=611335 \
++    -D TDESKTOP_API_HASH=d524b414d21f4d37f08684c1df41ac9c
+diff --git a/install.sh b/install.sh
+new file mode 100755
+index 0000000000..ad32596ccc
+--- /dev/null
++++ b/install.sh
+@@ -0,0 +1,12 @@
++#!/usr/bin/env bash
++set -exuo pipefail
++mkdir app
++install -Dm0755 out/Release/yukigram app/bin/yukigram
++install -Dm0644 Telegram/Resources/art/yukigram.svg app/share/icons/hicolor/scalable/apps/io.github.yukigram.svg
++install -Dm0644 Telegram/Resources/icons/tray_monochrome.svg app/share/icons/hicolor/symbolic/apps/io.github.yukigram-symbolic.svg
++install -Dm0644 Telegram/Resources/icons/tray_monochrome_attention.svg app/share/icons/hicolor/symbolic/apps/io.github.yukigram-attention-symbolic.svg
++install -Dm0644 Telegram/Resources/icons/tray_monochrome_mute.svg app/share/icons/hicolor/symbolic/apps/io.github.yukigram-mute-symbolic.svg
++install -Dm0644 lib/xdg/io.github.yukigram.desktop app/share/applications/io.github.yukigram.desktop
++sed -i s=@CMAKE_INSTALL_FULL_BINDIR@=/app/bin= lib/xdg/io.github.yukigram.service
++install -Dm0644 lib/xdg/io.github.yukigram.service app/share/dbus-1/services/io.github.yukigram.service
++install -Dm0644 lib/xdg/io.github.yukigram.metainfo.xml app/share/metainfo/io.github.yukigram.metainfo.xml
+-- 
+2.53.0
+
