@@ -135,6 +135,11 @@ jobs:
         with:
           path: yukigram
 
+      - name: Change appId
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          sed s/io.github.yukigram/io.github.yukigram.devel/ yukigram/flatpak/io.github.yukigram.yml
+
       - name: Build
         run: |
           set -exuo pipefail
