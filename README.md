@@ -227,7 +227,7 @@ Patches for Telegram Desktop (under `tdesktop/cur/`)
 are provided under [GPL-3.0-only]
 with [OpenSSL exception][sqlitestudio-OpenSSL-exception].
 
-Patches for flatpak manifest (under `flatpak/`)
+GitHub Actions workflows and flatpak manifest
 are provided under [MIT].
 
 Nix package definitions
