@@ -76,8 +76,6 @@ Contributions welcome!
     (requires submodule patching)
 - Compile-time option to use QtWebEngine for Instant View
     (requires submodule patching)
-- Instant view in flatpak
-    (requires QtWebEngine or reincarnating [org.telegram.desktop.webview])
 
 [org.telegram.desktop.webview]: https://github.com/flathub/org.telegram.desktop.webview
 
@@ -130,28 +128,11 @@ instead of plain binaries.
 
 ### with flatpak
 
-Flatpak builds use KDE platform,
-which does not have neither WebKitGTK nor patched Qt.
-To use upstream-like build with Qt patches,
-drop a patch from `flatpak/cur/`.
-
 #### with binary caches
 
 ```shell
 flatpak remote-add --user --if-not-exists yukigram https://yukigram.github.io/yukigram/index.flatpakrepo
 flatpak install io.github.yukigram
-```
-
-#### manual build
-
-```shell
-git submodule update --init --recursive
-commit=$(git describe --abbrev=12 HEAD)
-sed -i s/@commit/$commit/ tdesktop/cur/0001-Yukigram-branding.patch  # if building from git
-sed -i s/@commit/$commit/ flatpak/cur/0001-Yukigram.patch
-cd flatpak/org.telegram.desktop
-git am ..
-flatpak-builder --ccache --force-clean build org.telegram.desktop.yml
 ```
 
 ### with nix

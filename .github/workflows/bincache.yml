@@ -16,69 +16,145 @@ permissions:
 
 jobs:
 
-  flatpak:
+  binary:
     timeout-minutes: ${{ github.event.inputs.short_run && 10 || 360 }}
-    name: Flatpak repository
+    name: Linux binary
     strategy:
       matrix:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
 
-    container:
-      image: ghcr.io/andyholmes/flatter/kde:6.10
-      options: --privileged
-      volumes:
-        - /opt/hostedtoolcache:/hostedtoolcache
-
     steps:
-      - name: Free up disk space
-        shell: bash
-        run: |
-          rm -rf /hostedtoolcache/*
-          df -h
-
-      - name: Clone
+      - name: Clone yukigram
         uses: actions/checkout@v6
         with:
-          submodules: recursive
           fetch-depth: 0
+          path: yukigram
 
-      - name: Fix cloned repo
-        run: |
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Clone tdesktop
+        uses: actions/checkout@v6
+        with:
+          repository: telegramdesktop/tdesktop
+          ref: v6.7.6
+          path: yukigram-worktree
+          submodules: recursive
 
-      - name: Flatpak dependencies
-        run: |
-          flatpak install --noninteractive org.freedesktop.Sdk.Extension.llvm22/x86_64/25.08
-
-      - name: Patches
+      - name: Fix cloned repositories
         run: |
           set -exuo pipefail
+          git config --global --add safe.directory yukigram
+          git config --global --add safe.directory yukigram-worktree
 
+      - name: Patch patches
+        run: |
+          set -exuo pipefail
+          pushd yukigram
           commit=$(git describe --abbrev=12 HEAD)
           sed -i s/@commit/$commit/ tdesktop/cur/0001-Yukigram-branding.patch
-          sed -i s/@commit/$commit/ flatpak/cur/0001-Yukigram.patch
+          popd
 
-          # `git am` requires committer name/email
-          # -C flag changes working directory and requires absolute paths, which are harder to glob
-          cat flatpak/cur/*.patch | git -C flatpak/org.telegram.desktop apply
+      - name: Apply patches
+        env:
+          GIT_COMMITTER_NAME: "Automated builder commit"
+          GIT_COMMITTER_EMAIL: "<noreply@example.com>"
+        run: |
+          set -exuo pipefail
+          pushd yukigram-worktree
+          git am ../yukigram/tdesktop
+          popd
 
-          echo ARCH="$(uname -m)" >> $GITHUB_ENV
+      - name: Pull container
+        run:
+          docker pull ghcr.io/telegramdesktop/tdesktop/centos_env:latest
 
       - name: Build
-        id: flatpak
-        uses: andyholmes/flatter@main
-        with:
-          files: |
-            flatpak/org.telegram.desktop/org.telegram.desktop.yml
-          arch: ${{ env.ARCH }}
-          cache-key: ''
+        run: |
+          set -exuo pipefail
+          pushd yukigram-worktree
+          docker run --rm \
+            -u $(id -u) \
+            -v "$PWD:/usr/src/tdesktop" \
+            -e CONFIG=Release \
+            ghcr.io/telegramdesktop/tdesktop/centos_env:latest \
+            /usr/src/tdesktop/Telegram/build/docker/centos_env/build.sh \
+            -D TDESKTOP_API_ID=611335 \
+            -D TDESKTOP_API_HASH=d524b414d21f4d37f08684c1df41ac9c
+          popd
 
-      - uses: actions/upload-artifact@v7
-        name: Upload artifact
+      - name: Install
+        run: |
+          set -exuo pipefail
+          pushd yukigram-worktree
+          mkdir app
+          install -Dm0755 out/Release/yukigram app/bin/yukigram
+          install -Dm0644 Telegram/Resources/art/yukigram.svg app/share/icons/hicolor/scalable/apps/io.github.yukigram.svg
+          install -Dm0644 Telegram/Resources/icons/tray_monochrome.svg app/share/icons/hicolor/symbolic/apps/io.github.yukigram-symbolic.svg
+          install -Dm0644 Telegram/Resources/icons/tray_monochrome_attention.svg app/share/icons/hicolor/symbolic/apps/io.github.yukigram-attention-symbolic.svg
+          install -Dm0644 Telegram/Resources/icons/tray_monochrome_mute.svg app/share/icons/hicolor/symbolic/apps/io.github.yukigram-mute-symbolic.svg
+          install -Dm0644 lib/xdg/io.github.yukigram.desktop app/share/applications/io.github.yukigram.desktop
+          sed -i s=@CMAKE_INSTALL_FULL_BINDIR@=/app/bin= lib/xdg/io.github.yukigram.service
+          install -Dm0644 lib/xdg/io.github.yukigram.service app/share/dbus-1/services/io.github.yukigram.service
+          install -Dm0644 lib/xdg/io.github.yukigram.metainfo.xml app/share/metainfo/io.github.yukigram.metainfo.xml
+          popd
+
+      - name: Save architecture
+        run: |
+          set -exuo pipefail
+          echo ARCH="$(uname -m)" >> $GITHUB_ENV
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
         with:
-          name: flatpak-${{ env.ARCH }}
-          path: ${{ steps.flatpak.outputs.repository }}
+          name: binary-${{ env.ARCH }}
+          path: yukigram-worktree/app
+
+
+  flatpak:
+    needs: [binary]
+    name: Flatpak repository
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [x86_64]
+
+    steps:
+      - name: Prepare flatpak-builder
+        run: |
+          set -exuo pipefail
+          sudo apt-get update
+          sudo apt-get install -y flatpak flatpak-builder
+          flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+      - name: Download artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: binary-${{ matrix.arch }}
+          path: yukigram-worktree/app
+
+      - name: Clone yukigram
+        uses: actions/checkout@v6
+        with:
+          path: yukigram
+
+      - name: Build
+        run: |
+          set -exuo pipefail
+          pushd yukigram/flatpak
+          flatpak-builder --user \
+            --install-deps-from=flathub \
+            --disable-rofiles-fuse \
+            --force-clean \
+            --repo=repo \
+            --arch=${{ matrix.arch }} \
+            build_dir \
+            io.github.yukigram.yml
+          popd
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: flatpak-${{ matrix.arch }}
+          path: yukigram/flatpak/repo
 
   nixos:
     timeout-minutes: ${{ github.event.inputs.short_run && 10 || 360 }}
@@ -89,8 +165,8 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: nixbuild/nix-quick-install-action@v34
-        name: Install Nix
+      - name: Install Nix
+        uses: nixbuild/nix-quick-install-action@v34
 
       - name: Clone
         uses: actions/checkout@v6
@@ -129,8 +205,8 @@ jobs:
 
           echo ARCH="$(uname -m)" >> $GITHUB_ENV
 
-      - uses: actions/upload-artifact@v7
-        name: Upload artifact
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
         with:
           name: nixos-${{ env.ARCH }}
           path: out
@@ -138,7 +214,7 @@ jobs:
   website:
     if: github.event_name != 'workflow_dispatch'
     name: Website for hosting the repositories
-    needs: [flatpak, nixos]
+    needs: [binary, flatpak, nixos]
     runs-on: ubuntu-latest
 
     steps:
@@ -180,8 +256,8 @@ jobs:
           EOF
           rm -f website/narHash website/narPublicKey
 
-      - uses: actions/upload-pages-artifact@v5
-        name: Upload artifact
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
         with:
           path: website
 

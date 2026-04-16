@@ -1,0 +1,29 @@
+id: io.github.yukigram
+runtime: org.gnome.Platform
+runtime-version: '50'
+sdk: org.gnome.Sdk
+command: yukigram
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+  - --device=all
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.gnome.Mutter.IdleMonitor
+  - --talk-name=org.kde.StatusNotifierWatcher
+  - --talk-name=com.canonical.AppMenu.Registrar
+  - --talk-name=com.canonical.indicator.application
+  - --talk-name=org.ayatana.indicator.application
+  - --talk-name=org.sigxcpu.Feedback
+  - --unset-env=QT_PLUGIN_PATH
+modules:
+  - name: tdesktop
+    buildsystem: simple
+    build-commands:
+      - cp -r ./. /app/
+      - chmod +x /app/bin/yukigram
+    sources:
+      - type: dir
+        path: ../../yukigram-worktree/app/
