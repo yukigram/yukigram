@@ -48,6 +48,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. Show date of forwarded messages without hover
 1. Hide "Join group" bottom button when it is possible to send messages without joining
     (e.g. in linked discussion groups)
+1. Always show edit timer
 
 Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 

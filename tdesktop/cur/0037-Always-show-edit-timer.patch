@@ -1,0 +1,42 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 17 Apr 2026 02:54:19 +0300
+Subject: [PATCH] Always show edit timer
+
+This patch is adapted from Kotatogram.
+Original author: RadRussianRus <radrussianrus@gmail.com>
+---
+ Telegram/SourceFiles/history/history_widget.cpp | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
+
+diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
+index 27fd96acfc..b14ac9ebaa 100644
+--- a/Telegram/SourceFiles/history/history_widget.cpp
++++ b/Telegram/SourceFiles/history/history_widget.cpp
+@@ -10108,10 +10108,6 @@ void HistoryWidget::paintEditHeader(
+ 		- timeSinceMessage;
+ 	if (editTimeLeft < 2) {
+ 		editTimeLeftText = u"0:00"_q;
+-	} else if (editTimeLeft > kDisplayEditTimeWarningMs) {
+-		updateIn = static_cast<int>(qMin(
+-			editTimeLeft - kDisplayEditTimeWarningMs,
+-			qint64(kFullDayInMs)));
+ 	} else {
+ 		updateIn = static_cast<int>(editTimeLeft % 1000);
+ 		if (!updateIn) {
+@@ -10120,9 +10116,9 @@ void HistoryWidget::paintEditHeader(
+ 		++updateIn;
+ 
+ 		editTimeLeft = (editTimeLeft - 1) / 1000; // seconds
+-		editTimeLeftText = u"%1:%2"_q
+-			.arg(editTimeLeft / 60)
+-			.arg(editTimeLeft % 60, 2, 10, QChar('0'));
++		editTimeLeftText = (editTimeLeft >= 3600
++			? u"%1:%2:%3"_q.arg(editTimeLeft / 3600).arg(editTimeLeft % 3600 / 60, 2, 10, QChar('0')).arg(editTimeLeft % 60, 2, 10, QChar('0'))
++			: u"%1:%2"_q.arg(editTimeLeft / 60).arg(editTimeLeft % 60, 2, 10, QChar('0')));
+ 	}
+ 
+ 	// Restart timer only if we are sure that we've painted the whole timer.
+-- 
+2.53.0
+
