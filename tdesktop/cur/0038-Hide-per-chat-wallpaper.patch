@@ -1,0 +1,97 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 17 Apr 2026 03:21:22 +0300
+Subject: [PATCH] Hide per-chat wallpaper
+
+---
+ Telegram/SourceFiles/data/data_channel.cpp              | 2 +-
+ Telegram/SourceFiles/data/data_user.cpp                 | 2 +-
+ Telegram/SourceFiles/data/data_wall_paper.cpp           | 9 +++++++++
+ Telegram/SourceFiles/data/data_wall_paper.h             | 4 ++++
+ Telegram/SourceFiles/settings/settings_experimental.cpp | 2 ++
+ 5 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/Telegram/SourceFiles/data/data_channel.cpp b/Telegram/SourceFiles/data/data_channel.cpp
+index 4aee47b812..536db63e59 100644
+--- a/Telegram/SourceFiles/data/data_channel.cpp
++++ b/Telegram/SourceFiles/data/data_channel.cpp
+@@ -1470,7 +1470,7 @@ void ApplyChannelUpdate(
+ 		session->sendAsPeers().setChosen(channel, PeerId());
+ 	}
+ 
+-	if (const auto paper = update.vwallpaper()) {
++	if (const auto paper = update.vwallpaper(); paper && !HideWallPaper.value()) {
+ 		channel->setWallPaper(
+ 			Data::WallPaper::Create(&channel->session(), *paper));
+ 	} else {
+diff --git a/Telegram/SourceFiles/data/data_user.cpp b/Telegram/SourceFiles/data/data_user.cpp
+index 2a5c93abdb..7a5831db20 100644
+--- a/Telegram/SourceFiles/data/data_user.cpp
++++ b/Telegram/SourceFiles/data/data_user.cpp
+@@ -992,7 +992,7 @@ void ApplyUserUpdate(not_null<UserData*> user, const MTPDuserFull &update) {
+ 		}
+ 	}
+ 
+-	if (const auto paper = update.vwallpaper()) {
++	if (const auto paper = update.vwallpaper(); paper && !HideWallPaper.value()) {
+ 		user->setWallPaper(
+ 			Data::WallPaper::Create(&user->session(), *paper),
+ 			update.is_wallpaper_overridden());
+diff --git a/Telegram/SourceFiles/data/data_wall_paper.cpp b/Telegram/SourceFiles/data/data_wall_paper.cpp
+index 0234bdbb41..b5b5facf24 100644
+--- a/Telegram/SourceFiles/data/data_wall_paper.cpp
++++ b/Telegram/SourceFiles/data/data_wall_paper.cpp
+@@ -16,6 +16,15 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "core/application.h"
+ #include "main/main_session.h"
+ 
++base::options::toggle HideWallPaper({
++	.id = kOptionHideWallPaper,
++	.name = "Hide per-chat wallpaper",
++	.description = "Enforce theme wallpaper instead of peer wallpaper",
++	.restartRequired = true,
++});
++
++const char kOptionHideWallPaper[] = "hide-wall-paper";
++
+ namespace Ui {
+ 
+ QColor ColorFromSerialized(MTPint serialized) {
+diff --git a/Telegram/SourceFiles/data/data_wall_paper.h b/Telegram/SourceFiles/data/data_wall_paper.h
+index e7bfd2d511..2e325d1a84 100644
+--- a/Telegram/SourceFiles/data/data_wall_paper.h
++++ b/Telegram/SourceFiles/data/data_wall_paper.h
+@@ -8,6 +8,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #pragma once
+ 
+ #include "base/flags.h"
++#include "base/options.h"
++
++extern base::options::toggle HideWallPaper;
++extern const char kOptionHideWallPaper[];
+ 
+ class Image;
+ 
+diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
+index 4177cd1080..1b9309af55 100644
+--- a/Telegram/SourceFiles/settings/settings_experimental.cpp
++++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
+@@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "settings/settings_experimental.h"
+ 
+ #include "data/components/passkeys.h"
++#include "data/data_wall_paper.h"
+ #include "main/main_session.h"
+ #include "ui/boxes/confirm_box.h"
+ #include "ui/text/text_entity.h"
+@@ -222,6 +223,7 @@ void SetupExperimental(
+ 	addToggle(Ui::kOptionUseSmallMsgBubbleRadius);
+ 	addToggle(Media::Player::kOptionDisableAutoplayNext);
+ 	addToggle(kOptionWideMessages);
++	addToggle(kOptionHideWallPaper);
+ 	addToggle(Webview::kOptionWebviewDebugEnabled);
+ 	addToggle(Webview::kOptionWebviewLegacyEdge);
+ 	addToggle(kOptionAlwaysShowScheduled);
+-- 
+2.53.0
+
