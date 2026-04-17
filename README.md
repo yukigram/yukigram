@@ -50,6 +50,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
     (e.g. in linked discussion groups)
 1. Always show edit timer
 1. Option to hide per-chat wallpaper and use wallpaper from theme instead
+1. Allow opening group from peer info
 
 Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 

@@ -1,0 +1,49 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 17 Apr 2026 04:31:52 +0300
+Subject: [PATCH] Allow opening group from peer info
+
+---
+ .../info/profile/info_profile_top_bar.cpp            | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
+index 691c37ba16..940e523fe1 100644
+--- a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
++++ b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
+@@ -745,7 +745,7 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
+ 		_actions->show();
+ 		_actions->raise();
+ 	});
+-	if (user) {
++	const auto addShowHistory = [&]() {
+ 		const auto message = Ui::CreateChild<TopBarActionButton>(
+ 			this,
+ 			tr::lng_profile_action_short_message(tr::now),
+@@ -758,6 +758,9 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
+ 		message->setAccessibleName(tr::lng_profile_action_short_message(tr::now));
+ 		buttons.push_back(message);
+ 		_actions->add(message);
++	};
++	if (user) {
++		addShowHistory();
+ 	}
+ 	const auto canJoin = (!sublist && !topic && channel && !channel->amIn());
+ 	if (canJoin) {
+@@ -956,6 +959,13 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
+ 	if (chechMax()) {
+ 		return;
+ 	}
++	if (_peer->id != controller->activeChatCurrent().peer()->id
++		|| controller->dialogsEntryStateCurrent().section == Dialogs::EntryState::Section::Replies) {
++		addShowHistory();
++	}
++	if (chechMax()) {
++		return;
++	}
+ 	if (!topic
+ 		&& canJoin
+ 		&& ((chat && !chat->amCreator() && !chat->hasAdminRights())
+-- 
+2.53.0
+
