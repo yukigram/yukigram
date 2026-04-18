@@ -26,6 +26,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. tg://openmessage and tg://user links support
 1. Disable AI long message summary button
 1. "Search messages from" button in more context menus
+1. Show time on service messages
 1. Show time with seconds
 1. Show sticker/emoji pack owner
 1. Quick recent actions button

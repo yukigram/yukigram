@@ -14,6 +14,7 @@ SPDX-FileCopyrightText = "Yukigram contributors"
 path = [
     "tdesktop/cur/*-Handle-tg-openmessage-and-tg-user-links.patch",
     "tdesktop/cur/*-Show-messages-from-user.patch",
+    "tdesktop/cur/*-Show-time-on-service-messages.patch",
     "tdesktop/cur/*-Show-time-with-seconds.patch",
     "tdesktop/cur/*-Show-sticker-pack-owner.patch",
     "tdesktop/cur/*-Quick-Recent-Actions-button.patch",

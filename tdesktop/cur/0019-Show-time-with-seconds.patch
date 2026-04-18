@@ -3,21 +3,20 @@ From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Sat, 4 Apr 2026 14:42:25 +0300
 Subject: [PATCH] Show time with seconds
 
-This commit also adds time to service messages
-
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 ---
  Telegram/SourceFiles/api/api_who_reacted.cpp  |  7 +++---
  .../history/history_inner_widget.cpp          |  2 +-
- Telegram/SourceFiles/history/history_item.cpp | 10 ++++++++-
+ Telegram/SourceFiles/history/history_item.cpp |  5 +++--
  .../history/view/history_view_bottom_info.cpp |  2 +-
  .../history/view/history_view_list_widget.cpp |  2 +-
  .../history/view/media/history_view_call.cpp  |  2 +-
  .../polls/info_polls_results_inner_widget.cpp |  2 +-
+ Telegram/SourceFiles/lang/lang_keys.cpp       |  6 +++--
  .../controls/who_reacted_context_action.cpp   |  2 +-
  .../SourceFiles/ui/text/format_values.cpp     | 22 ++++++-------------
- 9 files changed, 26 insertions(+), 25 deletions(-)
+ 10 files changed, 24 insertions(+), 28 deletions(-)
 
 diff --git a/Telegram/SourceFiles/api/api_who_reacted.cpp b/Telegram/SourceFiles/api/api_who_reacted.cpp
 index f3af5312fb..cb274690cf 100644
@@ -65,30 +64,20 @@ index 20aa754f3c..2dfacde792 100644
  		}).first;
  		fullSize += i->second.time.size()
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
-index 88c7bba933..91051a8419 100644
+index c6ff7cf999..17d05c9f17 100644
 --- a/Telegram/SourceFiles/history/history_item.cpp
 +++ b/Telegram/SourceFiles/history/history_item.cpp
-@@ -1337,11 +1337,19 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
- 	}
- }
+@@ -1339,7 +1339,8 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
  
-+QString GenerateServiceTime(TimeId date) {
-+	if (date > 0) {
-+		return QString(" (%1)").arg(base::unixtime::parse(date).toString(QLocale::system().timeFormat(QLocale::LongFormat).remove("t")));
-+	}
-+	return QString();
-+}
-+
- void HistoryItem::setServiceText(PreparedServiceText &&prepared) {
- 	AddComponents(HistoryServiceData::Bit());
- 	_flags &= ~MessageFlag::HasTextLinks;
- 	const auto data = Get<HistoryServiceData>();
- 	const auto had = !_text.empty();
-+	prepared.text.text += GenerateServiceTime(date());
- 	_text = std::move(prepared.text);
- 	data->textLinks = std::move(prepared.links);
- 	if (had) {
-@@ -7674,7 +7682,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
+ QString GenerateServiceTime(TimeId date) {
+ 	if (date > 0) {
+-		return QString(" (%1)").arg(base::unixtime::parse(date).toString(QLocale::ShortFormat));
++		const auto timeLocale = QLocale::system().timeFormat(QLocale::LongFormat).remove("t");
++		return QString(" (%1)").arg(base::unixtime::parse(date).toString(timeLocale));
+ 	}
+ 	return QString();
+ }
+@@ -7682,7 +7683,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
  	};
  	const auto time = QLocale().toString(
  		scheduled.time(),
@@ -149,6 +138,36 @@ index 580b190077..2032b5af80 100644
  	_timeWidth = st::pollResultsVoteTimeFont->width(_timeText);
  	if (voteDate == nowDate) {
  		return;
+diff --git a/Telegram/SourceFiles/lang/lang_keys.cpp b/Telegram/SourceFiles/lang/lang_keys.cpp
+index f3269a4099..93563061a6 100644
+--- a/Telegram/SourceFiles/lang/lang_keys.cpp
++++ b/Telegram/SourceFiles/lang/lang_keys.cpp
+@@ -175,21 +175,23 @@ QString langDayOfWeekFull(int index) {
+ }
+ 
+ QString langDateTime(const QDateTime &date) {
++	const auto timeLocale = QLocale::system().timeFormat(QLocale::LongFormat).remove("t");
+ 	return tr::lng_mediaview_date_time(
+ 		tr::now,
+ 		lt_date,
+ 		langDayOfMonth(date.date()),
+ 		lt_time,
+-		QLocale().toString(date.time(), QLocale::ShortFormat));
++		QLocale().toString(date.time(), timeLocale));
+ }
+ 
+ QString langDateTimeFull(const QDateTime &date) {
++	const auto timeLocale = QLocale::system().timeFormat(QLocale::LongFormat).remove("t");
+ 	return tr::lng_mediaview_date_time(
+ 		tr::now,
+ 		lt_date,
+ 		langDayOfMonthFull(date.date()),
+ 		lt_time,
+-		QLocale().toString(date.time(), QLocale::ShortFormat));
++		QLocale().toString(date.time(), timeLocale));
+ }
+ 
+ namespace Lang {
 diff --git a/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp b/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
 index c0aa82fd18..ee3e405726 100644
 --- a/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
