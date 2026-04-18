@@ -6,52 +6,55 @@ Subject: [PATCH] Show time with seconds
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 ---
- Telegram/SourceFiles/api/api_who_reacted.cpp  |  7 +++---
+ Telegram/SourceFiles/api/api_who_reacted.cpp  | 19 +++-------
  .../history/history_inner_widget.cpp          |  2 +-
- Telegram/SourceFiles/history/history_item.cpp |  5 +++--
+ Telegram/SourceFiles/history/history_item.cpp |  4 +-
  .../history/view/history_view_bottom_info.cpp |  2 +-
  .../history/view/history_view_list_widget.cpp |  2 +-
  .../history/view/media/history_view_call.cpp  |  2 +-
  .../polls/info_polls_results_inner_widget.cpp |  2 +-
- Telegram/SourceFiles/lang/lang_keys.cpp       |  6 +++--
+ Telegram/SourceFiles/lang/lang_keys.cpp       | 37 ++++++++++++++++++-
+ Telegram/SourceFiles/lang/lang_keys.h         |  4 ++
+ .../settings/settings_experimental.cpp        |  1 +
  .../controls/who_reacted_context_action.cpp   |  2 +-
- .../SourceFiles/ui/text/format_values.cpp     | 22 ++++++-------------
- 10 files changed, 24 insertions(+), 28 deletions(-)
+ .../SourceFiles/ui/text/format_values.cpp     | 21 +++--------
+ 12 files changed, 59 insertions(+), 39 deletions(-)
 
 diff --git a/Telegram/SourceFiles/api/api_who_reacted.cpp b/Telegram/SourceFiles/api/api_who_reacted.cpp
-index f3af5312fb..cb274690cf 100644
+index f3af5312fb..248bf82662 100644
 --- a/Telegram/SourceFiles/api/api_who_reacted.cpp
 +++ b/Telegram/SourceFiles/api/api_who_reacted.cpp
-@@ -652,23 +652,24 @@ QString FormatReadDate(TimeId date, const QDateTime &now) {
+@@ -652,23 +652,14 @@ QString FormatReadDate(TimeId date, const QDateTime &now) {
  	const auto parsed = base::unixtime::parse(date);
  	const auto readDate = parsed.date();
  	const auto nowDate = now.date();
-+	const auto timeLocale = QLocale::system().timeFormat(QLocale::LongFormat).remove("t");
++	const auto timeText = QLocale().toString(parsed.time(), Lang::TimeFormat());
  	if (readDate == nowDate) {
- 		return tr::lng_mediaview_today(
- 			tr::now,
- 			lt_time,
+-		return tr::lng_mediaview_today(
+-			tr::now,
+-			lt_time,
 -			QLocale().toString(parsed.time(), QLocale::ShortFormat));
-+			QLocale().toString(parsed.time(), timeLocale));
++		return tr::lng_mediaview_today(tr::now, lt_time, timeText);
  	} else if (readDate.addDays(1) == nowDate) {
- 		return tr::lng_mediaview_yesterday(
- 			tr::now,
- 			lt_time,
+-		return tr::lng_mediaview_yesterday(
+-			tr::now,
+-			lt_time,
 -			QLocale().toString(parsed.time(), QLocale::ShortFormat));
-+			QLocale().toString(parsed.time(), timeLocale));
++		return tr::lng_mediaview_yesterday(tr::now, lt_time, timeText);
  	}
- 	return tr::lng_mediaview_date_time(
- 		tr::now,
- 		lt_date,
- 		langDayOfMonthShort(readDate),
- 		lt_time,
+-	return tr::lng_mediaview_date_time(
+-		tr::now,
+-		lt_date,
+-		langDayOfMonthShort(readDate),
+-		lt_time,
 -		QLocale().toString(parsed.time(), QLocale::ShortFormat));
-+		QLocale().toString(parsed.time(), timeLocale));
++	const auto dateText = langDayOfMonthShort(readDate);
++	return tr::lng_mediaview_date_time(tr::now, lt_date, dateText, lt_time, timeText);
  }
  
  bool WhoReadExists(not_null<HistoryItem*> item) {
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 20aa754f3c..2dfacde792 100644
+index 20aa754f3c..4e28c25789 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -3702,7 +3702,7 @@ TextForMimeData HistoryInner::getSelectedText() const {
@@ -59,35 +62,34 @@ index 20aa754f3c..2dfacde792 100644
  			.name = item->author()->name(),
  			.time = QString("[%1] ").arg(
 -				QLocale().toString(ItemDateTime(item), QLocale::ShortFormat)),
-+				QLocale().toString(ItemDateTime(item), QLocale::system().timeFormat(QLocale::LongFormat).remove("t"))),
++				QLocale().toString(ItemDateTime(item), Lang::DateTimeFormat())),
  			.unwrapped = std::move(unwrapped),
  		}).first;
  		fullSize += i->second.time.size()
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
-index c6ff7cf999..17d05c9f17 100644
+index c6ff7cf999..d7ab990a43 100644
 --- a/Telegram/SourceFiles/history/history_item.cpp
 +++ b/Telegram/SourceFiles/history/history_item.cpp
-@@ -1339,7 +1339,8 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
+@@ -1339,7 +1339,7 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
  
  QString GenerateServiceTime(TimeId date) {
  	if (date > 0) {
 -		return QString(" (%1)").arg(base::unixtime::parse(date).toString(QLocale::ShortFormat));
-+		const auto timeLocale = QLocale::system().timeFormat(QLocale::LongFormat).remove("t");
-+		return QString(" (%1)").arg(base::unixtime::parse(date).toString(timeLocale));
++		return QString(" (%1)").arg(base::unixtime::parse(date).toString(Lang::TimeFormat()));
  	}
  	return QString();
  }
-@@ -7682,7 +7683,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
+@@ -7682,7 +7682,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
  	};
  	const auto time = QLocale().toString(
  		scheduled.time(),
 -		QLocale::ShortFormat);
-+		QLocale::system().timeFormat(QLocale::LongFormat).remove("t"));
++		Lang::TimeFormat());
  	const auto prepareGeneric = [&] {
  		prepareWithDate(tr::lng_group_call_starts_date(
  			tr::now,
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-index 1dcb93feb4..0c134643af 100644
+index 1dcb93feb4..d9e1b4d257 100644
 --- a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 @@ -457,7 +457,7 @@ void BottomInfo::layoutDateText() {
@@ -95,12 +97,12 @@ index 1dcb93feb4..0c134643af 100644
  	const auto date = edited + ((_data.flags & Data::Flag::ForwardedDate)
  		? Ui::FormatDateTimeSavedFrom(_data.date)
 -		: QLocale().toString(_data.date.time(), QLocale::ShortFormat));
-+		: QLocale().toString(_data.date.time(), QLocale::system().timeFormat(QLocale::LongFormat).remove("t")));
++		: QLocale().toString(_data.date.time(), Lang::TimeFormat()));
  	const auto afterAuthor = prefix + date;
  	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
  	const auto authorWidth = st::msgDateFont->width(author);
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 51069e8f08..a09173781a 100644
+index 51069e8f08..6448d95153 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -2686,7 +2686,7 @@ TextForMimeData ListWidget::getSelectedText() const {
@@ -108,12 +110,12 @@ index 51069e8f08..a09173781a 100644
  			TextForMimeData &&unwrapped) {
  		auto time = QString("[%1] ").arg(
 -			QLocale().toString(ItemDateTime(item), QLocale::ShortFormat));
-+			QLocale().toString(ItemDateTime(item), QLocale::system().timeFormat(QLocale::LongFormat).remove("t")));
++			QLocale().toString(ItemDateTime(item), Lang::DateTimeFormat()));
  		auto part = TextForMimeData();
  		auto size = time.size()
  			+ item->author()->name().size()
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_call.cpp b/Telegram/SourceFiles/history/view/media/history_view_call.cpp
-index 0e58229f31..4382172318 100644
+index 0e58229f31..df1d4da4d4 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_call.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_call.cpp
 @@ -50,7 +50,7 @@ Call::Call(
@@ -121,12 +123,12 @@ index 0e58229f31..4382172318 100644
  	_status = QLocale().toString(
  		parent->dateTime().time(),
 -		QLocale::ShortFormat);
-+		QLocale::system().timeFormat(QLocale::LongFormat).remove("t"));
++		Lang::TimeFormat());
  	if (_duration) {
  		_status = tr::lng_call_duration_info(
  			tr::now,
 diff --git a/Telegram/SourceFiles/info/polls/info_polls_results_inner_widget.cpp b/Telegram/SourceFiles/info/polls/info_polls_results_inner_widget.cpp
-index 580b190077..2032b5af80 100644
+index 580b190077..ca20eab24d 100644
 --- a/Telegram/SourceFiles/info/polls/info_polls_results_inner_widget.cpp
 +++ b/Telegram/SourceFiles/info/polls/info_polls_results_inner_widget.cpp
 @@ -134,7 +134,7 @@ void VoterRow::computeTexts() {
@@ -134,42 +136,105 @@ index 580b190077..2032b5af80 100644
  	_timeText = QLocale().toString(
  		parsed.time(),
 -		QLocale::ShortFormat);
-+		QLocale::system().timeFormat(QLocale::LongFormat).remove("t"));
++		Lang::TimeFormat());
  	_timeWidth = st::pollResultsVoteTimeFont->width(_timeText);
  	if (voteDate == nowDate) {
  		return;
 diff --git a/Telegram/SourceFiles/lang/lang_keys.cpp b/Telegram/SourceFiles/lang/lang_keys.cpp
-index f3269a4099..93563061a6 100644
+index f3269a4099..393d98b7e2 100644
 --- a/Telegram/SourceFiles/lang/lang_keys.cpp
 +++ b/Telegram/SourceFiles/lang/lang_keys.cpp
-@@ -175,21 +175,23 @@ QString langDayOfWeekFull(int index) {
- }
+@@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "lang/lang_keys.h"
  
- QString langDateTime(const QDateTime &date) {
-+	const auto timeLocale = QLocale::system().timeFormat(QLocale::LongFormat).remove("t");
- 	return tr::lng_mediaview_date_time(
- 		tr::now,
+ #include "base/const_string.h"
++#include "base/options.h"
+ #include "lang/lang_file_parser.h"
+ #include "ui/integration.h"
+ 
+@@ -180,7 +181,7 @@ QString langDateTime(const QDateTime &date) {
  		lt_date,
  		langDayOfMonth(date.date()),
  		lt_time,
 -		QLocale().toString(date.time(), QLocale::ShortFormat));
-+		QLocale().toString(date.time(), timeLocale));
++		QLocale().toString(date.time(), Lang::TimeFormat()));
  }
  
  QString langDateTimeFull(const QDateTime &date) {
-+	const auto timeLocale = QLocale::system().timeFormat(QLocale::LongFormat).remove("t");
- 	return tr::lng_mediaview_date_time(
- 		tr::now,
+@@ -189,11 +190,43 @@ QString langDateTimeFull(const QDateTime &date) {
  		lt_date,
  		langDayOfMonthFull(date.date()),
  		lt_time,
 -		QLocale().toString(date.time(), QLocale::ShortFormat));
-+		QLocale().toString(date.time(), timeLocale));
++		QLocale().toString(date.time(), Lang::TimeFormat()));
  }
  
  namespace Lang {
+ 
++base::options::toggle TimeWithSeconds({
++	.id = kOptionTimeWithSeconds,
++	.name = "Show time with seconds",
++	.restartRequired = true,
++});
++
++const char kOptionTimeWithSeconds[] = "time-with-seconds";
++
++QString longTimeFormat() {
++	return QLocale::system().timeFormat(QLocale::LongFormat)
++		.remove("t") // Convert to Medium format
++		.remove("[]") // Fix for `yue`
++		.remove("()") // Fix for `fa`
++		.simplified();
++}
++
++QString shortTimeFormat() {
++	return QLocale::system().timeFormat(QLocale::ShortFormat);
++}
++
++QString TimeFormat() {
++	return TimeWithSeconds.value() ? longTimeFormat() : shortTimeFormat();
++}
++
++QString DateTimeFormat() {
++	auto format = QLocale::system().dateTimeFormat(QLocale::ShortFormat);
++	if (TimeWithSeconds.value()) {
++		format.replace(shortTimeFormat(), longTimeFormat());
++	}
++	return format;
++}
++
+ QString DefaultLanguageId() {
+ 	return kDefaultLanguage.utf16();
+ }
+diff --git a/Telegram/SourceFiles/lang/lang_keys.h b/Telegram/SourceFiles/lang/lang_keys.h
+index ec576b07e3..f007cf633a 100644
+--- a/Telegram/SourceFiles/lang/lang_keys.h
++++ b/Telegram/SourceFiles/lang/lang_keys.h
+@@ -37,6 +37,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ 
+ namespace Lang {
+ 
++extern const char kOptionTimeWithSeconds[];
++[[nodiscard]] QString TimeFormat();
++[[nodiscard]] QString DateTimeFormat();
++
+ [[nodiscard]] QString Id();
+ [[nodiscard]] rpl::producer<> Updated();
+ [[nodiscard]] QString GetNonDefaultValue(const QByteArray &key);
+diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
+index a4ab8c00f1..a3a38d740d 100644
+--- a/Telegram/SourceFiles/settings/settings_experimental.cpp
++++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
+@@ -245,6 +245,7 @@ void SetupExperimental(
+ 	addToggle(kForceComposeSearchOneColumn);
+ 	addToggle(HistoryView::kOptionDisableAnimoji);
+ 	addToggle(HistoryView::kOptionCommentsButtonAlwaysRight);
++	addToggle(Lang::kOptionTimeWithSeconds);
+ 	addToggle(ChatHelpers::kOptionUnlimitedRecentStickers);
+ 	addToggle(Ui::kOptionHideAiButton);
+ }
 diff --git a/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp b/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
-index c0aa82fd18..ee3e405726 100644
+index c0aa82fd18..328f935b6a 100644
 --- a/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
 +++ b/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
 @@ -580,7 +580,7 @@ void WhenAction::resolveMinWidth() {
@@ -177,20 +242,19 @@ index c0aa82fd18..ee3e405726 100644
  	const auto sampleTime = QLocale().toString(
  		QTime::currentTime(),
 -		QLocale::ShortFormat);
-+		QLocale::system().timeFormat(QLocale::LongFormat).remove("t"));
++		Lang::TimeFormat());
  	const auto maxTextWidth = added + std::max({
  		width(tr::lng_contacts_loading(tr::now)),
  		(width(tr::lng_context_read_hidden(tr::now))
 diff --git a/Telegram/SourceFiles/ui/text/format_values.cpp b/Telegram/SourceFiles/ui/text/format_values.cpp
-index 7b70065e1f..0d6f9397e7 100644
+index 7b70065e1f..14d23593d9 100644
 --- a/Telegram/SourceFiles/ui/text/format_values.cpp
 +++ b/Telegram/SourceFiles/ui/text/format_values.cpp
-@@ -83,23 +83,15 @@ QString FormatProgressText(qint64 ready, qint64 total) {
+@@ -83,23 +83,14 @@ QString FormatProgressText(qint64 ready, qint64 total) {
  
  QString FormatDateTime(QDateTime date) {
  	const auto now = QDateTime::currentDateTime();
-+	const auto timeLocale = QLocale::system().timeFormat(QLocale::LongFormat).remove("t");
-+	const auto timeText = QLocale().toString(date.time(), timeLocale);
++	const auto timeText = QLocale().toString(date.time(), Lang::TimeFormat());
  	if (date.date() == now.date()) {
 -		return tr::lng_mediaview_today(
 -			tr::now,
@@ -215,12 +279,12 @@ index 7b70065e1f..0d6f9397e7 100644
  	}
  }
  
-@@ -533,7 +525,7 @@ QString FormatDialogsDate(const QDateTime &lastTime) {
+@@ -533,7 +524,7 @@ QString FormatDialogsDate(const QDateTime &lastTime) {
  
  	if ((lastDate == nowDate)
  		|| (std::abs(lastTime.secsTo(now)) < kRecentlyInSeconds)) {
 -		return QLocale().toString(lastTime.time(), QLocale::ShortFormat);
-+		return QLocale().toString(lastTime.time(), QLocale::system().timeFormat(QLocale::LongFormat).remove("t"));
++		return QLocale().toString(lastTime.time(), Lang::TimeFormat());
  	} else if (std::abs(lastDate.daysTo(nowDate)) < 7) {
  		return langDayOfWeek(lastDate);
  	} else {

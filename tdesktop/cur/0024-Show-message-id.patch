@@ -13,7 +13,7 @@ Original author: c0re100 <corehusky@gmail.com>
  4 files changed, 23 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-index 0c134643af..18ed97d186 100644
+index d9e1b4d257..20387597f1 100644
 --- a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 @@ -23,6 +23,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -46,8 +46,8 @@ index 0c134643af..18ed97d186 100644
  	const auto prefix = !author.isEmpty() ? u", "_q : QString();
  	const auto date = edited + ((_data.flags & Data::Flag::ForwardedDate)
  		? Ui::FormatDateTimeSavedFrom(_data.date)
--		: QLocale().toString(_data.date.time(), QLocale::system().timeFormat(QLocale::LongFormat).remove("t")));
-+		: QLocale().toString(_data.date.time(), QLocale::system().timeFormat(QLocale::LongFormat).remove("t")))
+-		: QLocale().toString(_data.date.time(), Lang::TimeFormat()));
++		: QLocale().toString(_data.date.time(), Lang::TimeFormat()))
 +		+ _data.msgId;
  	const auto afterAuthor = prefix + date;
  	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
@@ -98,7 +98,7 @@ index 37b4db077c..cbdc94b8ea 100644
  }
  
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index a4ab8c00f1..4177cd1080 100644
+index a3a38d740d..174e0adcc3 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -45,6 +45,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -109,10 +109,10 @@ index a4ab8c00f1..4177cd1080 100644
  #include "window/window_controller.h"
  #include "window/notifications_manager.h"
  #include "info/info_flexible_scroll.h"
-@@ -245,6 +246,7 @@ void SetupExperimental(
- 	addToggle(kForceComposeSearchOneColumn);
+@@ -246,6 +247,7 @@ void SetupExperimental(
  	addToggle(HistoryView::kOptionDisableAnimoji);
  	addToggle(HistoryView::kOptionCommentsButtonAlwaysRight);
+ 	addToggle(Lang::kOptionTimeWithSeconds);
 +	addToggle(HistoryView::kOptionShowMsgId);
  	addToggle(ChatHelpers::kOptionUnlimitedRecentStickers);
  	addToggle(Ui::kOptionHideAiButton);
