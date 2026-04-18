@@ -16,7 +16,7 @@ cd ../yukigram && git add . && git commit -m "$TAG: patches only"
 ```
 
 If any patches were dropped, reordered, or added,
-please change the list in the README accordingly.
+please change the lists in the README and `REUSE.toml` accordingly.
 
 If both nix and flatpak packages are updated,
 commit message can be changed to simply `$TAG`,

@@ -5,10 +5,37 @@ version = 1
 # TODO: replace `WITH LicenseRef` to `WITH AdditionRef` when supported and/or devendor exception when database is updated.
 
 [[annotations]]
-path = "tdesktop/cur/*.patch"
-precedence = "aggregate"
+path = [
+    "tdesktop/cur/*-Yukigram-branding.patch",
+    "tdesktop/cur/*-Yukigram-build-support.patch",
+    "tdesktop/cur/*-tg-nya-handler.patch",
+    "tdesktop/cur/*-Disable-sponsored-messages.patch",
+    "tdesktop/cur/*-Immediate-restart-button.patch",
+    "tdesktop/cur/*-Allow-disabling-animoji.patch",
+    "tdesktop/cur/*-Support-post-comments-button-as-right-action.patch",
+    "tdesktop/cur/*-Control-calls-with-MPRIS.patch",
+    "tdesktop/cur/*-Remove-copy-restrictions.patch",
+    "tdesktop/cur/*-Allow-forcing-single-column-layout.patch",
+    "tdesktop/cur/*-Open-location-in-OpenStreetMap.patch",
+    "tdesktop/cur/*-Support-wide-messages.patch",
+    "tdesktop/cur/*-Allow-more-accounts.patch",
+    "tdesktop/cur/*-Always-show-scheduled-messages-button.patch",
+    "tdesktop/cur/*-Disable-AI-summaries-on-messages.patch",
+    "tdesktop/cur/*-Unregister-url-schemes.patch",
+    "tdesktop/cur/*-Increase-max-media-sizes.patch",
+    "tdesktop/cur/*-Forward-Copy-Steal-shortcuts.patch",
+    "tdesktop/cur/*-Disable-AI-compose-button-by-default.patch",
+    "tdesktop/cur/*-Disable-dbus-activation.patch",
+    "tdesktop/cur/*-Unshare-phone-number-by-default-on-adding-contact.patch",
+    "tdesktop/cur/*-Clickable-links-in-bio.patch",
+    "tdesktop/cur/*-Show-unofficial-client-users-in-chat.patch",
+    "tdesktop/cur/*-Hide-similar-channels-on-join-message-by-default.patch",
+    "tdesktop/cur/*-Hide-Join-group-button-in-open-groups.patch",
+    "tdesktop/cur/*-Hide-per-chat-wallpaper.patch",
+    "tdesktop/cur/*-Allow-opening-group-from-peer-info.patch",
+]
 SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
-SPDX-FileCopyrightText = "Yukigram contributors"
+SPDX-FileCopyrightText = "Yukigram contributors <https://github.com/yukigram/yukigram>"
 
 [[annotations]]
 path = [
@@ -21,6 +48,7 @@ path = [
     "tdesktop/cur/*-Quick-Admin-list-button.patch",
     "tdesktop/cur/*-Show-message-id.patch",
     "tdesktop/cur/*-Increase-maxSignatureSize.patch",
+    "tdesktop/cur/*-Show-member-join-date.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors, 64Gram contributors <https://github.com/TDesktop-x64/tdesktop>"
