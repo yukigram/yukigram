@@ -63,8 +63,6 @@ Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 
 Contributions welcome!
 
-- Show "open chat" button in group information box
-    (where join/mute/report/leave buttons are and description is)
 - Separate settings group instead of Experimental settings
 - Yukigram settings search support
 - Ban button for join requests
