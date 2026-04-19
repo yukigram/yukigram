@@ -1,0 +1,248 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Sun, 19 Apr 2026 04:49:10 +0300
+Subject: [PATCH] Compact chat list
+
+---
+ Telegram/SourceFiles/dialogs/dialogs.style    |  5 ++++
+ .../SourceFiles/dialogs/dialogs_entry.cpp     |  4 +++
+ .../dialogs/dialogs_inner_widget.cpp          | 10 ++++---
+ Telegram/SourceFiles/dialogs/dialogs_row.cpp  |  5 +++-
+ .../SourceFiles/dialogs/ui/dialogs_layout.cpp | 29 ++++++++++++++++++-
+ .../SourceFiles/dialogs/ui/dialogs_layout.h   |  4 +++
+ .../settings/settings_experimental.cpp        |  1 +
+ 7 files changed, 52 insertions(+), 6 deletions(-)
+
+diff --git a/Telegram/SourceFiles/dialogs/dialogs.style b/Telegram/SourceFiles/dialogs/dialogs.style
+index f80f21aa03..1a49f97b53 100644
+--- a/Telegram/SourceFiles/dialogs/dialogs.style
++++ b/Telegram/SourceFiles/dialogs/dialogs.style
+@@ -99,6 +99,11 @@ defaultDialogRow: DialogRow {
+ 	textLeft: 68px;
+ 	textTop: 34px;
+ }
++compactDialogRow: DialogRow(defaultDialogRow) {
++	height: 36px;
++	photoSize: 20px;
++	nameLeft: 40px;
++}
+ taggedDialogRow: DialogRow(defaultDialogRow) {
+ 	height: 72px;
+ 	textTop: 30px;
+diff --git a/Telegram/SourceFiles/dialogs/dialogs_entry.cpp b/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
+index 9b77e31814..9c5a162aec 100644
+--- a/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
++++ b/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
+@@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ 
+ #include "dialogs/dialogs_key.h"
+ #include "dialogs/dialogs_indexed_list.h"
++#include "dialogs/ui/dialogs_layout.h"
+ #include "data/data_changes.h"
+ #include "data/data_session.h"
+ #include "data/data_folder.h"
+@@ -461,6 +462,9 @@ void Entry::updateChatListEntryHeight() {
+ }
+ 
+ bool Entry::hasChatsFilterTags(FilterId exclude) const {
++	if (Ui::CompactChatList.value()) {
++		return false;
++	}
+ 	if (!owner().chatsFilters().tagsEnabled()) {
+ 		return false;
+ 	}
+diff --git a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
+index 80fdc809be..6aa6f03ef8 100644
+--- a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
++++ b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
+@@ -899,7 +899,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
+ 			}
+ 		}
+ 
++	if (!Ui::CompactChatList.value()) {
+ 		context.st = (forum || monoforum) ? &st::forumDialogRow : _st.get();
++	}
+ 
+ 		auto chatsFilterTags = std::vector<QImage*>();
+ 		if (context.narrow) {
+@@ -1268,7 +1270,7 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
+ 							? _previewPressed
+ 							: _previewSelected));
+ 					Ui::RowPainter::Paint(p, result.get(), {
+-						.st = _st,
++						.st = &st::defaultDialogRow,
+ 						.folder = _openedFolder,
+ 						.forum = _openedForum,
+ 						.currentBg = currentBg(),
+@@ -1346,7 +1348,7 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
+ 							? _searchedPressed
+ 							: _searchedSelected));
+ 					Ui::RowPainter::Paint(p, result.get(), {
+-						.st = _st,
++						.st = &st::defaultDialogRow,
+ 						.folder = _openedFolder,
+ 						.forum = _openedForum,
+ 						.currentBg = currentBg(),
+@@ -1762,7 +1764,7 @@ void InnerWidget::performDrag() {
+ 			('@' + u).toUtf8());
+ 	}
+ 
+-	const auto &st = st::defaultDialogRow;
++	const auto &st = (Ui::CompactChatList.value() ? st::defaultDialogRow : st::compactDialogRow);
+ 	auto pixmap = QPixmap(Size(st.height * style::DevicePixelRatio()));
+ 	pixmap.setDevicePixelRatio(style::DevicePixelRatio());
+ 	pixmap.fill(Qt::transparent);
+@@ -5319,7 +5321,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
+ 		: st::dialogsCallBadgeSize;
+ 	const auto stroke = st::dialogsOnlineBadgeStroke;
+ 	const auto skip = user
+-		? st::dialogsOnlineBadgeSkip
++		? (Ui::CompactChatList.value() ? QPoint() : st::dialogsOnlineBadgeSkip)
+ 		: st::dialogsCallBadgeSkip;
+ 	const auto updateRect = QRect(
+ 		_st->photoSize - skip.x() - size,
+diff --git a/Telegram/SourceFiles/dialogs/dialogs_row.cpp b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
+index 87ba11d6bb..b83e10dceb 100644
+--- a/Telegram/SourceFiles/dialogs/dialogs_row.cpp
++++ b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
+@@ -301,6 +301,9 @@ Row::~Row() {
+ const style::DialogRow &Row::ComputeSt(
+ 		not_null<const Entry*> entry,
+ 		FilterId filterId) {
++	if (Ui::CompactChatList.value()) {
++		return st::compactDialogRow;
++	}
+ 	if (const auto history = entry->asHistory()) {
+ 		const auto hasTags = entry->hasChatsFilterTags(filterId);
+ 		const auto wideRow = history->isForum()
+@@ -513,7 +516,7 @@ void Row::PaintCornerBadgeFrame(
+ 		: st::dialogsCallBadgeSize;
+ 	const auto stroke = st::dialogsOnlineBadgeStroke;
+ 	const auto skip = online
+-		? st::dialogsOnlineBadgeSkip
++		? (Ui::CompactChatList.value() ? QPoint() : st::dialogsOnlineBadgeSkip)
+ 		: st::dialogsCallBadgeSkip;
+ 	const auto shrink = (size / 2) * (1. - topLayerProgress);
+ 
+diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
+index 390d370077..06c7f3032b 100644
+--- a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
++++ b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
+@@ -53,6 +53,13 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ 
+ namespace Dialogs::Ui {
+ 
++base::options::toggle CompactChatList({
++	.id = kOptionCompactChatList,
++	.name = "Compact chat list",
++	.restartRequired = true,
++});
++const char kOptionCompactChatList[] = "compact-chat-list";
++
+ const char kOptionDialogsMuteIcon[] = "dialogs-mute-icon";
+ 
+ namespace {
+@@ -384,6 +391,7 @@ template <typename PaintItemCallback>
+ void PaintRow(
+ 		Painter &p,
+ 		not_null<const BasicRow*> row,
++		bool isFullRow,
+ 		QRect geometry,
+ 		not_null<Entry*> entry,
+ 		VideoUserpic *videoUserpic,
+@@ -395,10 +403,22 @@ void PaintRow(
+ 		HistoryItem *item,
+ 		const Data::Draft *draft,
+ 		QDateTime date,
+-		const PaintContext &context,
++		const PaintContext &in_context,
+ 		BadgesState badgesState,
+ 		base::flags<Flag> flags,
+ 		PaintItemCallback &&paintItemCallback) {
++	bool useFullRow = !Ui::CompactChatList.value()
++		|| in_context.narrow
++		|| isFullRow
++		|| entry->asFolder();
++	const auto context = [useFullRow, in_context] {
++		auto context = in_context;
++		if (!useFullRow) {
++			context.st = &st::compactDialogRow;
++		}
++		return context;
++	}();
++
+ 	const auto supportMode = entry->session().supportMode();
+ 	if (supportMode) {
+ 		draft = nullptr;
+@@ -547,6 +567,7 @@ void PaintRow(
+ 				+ st::dialogsChatTypeSkip);
+ 		}
+ 	}
++if (useFullRow) {
+ 	auto texttop = context.st->textTop;
+ 	if (const auto folder = entry->asFolder()) {
+ 		const auto availableWidth = PaintWideCounter(
+@@ -738,6 +759,10 @@ void PaintRow(
+ 			texttop,
+ 			context.width);
+ 	}
++} else {
++	const auto displayPinnedIcon = badgesState.empty() && entry->isPinnedDialog(context.filter) && (context.filter || !entry->fixedOnTopIndex());
++	rectForName.setWidth(PaintWideCounter(p, context, badgesState, rectForName.top(), rectForName.width(), displayPinnedIcon));
++}
+ 	const auto sendStateIcon = [&]() -> const style::icon* {
+ 		if (!thread) {
+ 			return nullptr;
+@@ -1160,6 +1185,7 @@ void RowPainter::Paint(
+ 	PaintRow(
+ 		p,
+ 		row,
++		sublist || row->topic(),
+ 		QRect(0, 0, context.width, row->height()),
+ 		entry,
+ 		videoUserpic,
+@@ -1271,6 +1297,7 @@ void RowPainter::Paint(
+ 	PaintRow(
+ 		p,
+ 		row,
++		true,
+ 		QRect(0, 0, context.width, context.st->height),
+ 		entry,
+ 		nullptr,
+diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.h b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.h
+index d5a36aeae7..8dfae7d1ea 100644
+--- a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.h
++++ b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.h
+@@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #pragma once
+ 
+ #include "dialogs/ui/dialogs_quick_action_context.h"
++#include "base/options.h"
+ #include "ui/cached_round_corners.h"
+ 
+ namespace style {
+@@ -78,6 +79,9 @@ struct PaintContext {
+ 
+ extern const char kOptionDialogsMuteIcon[];
+ 
++extern base::options::toggle CompactChatList;
++extern const char kOptionCompactChatList[];
++
+ [[nodiscard]] const style::icon *ChatTypeIcon(
+ 	not_null<PeerData*> peer,
+ 	const PaintContext &context);
+diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
+index e8765991b5..ce9f7bf6f3 100644
+--- a/Telegram/SourceFiles/settings/settings_experimental.cpp
++++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
+@@ -214,6 +214,7 @@ void SetupExperimental(
+ 
+ 	addToggle(ChatHelpers::kOptionTabbedPanelShowOnClick);
+ 	addToggle(Dialogs::kOptionForumHideChatsList);
++	addToggle(Dialogs::Ui::kOptionCompactChatList);
+ 	addToggle(Dialogs::Ui::kOptionDialogsMuteIcon);
+ 	addToggle(Core::kOptionFractionalScalingEnabled);
+ 	addToggle(Core::kOptionHighDpiDownscale);
+-- 
+2.53.0
+

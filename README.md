@@ -52,6 +52,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. Always show edit timer
 1. Option to hide per-chat wallpaper and use wallpaper from theme instead
 1. Allow opening group from peer info
+1. Collapsed chats in dialogs view (as in Kotatogram)
 
 Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 
@@ -69,7 +70,6 @@ Contributions welcome!
 - Ban button for join requests
 - Client-side user muting (as in 64Gram)
 - Disable Cocoon AI summary in Instant View
-- Collapsed chats in dialogs view (as in Kotatogram)
 - Ability to change font size
 - Ability to change monospace font
     (or use one from xdg-desktop-portal-gtk)
