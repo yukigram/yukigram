@@ -7,6 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 ---
  Telegram/SourceFiles/api/api_who_reacted.cpp  | 19 +++-------
+ .../SourceFiles/data/data_peer_values.cpp     | 10 ++---
  .../history/history_inner_widget.cpp          |  2 +-
  Telegram/SourceFiles/history/history_item.cpp |  4 +-
  .../history/view/history_view_bottom_info.cpp |  2 +-
@@ -18,7 +19,7 @@ Original author: c0re100 <corehusky@gmail.com>
  .../settings/settings_experimental.cpp        |  1 +
  .../controls/who_reacted_context_action.cpp   |  2 +-
  .../SourceFiles/ui/text/format_values.cpp     | 21 +++--------
- 12 files changed, 59 insertions(+), 39 deletions(-)
+ 13 files changed, 64 insertions(+), 44 deletions(-)
 
 diff --git a/Telegram/SourceFiles/api/api_who_reacted.cpp b/Telegram/SourceFiles/api/api_who_reacted.cpp
 index f3af5312fb..248bf82662 100644
@@ -53,6 +54,41 @@ index f3af5312fb..248bf82662 100644
  }
  
  bool WhoReadExists(not_null<HistoryItem*> item) {
+diff --git a/Telegram/SourceFiles/data/data_peer_values.cpp b/Telegram/SourceFiles/data/data_peer_values.cpp
+index 2e8ee8c52d..4a11612dad 100644
+--- a/Telegram/SourceFiles/data/data_peer_values.cpp
++++ b/Telegram/SourceFiles/data/data_peer_values.cpp
+@@ -461,10 +461,10 @@ QString OnlineText(Data::LastseenStatus status, TimeId now) {
+ 	const auto nowFull = base::unixtime::parse(now);
+ 	const auto locale = QLocale();
+ 	if (onlineFull.date() == nowFull.date()) {
+-		const auto onlineTime = locale.toString(onlineFull.time(), QLocale::ShortFormat);
++		const auto onlineTime = locale.toString(onlineFull.time(), Lang::TimeFormat());
+ 		return tr::lng_status_lastseen_today(tr::now, lt_time, onlineTime);
+ 	} else if (onlineFull.date().addDays(1) == nowFull.date()) {
+-		const auto onlineTime = locale.toString(onlineFull.time(), QLocale::ShortFormat);
++		const auto onlineTime = locale.toString(onlineFull.time(), Lang::TimeFormat());
+ 		return tr::lng_status_lastseen_yesterday(tr::now, lt_time, onlineTime);
+ 	}
+ 	const auto date = locale.toString(onlineFull.date(), QLocale::ShortFormat);
+@@ -489,14 +489,14 @@ QString OnlineTextFull(not_null<UserData*> user, TimeId now) {
+ 	const auto nowFull = base::unixtime::parse(now);
+ 	const auto locale = QLocale();
+ 	if (onlineFull.date() == nowFull.date()) {
+-		const auto onlineTime = locale.toString(onlineFull.time(), QLocale::ShortFormat);
++		const auto onlineTime = locale.toString(onlineFull.time(), Lang::TimeFormat());
+ 		return tr::lng_status_lastseen_today(tr::now, lt_time, onlineTime);
+ 	} else if (onlineFull.date().addDays(1) == nowFull.date()) {
+-		const auto onlineTime = locale.toString(onlineFull.time(), QLocale::ShortFormat);
++		const auto onlineTime = locale.toString(onlineFull.time(), Lang::TimeFormat());
+ 		return tr::lng_status_lastseen_yesterday(tr::now, lt_time, onlineTime);
+ 	}
+ 	const auto date = locale.toString(onlineFull.date(), QLocale::ShortFormat);
+-	const auto time = locale.toString(onlineFull.time(), QLocale::ShortFormat);
++	const auto time = locale.toString(onlineFull.time(), Lang::TimeFormat());
+ 	return tr::lng_status_lastseen_date_time(tr::now, lt_date, date, lt_time, time);
+ }
+ 
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
 index 20aa754f3c..4e28c25789 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
