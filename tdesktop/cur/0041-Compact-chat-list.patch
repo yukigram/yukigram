@@ -4,14 +4,14 @@ Date: Sun, 19 Apr 2026 04:49:10 +0300
 Subject: [PATCH] Compact chat list
 
 ---
- Telegram/SourceFiles/dialogs/dialogs.style    |  5 ++++
+ Telegram/SourceFiles/dialogs/dialogs.style    |  5 +++
  .../SourceFiles/dialogs/dialogs_entry.cpp     |  4 +++
- .../dialogs/dialogs_inner_widget.cpp          | 10 ++++---
- Telegram/SourceFiles/dialogs/dialogs_row.cpp  |  5 +++-
- .../SourceFiles/dialogs/ui/dialogs_layout.cpp | 29 ++++++++++++++++++-
+ .../dialogs/dialogs_inner_widget.cpp          | 10 +++---
+ Telegram/SourceFiles/dialogs/dialogs_row.cpp  |  5 ++-
+ .../SourceFiles/dialogs/ui/dialogs_layout.cpp | 31 +++++++++++++++++--
  .../SourceFiles/dialogs/ui/dialogs_layout.h   |  4 +++
  .../settings/settings_experimental.cpp        |  1 +
- 7 files changed, 52 insertions(+), 6 deletions(-)
+ 7 files changed, 53 insertions(+), 7 deletions(-)
 
 diff --git a/Telegram/SourceFiles/dialogs/dialogs.style b/Telegram/SourceFiles/dialogs/dialogs.style
 index f80f21aa03..1a49f97b53 100644
@@ -125,7 +125,7 @@ index 87ba11d6bb..b83e10dceb 100644
  	const auto shrink = (size / 2) * (1. - topLayerProgress);
  
 diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
-index 390d370077..06c7f3032b 100644
+index 390d370077..0d9f2f3ea6 100644
 --- a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 +++ b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 @@ -53,6 +53,13 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -142,6 +142,15 @@ index 390d370077..06c7f3032b 100644
  const char kOptionDialogsMuteIcon[] = "dialogs-mute-icon";
  
  namespace {
+@@ -113,7 +120,7 @@ int PaintRightButtonImpl(QPainter &p, const PaintContext &context) {
+ 		const auto left = context.width
+ 			- size.width()
+ 			- rightButton->st->margin.right();
+-		const auto top = rightButton->st->margin.top();
++		const auto top = (Ui::CompactChatList.value() ? st::defaultDialogRow.padding.top() : rightButton->st->margin.top());
+ 		p.drawImage(
+ 			left,
+ 			top,
 @@ -384,6 +391,7 @@ template <typename PaintItemCallback>
  void PaintRow(
  		Painter &p,
