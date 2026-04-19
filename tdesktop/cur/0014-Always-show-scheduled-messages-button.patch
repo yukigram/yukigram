@@ -4,13 +4,13 @@ Date: Fri, 3 Apr 2026 04:45:03 +0300
 Subject: [PATCH] Always show scheduled messages button
 
 ---
- Telegram/SourceFiles/history/history_widget.cpp     | 13 ++++++++++++-
- Telegram/SourceFiles/history/history_widget.h       |  3 +++
- .../SourceFiles/settings/settings_experimental.cpp  |  2 ++
- 3 files changed, 17 insertions(+), 1 deletion(-)
+ Telegram/SourceFiles/history/history_widget.cpp      | 12 +++++++++++-
+ Telegram/SourceFiles/history/history_widget.h        |  3 +++
+ .../SourceFiles/settings/settings_experimental.cpp   |  2 ++
+ 3 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index fe7a9944a6..5823dc75a6 100644
+index fe7a9944a6..fd648825da 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -6,6 +6,7 @@ For license and copyright information please follow this link:
@@ -21,14 +21,13 @@ index fe7a9944a6..5823dc75a6 100644
  
  #include "api/api_editing.h"
  #include "api/api_bot.h"
-@@ -202,6 +203,16 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -202,6 +203,15 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include <QtGui/QWindow>
  #include <QtCore/QMimeData>
  
 +base::options::toggle AlwaysShowScheduled({
 +	.id = kOptionAlwaysShowScheduled,
 +	.name = "Always show scheduled messages button",
-+	.description = "No need to hack around",
 +	.restartRequired = true,
 +});
 +
@@ -38,7 +37,7 @@ index fe7a9944a6..5823dc75a6 100644
  namespace {
  
  constexpr auto kMessagesPerPageFirst = 30;
-@@ -3352,7 +3363,7 @@ void HistoryWidget::setupScheduledToggle() {
+@@ -3352,7 +3362,7 @@ void HistoryWidget::setupScheduledToggle() {
  }
  
  void HistoryWidget::refreshScheduledToggle() {

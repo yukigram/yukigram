@@ -4,13 +4,13 @@ Date: Fri, 3 Apr 2026 03:07:17 +0300
 Subject: [PATCH] Allow disabling animoji
 
 ---
- .../history/view/history_view_element.cpp           | 13 ++++++++++++-
- .../SourceFiles/history/view/history_view_element.h |  2 ++
- .../SourceFiles/settings/settings_experimental.cpp  |  2 ++
- 3 files changed, 16 insertions(+), 1 deletion(-)
+ .../history/view/history_view_element.cpp            | 12 +++++++++++-
+ .../SourceFiles/history/view/history_view_element.h  |  2 ++
+ .../SourceFiles/settings/settings_experimental.cpp   |  2 ++
+ 3 files changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 1b595c77a8..5e6eaba01f 100644
+index 1b595c77a8..48a6b5bf1c 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -28,6 +28,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -21,14 +21,13 @@ index 1b595c77a8..5e6eaba01f 100644
  #include "base/unixtime.h"
  #include "boxes/premium_preview_box.h"
  #include "core/application.h"
-@@ -469,8 +470,18 @@ int KeyboardStyle::minButtonWidth(
+@@ -469,8 +470,17 @@ int KeyboardStyle::minButtonWidth(
  	return result;
  }
  
 +base::options::toggle DisableAnimoji({
 +	.id = kOptionDisableAnimoji,
 +	.name = "Disable animated big emoji",
-+	.description = "They don't respect emoji pack setting",
 +	.restartRequired = true,
 +});
 +
@@ -40,7 +39,7 @@ index 1b595c77a8..5e6eaba01f 100644
  std::unique_ptr<Ui::PathShiftGradient> MakePathShiftGradient(
  		not_null<const Ui::ChatStyle*> st,
  		Fn<void()> update) {
-@@ -1544,7 +1555,7 @@ void Element::refreshMedia(Element *replacing) {
+@@ -1544,7 +1554,7 @@ void Element::refreshMedia(Element *replacing) {
  		const auto emoji = isolatedEmoji();
  		const auto emojiStickers = &history()->session().emojiStickersPack();
  		const auto skipPremiumEffect = false;

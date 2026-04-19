@@ -55,7 +55,7 @@ index ff59b47658..8f723c44ee 100644
  
  [[maybe_unused]] constexpr auto kShowFolder = {
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 4e28c25789..c1cb35b67c 100644
+index ae7aabdfa0..127a9956c7 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -12,6 +12,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -66,7 +66,7 @@ index 4e28c25789..c1cb35b67c 100644
  #include "core/click_handler_types.h"
  #include "core/phone_click_handler.h"
  #include "data/data_chat_participant_status.h"
-@@ -485,6 +486,8 @@ HistoryInner::HistoryInner(
+@@ -484,6 +485,8 @@ HistoryInner::HistoryInner(
  		update();
  	}, lifetime());
  
@@ -75,7 +75,7 @@ index 4e28c25789..c1cb35b67c 100644
  	HistoryView::Reactions::SetupManagerList(
  		_reactionsManager.get(),
  		_reactionsItem.value());
-@@ -5561,3 +5564,35 @@ bool CanSendReply(not_null<const HistoryItem*> item) {
+@@ -5560,3 +5563,35 @@ bool CanSendReply(not_null<const HistoryItem*> item) {
  	}
  	return true;
  }
@@ -124,10 +124,10 @@ index 17ae0779cc..2c0e0c32a9 100644
  	[[nodiscard]] auto reactionButtonParameters(
  		not_null<const Element*> view,
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 5823dc75a6..73c9ab1e9b 100644
+index fd648825da..cc7b7c00e4 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -9559,7 +9559,7 @@ bool HistoryWidget::updateCanSendMessage() {
+@@ -9558,7 +9558,7 @@ bool HistoryWidget::updateCanSendMessage() {
  	return true;
  }
  
@@ -136,7 +136,7 @@ index 5823dc75a6..73c9ab1e9b 100644
  	if (!_list) {
  		return;
  	}
-@@ -9568,7 +9568,7 @@ void HistoryWidget::forwardSelected() {
+@@ -9567,7 +9567,7 @@ void HistoryWidget::forwardSelected() {
  		if (const auto strong = weak.get()) {
  			strong->clearSelected();
  		}

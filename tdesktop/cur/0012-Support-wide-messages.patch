@@ -5,7 +5,7 @@ Subject: [PATCH] Support wide messages
 
 ---
  Telegram/SourceFiles/data/data_media_types.cpp      |  3 ++-
- .../SourceFiles/history/history_inner_widget.cpp    | 13 ++++++++++++-
+ .../SourceFiles/history/history_inner_widget.cpp    | 12 +++++++++++-
  Telegram/SourceFiles/history/history_inner_widget.h |  4 ++++
  .../history/view/history_view_element.cpp           |  3 ++-
  .../history/view/history_view_list_widget.cpp       |  3 ++-
@@ -19,7 +19,7 @@ Subject: [PATCH] Support wide messages
  .../history/view/media/history_view_web_page.cpp    |  4 ++++
  .../SourceFiles/settings/settings_experimental.cpp  |  2 ++
  .../window/themes/window_theme_preview.cpp          |  7 ++++---
- 15 files changed, 66 insertions(+), 23 deletions(-)
+ 15 files changed, 65 insertions(+), 23 deletions(-)
 
 diff --git a/Telegram/SourceFiles/data/data_media_types.cpp b/Telegram/SourceFiles/data/data_media_types.cpp
 index 5db673460b..a321919430 100644
@@ -43,7 +43,7 @@ index 5db673460b..a321919430 100644
  		return std::make_unique<HistoryView::Photo>(
  			message,
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 397ec76029..a79c7d6685 100644
+index 397ec76029..3e4c416c01 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -6,6 +6,7 @@ For license and copyright information please follow this link:
@@ -54,14 +54,13 @@ index 397ec76029..a79c7d6685 100644
  
  #include "api/api_polls.h"
  #include "chat_helpers/stickers_emoji_pack.h"
-@@ -125,6 +126,16 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -125,6 +126,15 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include <QtCore/QCoreApplication>
  #include <QtCore/QMimeData>
  
 +base::options::toggle WideMessages({
 +	.id = kOptionWideMessages,
 +	.name = "Wide messages",
-+	.description = "Use every inch of screen space",
 +	.restartRequired = true,
 +});
 +
@@ -71,7 +70,7 @@ index 397ec76029..a79c7d6685 100644
  namespace {
  
  constexpr auto kScrollDateHideTimeout = 1000;
-@@ -4674,7 +4685,7 @@ void HistoryInner::mouseActionUpdate() {
+@@ -4674,7 +4684,7 @@ void HistoryInner::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = _contentWidth;
@@ -96,7 +95,7 @@ index 3a8c42982f..17ae0779cc 100644
  #include "base/timer.h"
  #include "data/data_report.h"
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 5e6eaba01f..37b4db077c 100644
+index 48a6b5bf1c..5e573cd006 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -26,6 +26,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -107,7 +106,7 @@ index 5e6eaba01f..37b4db077c 100644
  #include "history/history_item_components.h"
  #include "history/history_item_helpers.h"
  #include "base/options.h"
-@@ -754,7 +755,7 @@ void UnreadBar::paint(
+@@ -753,7 +754,7 @@ void UnreadBar::paint(
  	p.setPen(st->historyUnreadBarFg());
  
  	int maxwidth = w;

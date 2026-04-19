@@ -6,14 +6,14 @@ Subject: [PATCH] Show message id
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 ---
- .../history/view/history_view_bottom_info.cpp    | 16 +++++++++++++++-
- .../history/view/history_view_bottom_info.h      |  3 +++
- .../history/view/history_view_element.cpp        |  3 +++
- .../settings/settings_experimental.cpp           |  2 ++
- 4 files changed, 23 insertions(+), 1 deletion(-)
+ .../history/view/history_view_bottom_info.cpp     | 15 ++++++++++++++-
+ .../history/view/history_view_bottom_info.h       |  3 +++
+ .../history/view/history_view_element.cpp         |  3 +++
+ .../settings/settings_experimental.cpp            |  2 ++
+ 4 files changed, 22 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-index d9e1b4d257..20387597f1 100644
+index d9e1b4d257..a8ca04656b 100644
 --- a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 @@ -23,6 +23,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -24,14 +24,13 @@ index d9e1b4d257..20387597f1 100644
  #include "base/unixtime.h"
  #include "chat_helpers/emoji_interactions.h"
  #include "core/click_handler_types.h"
-@@ -69,8 +70,17 @@ namespace {
+@@ -69,8 +70,16 @@ namespace {
  	return map.back().text;
  }
  
 +base::options::toggle ShowMsgId({
 +	.id = kOptionShowMsgId,
 +	.name = "Show message ID",
-+	.description = "Show message ID next to message date",
 +	.restartRequired = true,
 +});
 +
@@ -42,7 +41,7 @@ index d9e1b4d257..20387597f1 100644
  struct BottomInfo::Effect {
  	mutable std::unique_ptr<Ui::ReactionFlyAnimation> animation;
  	mutable QImage image;
-@@ -457,7 +467,8 @@ void BottomInfo::layoutDateText() {
+@@ -457,7 +466,8 @@ void BottomInfo::layoutDateText() {
  	const auto prefix = !author.isEmpty() ? u", "_q : QString();
  	const auto date = edited + ((_data.flags & Data::Flag::ForwardedDate)
  		? Ui::FormatDateTimeSavedFrom(_data.date)
@@ -52,7 +51,7 @@ index d9e1b4d257..20387597f1 100644
  	const auto afterAuthor = prefix + date;
  	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
  	const auto authorWidth = st::msgDateFont->width(author);
-@@ -678,6 +689,9 @@ BottomInfo::Data BottomInfoDataFromMessage(not_null<Message*> message) {
+@@ -678,6 +688,9 @@ BottomInfo::Data BottomInfoDataFromMessage(not_null<Message*> message) {
  	if (item->isScheduled()) {
  		result.scheduleRepeatPeriod = item->scheduleRepeatPeriod();
  	}
@@ -84,10 +83,10 @@ index ef3d261c86..7c9013e598 100644
  		int64 tonStake = 0;
  		int stars = 0;
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 37b4db077c..cbdc94b8ea 100644
+index 5e573cd006..9642915724 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
-@@ -710,6 +710,9 @@ QString DateTooltipText(not_null<Element*> view) {
+@@ -709,6 +709,9 @@ QString DateTooltipText(not_null<Element*> view) {
  	if (const auto stars = item->out() ? item->starsPaid() : 0) {
  		dateText += '\n' + tr::lng_you_paid_stars(tr::now, lt_count, stars);
  	}
