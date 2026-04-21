@@ -10,7 +10,7 @@ Subject: [PATCH] Support post comments button as right action
  3 files changed, 25 insertions(+), 6 deletions(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index f975a839c0..9929463181 100644
+index 57f8e60f87..54be77ba88 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -6,6 +6,7 @@ For license and copyright information please follow this link:
@@ -21,7 +21,7 @@ index f975a839c0..9929463181 100644
  
  #include "api/api_suggest_post.h"
  #include "api/api_transcribes.h"
-@@ -195,8 +196,18 @@ struct BadgePillGeometry {
+@@ -194,8 +195,18 @@ struct BadgePillGeometry {
  	};
  }
  
@@ -40,7 +40,7 @@ index f975a839c0..9929463181 100644
  struct Message::CommentsButton {
  	std::unique_ptr<Ui::RippleAnimation> ripple;
  	std::vector<UserpicInRow> userpics;
-@@ -567,7 +578,7 @@ void Message::animateReaction(Ui::ReactionFlyAnimationArgs &&args) {
+@@ -566,7 +577,7 @@ void Message::animateReaction(Ui::ReactionFlyAnimationArgs &&args) {
  	if (bubble) {
  		// Entry page is always a bubble bottom.
  		auto inner = g;
@@ -49,7 +49,7 @@ index f975a839c0..9929463181 100644
  			inner.setHeight(inner.height() - st::historyCommentsButtonHeight);
  		}
  		auto trect = inner.marginsRemoved(st::msgPadding);
-@@ -1146,7 +1157,7 @@ void Message::draw(Painter &p, const PaintContext &context) const {
+@@ -1145,7 +1156,7 @@ void Message::draw(Painter &p, const PaintContext &context) const {
  	const auto customHighlight = mediaDisplayed && media->customHighlight();
  	if (!mediaSelectionIntervals.empty() || customHighlight) {
  		auto localMediaBottom = gForIntervals.top() + gForIntervals.height();
@@ -58,7 +58,7 @@ index f975a839c0..9929463181 100644
  			localMediaBottom -= st::historyCommentsButtonHeight;
  		}
  		if (_viewButton) {
-@@ -1679,6 +1690,9 @@ void Message::paintCommentsButton(
+@@ -1678,6 +1689,9 @@ void Message::paintCommentsButton(
  	if (!data()->repliesAreComments() && !data()->externalReply()) {
  		return;
  	}
@@ -68,7 +68,7 @@ index f975a839c0..9929463181 100644
  	if (!_comments) {
  		_comments = std::make_unique<CommentsButton>();
  		history()->owner().registerHeavyViewPart(const_cast<Message*>(this));
-@@ -2380,7 +2394,7 @@ PointState Message::pointState(QPoint point) const {
+@@ -2378,7 +2392,7 @@ PointState Message::pointState(QPoint point) const {
  			auto mediaOnBottom = (mediaDisplayed && media->isBubbleBottom()) || check || (entry/* && entry->isBubbleBottom()*/);
  			auto mediaOnTop = (mediaDisplayed && media->isBubbleTop()) || (entry && entry->isBubbleTop());
  
@@ -77,7 +77,7 @@ index f975a839c0..9929463181 100644
  				g.setHeight(g.height() - st::historyCommentsButtonHeight);
  			}
  
-@@ -2713,7 +2727,7 @@ BottomRippleMask Message::bottomRippleMask(int buttonHeight) const {
+@@ -2711,7 +2725,7 @@ BottomRippleMask Message::bottomRippleMask(int buttonHeight) const {
  }
  
  void Message::createCommentsButtonRipple() {

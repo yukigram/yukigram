@@ -43,7 +43,7 @@ index 5db673460b..a321919430 100644
  		return std::make_unique<HistoryView::Photo>(
  			message,
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 397ec76029..3e4c416c01 100644
+index 8019707f42..1bd99244f4 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -6,6 +6,7 @@ For license and copyright information please follow this link:
@@ -54,7 +54,7 @@ index 397ec76029..3e4c416c01 100644
  
  #include "api/api_polls.h"
  #include "chat_helpers/stickers_emoji_pack.h"
-@@ -125,6 +126,15 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -126,6 +127,15 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include <QtCore/QCoreApplication>
  #include <QtCore/QMimeData>
  
@@ -70,7 +70,7 @@ index 397ec76029..3e4c416c01 100644
  namespace {
  
  constexpr auto kScrollDateHideTimeout = 1000;
-@@ -4674,7 +4684,7 @@ void HistoryInner::mouseActionUpdate() {
+@@ -4680,7 +4690,7 @@ void HistoryInner::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = _contentWidth;
@@ -137,7 +137,7 @@ index 88ac50002f..51069e8f08 100644
  					}
  					auto widthForDate = maxwidth - st::msgServiceMargin.left() - st::msgServiceMargin.left();
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 9929463181..f96cb9ced6 100644
+index 54be77ba88..6e9346f928 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -15,6 +15,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -219,7 +219,7 @@ index 2c08e5bb70..51fac0032d 100644
  	}
  	contentWidth -= st::msgServiceMargin.left() + st::msgServiceMargin.left(); // two small margins
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_document.cpp b/Telegram/SourceFiles/history/view/media/history_view_document.cpp
-index c97db4250f..deee73cdea 100644
+index cc8ad9f416..688cb877b5 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_document.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_document.cpp
 @@ -17,6 +17,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

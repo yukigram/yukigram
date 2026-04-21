@@ -12,7 +12,7 @@ Subject: [PATCH] Yukigram build support
 
 diff --git a/build.sh b/build.sh
 new file mode 100755
-index 0000000000..1bc764a7c9
+index 0000000000..267a7d8a5b
 --- /dev/null
 +++ b/build.sh
 @@ -0,0 +1,14 @@
@@ -26,7 +26,7 @@ index 0000000000..1bc764a7c9
 +    -u $(id -u) \
 +    -v "$PWD:/usr/src/tdesktop" \
 +    -e CONFIG=${CONFIG:-Release} \
-+    ghcr.io/telegramdesktop/tdesktop/centos_env@sha256:892f22d6d6b7c9f62ea5b3c71223e488452fc5b0a22790c5f26f9a4579d3a330 \
++    ghcr.io/telegramdesktop/tdesktop/centos_env@sha256:2a7b92ae9e6ba1dc7e9e35ae6d193f317f1f91cb076c7cb5084d18cbed393f71 \
 +    /usr/src/tdesktop/Telegram/build/docker/centos_env/build.sh \
 +    -D TDESKTOP_API_ID=611335 \
 +    -D TDESKTOP_API_HASH=d524b414d21f4d37f08684c1df41ac9c

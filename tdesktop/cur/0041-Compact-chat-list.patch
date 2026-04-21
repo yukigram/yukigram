@@ -30,7 +30,7 @@ index f80f21aa03..1a49f97b53 100644
  	height: 72px;
  	textTop: 30px;
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_entry.cpp b/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
-index 9b77e31814..9c5a162aec 100644
+index 5a6ab2d037..518d349b89 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
 @@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -38,10 +38,10 @@ index 9b77e31814..9c5a162aec 100644
  #include "dialogs/dialogs_key.h"
  #include "dialogs/dialogs_indexed_list.h"
 +#include "dialogs/ui/dialogs_layout.h"
+ #include "base/unixtime.h"
  #include "data/data_changes.h"
  #include "data/data_session.h"
- #include "data/data_folder.h"
-@@ -461,6 +462,9 @@ void Entry::updateChatListEntryHeight() {
+@@ -490,6 +491,9 @@ void Entry::updateChatListEntryHeight() {
  }
  
  bool Entry::hasChatsFilterTags(FilterId exclude) const {
@@ -102,7 +102,7 @@ index 80fdc809be..6aa6f03ef8 100644
  	const auto updateRect = QRect(
  		_st->photoSize - skip.x() - size,
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_row.cpp b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
-index 87ba11d6bb..b83e10dceb 100644
+index acd8c8cb1c..9f58bb244d 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 @@ -301,6 +301,9 @@ Row::~Row() {
@@ -125,10 +125,10 @@ index 87ba11d6bb..b83e10dceb 100644
  	const auto shrink = (size / 2) * (1. - topLayerProgress);
  
 diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
-index 390d370077..0d9f2f3ea6 100644
+index ac29683c5b..e1d593ca17 100644
 --- a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 +++ b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
-@@ -53,6 +53,13 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -52,6 +52,13 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  
  namespace Dialogs::Ui {
  
@@ -142,7 +142,7 @@ index 390d370077..0d9f2f3ea6 100644
  const char kOptionDialogsMuteIcon[] = "dialogs-mute-icon";
  
  namespace {
-@@ -113,7 +120,7 @@ int PaintRightButtonImpl(QPainter &p, const PaintContext &context) {
+@@ -115,7 +122,7 @@ int PaintRightButtonImpl(QPainter &p, const PaintContext &context) {
  		const auto left = context.width
  			- size.width()
  			- rightButton->st->margin.right();
@@ -151,7 +151,7 @@ index 390d370077..0d9f2f3ea6 100644
  		p.drawImage(
  			left,
  			top,
-@@ -384,6 +391,7 @@ template <typename PaintItemCallback>
+@@ -399,6 +406,7 @@ template <typename PaintItemCallback>
  void PaintRow(
  		Painter &p,
  		not_null<const BasicRow*> row,
@@ -159,12 +159,13 @@ index 390d370077..0d9f2f3ea6 100644
  		QRect geometry,
  		not_null<Entry*> entry,
  		VideoUserpic *videoUserpic,
-@@ -395,10 +403,22 @@ void PaintRow(
+@@ -410,11 +418,23 @@ void PaintRow(
  		HistoryItem *item,
  		const Data::Draft *draft,
- 		QDateTime date,
+ 		TimeId date,
 -		const PaintContext &context,
 +		const PaintContext &in_context,
+ 		const FakeRow *fakeRow,
  		BadgesState badgesState,
  		base::flags<Flag> flags,
  		PaintItemCallback &&paintItemCallback) {
@@ -183,7 +184,7 @@ index 390d370077..0d9f2f3ea6 100644
  	const auto supportMode = entry->session().supportMode();
  	if (supportMode) {
  		draft = nullptr;
-@@ -547,6 +567,7 @@ void PaintRow(
+@@ -563,6 +583,7 @@ void PaintRow(
  				+ st::dialogsChatTypeSkip);
  		}
  	}
@@ -191,7 +192,7 @@ index 390d370077..0d9f2f3ea6 100644
  	auto texttop = context.st->textTop;
  	if (const auto folder = entry->asFolder()) {
  		const auto availableWidth = PaintWideCounter(
-@@ -738,6 +759,10 @@ void PaintRow(
+@@ -752,6 +773,10 @@ void PaintRow(
  			texttop,
  			context.width);
  	}
@@ -202,7 +203,7 @@ index 390d370077..0d9f2f3ea6 100644
  	const auto sendStateIcon = [&]() -> const style::icon* {
  		if (!thread) {
  			return nullptr;
-@@ -1160,6 +1185,7 @@ void RowPainter::Paint(
+@@ -1166,6 +1191,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,
@@ -210,7 +211,7 @@ index 390d370077..0d9f2f3ea6 100644
  		QRect(0, 0, context.width, row->height()),
  		entry,
  		videoUserpic,
-@@ -1271,6 +1297,7 @@ void RowPainter::Paint(
+@@ -1278,6 +1304,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,
