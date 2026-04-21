@@ -2,7 +2,8 @@ name: Binary cache
 on:
   push:
     tags:
-      - v*
+      - "v*"
+      - "!v*-*"
   workflow_dispatch:
     inputs:
       short_run:
