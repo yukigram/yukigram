@@ -1,5 +1,20 @@
 # Contributing notes
 
+This is mostly a collection of notes and other tips.
+
+## Adding a new patch
+
+Proceed as if you were porting a patchset
+to the current tdesktop version,
+and add patches over existing ones
+before running `git format-patch`.
+
+Use `git rebase -i $TAG` to reorder patches if needed.
+Yukigram "structure" patches,
+such as "branding" or "build support"
+should go before "feature" patches,
+such as "wide messages" or "show message id".
+
 ## Porting to newer tdesktop versions
 
 Patchset supports only one version out of the box.
@@ -33,6 +48,13 @@ and is generally ready to be used.
 1. change version in `package.nix` and set hash to `lib.fakeHash`
 2. fail a build once to get the correct hash
 3. (optional) build again with `nix-build --argstr appId io.github.yukigram.devel`
+
+Before I have set incremental buils up for myself,
+I used the following snippet to support overnight builds:
+
+```shell
+gnome-session-inhibit --inhibit=idle --inhibit-only & nix-build --argstr appId io.github.yukigram.devel --show-trace; kill %%
+```
 
 ### Updating Flatpak manifest
 
@@ -110,3 +132,10 @@ Downgrading versions is not supported.
 2. `flatpak install --user .../flatpak-x86_64/ io.github.yukigram`
 
 For development versions, use `io.github.yukigram.devel`
+
+### with nix binary cache
+
+I think it is possible,
+but I haven't confirmed it myself.
+Can possibly be done with `python3 -m http.server`
+and a right `extra-substituter` URL.

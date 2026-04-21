@@ -112,8 +112,11 @@ it is currently not possible to patch submodules.
 Support for such patching may be added in the future,
 when it becomes essential.
 
+Some more information can be found in [`CONTRIBUTING.md`].
+
 [git-am]: https://git-scm.com/docs/git-am
 [range-diff]: https://git-scm.com/docs/git-range-diff
+[`CONTRIBUTING.md`]: ./CONTRIBUTING.md
 
 ## Installation
 
