@@ -1,85 +1,76 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
-Date: Fri, 3 Apr 2026 04:45:03 +0300
+Date: Tue, 21 Apr 2026 19:31:21 +0300
 Subject: [PATCH] Always show scheduled messages button
 
 ---
- Telegram/SourceFiles/history/history_widget.cpp      | 12 +++++++++++-
- Telegram/SourceFiles/history/history_widget.h        |  3 +++
- .../SourceFiles/settings/settings_experimental.cpp   |  2 ++
- 3 files changed, 16 insertions(+), 1 deletion(-)
+ Telegram/SourceFiles/core/yukigram_settings.cpp            | 7 +++++++
+ Telegram/SourceFiles/core/yukigram_settings.h              | 3 +++
+ Telegram/SourceFiles/history/history_widget.cpp            | 3 ++-
+ .../SourceFiles/settings/sections/settings_yukigram.cpp    | 1 +
+ 4 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 0f3a21055b..cec596f861 100644
---- a/Telegram/SourceFiles/history/history_widget.cpp
-+++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -6,6 +6,7 @@ For license and copyright information please follow this link:
- https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- */
- #include "history/history_widget.h"
-+#include "base/options.h"
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.cpp b/Telegram/SourceFiles/core/yukigram_settings.cpp
+index 6100f9e2b8..9beb9e4300 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.cpp
++++ b/Telegram/SourceFiles/core/yukigram_settings.cpp
+@@ -40,4 +40,11 @@ base::options::toggle WideMessages({
+ 	.restartRequired = true,
+ });
  
- #include "api/api_editing.h"
- #include "api/api_bot.h"
-@@ -202,6 +203,15 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include <QtGui/QWindow>
- #include <QtCore/QMimeData>
- 
++const char kOptionAlwaysShowScheduled[] = "always-show-scheduled";
 +base::options::toggle AlwaysShowScheduled({
 +	.id = kOptionAlwaysShowScheduled,
 +	.name = "Always show scheduled messages button",
 +	.restartRequired = true,
 +});
 +
-+const char kOptionAlwaysShowScheduled[]
-+	= "always-show-scheduled";
-+
- namespace {
+ } // namespace Core::YukigramSettings
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.h b/Telegram/SourceFiles/core/yukigram_settings.h
+index 209d786e59..2cb2e68591 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.h
++++ b/Telegram/SourceFiles/core/yukigram_settings.h
+@@ -19,4 +19,7 @@ extern base::options::toggle ForceMobileLayout;
+ extern const char kOptionWideMessages[];
+ extern base::options::toggle WideMessages;
  
- constexpr auto kMessagesPerPageFirst = 30;
-@@ -3357,7 +3367,7 @@ void HistoryWidget::setupScheduledToggle() {
++extern const char kOptionAlwaysShowScheduled[];
++extern base::options::toggle AlwaysShowScheduled;
++
+ } // namespace Core::YukigramSettings
+diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
+index 0f3a21055b..1213afa130 100644
+--- a/Telegram/SourceFiles/history/history_widget.cpp
++++ b/Telegram/SourceFiles/history/history_widget.cpp
+@@ -31,6 +31,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "boxes/peers/edit_peer_permissions_box.h" // ShowAboutGigagroup.
+ #include "boxes/peers/edit_peer_requests_box.h"
+ #include "core/core_settings.h"
++#include "core/yukigram_settings.h"
+ #include "core/file_utilities.h"
+ #include "core/mime_type.h"
+ #include "history/view/history_view_draw_to_reply.h"
+@@ -3357,7 +3358,7 @@ void HistoryWidget::setupScheduledToggle() {
  }
  
  void HistoryWidget::refreshScheduledToggle() {
 -	const auto has = _history
-+	const auto has = AlwaysShowScheduled.value() || _history
++	const auto has = Core::YukigramSettings::AlwaysShowScheduled.value() || _history
  		&& _canSendMessages
  		&& (session().scheduledMessages().count(_history) > 0);
  	if (!_scheduled && has) {
-diff --git a/Telegram/SourceFiles/history/history_widget.h b/Telegram/SourceFiles/history/history_widget.h
-index 3f79a66915..e467e39ada 100644
---- a/Telegram/SourceFiles/history/history_widget.h
-+++ b/Telegram/SourceFiles/history/history_widget.h
-@@ -6,6 +6,9 @@ For license and copyright information please follow this link:
- https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- */
- #pragma once
-+#include "base/options.h"
-+extern base::options::toggle AlwaysShowScheduled;
-+extern const char kOptionAlwaysShowScheduled[];
+diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+index 360a74301f..dc4e2af7f2 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+@@ -81,6 +81,7 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
+     addToggle(Core::YukigramSettings::kOptionMprisCallHangup, { u"yukigram"_q, u"mpris"_q, u"calls"_q });
+     addToggle(Core::YukigramSettings::kOptionForceMobileLayout, { u"yukigram"_q, u"mobile"_q, u"single-column"_q, u"layout"_q });
+     addToggle(Core::YukigramSettings::kOptionWideMessages, { u"yukigram"_q, u"wide"_q, u"messages"_q });
++	addToggle(Core::YukigramSettings::kOptionAlwaysShowScheduled, { u"yukigram"_q, u"show"_q, u"scheduled"_q, u"messages"_q });
+ }
  
- #include "history/view/controls/history_view_compose_media_edit_manager.h"
- #include "history/view/history_view_corner_buttons.h"
-diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 2dae6059bb..a4ab8c00f1 100644
---- a/Telegram/SourceFiles/settings/settings_experimental.cpp
-+++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -33,6 +33,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "dialogs/ui/dialogs_layout.h"
- #include "history/history_item_components.h"
- #include "info/profile/info_profile_actions.h"
-+#include "history/history_widget.h"
- #include "lang/lang_keys.h"
- #include "mainwindow.h"
- #include "mainwidget.h"
-@@ -222,6 +223,7 @@ void SetupExperimental(
- 	addToggle(kOptionWideMessages);
- 	addToggle(Webview::kOptionWebviewDebugEnabled);
- 	addToggle(Webview::kOptionWebviewLegacyEdge);
-+	addToggle(kOptionAlwaysShowScheduled);
- 	addToggle(kOptionAutoScrollInactiveChat);
- 	addToggle(Window::Notifications::kOptionHideReplyButton);
- 	addToggle(Window::Notifications::kOptionCustomNotification);
+ class Yukigram : public Section<Yukigram> {
 -- 
 2.53.0
 

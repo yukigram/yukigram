@@ -1,86 +1,77 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
-Date: Fri, 3 Apr 2026 03:07:17 +0300
+Date: Tue, 21 Apr 2026 17:41:37 +0300
 Subject: [PATCH] Allow disabling animoji
 
 ---
- .../history/view/history_view_element.cpp            | 12 +++++++++++-
- .../SourceFiles/history/view/history_view_element.h  |  2 ++
- .../SourceFiles/settings/settings_experimental.cpp   |  2 ++
- 3 files changed, 15 insertions(+), 1 deletion(-)
+ Telegram/SourceFiles/core/yukigram_settings.cpp            | 7 +++++++
+ Telegram/SourceFiles/core/yukigram_settings.h              | 3 +++
+ Telegram/SourceFiles/history/view/history_view_element.cpp | 3 ++-
+ .../SourceFiles/settings/sections/settings_yukigram.cpp    | 2 ++
+ 4 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 1b595c77a8..48a6b5bf1c 100644
---- a/Telegram/SourceFiles/history/view/history_view_element.cpp
-+++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
-@@ -28,6 +28,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "history/history.h"
- #include "history/history_item_components.h"
- #include "history/history_item_helpers.h"
-+#include "base/options.h"
- #include "base/unixtime.h"
- #include "boxes/premium_preview_box.h"
- #include "core/application.h"
-@@ -469,8 +470,17 @@ int KeyboardStyle::minButtonWidth(
- 	return result;
- }
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.cpp b/Telegram/SourceFiles/core/yukigram_settings.cpp
+index 6c2165a196..7a573035fd 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.cpp
++++ b/Telegram/SourceFiles/core/yukigram_settings.cpp
+@@ -2,4 +2,11 @@
  
+ namespace Core::YukigramSettings {
+ 
++const char kOptionDisableAnimoji[] = "disable-animoji";
 +base::options::toggle DisableAnimoji({
 +	.id = kOptionDisableAnimoji,
 +	.name = "Disable animated big emoji",
 +	.restartRequired = true,
 +});
 +
- } // namespace
+ } // namespace Core::YukigramSettings
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.h b/Telegram/SourceFiles/core/yukigram_settings.h
+index a1f2611f9e..112c23c506 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.h
++++ b/Telegram/SourceFiles/core/yukigram_settings.h
+@@ -4,4 +4,7 @@
  
-+const char kOptionDisableAnimoji[]
-+	= "disable-animoji";
+ namespace Core::YukigramSettings {
+ 
++extern const char kOptionDisableAnimoji[];
++extern base::options::toggle DisableAnimoji;
 +
- std::unique_ptr<Ui::PathShiftGradient> MakePathShiftGradient(
- 		not_null<const Ui::ChatStyle*> st,
- 		Fn<void()> update) {
-@@ -1544,7 +1554,7 @@ void Element::refreshMedia(Element *replacing) {
+ } // namespace Core::YukigramSettings
+diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
+index 1b595c77a8..e4c45a5e74 100644
+--- a/Telegram/SourceFiles/history/view/history_view_element.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
+@@ -34,6 +34,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "core/core_settings.h"
+ #include "core/click_handler_types.h"
+ #include "core/ui_integration.h"
++#include "core/yukigram_settings.h"
+ #include "main/main_app_config.h"
+ #include "main/main_session.h"
+ #include "chat_helpers/stickers_emoji_pack.h"
+@@ -1544,7 +1545,7 @@ void Element::refreshMedia(Element *replacing) {
  		const auto emoji = isolatedEmoji();
  		const auto emojiStickers = &history()->session().emojiStickersPack();
  		const auto skipPremiumEffect = false;
 -		if (const auto sticker = emojiStickers->stickerForEmoji(emoji)) {
-+		if (const auto sticker = emojiStickers->stickerForEmoji(emoji); sticker && (!DisableAnimoji.value())) {
++		if (const auto sticker = emojiStickers->stickerForEmoji(emoji); sticker && (!Core::YukigramSettings::DisableAnimoji.value())) {
  			auto content = std::make_unique<Sticker>(
  				this,
  				sticker.document,
-diff --git a/Telegram/SourceFiles/history/view/history_view_element.h b/Telegram/SourceFiles/history/view/history_view_element.h
-index b95b8371b6..82e3e49025 100644
---- a/Telegram/SourceFiles/history/view/history_view_element.h
-+++ b/Telegram/SourceFiles/history/view/history_view_element.h
-@@ -93,6 +93,8 @@ enum class ElementChatMode : char {
- 	Narrow, // monoforum with left tabs
- };
- 
-+extern const char kOptionDisableAnimoji[];
+diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+index c07ec57a3e..3bc7adf6fe 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+@@ -75,6 +75,8 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
+     const auto addToggle = [&](const char id[], QStringList keywords) {
+         BuildToggle(builder, keywords, base::options::lookup<bool>(id));
+     };
 +
- class Element;
- class ElementDelegate {
- public:
-diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 31315bdae3..af2dd0b35c 100644
---- a/Telegram/SourceFiles/settings/settings_experimental.cpp
-+++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "window/main_window.h"
- #include "window/window_peer_menu.h"
- #include "window/window_session_controller.h"
-+#include "history/view/history_view_element.h"
- #include "window/window_controller.h"
- #include "window/notifications_manager.h"
- #include "info/info_flexible_scroll.h"
-@@ -233,6 +234,7 @@ void SetupExperimental(
- 	addToggle(Info::kAlternativeScrollProcessing);
- 	addToggle(kModerateCommonGroups);
- 	addToggle(kForceComposeSearchOneColumn);
-+	addToggle(HistoryView::kOptionDisableAnimoji);
- 	addToggle(ChatHelpers::kOptionUnlimitedRecentStickers);
- 	addToggle(Ui::kOptionHideAiButton);
++    addToggle(Core::YukigramSettings::kOptionDisableAnimoji, { u"yukigram"_q, u"disable"_q, u"animoji"_q });
  }
+ 
+ class Yukigram : public Section<Yukigram> {
 -- 
 2.53.0
 

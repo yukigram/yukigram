@@ -1,25 +1,27 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
-Date: Sat, 4 Apr 2026 14:42:25 +0300
+Date: Tue, 21 Apr 2026 19:39:33 +0300
 Subject: [PATCH] Show time with seconds
 
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 ---
- Telegram/SourceFiles/api/api_who_reacted.cpp  | 19 +++-------
- .../SourceFiles/data/data_peer_values.cpp     | 10 ++---
+ Telegram/SourceFiles/api/api_who_reacted.cpp  | 19 ++++--------
+ .../SourceFiles/core/yukigram_settings.cpp    |  7 +++++
+ Telegram/SourceFiles/core/yukigram_settings.h |  3 ++
+ .../SourceFiles/data/data_peer_values.cpp     | 10 +++----
  .../history/history_inner_widget.cpp          |  2 +-
- Telegram/SourceFiles/history/history_item.cpp |  4 +-
+ Telegram/SourceFiles/history/history_item.cpp |  4 +--
  .../history/view/history_view_bottom_info.cpp |  2 +-
  .../history/view/history_view_list_widget.cpp |  2 +-
  .../history/view/media/history_view_call.cpp  |  2 +-
  .../polls/info_polls_results_inner_widget.cpp |  2 +-
- Telegram/SourceFiles/lang/lang_keys.cpp       | 37 ++++++++++++++++++-
- Telegram/SourceFiles/lang/lang_keys.h         |  4 ++
- .../settings/settings_experimental.cpp        |  1 +
+ Telegram/SourceFiles/lang/lang_keys.cpp       | 29 +++++++++++++++++--
+ Telegram/SourceFiles/lang/lang_keys.h         |  3 ++
+ .../settings/sections/settings_yukigram.cpp   |  1 +
  .../controls/who_reacted_context_action.cpp   |  2 +-
- .../SourceFiles/ui/text/format_values.cpp     | 21 +++--------
- 13 files changed, 64 insertions(+), 44 deletions(-)
+ .../SourceFiles/ui/text/format_values.cpp     | 21 ++++----------
+ 15 files changed, 65 insertions(+), 44 deletions(-)
 
 diff --git a/Telegram/SourceFiles/api/api_who_reacted.cpp b/Telegram/SourceFiles/api/api_who_reacted.cpp
 index f3af5312fb..248bf82662 100644
@@ -54,6 +56,34 @@ index f3af5312fb..248bf82662 100644
  }
  
  bool WhoReadExists(not_null<HistoryItem*> item) {
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.cpp b/Telegram/SourceFiles/core/yukigram_settings.cpp
+index 9beb9e4300..f980358c0f 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.cpp
++++ b/Telegram/SourceFiles/core/yukigram_settings.cpp
+@@ -47,4 +47,11 @@ base::options::toggle AlwaysShowScheduled({
+ 	.restartRequired = true,
+ });
+ 
++const char kOptionTimeWithSeconds[] = "time-with-seconds";
++base::options::toggle TimeWithSeconds({
++	.id = kOptionTimeWithSeconds,
++	.name = "Show time with seconds",
++	.restartRequired = true,
++});
++
+ } // namespace Core::YukigramSettings
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.h b/Telegram/SourceFiles/core/yukigram_settings.h
+index 2cb2e68591..be0bc2babc 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.h
++++ b/Telegram/SourceFiles/core/yukigram_settings.h
+@@ -22,4 +22,7 @@ extern base::options::toggle WideMessages;
+ extern const char kOptionAlwaysShowScheduled[];
+ extern base::options::toggle AlwaysShowScheduled;
+ 
++extern const char kOptionTimeWithSeconds[];
++extern base::options::toggle TimeWithSeconds;
++
+ } // namespace Core::YukigramSettings
 diff --git a/Telegram/SourceFiles/data/data_peer_values.cpp b/Telegram/SourceFiles/data/data_peer_values.cpp
 index 2e8ee8c52d..4a11612dad 100644
 --- a/Telegram/SourceFiles/data/data_peer_values.cpp
@@ -90,10 +120,10 @@ index 2e8ee8c52d..4a11612dad 100644
  }
  
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 599e3e7d07..4380226135 100644
+index a00f0e3e03..1f122d3acf 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3707,7 +3707,7 @@ TextForMimeData HistoryInner::getSelectedText() const {
+@@ -3698,7 +3698,7 @@ TextForMimeData HistoryInner::getSelectedText() const {
  		const auto i = texts.emplace(item->position(), Part{
  			.name = item->author()->name(),
  			.time = QString("[%1] ").arg(
@@ -138,7 +168,7 @@ index 1dcb93feb4..d9e1b4d257 100644
  	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
  	const auto authorWidth = st::msgDateFont->width(author);
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 51069e8f08..6448d95153 100644
+index 1a61af4212..fc7f9d82f0 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -2686,7 +2686,7 @@ TextForMimeData ListWidget::getSelectedText() const {
@@ -177,14 +207,14 @@ index 580b190077..ca20eab24d 100644
  	if (voteDate == nowDate) {
  		return;
 diff --git a/Telegram/SourceFiles/lang/lang_keys.cpp b/Telegram/SourceFiles/lang/lang_keys.cpp
-index f3269a4099..393d98b7e2 100644
+index f3269a4099..58b93aacac 100644
 --- a/Telegram/SourceFiles/lang/lang_keys.cpp
 +++ b/Telegram/SourceFiles/lang/lang_keys.cpp
 @@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "lang/lang_keys.h"
  
  #include "base/const_string.h"
-+#include "base/options.h"
++#include "core/yukigram_settings.h"
  #include "lang/lang_file_parser.h"
  #include "ui/integration.h"
  
@@ -197,7 +227,7 @@ index f3269a4099..393d98b7e2 100644
  }
  
  QString langDateTimeFull(const QDateTime &date) {
-@@ -189,11 +190,43 @@ QString langDateTimeFull(const QDateTime &date) {
+@@ -189,11 +190,35 @@ QString langDateTimeFull(const QDateTime &date) {
  		lt_date,
  		langDayOfMonthFull(date.date()),
  		lt_time,
@@ -207,14 +237,6 @@ index f3269a4099..393d98b7e2 100644
  
  namespace Lang {
  
-+base::options::toggle TimeWithSeconds({
-+	.id = kOptionTimeWithSeconds,
-+	.name = "Show time with seconds",
-+	.restartRequired = true,
-+});
-+
-+const char kOptionTimeWithSeconds[] = "time-with-seconds";
-+
 +QString longTimeFormat() {
 +	return QLocale::system().timeFormat(QLocale::LongFormat)
 +		.remove("t") // Convert to Medium format
@@ -228,12 +250,12 @@ index f3269a4099..393d98b7e2 100644
 +}
 +
 +QString TimeFormat() {
-+	return TimeWithSeconds.value() ? longTimeFormat() : shortTimeFormat();
++	return Core::YukigramSettings::TimeWithSeconds.value() ? longTimeFormat() : shortTimeFormat();
 +}
 +
 +QString DateTimeFormat() {
 +	auto format = QLocale::system().dateTimeFormat(QLocale::ShortFormat);
-+	if (TimeWithSeconds.value()) {
++	if (Core::YukigramSettings::TimeWithSeconds.value()) {
 +		format.replace(shortTimeFormat(), longTimeFormat());
 +	}
 +	return format;
@@ -243,32 +265,31 @@ index f3269a4099..393d98b7e2 100644
  	return kDefaultLanguage.utf16();
  }
 diff --git a/Telegram/SourceFiles/lang/lang_keys.h b/Telegram/SourceFiles/lang/lang_keys.h
-index ec576b07e3..f007cf633a 100644
+index ec576b07e3..e60a0ecb0b 100644
 --- a/Telegram/SourceFiles/lang/lang_keys.h
 +++ b/Telegram/SourceFiles/lang/lang_keys.h
-@@ -37,6 +37,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -37,6 +37,9 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  
  namespace Lang {
  
-+extern const char kOptionTimeWithSeconds[];
 +[[nodiscard]] QString TimeFormat();
 +[[nodiscard]] QString DateTimeFormat();
 +
  [[nodiscard]] QString Id();
  [[nodiscard]] rpl::producer<> Updated();
  [[nodiscard]] QString GetNonDefaultValue(const QByteArray &key);
-diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index a4ab8c00f1..a3a38d740d 100644
---- a/Telegram/SourceFiles/settings/settings_experimental.cpp
-+++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -245,6 +245,7 @@ void SetupExperimental(
- 	addToggle(kForceComposeSearchOneColumn);
- 	addToggle(HistoryView::kOptionDisableAnimoji);
- 	addToggle(HistoryView::kOptionCommentsButtonAlwaysRight);
-+	addToggle(Lang::kOptionTimeWithSeconds);
- 	addToggle(ChatHelpers::kOptionUnlimitedRecentStickers);
- 	addToggle(Ui::kOptionHideAiButton);
+diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+index dc4e2af7f2..d3c67bd263 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+@@ -82,6 +82,7 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
+     addToggle(Core::YukigramSettings::kOptionForceMobileLayout, { u"yukigram"_q, u"mobile"_q, u"single-column"_q, u"layout"_q });
+     addToggle(Core::YukigramSettings::kOptionWideMessages, { u"yukigram"_q, u"wide"_q, u"messages"_q });
+ 	addToggle(Core::YukigramSettings::kOptionAlwaysShowScheduled, { u"yukigram"_q, u"show"_q, u"scheduled"_q, u"messages"_q });
++	addToggle(Core::YukigramSettings::kOptionTimeWithSeconds, { u"yukigram"_q, u"time"_q, u"seconds"_q });
  }
+ 
+ class Yukigram : public Section<Yukigram> {
 diff --git a/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp b/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
 index c0aa82fd18..328f935b6a 100644
 --- a/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp

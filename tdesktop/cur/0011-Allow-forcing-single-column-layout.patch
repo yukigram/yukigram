@@ -1,65 +1,26 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
-Date: Fri, 3 Apr 2026 03:16:20 +0300
+Date: Tue, 21 Apr 2026 21:28:03 +0300
 Subject: [PATCH] Allow forcing single-column layout
 
 ---
- Telegram/SourceFiles/mainwidget.cpp                 |  2 +-
- .../SourceFiles/settings/settings_experimental.cpp  |  2 ++
- Telegram/SourceFiles/window/window_adaptive.cpp     | 13 ++++++++++++-
- Telegram/SourceFiles/window/window_adaptive.h       |  4 ++++
- .../window/window_session_controller.cpp            |  1 +
- 5 files changed, 20 insertions(+), 2 deletions(-)
+ Telegram/SourceFiles/core/yukigram_settings.cpp           | 8 ++++++++
+ Telegram/SourceFiles/core/yukigram_settings.h             | 3 +++
+ Telegram/SourceFiles/mainwidget.cpp                       | 3 ++-
+ .../SourceFiles/settings/sections/settings_yukigram.cpp   | 1 +
+ Telegram/SourceFiles/window/window_adaptive.cpp           | 3 ++-
+ Telegram/SourceFiles/window/window_session_controller.cpp | 2 ++
+ 6 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/Telegram/SourceFiles/mainwidget.cpp b/Telegram/SourceFiles/mainwidget.cpp
-index beac8028dd..b8d42a2c8d 100644
---- a/Telegram/SourceFiles/mainwidget.cpp
-+++ b/Telegram/SourceFiles/mainwidget.cpp
-@@ -2866,7 +2866,7 @@ void MainWidget::updateWindowAdaptiveLayout() {
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.cpp b/Telegram/SourceFiles/core/yukigram_settings.cpp
+index e5ee02e767..3135b9ccaf 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.cpp
++++ b/Telegram/SourceFiles/core/yukigram_settings.cpp
+@@ -25,4 +25,12 @@ base::options::toggle MprisCallHangup({
+ 	.restartRequired = true,
+ });
  
- 	// Check if we are in a single-column layout in a wide enough window
- 	// for the normal layout. If so, switch to the normal layout.
--	if (layout.windowLayout == Window::Adaptive::WindowLayout::OneColumn) {
-+	if ((!Window::ForceMobileLayout.value()) && layout.windowLayout == Window::Adaptive::WindowLayout::OneColumn) {
- 		auto chatWidth = layout.chatWidth;
- 		//if (session().settings().tabbedSelectorSectionEnabled()
- 		//	&& chatWidth >= _history->minimalWidthForTabbedSelectorSection()) {
-diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 97066cbcff..f588c05c07 100644
---- a/Telegram/SourceFiles/settings/settings_experimental.cpp
-+++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "mtproto/session_private.h"
- #include "webview/webview_embed.h"
- #include "window/main_window.h"
-+#include "window/window_adaptive.h"
- #include "window/window_peer_menu.h"
- #include "window/window_session_controller.h"
- #include "history/view/history_view_element.h"
-@@ -234,6 +235,7 @@ void SetupExperimental(
- 		addToggle(kOptionFastButtonsMode);
- 	}
- 	addToggle(Window::kOptionDisableTouchbar);
-+	addToggle(Window::kOptionForceMobileLayout);
- 	addToggle(Info::kAlternativeScrollProcessing);
- 	addToggle(kModerateCommonGroups);
- 	addToggle(kForceComposeSearchOneColumn);
-diff --git a/Telegram/SourceFiles/window/window_adaptive.cpp b/Telegram/SourceFiles/window/window_adaptive.cpp
-index 784164db99..f09331375a 100644
---- a/Telegram/SourceFiles/window/window_adaptive.cpp
-+++ b/Telegram/SourceFiles/window/window_adaptive.cpp
-@@ -6,6 +6,7 @@ For license and copyright information please follow this link:
- https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- */
- #include "window/window_adaptive.h"
-+#include "base/options.h"
- 
- #include "history/history_item.h"
- #include "data/data_media_types.h"
-@@ -15,10 +16,20 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- 
- namespace Window {
- 
++const char kOptionForceMobileLayout[] = "force-mobile-layout";
 +base::options::toggle ForceMobileLayout({
 +	.id = kOptionForceMobileLayout,
 +	.name = "Force mobile-like layout",
@@ -67,44 +28,89 @@ index 784164db99..f09331375a 100644
 +	.restartRequired = true,
 +});
 +
-+const char kOptionForceMobileLayout[]
-+	= "force-mobile-layout";
+ } // namespace Core::YukigramSettings
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.h b/Telegram/SourceFiles/core/yukigram_settings.h
+index 12df612534..35e1ddd7dd 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.h
++++ b/Telegram/SourceFiles/core/yukigram_settings.h
+@@ -13,4 +13,7 @@ extern base::options::toggle CommentsButtonAlwaysRight;
+ extern const char kOptionMprisCallHangup[];
+ extern base::options::toggle MprisCallHangup;
+ 
++extern const char kOptionForceMobileLayout[];
++extern base::options::toggle ForceMobileLayout;
 +
+ } // namespace Core::YukigramSettings
+diff --git a/Telegram/SourceFiles/mainwidget.cpp b/Telegram/SourceFiles/mainwidget.cpp
+index beac8028dd..79077e2610 100644
+--- a/Telegram/SourceFiles/mainwidget.cpp
++++ b/Telegram/SourceFiles/mainwidget.cpp
+@@ -77,6 +77,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "core/application.h"
+ #include "core/changelogs.h"
+ #include "core/mime_type.h"
++#include "core/yukigram_settings.h"
+ #include "calls/calls_call.h"
+ #include "calls/calls_instance.h"
+ #include "calls/calls_top_bar.h"
+@@ -2866,7 +2867,7 @@ void MainWidget::updateWindowAdaptiveLayout() {
+ 
+ 	// Check if we are in a single-column layout in a wide enough window
+ 	// for the normal layout. If so, switch to the normal layout.
+-	if (layout.windowLayout == Window::Adaptive::WindowLayout::OneColumn) {
++	if ((!Core::YukigramSettings::ForceMobileLayout.value()) && layout.windowLayout == Window::Adaptive::WindowLayout::OneColumn) {
+ 		auto chatWidth = layout.chatWidth;
+ 		//if (session().settings().tabbedSelectorSectionEnabled()
+ 		//	&& chatWidth >= _history->minimalWidthForTabbedSelectorSection()) {
+diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+index a54f06eff0..849fe75dcc 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+@@ -79,6 +79,7 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
+     addToggle(Core::YukigramSettings::kOptionDisableAnimoji, { u"yukigram"_q, u"disable"_q, u"animoji"_q });
+ 	addToggle(Core::YukigramSettings::kOptionCommentsButtonAlwaysRight, { u"yukigram"_q, u"comments"_q, u"button"_q, u"right"_q });
+     addToggle(Core::YukigramSettings::kOptionMprisCallHangup, { u"yukigram"_q, u"mpris"_q, u"calls"_q });
++    addToggle(Core::YukigramSettings::kOptionForceMobileLayout, { u"yukigram"_q, u"mobile"_q, u"single-column"_q, u"layout"_q });
+ }
+ 
+ class Yukigram : public Section<Yukigram> {
+diff --git a/Telegram/SourceFiles/window/window_adaptive.cpp b/Telegram/SourceFiles/window/window_adaptive.cpp
+index 784164db99..2fe184acd7 100644
+--- a/Telegram/SourceFiles/window/window_adaptive.cpp
++++ b/Telegram/SourceFiles/window/window_adaptive.cpp
+@@ -12,13 +12,14 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "data/data_session.h"
+ #include "core/application.h"
+ #include "core/core_settings.h"
++#include "core/yukigram_settings.h"
+ 
+ namespace Window {
+ 
  Adaptive::Adaptive() = default;
  
  void Adaptive::setWindowLayout(WindowLayout value) {
 -	_layout = value;
-+	_layout = (ForceMobileLayout.value() ? WindowLayout::OneColumn : value);
++	_layout = (Core::YukigramSettings::ForceMobileLayout.value() ? WindowLayout::OneColumn : value);
  }
  
  void Adaptive::setChatLayout(ChatLayout value) {
-diff --git a/Telegram/SourceFiles/window/window_adaptive.h b/Telegram/SourceFiles/window/window_adaptive.h
-index 9a6421e312..aff3aedddd 100644
---- a/Telegram/SourceFiles/window/window_adaptive.h
-+++ b/Telegram/SourceFiles/window/window_adaptive.h
-@@ -6,9 +6,13 @@ For license and copyright information please follow this link:
- https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- */
- #pragma once
-+#include "base/options.h"
- 
- namespace Window {
- 
-+extern base::options::toggle ForceMobileLayout;
-+extern const char kOptionForceMobileLayout[];
-+
- class Adaptive {
- public:
- 	enum class WindowLayout {
 diff --git a/Telegram/SourceFiles/window/window_session_controller.cpp b/Telegram/SourceFiles/window/window_session_controller.cpp
-index 9f1fa45258..4b8fbffe42 100644
+index 9f1fa45258..fd48118112 100644
 --- a/Telegram/SourceFiles/window/window_session_controller.cpp
 +++ b/Telegram/SourceFiles/window/window_session_controller.cpp
-@@ -2492,6 +2492,7 @@ auto SessionController::computeColumnLayout() const -> ColumnLayout {
+@@ -74,6 +74,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "core/click_handler_types.h"
+ #include "core/file_utilities.h"
+ #include "core/ui_integration.h"
++#include "core/yukigram_settings.h"
+ #include "base/options.h"
+ #include "base/unixtime.h"
+ #include "info/channel_statistics/earn/earn_icons.h"
+@@ -2492,6 +2493,7 @@ auto SessionController::computeColumnLayout() const -> ColumnLayout {
  	auto dialogsWidth = 0, chatWidth = 0, thirdWidth = 0;
  
  	auto useOneColumnLayout = [&] {
-+		if (Window::ForceMobileLayout.value()) return true;
++		if (Core::YukigramSettings::ForceMobileLayout.value()) return true;
  		auto minimalNormal = st::columnMinimalWidthLeft
  			+ st::columnMinimalWidthMain;
  		if (_hasDialogs && bodyWidth < minimalNormal) {

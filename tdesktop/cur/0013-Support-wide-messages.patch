@@ -1,15 +1,16 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
-Date: Fri, 3 Apr 2026 03:22:31 +0300
+Date: Tue, 21 Apr 2026 19:24:38 +0300
 Subject: [PATCH] Support wide messages
 
 ---
+ Telegram/SourceFiles/core/yukigram_settings.cpp     |  7 +++++++
+ Telegram/SourceFiles/core/yukigram_settings.h       |  3 +++
  Telegram/SourceFiles/data/data_media_types.cpp      |  3 ++-
- .../SourceFiles/history/history_inner_widget.cpp    | 12 +++++++++++-
- Telegram/SourceFiles/history/history_inner_widget.h |  4 ++++
- .../history/view/history_view_element.cpp           |  3 ++-
+ .../SourceFiles/history/history_inner_widget.cpp    |  3 ++-
+ .../history/view/history_view_element.cpp           |  2 +-
  .../history/view/history_view_list_widget.cpp       |  3 ++-
- .../history/view/history_view_message.cpp           |  9 +++++++--
+ .../history/view/history_view_message.cpp           |  8 ++++++--
  .../history/view/history_view_service_message.cpp   |  7 ++++---
  .../history/view/media/history_view_document.cpp    |  5 ++++-
  .../history/view/media/history_view_location.cpp    | 13 ++++++++-----
@@ -17,186 +18,167 @@ Subject: [PATCH] Support wide messages
  .../view/media/history_view_media_grouped.cpp       |  3 ++-
  .../history/view/media/history_view_photo.cpp       | 10 +++++++---
  .../history/view/media/history_view_web_page.cpp    |  4 ++++
- .../SourceFiles/settings/settings_experimental.cpp  |  2 ++
+ .../settings/sections/settings_yukigram.cpp         |  1 +
  .../window/themes/window_theme_preview.cpp          |  7 ++++---
- 15 files changed, 65 insertions(+), 23 deletions(-)
+ 16 files changed, 59 insertions(+), 23 deletions(-)
 
-diff --git a/Telegram/SourceFiles/data/data_media_types.cpp b/Telegram/SourceFiles/data/data_media_types.cpp
-index 5db673460b..a321919430 100644
---- a/Telegram/SourceFiles/data/data_media_types.cpp
-+++ b/Telegram/SourceFiles/data/data_media_types.cpp
-@@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "base/random.h"
- #include "boxes/send_credits_box.h" // CreditsEmoji.
- #include "history/history.h"
-+#include "history/history_inner_widget.h"
- #include "history/history_item.h" // CreateMedia.
- #include "history/history_item_components.h"
- #include "history/history_location_manager.h"
-@@ -1021,7 +1022,7 @@ std::unique_ptr<HistoryView::Media> MediaPhoto::createView(
- 					message,
- 					_chat,
- 					_photo,
--					st::msgServicePhotoWidth));
-+					(1 + WideMessages.value()) * st::msgServicePhotoWidth));
- 		}
- 		return std::make_unique<HistoryView::Photo>(
- 			message,
-diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 8019707f42..1bd99244f4 100644
---- a/Telegram/SourceFiles/history/history_inner_widget.cpp
-+++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -6,6 +6,7 @@ For license and copyright information please follow this link:
- https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- */
- #include "history/history_inner_widget.h"
-+#include "base/options.h"
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.cpp b/Telegram/SourceFiles/core/yukigram_settings.cpp
+index 3135b9ccaf..6100f9e2b8 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.cpp
++++ b/Telegram/SourceFiles/core/yukigram_settings.cpp
+@@ -33,4 +33,11 @@ base::options::toggle ForceMobileLayout({
+ 	.restartRequired = true,
+ });
  
- #include "api/api_polls.h"
- #include "chat_helpers/stickers_emoji_pack.h"
-@@ -126,6 +127,15 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include <QtCore/QCoreApplication>
- #include <QtCore/QMimeData>
- 
++const char kOptionWideMessages[] = "wide-messages";
 +base::options::toggle WideMessages({
 +	.id = kOptionWideMessages,
 +	.name = "Wide messages",
 +	.restartRequired = true,
 +});
 +
-+const char kOptionWideMessages[]
-+	= "wide-messages";
-+
- namespace {
+ } // namespace Core::YukigramSettings
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.h b/Telegram/SourceFiles/core/yukigram_settings.h
+index 35e1ddd7dd..209d786e59 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.h
++++ b/Telegram/SourceFiles/core/yukigram_settings.h
+@@ -16,4 +16,7 @@ extern base::options::toggle MprisCallHangup;
+ extern const char kOptionForceMobileLayout[];
+ extern base::options::toggle ForceMobileLayout;
  
- constexpr auto kScrollDateHideTimeout = 1000;
-@@ -4680,7 +4690,7 @@ void HistoryInner::mouseActionUpdate() {
++extern const char kOptionWideMessages[];
++extern base::options::toggle WideMessages;
++
+ } // namespace Core::YukigramSettings
+diff --git a/Telegram/SourceFiles/data/data_media_types.cpp b/Telegram/SourceFiles/data/data_media_types.cpp
+index 5db673460b..fe951d361c 100644
+--- a/Telegram/SourceFiles/data/data_media_types.cpp
++++ b/Telegram/SourceFiles/data/data_media_types.cpp
+@@ -76,6 +76,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "calls/calls_instance.h"
+ #include "core/application.h"
+ #include "core/click_handler_types.h" // ClickHandlerContext
++#include "core/yukigram_settings.h"
+ #include "lang/lang_keys.h"
+ #include "storage/file_upload.h"
+ #include "window/window_session_controller.h" // SessionController::uiShow.
+@@ -1021,7 +1022,7 @@ std::unique_ptr<HistoryView::Media> MediaPhoto::createView(
+ 					message,
+ 					_chat,
+ 					_photo,
+-					st::msgServicePhotoWidth));
++					(1 + Core::YukigramSettings::WideMessages.value()) * st::msgServicePhotoWidth));
+ 		}
+ 		return std::make_unique<HistoryView::Photo>(
+ 			message,
+diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
+index 8019707f42..83906c7349 100644
+--- a/Telegram/SourceFiles/history/history_inner_widget.cpp
++++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
+@@ -91,6 +91,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "menu/menu_timecode_action.h"
+ #include "menu/menu_sponsored.h"
+ #include "core/application.h"
++#include "core/yukigram_settings.h"
+ #include "apiwrap.h"
+ #include "api/api_attached_stickers.h"
+ #include "api/api_suggest_post.h"
+@@ -4680,7 +4681,7 @@ void HistoryInner::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = _contentWidth;
 -					if (_isChatWide) {
-+					if (!WideMessages.value() && _isChatWide) {
++					if (!Core::YukigramSettings::WideMessages.value() && _isChatWide) {
  						maxwidth = qMin(maxwidth, int32(st::msgMaxWidth + 2 * st::msgPhotoSkip + 2 * st::msgMargin.left()));
  					}
  					auto widthForDate = maxwidth - st::msgServiceMargin.left() - st::msgServiceMargin.left();
-diff --git a/Telegram/SourceFiles/history/history_inner_widget.h b/Telegram/SourceFiles/history/history_inner_widget.h
-index 3a8c42982f..17ae0779cc 100644
---- a/Telegram/SourceFiles/history/history_inner_widget.h
-+++ b/Telegram/SourceFiles/history/history_inner_widget.h
-@@ -6,6 +6,10 @@ For license and copyright information please follow this link:
- https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- */
- #pragma once
-+#include "base/options.h"
-+
-+extern base::options::toggle WideMessages;
-+extern const char kOptionWideMessages[];
- 
- #include "base/timer.h"
- #include "data/data_report.h"
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 48a6b5bf1c..5e573cd006 100644
+index e4c45a5e74..3f62e02026 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
-@@ -26,6 +26,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "history/view/history_view_reply.h"
- #include "history/view/history_view_text_helper.h"
- #include "history/history.h"
-+#include "history/history_inner_widget.h"
- #include "history/history_item_components.h"
- #include "history/history_item_helpers.h"
- #include "base/options.h"
-@@ -753,7 +754,7 @@ void UnreadBar::paint(
+@@ -744,7 +744,7 @@ void UnreadBar::paint(
  	p.setPen(st->historyUnreadBarFg());
  
  	int maxwidth = w;
 -	if (mode == ElementChatMode::Wide) {
-+	if (!WideMessages.value() && mode == ElementChatMode::Wide) {
++	if (!Core::YukigramSettings::WideMessages.value() && mode == ElementChatMode::Wide) {
  		maxwidth = qMin(
  			maxwidth,
  			st::msgMaxWidth
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 88ac50002f..51069e8f08 100644
+index 88ac50002f..1a61af4212 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-@@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "base/qt/qt_key_modifiers.h"
- #include "base/qt/qt_common_adapters.h"
- #include "history/history.h"
-+#include "history/history_inner_widget.h"
- #include "history/history_item.h"
- #include "history/history_item_components.h"
- #include "history/history_item_helpers.h"
+@@ -41,6 +41,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "core/application.h"
+ #include "core/click_handler_types.h"
+ #include "core/core_settings.h"
++#include "core/yukigram_settings.h"
+ #include "core/phone_click_handler.h"
+ #include "apiwrap.h"
+ #include "api/api_who_reacted.h"
 @@ -4029,7 +4030,7 @@ void ListWidget::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = view->width();
 -					if (_isChatWide) {
-+					if (!WideMessages.value() && _isChatWide) {
++					if (!Core::YukigramSettings::WideMessages.value() && _isChatWide) {
  						maxwidth = qMin(maxwidth, int32(st::msgMaxWidth + 2 * st::msgPhotoSkip + 2 * st::msgMargin.left()));
  					}
  					auto widthForDate = maxwidth - st::msgServiceMargin.left() - st::msgServiceMargin.left();
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 54be77ba88..6e9346f928 100644
+index 07354bed0e..b61182bac6 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
-@@ -15,6 +15,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "core/click_handler_types.h" // ClickHandlerContext
- #include "core/ui_integration.h"
- #include "history/view/history_view_cursor_state.h"
-+#include "history/history_inner_widget.h"
- #include "history/history_item_components.h"
- #include "history/history_item_helpers.h"
- #include "history/view/media/history_view_media_generic.h"
-@@ -5021,7 +5022,9 @@ QRect Message::countGeometry() const {
+@@ -5011,7 +5011,9 @@ QRect Message::countGeometry() const {
  	//	contentLeft += st::msgPhotoSkip - (hmaxwidth - hwidth);
  	}
  	accumulate_min(contentWidth, maxWidth());
-+if (!WideMessages.value()) {
++if (!Core::YukigramSettings::WideMessages.value()) {
  	accumulate_min(contentWidth, int(_bubbleWidthLimit));
 +}
  	if (mediaWidth < contentWidth) {
  		const auto textualWidth = bubbleTextualWidth();
  		if (mediaWidth < textualWidth
-@@ -5152,8 +5155,10 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -5142,8 +5144,10 @@ int Message::resizeContentGetHeight(int newWidth) {
  		}
  	}
  	accumulate_min(contentWidth, maxWidth());
 -	_bubbleWidthLimit = std::max(st::msgMaxWidth, monospaceMaxWidth());
-+	_bubbleWidthLimit = (WideMessages.value() ? 4000 : std::max(st::msgMaxWidth, monospaceMaxWidth()));
-+if (!WideMessages.value()) {
++	_bubbleWidthLimit = (Core::YukigramSettings::WideMessages.value() ? 4000 : std::max(st::msgMaxWidth, monospaceMaxWidth()));
++if (!Core::YukigramSettings::WideMessages.value()) {
  	accumulate_min(contentWidth, int(_bubbleWidthLimit));
 +}
  	const auto textualWidth = bubbleTextualWidth();
  	if (mediaDisplayed) {
  		media->resizeGetHeight(contentWidth);
-@@ -5226,7 +5231,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -5216,7 +5220,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  		if (reactionsInBubble) {
  			_reactions->resizeGetHeight(textWidth);
  		}
 -		if (contentWidth == maxWidth() && !appearing) {
-+		if (!WideMessages.value() && contentWidth == maxWidth() && !appearing) {
++		if (!Core::YukigramSettings::WideMessages.value() && contentWidth == maxWidth() && !appearing) {
  			if (mediaDisplayed) {
  				if (check) {
  					newHeight += check->resizeGetHeight(contentWidth) + st::mediaInBubbleSkip;
 diff --git a/Telegram/SourceFiles/history/view/history_view_service_message.cpp b/Telegram/SourceFiles/history/view/history_view_service_message.cpp
-index 2c08e5bb70..51fac0032d 100644
+index 2c08e5bb70..eaa27398d5 100644
 --- a/Telegram/SourceFiles/history/view/history_view_service_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_service_message.cpp
-@@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -7,6 +7,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ */
+ #include "history/view/history_view_service_message.h"
+ 
++#include "core/yukigram_settings.h"
+ #include "history/view/media/history_view_media.h"
  #include "history/view/reactions/history_view_reactions.h"
  #include "history/view/history_view_cursor_state.h"
- #include "history/history.h"
-+#include "history/history_inner_widget.h"
- #include "history/history_item.h"
- #include "history/history_item_components.h"
- #include "history/history_item_helpers.h"
 @@ -157,7 +158,7 @@ void PaintPreparedDate(
  		int w,
  		bool chatWide) {
  	int left = st::msgServiceMargin.left();
 -	const auto maxwidth = chatWide
-+	const auto maxwidth = (!WideMessages.value() && chatWide)
++	const auto maxwidth = (!Core::YukigramSettings::WideMessages.value() && chatWide)
  		? std::min(w, WideChatWidth())
  		: w;
  	w = maxwidth - st::msgServiceMargin.left() - st::msgServiceMargin.left();
@@ -205,7 +187,7 @@ index 2c08e5bb70..51fac0032d 100644
  QRect Service::countGeometry() const {
  	auto result = QRect(0, 0, width(), height());
 -	if (delegate()->elementChatMode() == ElementChatMode::Wide) {
-+	if (!WideMessages.value() && delegate()->elementChatMode() == ElementChatMode::Wide) {
++	if (!Core::YukigramSettings::WideMessages.value() && delegate()->elementChatMode() == ElementChatMode::Wide) {
  		result.setWidth(qMin(result.width(), st::msgMaxWidth + 2 * st::msgPhotoSkip + 2 * st::msgMargin.left()));
  	}
  	auto margins = st::msgServiceMargin;
@@ -214,56 +196,56 @@ index 2c08e5bb70..51fac0032d 100644
  	const auto mediaDisplayed = media && media->isDisplayed();
  	auto contentWidth = newWidth;
 -	if (delegate()->elementChatMode() == ElementChatMode::Wide) {
-+	if (!WideMessages.value() && delegate()->elementChatMode() == ElementChatMode::Wide) {
++	if (!Core::YukigramSettings::WideMessages.value() && delegate()->elementChatMode() == ElementChatMode::Wide) {
  		accumulate_min(contentWidth, st::msgMaxWidth + 2 * st::msgPhotoSkip + 2 * st::msgMargin.left());
  	}
  	contentWidth -= st::msgServiceMargin.left() + st::msgServiceMargin.left(); // two small margins
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_document.cpp b/Telegram/SourceFiles/history/view/media/history_view_document.cpp
-index cc8ad9f416..688cb877b5 100644
+index cc8ad9f416..f2baa96c42 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_document.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_document.cpp
-@@ -17,6 +17,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "media/player/media_player_instance.h"
- #include "history/history_item_components.h"
+@@ -19,6 +19,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "history/history_item.h"
-+#include "history/history_inner_widget.h"
  #include "history/history.h"
  #include "core/click_handler_types.h" // kDocumentFilenameTooltipProperty.
++#include "core/yukigram_settings.h"
  #include "history/view/history_view_element.h"
+ #include "history/view/history_view_cursor_state.h"
+ #include "history/view/history_view_transcribe_button.h"
 @@ -533,7 +534,9 @@ QSize Document::countOptimalSize() {
  
  	if (const auto named = Get<HistoryDocumentNamed>()) {
  		accumulate_max(maxWidth, tleft + named->name.maxWidth() + tright);
 -		accumulate_min(maxWidth, st::msgMaxWidth);
-+		if (!WideMessages.value()) {
++		if (!Core::YukigramSettings::WideMessages.value()) {
 +			accumulate_min(maxWidth, st::msgMaxWidth);
 +		}
  	}
  	if (voice) {
  		const auto maxWaveformWidth = ::Media::Player::kWaveformSamplesCount *
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_location.cpp b/Telegram/SourceFiles/history/view/media/history_view_location.cpp
-index b4c03f9e84..de698a06bd 100644
+index b4c03f9e84..461e5af80f 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_location.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_location.cpp
-@@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -7,6 +7,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ */
+ #include "history/view/media/history_view_location.h"
  
++#include "core/yukigram_settings.h"
  #include "base/unixtime.h"
  #include "history/history.h"
-+#include "history/history_inner_widget.h"
  #include "history/history_item_components.h"
- #include "history/history_item.h"
- #include "history/history_location_manager.h"
 @@ -302,9 +303,15 @@ QSize Location::countOptimalSize() {
  
  	if (_parent->hasBubble()) {
  		if (!_title.isEmpty()) {
-+			if (WideMessages.value()) {
++			if (Core::YukigramSettings::WideMessages.value()) {
 +				maxWidth = qMax(maxWidth, _title.maxWidth() + st::msgPadding.left() + st::msgPadding.right());
 +			}
  			minHeight += qMin(_title.countHeight(maxWidth - st::msgPadding.left() - st::msgPadding.right()), 2 * st::webPageTitleFont->height);
  		}
  		if (!_description.isEmpty()) {
-+			if (WideMessages.value()) {
++			if (Core::YukigramSettings::WideMessages.value()) {
 +				maxWidth = qMax(maxWidth, _description.maxWidth() + st::msgPadding.left() + st::msgPadding.right());
 +			}
  			minHeight += qMin(_description.countHeight(maxWidth - st::msgPadding.left() - st::msgPadding.right()), 3 * st::webPageDescriptionFont->height);
@@ -283,65 +265,65 @@ index b4c03f9e84..de698a06bd 100644
  		_parent->minWidthForMedia(),
  		st::minPhotoSize,
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_media_common.cpp b/Telegram/SourceFiles/history/view/media/history_view_media_common.cpp
-index b46a9aa0a7..562e906af5 100644
+index b46a9aa0a7..caad3ab423 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_media_common.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_media_common.cpp
-@@ -33,6 +33,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "history/view/media/history_view_document.h"
- #include "history/view/media/history_view_sticker.h"
- #include "history/view/media/history_view_theme_document.h"
-+#include "history/history_inner_widget.h"
- #include "history/history_item.h"
- #include "history/history.h"
- #include "lang/lang_keys.h"
+@@ -21,6 +21,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "ui/painter.h"
+ #include "core/application.h"
+ #include "core/click_handler_types.h"
++#include "core/yukigram_settings.h"
+ #include "data/data_document.h"
+ #include "data/data_session.h"
+ #include "data/data_wall_paper.h"
 @@ -242,7 +243,7 @@ QImage PrepareWithBlurredBackground(
  QSize CountDesiredMediaSize(QSize original) {
  	return DownscaledSize(
  		style::ConvertScale(original),
 -		{ st::maxMediaSize, st::maxMediaSize });
-+		{ (1 + WideMessages.value()) * st::maxMediaSize, (2 + WideMessages.value()) * st::maxMediaSize / 2});
++		{ (1 + Core::YukigramSettings::WideMessages.value()) * st::maxMediaSize, (2 + Core::YukigramSettings::WideMessages.value()) * st::maxMediaSize / 2});
  }
  
  QSize CountMediaSize(QSize desired, int newWidth) {
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_media_grouped.cpp b/Telegram/SourceFiles/history/view/media/history_view_media_grouped.cpp
-index a165cb1366..72dec9fd3c 100644
+index a165cb1366..23288187b7 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_media_grouped.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_media_grouped.cpp
-@@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -7,6 +7,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ */
+ #include "history/view/media/history_view_media_grouped.h"
  
++#include "core/yukigram_settings.h"
  #include "history/history_item_components.h"
  #include "history/history_item.h"
-+#include "history/history_inner_widget.h"
  #include "history/history.h"
- #include "history/view/history_view_element.h"
- #include "history/view/history_view_cursor_state.h"
 @@ -157,7 +158,7 @@ QSize GroupedMedia::countOptimalSize() {
  	const auto layout = (_mode == Mode::Grid)
  		? Ui::LayoutMediaGroup(
  			sizes,
 -			st::historyGroupWidthMax,
-+			(WideMessages.value() ? 4000 /* TODO: Yulia */ : st::historyGroupWidthMax),
++			(Core::YukigramSettings::WideMessages.value() ? 4000 /* TODO: Yulia */ : st::historyGroupWidthMax),
  			st::historyGroupWidthMin,
  			st::historyGroupSkip)
  		: LayoutPlaylist(sizes);
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_photo.cpp b/Telegram/SourceFiles/history/view/media/history_view_photo.cpp
-index 6d4eb7dc9d..e92879b47e 100644
+index 6d4eb7dc9d..c31c787166 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_photo.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_photo.cpp
-@@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "boxes/send_credits_box.h"
- #include "history/history_item_components.h"
- #include "history/history_item.h"
-+#include "history/history_inner_widget.h"
- #include "history/history.h"
- #include "history/view/history_view_element.h"
- #include "history/view/history_view_cursor_state.h"
+@@ -42,6 +42,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "data/data_web_page.h"
+ #include "core/application.h"
+ #include "core/ui_integration.h"
++#include "core/yukigram_settings.h"
+ #include "styles/style_chat.h"
+ #include "styles/style_chat_helpers.h"
+ 
 @@ -203,7 +204,7 @@ QSize Photo::countOptimalSize() {
  		(_parent->hasBubble()
  			? st::historyPhotoBubbleMinWidth
  			: st::minPhotoSize),
 -		st::maxMediaSize);
-+		(1 + WideMessages.value()) * st::maxMediaSize);
++		(1 + Core::YukigramSettings::WideMessages.value()) * st::maxMediaSize);
  	const auto maxActualWidth = qMax(scaled.width(), minWidth);
  	auto maxWidth = qMax(maxActualWidth, scaled.height());
  	auto minHeight = qMax(scaled.height(), st::minPhotoSize);
@@ -351,7 +333,7 @@ index 6d4eb7dc9d..e92879b47e 100644
  			const auto maxWithCaption = qMin(st::msgMaxWidth, captionMaxWidth);
 -			maxWidth = qMin(qMax(maxWidth, maxWithCaption), st::msgMaxWidth);
 +			maxWidth = qMax(maxWidth, maxWithCaption);
-+			if (!WideMessages.value()) {
++			if (!Core::YukigramSettings::WideMessages.value()) {
 +				maxWidth = qMin(maxWidth, st::msgMaxWidth);
 +			}
  			minHeight = adjustHeightForLessCrop(
@@ -362,70 +344,62 @@ index 6d4eb7dc9d..e92879b47e 100644
  		return { int(_serviceWidth), int(_serviceWidth) };
  	}
 -	const auto thumbMaxWidth = qMin(newWidth, st::maxMediaSize);
-+	const auto thumbMaxWidth = qMin(newWidth, (1 + WideMessages.value()) * st::maxMediaSize);
++	const auto thumbMaxWidth = qMin(newWidth, (1 + Core::YukigramSettings::WideMessages.value()) * st::maxMediaSize);
  	const auto minWidth = std::clamp(
  		_parent->minWidthForMedia(),
  		qMin(thumbMaxWidth, _parent->hasBubble()
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_web_page.cpp b/Telegram/SourceFiles/history/view/media/history_view_web_page.cpp
-index 5950801174..8e56bca917 100644
+index 5950801174..7bb998d738 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_web_page.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_web_page.cpp
-@@ -29,6 +29,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "history/view/history_view_reply.h"
- #include "history/view/history_view_sponsored_click_handler.h"
- #include "history/history.h"
-+#include "history/history_inner_widget.h"
- #include "history/history_item_components.h"
- #include "history/history_item_helpers.h"
- #include "lang/lang_keys.h"
+@@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ 
+ #include "base/unixtime.h"
+ #include "core/application.h"
++#include "core/yukigram_settings.h"
+ #include "countries/countries_instance.h"
+ #include "base/qt/qt_key_modifiers.h"
+ #include "window/window_session_controller.h"
 @@ -727,6 +728,9 @@ QSize WebPage::countCurrentSize(int newWidth) {
  	}
  
  	const auto padding = inBubblePadding() + innerMargin();
-+	if (WideMessages.value()) {
++	if (Core::YukigramSettings::WideMessages.value()) {
 +		accumulate_min(newWidth, maxWidth());
 +	}
  	const auto innerWidth = newWidth - rect::m::sum::h(padding);
  	auto newHeight = 0;
  
-diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index f588c05c07..2dae6059bb 100644
---- a/Telegram/SourceFiles/settings/settings_experimental.cpp
-+++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -25,6 +25,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "boxes/moderate_messages_box.h"
- #include "core/application.h"
- #include "core/launcher.h"
-+#include "history/history_inner_widget.h"
- #include "core/sandbox.h"
- #include "calls/calls_instance.h"
- #include "chat_helpers/tabbed_panel.h"
-@@ -218,6 +219,7 @@ void SetupExperimental(
- 	addToggle(Info::Profile::kOptionShowChannelJoinedBelowAbout);
- 	addToggle(Ui::kOptionUseSmallMsgBubbleRadius);
- 	addToggle(Media::Player::kOptionDisableAutoplayNext);
-+	addToggle(kOptionWideMessages);
- 	addToggle(Webview::kOptionWebviewDebugEnabled);
- 	addToggle(Webview::kOptionWebviewLegacyEdge);
- 	addToggle(kOptionAutoScrollInactiveChat);
+diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+index 849fe75dcc..360a74301f 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+@@ -80,6 +80,7 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
+ 	addToggle(Core::YukigramSettings::kOptionCommentsButtonAlwaysRight, { u"yukigram"_q, u"comments"_q, u"button"_q, u"right"_q });
+     addToggle(Core::YukigramSettings::kOptionMprisCallHangup, { u"yukigram"_q, u"mpris"_q, u"calls"_q });
+     addToggle(Core::YukigramSettings::kOptionForceMobileLayout, { u"yukigram"_q, u"mobile"_q, u"single-column"_q, u"layout"_q });
++    addToggle(Core::YukigramSettings::kOptionWideMessages, { u"yukigram"_q, u"wide"_q, u"messages"_q });
+ }
+ 
+ class Yukigram : public Section<Yukigram> {
 diff --git a/Telegram/SourceFiles/window/themes/window_theme_preview.cpp b/Telegram/SourceFiles/window/themes/window_theme_preview.cpp
-index 0130e318a0..22934afc85 100644
+index 0130e318a0..1302e46fc0 100644
 --- a/Telegram/SourceFiles/window/themes/window_theme_preview.cpp
 +++ b/Telegram/SourceFiles/window/themes/window_theme_preview.cpp
-@@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -7,6 +7,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ */
  #include "window/themes/window_theme_preview.h"
  
++#include "core/yukigram_settings.h"
  #include "dialogs/dialogs_three_state_icon.h"
-+#include "history/history_inner_widget.h"
  #include "lang/lang_keys.h"
  #include "lottie/lottie_icon.h"
- #include "platform/platform_window_title.h"
 @@ -268,7 +269,7 @@ void Generator::addAudioBubble(QVector<int> waveform, int waveactive, QString wa
  	const auto &st = st::msgFileLayout;
  	auto tleft = st.padding.left() + st.thumbSize + st.thumbSkip;
  	accumulate_max(width, tleft + st::normalFont->width(wavestatus) + skipBlock.width() + st::msgPadding.right());
 -	accumulate_min(width, st::msgMaxWidth);
-+	accumulate_min(width, WideMessages.value() ? width : st::msgMaxWidth);
++	accumulate_min(width, Core::YukigramSettings::WideMessages.value() ? width : st::msgMaxWidth);
  
  	auto height = st.padding.top() + st.thumbSize + st.padding.bottom();
  	addBubble(std::move(bubble), width, height, date, status);
@@ -434,7 +408,7 @@ index 0130e318a0..22934afc85 100644
  	auto width = _history.width() - st::msgMargin.left() - st::msgMargin.right();
  	accumulate_min(width, st::msgPadding.left() + bubble.text.maxWidth() + st::msgPadding.right());
 -	accumulate_min(width, st::msgMaxWidth);
-+	accumulate_min(width, WideMessages.value() ? width : st::msgMaxWidth);
++	accumulate_min(width, Core::YukigramSettings::WideMessages.value() ? width : st::msgMaxWidth);
  
  	auto textWidth = qMax(width - st::msgPadding.left() - st::msgPadding.right(), 1);
  	auto textHeight = bubble.text.countHeight(textWidth);
@@ -443,7 +417,7 @@ index 0130e318a0..22934afc85 100644
  	auto width = _history.width() - st::msgMargin.left() - st::msgMargin.right();
  	accumulate_min(width, bubble.photoWidth);
 -	accumulate_min(width, st::msgMaxWidth);
-+	accumulate_min(width, WideMessages.value() ? width : st::msgMaxWidth);
++	accumulate_min(width, Core::YukigramSettings::WideMessages.value() ? width : st::msgMaxWidth);
  
  	auto textWidth = qMax(width - st::msgPadding.left() - st::msgPadding.right(), 1);
  	auto textHeight = bubble.text.countHeight(textWidth);

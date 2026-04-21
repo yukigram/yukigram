@@ -1,6 +1,6 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
-Date: Fri, 3 Apr 2026 03:10:55 +0300
+Date: Tue, 21 Apr 2026 18:02:14 +0300
 Subject: [PATCH] Control calls with MPRIS
 
 - play, pause, play-pause -> accept
@@ -14,44 +14,34 @@ State mapping:
 
 Co-Authored-By: Sonya Sireneva <sleirsgoevy@gmail.com>
 ---
- Telegram/SourceFiles/calls/calls_instance.cpp | 100 +++++++++++++++++-
- Telegram/SourceFiles/calls/calls_instance.h   |   9 ++
- .../settings/settings_experimental.cpp        |   2 +
- 3 files changed, 110 insertions(+), 1 deletion(-)
+ Telegram/SourceFiles/calls/calls_instance.cpp | 90 ++++++++++++++++++-
+ Telegram/SourceFiles/calls/calls_instance.h   |  7 ++
+ .../SourceFiles/core/yukigram_settings.cpp    |  8 ++
+ Telegram/SourceFiles/core/yukigram_settings.h |  3 +
+ .../settings/sections/settings_yukigram.cpp   |  1 +
+ 5 files changed, 108 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/calls/calls_instance.cpp b/Telegram/SourceFiles/calls/calls_instance.cpp
-index 42c7806086..2b66813668 100644
+index 42c7806086..9ad92464af 100644
 --- a/Telegram/SourceFiles/calls/calls_instance.cpp
 +++ b/Telegram/SourceFiles/calls/calls_instance.cpp
-@@ -6,6 +6,8 @@ For license and copyright information please follow this link:
+@@ -6,6 +6,7 @@ For license and copyright information please follow this link:
  https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  */
  #include "calls/calls_instance.h"
 +#include "base/platform/base_platform_system_media_controls.h"
-+#include "base/options.h"
  
  #include "calls/calls_call.h"
  #include "calls/group/calls_group_common.h"
-@@ -53,8 +55,18 @@ constexpr auto kServerConfigUpdateTimeoutMs = 24 * 3600 * crl::time(1000);
- using CallSound = Call::Delegate::CallSound;
- using GroupCallSound = GroupCall::Delegate::GroupCallSound;
- 
-+base::options::toggle MprisCallHangup({
-+	.id = kOptionMprisCallHangup,
-+	.name = "Use MPRIS for call hangup",
-+	.description = "Hangup with Prev/Next. Simple and elegant, especially on PostmarketOS",
-+	.restartRequired = true,
-+});
-+
- } // namespace
- 
-+const char kOptionMprisCallHangup[]
-+	= "mpris-call-hangup";
-+
- class Instance::Delegate final
- 	: public Call::Delegate
- 	, public GroupCall::Delegate {
-@@ -184,7 +196,93 @@ Instance::Instance()
+@@ -17,6 +18,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "mtproto/mtproto_dh_utils.h"
+ #include "core/application.h"
+ #include "core/core_settings.h"
++#include "core/yukigram_settings.h"
+ #include "main/session/session_show.h"
+ #include "main/main_app_config.h"
+ #include "main/main_session.h"
+@@ -184,7 +186,93 @@ Instance::Instance()
  : _delegate(std::make_unique<Delegate>(this))
  , _cachedDhConfig(std::make_unique<DhConfig>())
  , _chooseJoinAs(std::make_unique<Group::ChooseJoinAsProcess>())
@@ -61,7 +51,7 @@ index 42c7806086..2b66813668 100644
 +
 +	using Command = base::Platform::SystemMediaControls::Command;
 +
-+	_controls->commandRequests() | rpl::filter([](auto unused) { return MprisCallHangup.value(); }) | rpl::on_next([=](Command command) {
++	_controls->commandRequests() | rpl::filter([](auto unused) { return Core::YukigramSettings::MprisCallHangup.value(); }) | rpl::on_next([=](Command command) {
 +		switch (command) {
 +		case Command::PlayPause: [[fallthrough]];
 +		case Command::Play: [[fallthrough]];
@@ -114,7 +104,7 @@ index 42c7806086..2b66813668 100644
 +		}
 +	};
 +
-+	currentCallValue() | rpl::filter([](auto unused) { return MprisCallHangup.value(); }) | rpl::on_next([=](Call *current_call) {
++	currentCallValue() | rpl::filter([](auto unused) { return Core::YukigramSettings::MprisCallHangup.value(); }) | rpl::on_next([=](Call *current_call) {
 +		setup_controls(current_call);
 +		if (!current_call) {
 +			return;
@@ -127,10 +117,10 @@ index 42c7806086..2b66813668 100644
 +		set_title(user->username(), user->id, user->firstName);
 +		update_call_state(current_call->state());
 +
-+		current_call->stateValue() | rpl::filter([](auto unused) { return MprisCallHangup.value(); }) | rpl::on_next(update_call_state, current_call->lifetime());
++		current_call->stateValue() | rpl::filter([](auto unused) { return Core::YukigramSettings::MprisCallHangup.value(); }) | rpl::on_next(update_call_state, current_call->lifetime());
 +	}, _lifetime);
 +
-+	currentGroupCallValue() | rpl::filter([](auto unused) { return MprisCallHangup.value(); }) | rpl::on_next([=](GroupCall *current_call) {
++	currentGroupCallValue() | rpl::filter([](auto unused) { return Core::YukigramSettings::MprisCallHangup.value(); }) | rpl::on_next([=](GroupCall *current_call) {
 +		setup_controls(current_call);
 +		if (!current_call) {
 +			return;
@@ -147,7 +137,7 @@ index 42c7806086..2b66813668 100644
  
  Instance::~Instance() {
 diff --git a/Telegram/SourceFiles/calls/calls_instance.h b/Telegram/SourceFiles/calls/calls_instance.h
-index 4742827c69..179b1b6b5e 100644
+index 4742827c69..5b3fba6167 100644
 --- a/Telegram/SourceFiles/calls/calls_instance.h
 +++ b/Telegram/SourceFiles/calls/calls_instance.h
 @@ -9,6 +9,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -161,7 +151,7 @@ index 4742827c69..179b1b6b5e 100644
  namespace crl {
  class semaphore;
  } // namespace crl
-@@ -231,6 +235,11 @@ private:
+@@ -231,6 +235,9 @@ private:
  		not_null<Main::Session*>,
  		std::vector<base::weak_ptr<GroupCall>>> _streams;
  
@@ -170,29 +160,48 @@ index 4742827c69..179b1b6b5e 100644
 +
  };
  
-+extern const char kOptionMprisCallHangup[];
-+
  } // namespace Calls
-diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 0b65d03f82..97066cbcff 100644
---- a/Telegram/SourceFiles/settings/settings_experimental.cpp
-+++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -26,6 +26,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "core/application.h"
- #include "core/launcher.h"
- #include "core/sandbox.h"
-+#include "calls/calls_instance.h"
- #include "chat_helpers/tabbed_panel.h"
- #include "dialogs/dialogs_widget.h"
- #include "dialogs/ui/dialogs_layout.h"
-@@ -226,6 +227,7 @@ void SetupExperimental(
- 	addToggle(Core::kOptionSkipUrlSchemeRegister);
- 	addToggle(Core::kOptionDeadlockDetector);
- 	addToggle(Window::kOptionExternalMediaViewer);
-+	addToggle(Calls::kOptionMprisCallHangup);
- 	addToggle(Window::kOptionNewWindowsSizeAsFirst);
- 	addToggle(MTP::details::kOptionPreferIPv6);
- 	if (base::options::lookup<bool>(kOptionFastButtonsMode).value()) {
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.cpp b/Telegram/SourceFiles/core/yukigram_settings.cpp
+index 0e10333099..e5ee02e767 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.cpp
++++ b/Telegram/SourceFiles/core/yukigram_settings.cpp
+@@ -17,4 +17,12 @@ base::options::toggle CommentsButtonAlwaysRight({
+ 	.restartRequired = true,
+ });
+ 
++const char kOptionMprisCallHangup[] = "mpris-call-hangup";
++base::options::toggle MprisCallHangup({
++	.id = kOptionMprisCallHangup,
++	.name = "Use MPRIS for call hangup",
++	.description = "Hangup with Prev/Next. Simple and elegant, especially on PostmarketOS",
++	.restartRequired = true,
++});
++
+ } // namespace Core::YukigramSettings
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.h b/Telegram/SourceFiles/core/yukigram_settings.h
+index 398272b296..12df612534 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.h
++++ b/Telegram/SourceFiles/core/yukigram_settings.h
+@@ -10,4 +10,7 @@ extern base::options::toggle DisableAnimoji;
+ extern const char kOptionCommentsButtonAlwaysRight[];
+ extern base::options::toggle CommentsButtonAlwaysRight;
+ 
++extern const char kOptionMprisCallHangup[];
++extern base::options::toggle MprisCallHangup;
++
+ } // namespace Core::YukigramSettings
+diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+index 081b136e95..a54f06eff0 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+@@ -78,6 +78,7 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
+ 
+     addToggle(Core::YukigramSettings::kOptionDisableAnimoji, { u"yukigram"_q, u"disable"_q, u"animoji"_q });
+ 	addToggle(Core::YukigramSettings::kOptionCommentsButtonAlwaysRight, { u"yukigram"_q, u"comments"_q, u"button"_q, u"right"_q });
++    addToggle(Core::YukigramSettings::kOptionMprisCallHangup, { u"yukigram"_q, u"mpris"_q, u"calls"_q });
+ }
+ 
+ class Yukigram : public Section<Yukigram> {
 -- 
 2.53.0
 

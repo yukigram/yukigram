@@ -9,10 +9,10 @@ Subject: [PATCH] Show unofficial client users in chat
  2 files changed, 4 insertions(+)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index e6dac8acf6..43f0e06ea4 100644
+index e0351e81f9..6899d456a1 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
-@@ -146,6 +146,8 @@ std::optional<style::icon> ChatTypeIcon(HistoryItem *item) {
+@@ -145,6 +145,8 @@ std::optional<style::icon> ChatTypeIcon(HistoryItem *item) {
  				return st::msgNameDeletedIcon;
  			} else if (user->isBot() && !user->isSupport() && !user->isRepliesChat()) {
  				return st::msgNameBotIcon;

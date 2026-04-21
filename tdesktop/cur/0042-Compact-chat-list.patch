@@ -1,18 +1,47 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
-Date: Sun, 19 Apr 2026 04:49:10 +0300
+Date: Tue, 21 Apr 2026 20:00:01 +0300
 Subject: [PATCH] Compact chat list
 
 ---
- Telegram/SourceFiles/dialogs/dialogs.style    |  5 +++
+ .../SourceFiles/core/yukigram_settings.cpp    |  7 ++++++
+ Telegram/SourceFiles/core/yukigram_settings.h |  3 +++
+ Telegram/SourceFiles/dialogs/dialogs.style    |  5 ++++
  .../SourceFiles/dialogs/dialogs_entry.cpp     |  4 +++
- .../dialogs/dialogs_inner_widget.cpp          | 10 +++---
- Telegram/SourceFiles/dialogs/dialogs_row.cpp  |  5 ++-
- .../SourceFiles/dialogs/ui/dialogs_layout.cpp | 31 +++++++++++++++++--
- .../SourceFiles/dialogs/ui/dialogs_layout.h   |  4 +++
- .../settings/settings_experimental.cpp        |  1 +
- 7 files changed, 53 insertions(+), 7 deletions(-)
+ .../dialogs/dialogs_inner_widget.cpp          | 11 +++++---
+ Telegram/SourceFiles/dialogs/dialogs_row.cpp  |  6 ++++-
+ .../SourceFiles/dialogs/ui/dialogs_layout.cpp | 25 +++++++++++++++++--
+ .../settings/sections/settings_yukigram.cpp   |  1 +
+ 8 files changed, 55 insertions(+), 7 deletions(-)
 
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.cpp b/Telegram/SourceFiles/core/yukigram_settings.cpp
+index 9913b99825..c9b087e42c 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.cpp
++++ b/Telegram/SourceFiles/core/yukigram_settings.cpp
+@@ -69,4 +69,11 @@ base::options::toggle HideWallPaper({
+ 	.restartRequired = true,
+ });
+ 
++const char kOptionCompactChatList[] = "compact-chat-list";
++base::options::toggle CompactChatList({
++	.id = kOptionCompactChatList,
++	.name = "Compact chat list",
++	.restartRequired = true,
++});
++
+ } // namespace Core::YukigramSettings
+diff --git a/Telegram/SourceFiles/core/yukigram_settings.h b/Telegram/SourceFiles/core/yukigram_settings.h
+index 10446a68bc..97ab6c7adb 100644
+--- a/Telegram/SourceFiles/core/yukigram_settings.h
++++ b/Telegram/SourceFiles/core/yukigram_settings.h
+@@ -31,4 +31,7 @@ extern base::options::toggle ShowMsgId;
+ extern const char kOptionHideWallPaper[];
+ extern base::options::toggle HideWallPaper;
+ 
++extern const char kOptionCompactChatList[];
++extern base::options::toggle CompactChatList;
++
+ } // namespace Core::YukigramSettings
 diff --git a/Telegram/SourceFiles/dialogs/dialogs.style b/Telegram/SourceFiles/dialogs/dialogs.style
 index f80f21aa03..1a49f97b53 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs.style
@@ -30,42 +59,50 @@ index f80f21aa03..1a49f97b53 100644
  	height: 72px;
  	textTop: 30px;
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_entry.cpp b/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
-index 5a6ab2d037..518d349b89 100644
+index 5a6ab2d037..daf6e0958a 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
-@@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- 
- #include "dialogs/dialogs_key.h"
- #include "dialogs/dialogs_indexed_list.h"
-+#include "dialogs/ui/dialogs_layout.h"
- #include "base/unixtime.h"
- #include "data/data_changes.h"
- #include "data/data_session.h"
+@@ -18,6 +18,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "data/data_saved_sublist.h"
+ #include "core/application.h"
+ #include "core/core_settings.h"
++#include "core/yukigram_settings.h"
+ #include "mainwidget.h"
+ #include "main/main_session.h"
+ #include "main/main_session_settings.h"
 @@ -490,6 +491,9 @@ void Entry::updateChatListEntryHeight() {
  }
  
  bool Entry::hasChatsFilterTags(FilterId exclude) const {
-+	if (Ui::CompactChatList.value()) {
++	if (Core::YukigramSettings::CompactChatList.value()) {
 +		return false;
 +	}
  	if (!owner().chatsFilters().tagsEnabled()) {
  		return false;
  	}
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-index 80fdc809be..6aa6f03ef8 100644
+index 80fdc809be..62ebf06dd0 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-@@ -899,7 +899,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
+@@ -25,6 +25,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "core/click_handler_types.h"
+ #include "core/shortcuts.h"
+ #include "core/ui_integration.h"
++#include "core/yukigram_settings.h"
+ #include "ui/widgets/buttons.h"
+ #include "ui/widgets/popup_menu.h"
+ #include "ui/widgets/scroll_area.h"
+@@ -899,7 +900,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
  			}
  		}
  
-+	if (!Ui::CompactChatList.value()) {
++	if (!Core::YukigramSettings::CompactChatList.value()) {
  		context.st = (forum || monoforum) ? &st::forumDialogRow : _st.get();
 +	}
  
  		auto chatsFilterTags = std::vector<QImage*>();
  		if (context.narrow) {
-@@ -1268,7 +1270,7 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
+@@ -1268,7 +1271,7 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
  							? _previewPressed
  							: _previewSelected));
  					Ui::RowPainter::Paint(p, result.get(), {
@@ -74,7 +111,7 @@ index 80fdc809be..6aa6f03ef8 100644
  						.folder = _openedFolder,
  						.forum = _openedForum,
  						.currentBg = currentBg(),
-@@ -1346,7 +1348,7 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
+@@ -1346,7 +1349,7 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
  							? _searchedPressed
  							: _searchedSelected));
  					Ui::RowPainter::Paint(p, result.get(), {
@@ -83,75 +120,77 @@ index 80fdc809be..6aa6f03ef8 100644
  						.folder = _openedFolder,
  						.forum = _openedForum,
  						.currentBg = currentBg(),
-@@ -1762,7 +1764,7 @@ void InnerWidget::performDrag() {
+@@ -1762,7 +1765,7 @@ void InnerWidget::performDrag() {
  			('@' + u).toUtf8());
  	}
  
 -	const auto &st = st::defaultDialogRow;
-+	const auto &st = (Ui::CompactChatList.value() ? st::defaultDialogRow : st::compactDialogRow);
++	const auto &st = (Core::YukigramSettings::CompactChatList.value() ? st::defaultDialogRow : st::compactDialogRow);
  	auto pixmap = QPixmap(Size(st.height * style::DevicePixelRatio()));
  	pixmap.setDevicePixelRatio(style::DevicePixelRatio());
  	pixmap.fill(Qt::transparent);
-@@ -5319,7 +5321,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
+@@ -5319,7 +5322,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
  		: st::dialogsCallBadgeSize;
  	const auto stroke = st::dialogsOnlineBadgeStroke;
  	const auto skip = user
 -		? st::dialogsOnlineBadgeSkip
-+		? (Ui::CompactChatList.value() ? QPoint() : st::dialogsOnlineBadgeSkip)
++		? (Core::YukigramSettings::CompactChatList.value() ? QPoint() : st::dialogsOnlineBadgeSkip)
  		: st::dialogsCallBadgeSkip;
  	const auto updateRect = QRect(
  		_st->photoSize - skip.x() - size,
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_row.cpp b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
-index acd8c8cb1c..9f58bb244d 100644
+index acd8c8cb1c..e3ec4e2b8e 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
-@@ -301,6 +301,9 @@ Row::~Row() {
+@@ -7,6 +7,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ */
+ #include "dialogs/dialogs_row.h"
+ 
++#include "core/yukigram_settings.h"
+ #include "ui/chat/chat_theme.h" // CountAverageColor.
+ #include "ui/color_contrast.h"
+ #include "ui/effects/credits_graphics.h"
+@@ -301,6 +302,9 @@ Row::~Row() {
  const style::DialogRow &Row::ComputeSt(
  		not_null<const Entry*> entry,
  		FilterId filterId) {
-+	if (Ui::CompactChatList.value()) {
++	if (Core::YukigramSettings::CompactChatList.value()) {
 +		return st::compactDialogRow;
 +	}
  	if (const auto history = entry->asHistory()) {
  		const auto hasTags = entry->hasChatsFilterTags(filterId);
  		const auto wideRow = history->isForum()
-@@ -513,7 +516,7 @@ void Row::PaintCornerBadgeFrame(
+@@ -513,7 +517,7 @@ void Row::PaintCornerBadgeFrame(
  		: st::dialogsCallBadgeSize;
  	const auto stroke = st::dialogsOnlineBadgeStroke;
  	const auto skip = online
 -		? st::dialogsOnlineBadgeSkip
-+		? (Ui::CompactChatList.value() ? QPoint() : st::dialogsOnlineBadgeSkip)
++		? (Core::YukigramSettings::CompactChatList.value() ? QPoint() : st::dialogsOnlineBadgeSkip)
  		: st::dialogsCallBadgeSkip;
  	const auto shrink = (size / 2) * (1. - topLayerProgress);
  
 diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
-index ac29683c5b..e1d593ca17 100644
+index ac29683c5b..5090a6b06e 100644
 --- a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 +++ b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
-@@ -52,6 +52,13 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- 
- namespace Dialogs::Ui {
- 
-+base::options::toggle CompactChatList({
-+	.id = kOptionCompactChatList,
-+	.name = "Compact chat list",
-+	.restartRequired = true,
-+});
-+const char kOptionCompactChatList[] = "compact-chat-list";
-+
- const char kOptionDialogsMuteIcon[] = "dialogs-mute-icon";
- 
- namespace {
-@@ -115,7 +122,7 @@ int PaintRightButtonImpl(QPainter &p, const PaintContext &context) {
+@@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "base/options.h"
+ #include "base/unixtime.h"
+ #include "core/ui_integration.h"
++#include "core/yukigram_settings.h"
+ #include "data/data_channel.h"
+ #include "data/data_drafts.h"
+ #include "data/data_folder.h"
+@@ -115,7 +116,7 @@ int PaintRightButtonImpl(QPainter &p, const PaintContext &context) {
  		const auto left = context.width
  			- size.width()
  			- rightButton->st->margin.right();
 -		const auto top = rightButton->st->margin.top();
-+		const auto top = (Ui::CompactChatList.value() ? st::defaultDialogRow.padding.top() : rightButton->st->margin.top());
++		const auto top = (Core::YukigramSettings::CompactChatList.value() ? st::defaultDialogRow.padding.top() : rightButton->st->margin.top());
  		p.drawImage(
  			left,
  			top,
-@@ -399,6 +406,7 @@ template <typename PaintItemCallback>
+@@ -399,6 +400,7 @@ template <typename PaintItemCallback>
  void PaintRow(
  		Painter &p,
  		not_null<const BasicRow*> row,
@@ -159,7 +198,7 @@ index ac29683c5b..e1d593ca17 100644
  		QRect geometry,
  		not_null<Entry*> entry,
  		VideoUserpic *videoUserpic,
-@@ -410,11 +418,23 @@ void PaintRow(
+@@ -410,11 +412,23 @@ void PaintRow(
  		HistoryItem *item,
  		const Data::Draft *draft,
  		TimeId date,
@@ -169,7 +208,7 @@ index ac29683c5b..e1d593ca17 100644
  		BadgesState badgesState,
  		base::flags<Flag> flags,
  		PaintItemCallback &&paintItemCallback) {
-+	bool useFullRow = !Ui::CompactChatList.value()
++	bool useFullRow = !Core::YukigramSettings::CompactChatList.value()
 +		|| in_context.narrow
 +		|| isFullRow
 +		|| entry->asFolder();
@@ -184,7 +223,7 @@ index ac29683c5b..e1d593ca17 100644
  	const auto supportMode = entry->session().supportMode();
  	if (supportMode) {
  		draft = nullptr;
-@@ -563,6 +583,7 @@ void PaintRow(
+@@ -563,6 +577,7 @@ void PaintRow(
  				+ st::dialogsChatTypeSkip);
  		}
  	}
@@ -192,7 +231,7 @@ index ac29683c5b..e1d593ca17 100644
  	auto texttop = context.st->textTop;
  	if (const auto folder = entry->asFolder()) {
  		const auto availableWidth = PaintWideCounter(
-@@ -752,6 +773,10 @@ void PaintRow(
+@@ -752,6 +767,10 @@ void PaintRow(
  			texttop,
  			context.width);
  	}
@@ -203,7 +242,7 @@ index ac29683c5b..e1d593ca17 100644
  	const auto sendStateIcon = [&]() -> const style::icon* {
  		if (!thread) {
  			return nullptr;
-@@ -1166,6 +1191,7 @@ void RowPainter::Paint(
+@@ -1166,6 +1185,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,
@@ -211,7 +250,7 @@ index ac29683c5b..e1d593ca17 100644
  		QRect(0, 0, context.width, row->height()),
  		entry,
  		videoUserpic,
-@@ -1278,6 +1304,7 @@ void RowPainter::Paint(
+@@ -1278,6 +1298,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,
@@ -219,40 +258,18 @@ index ac29683c5b..e1d593ca17 100644
  		QRect(0, 0, context.width, context.st->height),
  		entry,
  		nullptr,
-diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.h b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.h
-index d5a36aeae7..8dfae7d1ea 100644
---- a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.h
-+++ b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.h
-@@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #pragma once
+diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+index 4cedde077e..82a68b375a 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+@@ -85,6 +85,7 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
+ 	addToggle(Core::YukigramSettings::kOptionTimeWithSeconds, { u"yukigram"_q, u"time"_q, u"seconds"_q });
+ 	addToggle(Core::YukigramSettings::kOptionShowMsgId, { u"yukigram"_q, u"message"_q, u"id"_q });
+ 	addToggle(Core::YukigramSettings::kOptionHideWallPaper, { u"yukigram"_q, u"hide"_q, u"wallpaper"_q });
++	addToggle(Core::YukigramSettings::kOptionCompactChatList, { u"yukigram"_q, u"compact"_q, u"chat"_q });
+ }
  
- #include "dialogs/ui/dialogs_quick_action_context.h"
-+#include "base/options.h"
- #include "ui/cached_round_corners.h"
- 
- namespace style {
-@@ -78,6 +79,9 @@ struct PaintContext {
- 
- extern const char kOptionDialogsMuteIcon[];
- 
-+extern base::options::toggle CompactChatList;
-+extern const char kOptionCompactChatList[];
-+
- [[nodiscard]] const style::icon *ChatTypeIcon(
- 	not_null<PeerData*> peer,
- 	const PaintContext &context);
-diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index e8765991b5..ce9f7bf6f3 100644
---- a/Telegram/SourceFiles/settings/settings_experimental.cpp
-+++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -214,6 +214,7 @@ void SetupExperimental(
- 
- 	addToggle(ChatHelpers::kOptionTabbedPanelShowOnClick);
- 	addToggle(Dialogs::kOptionForumHideChatsList);
-+	addToggle(Dialogs::Ui::kOptionCompactChatList);
- 	addToggle(Dialogs::Ui::kOptionDialogsMuteIcon);
- 	addToggle(Core::kOptionFractionalScalingEnabled);
- 	addToggle(Core::kOptionHighDpiDownscale);
+ class Yukigram : public Section<Yukigram> {
 -- 
 2.53.0
 

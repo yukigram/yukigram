@@ -55,10 +55,10 @@ index ff59b47658..8f723c44ee 100644
  
  [[maybe_unused]] constexpr auto kShowFolder = {
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 4380226135..2c1f9612f4 100644
+index 1f122d3acf..0b0caa02d3 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -12,6 +12,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "chat_helpers/stickers_emoji_pack.h"
  #include "core/application.h"
  #include "core/file_utilities.h"
@@ -66,7 +66,7 @@ index 4380226135..2c1f9612f4 100644
  #include "core/click_handler_types.h"
  #include "core/phone_click_handler.h"
  #include "data/data_chat_participant_status.h"
-@@ -485,6 +486,8 @@ HistoryInner::HistoryInner(
+@@ -476,6 +477,8 @@ HistoryInner::HistoryInner(
  		update();
  	}, lifetime());
  
@@ -75,7 +75,7 @@ index 4380226135..2c1f9612f4 100644
  	HistoryView::Reactions::SetupManagerList(
  		_reactionsManager.get(),
  		_reactionsItem.value());
-@@ -5566,3 +5569,35 @@ bool CanSendReply(not_null<const HistoryItem*> item) {
+@@ -5557,3 +5560,35 @@ bool CanSendReply(not_null<const HistoryItem*> item) {
  	}
  	return true;
  }
@@ -112,10 +112,10 @@ index 4380226135..2c1f9612f4 100644
 +	}, lifetime());
 +}
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.h b/Telegram/SourceFiles/history/history_inner_widget.h
-index 17ae0779cc..2c0e0c32a9 100644
+index 3a8c42982f..f005431a43 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.h
 +++ b/Telegram/SourceFiles/history/history_inner_widget.h
-@@ -453,6 +453,7 @@ private:
+@@ -449,6 +449,7 @@ private:
  	void blockSenderAsGroup(FullMsgId itemId);
  	void copySelectedText();
  	void editCaptionUploadLayer(not_null<HistoryItem*> item);
@@ -124,10 +124,10 @@ index 17ae0779cc..2c0e0c32a9 100644
  	[[nodiscard]] auto reactionButtonParameters(
  		not_null<const Element*> view,
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index cec596f861..b13bfbede7 100644
+index 1213afa130..8b63e28cfd 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -9568,7 +9568,7 @@ bool HistoryWidget::updateCanSendMessage() {
+@@ -9559,7 +9559,7 @@ bool HistoryWidget::updateCanSendMessage() {
  	return true;
  }
  
@@ -136,7 +136,7 @@ index cec596f861..b13bfbede7 100644
  	if (!_list) {
  		return;
  	}
-@@ -9577,7 +9577,7 @@ void HistoryWidget::forwardSelected() {
+@@ -9568,7 +9568,7 @@ void HistoryWidget::forwardSelected() {
  		if (const auto strong = weak.get()) {
  			strong->clearSelected();
  		}
@@ -146,10 +146,10 @@ index cec596f861..b13bfbede7 100644
  
  void HistoryWidget::confirmDeleteSelected() {
 diff --git a/Telegram/SourceFiles/history/history_widget.h b/Telegram/SourceFiles/history/history_widget.h
-index e467e39ada..446bbbf3f4 100644
+index 3f79a66915..39923c36fa 100644
 --- a/Telegram/SourceFiles/history/history_widget.h
 +++ b/Telegram/SourceFiles/history/history_widget.h
-@@ -294,7 +294,7 @@ public:
+@@ -291,7 +291,7 @@ public:
  
  	QPixmap grabForShowAnimation(const Window::SectionSlideParams &params);
  
