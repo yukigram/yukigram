@@ -161,6 +161,8 @@ yukigram.packages.${system}.default
 
 #### nixpak (custom options)
 
+Custom nixpak options are required to launch Yukigram nixpak under X11.
+
 without flakes:
 ```nix
 import <yukigram> {
@@ -169,7 +171,7 @@ import <yukigram> {
     pkgs = import <nixpkgs> {};
 
     customNixpakConfig = {
-        sockets.pulse = false;
+        bubblewrap.sockets.x11 = true;
     };
 }
 ```
@@ -182,7 +184,7 @@ yukigram.packages.${system}.default.override {
     pkgs = my-pkgs;
 
     customNixpakConfig = {
-        sockets.pulse = false;
+        bubblewrap.sockets.x11 = true;
     };
 }
 ```
