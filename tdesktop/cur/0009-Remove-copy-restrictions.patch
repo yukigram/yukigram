@@ -10,7 +10,7 @@ Subject: [PATCH] Remove copy restrictions
  3 files changed, 10 insertions(+), 11 deletions(-)
 
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 599199c81f..8019707f42 100644
+index 44f03da246..92b54b6e64 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -3481,12 +3481,12 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {

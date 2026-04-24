@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: telegramdesktop/tdesktop
-          ref: v6.7.7
+          ref: 6e90f6876e2a2daf04d97ea97345cc9ad8ade378 # v6.7.8 tag is not published yet
           path: yukigram-worktree
           submodules: recursive
 

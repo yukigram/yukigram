@@ -10,7 +10,7 @@ Original author: c0re100 <corehusky@gmail.com>
  1 file changed, 21 insertions(+)
 
 diff --git a/Telegram/SourceFiles/boxes/sticker_set_box.cpp b/Telegram/SourceFiles/boxes/sticker_set_box.cpp
-index ed97954db8..444dd2a894 100644
+index 7598c4b650..5a20f79ea6 100644
 --- a/Telegram/SourceFiles/boxes/sticker_set_box.cpp
 +++ b/Telegram/SourceFiles/boxes/sticker_set_box.cpp
 @@ -72,6 +72,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -46,22 +46,22 @@ index ed97954db8..444dd2a894 100644
  		if (_inner->notInstalled()) {
  			if (!_session->premium()
  				&& _session->premiumPossible()
-@@ -939,6 +958,7 @@ void StickerSetBox::updateButtons() {
+@@ -940,6 +959,7 @@ void StickerSetBox::updateButtons() {
  					if (fillSetCreatorFooter) {
- 						fillSetCreatorFooter(*menu);
+ 						fillSetCreatorFooter(raw);
  					}
-+					(*menu)->addAction("Owner", [=] { author(); }, &st::menuIconProfile);
- 					(*menu)->popup(QCursor::pos());
- 					return true;
- 				});
-@@ -994,6 +1014,7 @@ void StickerSetBox::updateButtons() {
- 							fillSetCreatorFooter(*menu);
++					raw->addAction("Owner", [=] { author(); }, &st::menuIconProfile);
+ 					raw->setForcedOrigin(
+ 						Ui::PanelAnimation::Origin::TopRight);
+ 					top->setForceRippled(true);
+@@ -1013,6 +1033,7 @@ void StickerSetBox::updateButtons() {
+ 							fillSetCreatorFooter(raw);
  						}
  					}
-+					(*menu)->addAction("Owner", [=] { author(); }, &st::menuIconProfile);
- 					(*menu)->popup(QCursor::pos());
- 					return true;
- 				});
++					raw->addAction("Owner", [=] { author(); }, &st::menuIconProfile);
+ 					raw->setForcedOrigin(
+ 						Ui::PanelAnimation::Origin::TopRight);
+ 					top->setForceRippled(true);
 -- 
 2.53.0
 

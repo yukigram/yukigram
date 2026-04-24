@@ -10,7 +10,7 @@ Subject: [PATCH] Support post comments button as right action
  3 files changed, 25 insertions(+), 6 deletions(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 57f8e60f87..54be77ba88 100644
+index 7027e88378..fbe99c531e 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -6,6 +6,7 @@ For license and copyright information please follow this link:
@@ -68,7 +68,7 @@ index 57f8e60f87..54be77ba88 100644
  	if (!_comments) {
  		_comments = std::make_unique<CommentsButton>();
  		history()->owner().registerHeavyViewPart(const_cast<Message*>(this));
-@@ -2378,7 +2392,7 @@ PointState Message::pointState(QPoint point) const {
+@@ -2377,7 +2391,7 @@ PointState Message::pointState(QPoint point) const {
  			auto mediaOnBottom = (mediaDisplayed && media->isBubbleBottom()) || check || (entry/* && entry->isBubbleBottom()*/);
  			auto mediaOnTop = (mediaDisplayed && media->isBubbleTop()) || (entry && entry->isBubbleTop());
  
@@ -77,7 +77,7 @@ index 57f8e60f87..54be77ba88 100644
  				g.setHeight(g.height() - st::historyCommentsButtonHeight);
  			}
  
-@@ -2711,7 +2725,7 @@ BottomRippleMask Message::bottomRippleMask(int buttonHeight) const {
+@@ -2710,7 +2724,7 @@ BottomRippleMask Message::bottomRippleMask(int buttonHeight) const {
  }
  
  void Message::createCommentsButtonRipple() {
@@ -86,7 +86,7 @@ index 57f8e60f87..54be77ba88 100644
  	_comments->ripple = std::make_unique<Ui::RippleAnimation>(
  		st::defaultRippleAnimation,
  		std::move(mask.image),
-@@ -4512,9 +4526,10 @@ bool Message::displayRightActionComments() const {
+@@ -4520,9 +4534,10 @@ bool Message::displayRightActionComments() const {
  	return !isPinnedContext()
  		&& (context() != Context::SavedSublist)
  		&& data()->repliesAreComments()
@@ -98,7 +98,7 @@ index 57f8e60f87..54be77ba88 100644
  }
  
  std::optional<QSize> Message::rightActionSize() const {
-@@ -5313,7 +5328,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -5326,7 +5341,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  			newHeight += (bottomInfoHeight - st::msgDateFont->height);
  		}
  
@@ -108,7 +108,7 @@ index 57f8e60f87..54be77ba88 100644
  		} else if (_comments) {
  			_comments = nullptr;
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.h b/Telegram/SourceFiles/history/view/history_view_message.h
-index bb6d27e3f3..de25061a95 100644
+index e65a82a67a..e87c0261c6 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.h
 +++ b/Telegram/SourceFiles/history/view/history_view_message.h
 @@ -108,6 +108,8 @@ struct BottomRippleMask {

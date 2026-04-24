@@ -10,7 +10,7 @@ Original author: 23rd <23rd@vivaldi.net>
  1 file changed, 4 insertions(+)
 
 diff --git a/Telegram/SourceFiles/history/history_item_components.cpp b/Telegram/SourceFiles/history/history_item_components.cpp
-index 67bf9c1723..031b088867 100644
+index 45c1f4b7cb..0f8e7f134a 100644
 --- a/Telegram/SourceFiles/history/history_item_components.cpp
 +++ b/Telegram/SourceFiles/history/history_item_components.cpp
 @@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -21,7 +21,7 @@ index 67bf9c1723..031b088867 100644
  #include "lang/lang_keys.h"
  #include "ui/effects/ripple_animation.h"
  #include "ui/effects/spoiler_mess.h"
-@@ -336,6 +337,9 @@ void HistoryMessageForwarded::create(
+@@ -337,6 +338,9 @@ void HistoryMessageForwarded::create(
  				tr::marked);
  		}
  	}

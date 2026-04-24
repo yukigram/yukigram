@@ -22,7 +22,7 @@ Subject: [PATCH] Support wide messages
  15 files changed, 65 insertions(+), 23 deletions(-)
 
 diff --git a/Telegram/SourceFiles/data/data_media_types.cpp b/Telegram/SourceFiles/data/data_media_types.cpp
-index 5db673460b..a321919430 100644
+index 60947ca72d..0c5458e323 100644
 --- a/Telegram/SourceFiles/data/data_media_types.cpp
 +++ b/Telegram/SourceFiles/data/data_media_types.cpp
 @@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -33,7 +33,7 @@ index 5db673460b..a321919430 100644
  #include "history/history_item.h" // CreateMedia.
  #include "history/history_item_components.h"
  #include "history/history_location_manager.h"
-@@ -1021,7 +1022,7 @@ std::unique_ptr<HistoryView::Media> MediaPhoto::createView(
+@@ -1031,7 +1032,7 @@ std::unique_ptr<HistoryView::Media> MediaPhoto::createView(
  					message,
  					_chat,
  					_photo,
@@ -43,7 +43,7 @@ index 5db673460b..a321919430 100644
  		return std::make_unique<HistoryView::Photo>(
  			message,
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 8019707f42..1bd99244f4 100644
+index 92b54b6e64..29c15ec8d7 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -6,6 +6,7 @@ For license and copyright information please follow this link:
@@ -137,7 +137,7 @@ index 88ac50002f..51069e8f08 100644
  					}
  					auto widthForDate = maxwidth - st::msgServiceMargin.left() - st::msgServiceMargin.left();
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 54be77ba88..6e9346f928 100644
+index fbe99c531e..437909f1a5 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -15,6 +15,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -148,7 +148,7 @@ index 54be77ba88..6e9346f928 100644
  #include "history/history_item_components.h"
  #include "history/history_item_helpers.h"
  #include "history/view/media/history_view_media_generic.h"
-@@ -5021,7 +5022,9 @@ QRect Message::countGeometry() const {
+@@ -5033,7 +5034,9 @@ QRect Message::countGeometry() const {
  	//	contentLeft += st::msgPhotoSkip - (hmaxwidth - hwidth);
  	}
  	accumulate_min(contentWidth, maxWidth());
@@ -158,7 +158,7 @@ index 54be77ba88..6e9346f928 100644
  	if (mediaWidth < contentWidth) {
  		const auto textualWidth = bubbleTextualWidth();
  		if (mediaWidth < textualWidth
-@@ -5152,8 +5155,10 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -5164,8 +5167,10 @@ int Message::resizeContentGetHeight(int newWidth) {
  		}
  	}
  	accumulate_min(contentWidth, maxWidth());
@@ -170,15 +170,15 @@ index 54be77ba88..6e9346f928 100644
  	const auto textualWidth = bubbleTextualWidth();
  	if (mediaDisplayed) {
  		media->resizeGetHeight(contentWidth);
-@@ -5226,7 +5231,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -5238,7 +5243,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  		if (reactionsInBubble) {
  			_reactions->resizeGetHeight(textWidth);
  		}
 -		if (contentWidth == maxWidth() && !appearing) {
 +		if (!WideMessages.value() && contentWidth == maxWidth() && !appearing) {
  			if (mediaDisplayed) {
+ 				newHeight += media->height() - media->minHeight();
  				if (check) {
- 					newHeight += check->resizeGetHeight(contentWidth) + st::mediaInBubbleSkip;
 diff --git a/Telegram/SourceFiles/history/view/history_view_service_message.cpp b/Telegram/SourceFiles/history/view/history_view_service_message.cpp
 index 2c08e5bb70..51fac0032d 100644
 --- a/Telegram/SourceFiles/history/view/history_view_service_message.cpp

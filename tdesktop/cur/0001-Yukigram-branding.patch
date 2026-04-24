@@ -28,10 +28,10 @@ Subject: [PATCH] Yukigram branding
  delete mode 100644 lib/xdg/org.telegram.desktop.service
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 9ac95495be..2f716039b1 100644
+index 1c7484a603..c3d8c64b11 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -2095,7 +2095,7 @@ else()
+@@ -2097,7 +2097,7 @@ else()
          set(bundle_identifier "com.tdesktop.Telegram")
      endif()
      set(bundle_entitlements "Telegram.entitlements")
@@ -40,7 +40,7 @@ index 9ac95495be..2f716039b1 100644
  endif()
  
  if (CMAKE_GENERATOR STREQUAL Xcode)
-@@ -2141,7 +2141,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+@@ -2143,7 +2143,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
  if (APPLE
      OR is_multi_config
      OR NOT CMAKE_EXECUTABLE_SUFFIX STREQUAL ""
@@ -49,7 +49,7 @@ index 9ac95495be..2f716039b1 100644
      set(output_folder ${CMAKE_BINARY_DIR})
  else()
      set(output_folder ${CMAKE_BINARY_DIR}/bin)
-@@ -2315,28 +2315,15 @@ endif()
+@@ -2317,28 +2317,15 @@ endif()
  
  if (LINUX AND DESKTOP_APP_USE_PACKAGED)
      include(GNUInstallDirs)
@@ -121,7 +121,7 @@ index fd3f69e5ed..27ec7f6a1d 100644
    </qresource>
  </RCC>
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
-index 738ad20837..6a22dce753 100644
+index 738ad20837..eb3999ab14 100644
 --- a/Telegram/SourceFiles/boxes/about_box.cpp
 +++ b/Telegram/SourceFiles/boxes/about_box.cpp
 @@ -49,7 +49,7 @@ rpl::producer<TextWithEntities> Text2() {
@@ -139,7 +139,7 @@ index 738ad20837..6a22dce753 100644
  void AboutBox(not_null<Ui::GenericBox*> box) {
 -	box->setTitle(u"Telegram Desktop"_q);
 +	const auto commit_info = "@commit";
-+	box->setTitle(u"Yukigram "_q + (commit_info[0] != '@' ? commit_info : "v6.7.7"));
++	box->setTitle(u"Yukigram "_q + (commit_info[0] != '@' ? commit_info : "v6.7.8"));
  
  	auto layout = box->verticalLayout();
  
@@ -157,7 +157,7 @@ index f0e5120aa7..19372beb15 100644
  #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
  	// fallback session management is useless for tdesktop since it doesn't have
 diff --git a/Telegram/SourceFiles/core/version.h b/Telegram/SourceFiles/core/version.h
-index c871fdba11..61557f293b 100644
+index 44f966ebed..09310f339f 100644
 --- a/Telegram/SourceFiles/core/version.h
 +++ b/Telegram/SourceFiles/core/version.h
 @@ -20,8 +20,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -168,9 +168,9 @@ index c871fdba11..61557f293b 100644
 -constexpr auto AppFile = "Telegram"_cs;
 +constexpr auto AppName = "Yukigram"_cs;
 +constexpr auto AppFile = "yukigram"_cs;
- constexpr auto AppVersion = 6007007;
- constexpr auto AppVersionStr = "6.7.7";
- constexpr auto AppBetaVersion = true;
+ constexpr auto AppVersion = 6007008;
+ constexpr auto AppVersionStr = "6.7.8";
+ constexpr auto AppBetaVersion = false;
 diff --git a/Telegram/SourceFiles/intro/intro_start.cpp b/Telegram/SourceFiles/intro/intro_start.cpp
 index d1b835a09a..a871886d76 100644
 --- a/Telegram/SourceFiles/intro/intro_start.cpp
@@ -185,7 +185,7 @@ index d1b835a09a..a871886d76 100644
  	show();
  }
 diff --git a/Telegram/SourceFiles/platform/linux/specific_linux.cpp b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-index 630ac06b52..a1376acfd6 100644
+index abe2197966..892ff819ad 100644
 --- a/Telegram/SourceFiles/platform/linux/specific_linux.cpp
 +++ b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
 @@ -234,7 +234,7 @@ bool GenerateDesktopFile(
@@ -261,10 +261,10 @@ index 81242142ad..be84e4c7e9 100644
  
  		st::notifyClose.icon.paint(p, w - st::notifyClosePos.x() - st::notifyClose.width + st::notifyClose.iconPosition.x(), st::notifyClosePos.y() + st::notifyClose.iconPosition.y(), w);
 diff --git a/Telegram/SourceFiles/window/main_window.cpp b/Telegram/SourceFiles/window/main_window.cpp
-index 51da6eb006..ba46d1bad5 100644
+index 5b11b2eaf4..599f8d25ca 100644
 --- a/Telegram/SourceFiles/window/main_window.cpp
 +++ b/Telegram/SourceFiles/window/main_window.cpp
-@@ -835,7 +835,7 @@ void MainWindow::updateTitle() {
+@@ -847,7 +847,7 @@ void MainWindow::updateTitle() {
  		: Dialogs::Key();
  	const auto thread = key ? key.thread() : nullptr;
  	if (!thread) {
@@ -403,7 +403,7 @@ index 8935a4fa83..0000000000
 -Name=org.telegram.desktop
 -Exec=@CMAKE_INSTALL_FULL_BINDIR@/Telegram
 
-base-commit: f1b3588465cf9a9d5a1f359307a2251d87a50a82
+base-commit: 6e90f6876e2a2daf04d97ea97345cc9ad8ade378
 -- 
 2.53.0
 

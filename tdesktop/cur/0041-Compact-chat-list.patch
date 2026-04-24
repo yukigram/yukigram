@@ -14,7 +14,7 @@ Subject: [PATCH] Compact chat list
  7 files changed, 53 insertions(+), 7 deletions(-)
 
 diff --git a/Telegram/SourceFiles/dialogs/dialogs.style b/Telegram/SourceFiles/dialogs/dialogs.style
-index f80f21aa03..1a49f97b53 100644
+index 78f560bd29..d0760aede6 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs.style
 +++ b/Telegram/SourceFiles/dialogs/dialogs.style
 @@ -99,6 +99,11 @@ defaultDialogRow: DialogRow {
