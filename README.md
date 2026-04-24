@@ -128,8 +128,11 @@ Windows and macOS are *not* supported.
 Consider using isolated packages
 and reviewing and refining their permissions
 (with e.g. [Flatseal] for flatpak
-or by creating a custom [Nixpak])
+or with [custom Nixpak options] for nixpak)
 instead of plain binaries.
+
+[Flatseal]: https://github.com/tchx84/Flatseal
+[custom Nixpak]: #nixpak-custom-options
 
 ### with flatpak
 
@@ -205,9 +208,6 @@ In the meantime, use [Nix](#with-nix) or [Flatpak](#with-flatpak).
 Check your package manager's manual on how to add patches to packages
 and package Telegram Desktop (of correct version)
 with your selection of patches.
-
-[Flatseal]: https://github.com/tchx84/Flatseal
-[Nixpak]: https://github.com/nixpak/nixpak
 
 ## Previous versions
 
