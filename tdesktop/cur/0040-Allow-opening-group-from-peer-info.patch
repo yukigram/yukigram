@@ -4,23 +4,28 @@ Date: Fri, 17 Apr 2026 04:31:52 +0300
 Subject: [PATCH] Allow opening group from peer info
 
 ---
- .../info/profile/info_profile_top_bar.cpp            | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ .../info/profile/info_profile_top_bar.cpp       | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
-index 26693dcead..83b4aca55e 100644
+index 26693dcead..9b12ceea27 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
-@@ -745,7 +745,7 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
+@@ -745,7 +745,12 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
  		_actions->show();
  		_actions->raise();
  	});
 -	if (user) {
++	bool showHistoryDone = false;
 +	const auto addShowHistory = [&]() {
++		if (showHistoryDone) {
++			return;
++		}
++		showHistoryDone = true;
  		const auto message = Ui::CreateChild<TopBarActionButton>(
  			this,
  			tr::lng_profile_action_short_message(tr::now),
-@@ -758,6 +758,9 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
+@@ -758,6 +763,9 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
  		message->setAccessibleName(tr::lng_profile_action_short_message(tr::now));
  		buttons.push_back(message);
  		_actions->add(message);
@@ -30,7 +35,7 @@ index 26693dcead..83b4aca55e 100644
  	}
  	const auto canJoin = (!sublist && !topic && channel && !channel->amIn());
  	if (canJoin) {
-@@ -956,6 +959,13 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
+@@ -956,6 +964,13 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
  	if (chechMax()) {
  		return;
  	}
