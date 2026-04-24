@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+exec 1>&2
+if ! reuse lint -l; then
+    echo ==== reuse lint errors, not committing ====
+    exit 1
+fi

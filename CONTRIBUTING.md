@@ -22,6 +22,18 @@ git checkout -b test
 git worktree add ../yukigram-worktree
 ```
 
+### Git hooks
+
+#### pre-commit
+
+Requires a relatively recent version of [`reuse` tool][reuse-tool]
+
+```shell
+ln -s ../../hooks/pre-commit .git/hooks
+```
+
+[reuse-tool]: https://codeberg.org/fsfe/reuse-tool
+
 ## Incremental builds
 
 To use incremental builds under NixOS,
