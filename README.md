@@ -198,7 +198,7 @@ pkgs.callPackage <yukigram/package.nix> {}
 ### on PostmarketOS
 
 Support planned.
-In the meantime, use [Nix] or Flatpak.
+In the meantime, use [Nix](#with-nix) or [Flatpak](#with-flatpak).
 
 ### with other package manager
 
@@ -208,7 +208,6 @@ with your selection of patches.
 
 [Flatseal]: https://github.com/tchx84/Flatseal
 [Nixpak]: https://github.com/nixpak/nixpak
-[Nix]: https://lix.systems
 
 ## Previous versions
 
