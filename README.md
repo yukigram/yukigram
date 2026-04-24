@@ -80,8 +80,6 @@ Contributions welcome!
 - Compile-time option to use QtWebEngine for Instant View
     (requires submodule patching)
 
-[org.telegram.desktop.webview]: https://github.com/flathub/org.telegram.desktop.webview
-
 ## Known bugs
 
 - "Has unofficial client" icon won't show unless the user profile has already been opened before
