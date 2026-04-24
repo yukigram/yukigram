@@ -72,7 +72,6 @@ SPDX-FileCopyrightText = "Yukigram contributors, Forkgram contributors <https://
 [[annotations]]
 path = [
     ".gitignore",
-    ".gitmodules",
     ".mailmap",
     "npins/sources.json",
     "CONTRIBUTING.md",
