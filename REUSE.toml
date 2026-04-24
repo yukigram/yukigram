@@ -33,6 +33,7 @@ path = [
     "tdesktop/cur/*-Hide-Join-group-button-in-open-groups.patch",
     "tdesktop/cur/*-Hide-per-chat-wallpaper.patch",
     "tdesktop/cur/*-Allow-opening-group-from-peer-info.patch",
+    "tdesktop/cur/*-Compact-chat-list.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors <https://github.com/yukigram/yukigram>"
@@ -69,7 +70,14 @@ SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exc
 SPDX-FileCopyrightText = "Yukigram contributors, Forkgram contributors <https://github.com/forkgram/tdesktop>"
 
 [[annotations]]
-path = [".gitignore", ".gitmodules", "npins/sources.json", "CONTRIBUTING.md", "README.md"]
+path = [
+    ".gitignore",
+    ".gitmodules",
+    ".mailmap",
+    "npins/sources.json",
+    "CONTRIBUTING.md",
+    "README.md",
+]
 SPDX-License-Identifier = "CC0-1.0"
 SPDX-FileCopyrightText = "none"
 
