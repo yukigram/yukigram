@@ -206,7 +206,7 @@ gnome-session-inhibit --inhibit=idle --inhibit-only & nix-build --argstr appId i
 ```shell
 cd yukigram-worktree
 ./build.sh
-./install.sh
+./install.sh --prefix /app
 cd ../yukigram/flatpak
 flatpak-builder --force-clean build io.github.yukigram.yml
 ```

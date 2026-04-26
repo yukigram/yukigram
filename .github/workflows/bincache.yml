@@ -74,7 +74,7 @@ jobs:
         run: |
           set -exuo pipefail
           pushd yukigram-worktree
-          ./install.sh
+          ./install.sh --prefix /app
           popd
 
       - name: Save architecture
