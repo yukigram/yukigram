@@ -61,10 +61,10 @@ index 3f79a66915..e467e39ada 100644
  #include "history/view/controls/history_view_compose_media_edit_manager.h"
  #include "history/view/history_view_corner_buttons.h"
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 4943a8869d..7bfd916474 100644
+index c20898a21e..8cc0344b2f 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -34,6 +34,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -35,6 +35,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "dialogs/ui/dialogs_layout.h"
  #include "history/history_item_components.h"
  #include "info/profile/info_profile_actions.h"
@@ -72,7 +72,7 @@ index 4943a8869d..7bfd916474 100644
  #include "lang/lang_keys.h"
  #include "mainwindow.h"
  #include "mainwidget.h"
-@@ -222,6 +223,7 @@ void SetupExperimental(
+@@ -223,6 +224,7 @@ void SetupExperimental(
  	addToggle(kOptionWideMessages);
  	addToggle(Webview::kOptionWebviewDebugEnabled);
  	addToggle(Webview::kOptionWebviewLegacyEdge);

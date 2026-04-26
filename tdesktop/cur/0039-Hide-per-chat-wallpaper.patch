@@ -73,10 +73,10 @@ index e7bfd2d511..2e325d1a84 100644
  class Image;
  
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index a0012447b2..ddf2c09a38 100644
+index 081d5f2786..3816817721 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -12,6 +12,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "yukigram/settings/right_action_comments.h"
  
  #include "data/components/passkeys.h"
@@ -84,7 +84,7 @@ index a0012447b2..ddf2c09a38 100644
  #include "main/main_session.h"
  #include "ui/boxes/confirm_box.h"
  #include "ui/text/text_entity.h"
-@@ -222,6 +223,7 @@ void SetupExperimental(
+@@ -223,6 +224,7 @@ void SetupExperimental(
  	addToggle(Ui::kOptionUseSmallMsgBubbleRadius);
  	addToggle(Media::Player::kOptionDisableAutoplayNext);
  	addToggle(kOptionWideMessages);
