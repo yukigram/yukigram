@@ -171,7 +171,7 @@ index 4742827c69..5b3fba6167 100644
  } // namespace Calls
 diff --git a/Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.cpp b/Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.cpp
 new file mode 100644
-index 0000000000..3e2542b930
+index 0000000000..959dff0c8d
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.cpp
 @@ -0,0 +1,14 @@
@@ -180,8 +180,8 @@ index 0000000000..3e2542b930
 +namespace Yukigram::Settings {
 +
 +rpl::variable<bool> *MprisCallHangup = Yukigram::Options::make(kOptionMprisCallHangup, {
-+	.name = "Use MPRIS for call hangup",
-+	.description = "Hangup with Prev/Next. Useful for PostmarketOS",
++	.name = "Control calls with MPRIS",
++	.description = "Hangup/Decline with Prev/Next/Stop. Accept with Play/Pause/PlayPause. Conflicts with internal media player",
 +	.keywords = { u"yukigram"_q, u"mpris"_q, u"hangup"_q, u"call"_q },
 +	.restartRequired = true,
 +});
