@@ -20,6 +20,16 @@ import ./. {
         libGL
         webkitgtk_4_1
         dbus
+        kdePackages.breeze-icons
+        (stdenv.mkDerivation {
+          name = "yukigram-data";
+          src = ../yukigram-worktree/app/share;
+          dontUnpack = true;
+          installPhase = ''
+            mkdir -p $out/share
+            cp -r $src/. $out/share/
+          '';
+        })
       ];
       executableName = "yukigram";
       runScript = path + "/yukigram";

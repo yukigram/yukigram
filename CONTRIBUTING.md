@@ -36,16 +36,7 @@ ln -s ../../hooks/pre-commit .git/hooks
 
 ## Incremental builds
 
-To use incremental builds under NixOS,
-or to use Nixpak for isolation of built binary,
-a one-time preparation is needed.
-
-```shell
-cd yukigram
-nix-build local.nix --out-link local
-```
-
-Builds:
+### Build
 
 ```shell
 cd yukigram-worktree
@@ -57,7 +48,25 @@ The `cd` to `yukigram-worktree` instead of `tdesktop` is load-bearing,
 because git-rebase works on a tree and mangles more timestamps than needed,
 and makes incremental builds horribly break.
 
-Run:
+### Install
+
+Reinstall is only needed if `share` directory changes.
+
+```shell
+cd yukigram-worktree
+rm -r app || true
+CONFIG=Debug ./install.sh --prefix /app
+strip -s app/bin/yukigram
+```
+
+Rebuild `local` after `app/share` changes.
+
+```shell
+cd yukigram
+nix-build local.nix --out-link local
+```
+
+### Run
 
 ```shell
 cd yukigram
