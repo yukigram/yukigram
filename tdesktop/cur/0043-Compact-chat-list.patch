@@ -7,13 +7,12 @@ Subject: [PATCH] Compact chat list
  Telegram/CMakeLists.txt                       |  2 ++
  Telegram/SourceFiles/dialogs/dialogs.style    |  5 ++++
  .../SourceFiles/dialogs/dialogs_entry.cpp     |  5 ++++
- .../dialogs/dialogs_inner_widget.cpp          | 11 +++++---
+ .../dialogs/dialogs_inner_widget.cpp          | 12 ++++++---
  Telegram/SourceFiles/dialogs/dialogs_row.cpp  |  6 ++++-
  .../SourceFiles/dialogs/ui/dialogs_layout.cpp | 25 +++++++++++++++++--
- .../settings/settings_experimental.cpp        |  2 ++
- .../yukigram/settings/compact_chat_list.cpp   | 15 +++++++++++
- .../yukigram/settings/compact_chat_list.h     |  7 ++++++
- 9 files changed, 71 insertions(+), 7 deletions(-)
+ .../yukigram/settings/compact_chat_list.cpp   | 12 +++++++++
+ .../yukigram/settings/compact_chat_list.h     |  5 ++++
+ 8 files changed, 65 insertions(+), 7 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/compact_chat_list.h
 
@@ -47,7 +46,7 @@ index 78f560bd29..d0760aede6 100644
  	height: 72px;
  	textTop: 30px;
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_entry.cpp b/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
-index 5a6ab2d037..37adaa57a5 100644
+index 5a6ab2d037..60026a5ec3 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
 @@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -70,14 +69,14 @@ index 5a6ab2d037..37adaa57a5 100644
  }
  
  bool Entry::hasChatsFilterTags(FilterId exclude) const {
-+	if (Yukigram::Settings::CompactChatList.value()) {
++	if (Yukigram::Settings::CompactChatList->current()) {
 +		return false;
 +	}
  	if (!owner().chatsFilters().tagsEnabled()) {
  		return false;
  	}
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-index 80fdc809be..cac57e5aef 100644
+index 80fdc809be..319e541e14 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 @@ -35,6 +35,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -88,17 +87,25 @@ index 80fdc809be..cac57e5aef 100644
  #include "data/components/sponsored_messages.h"
  #include "data/data_drafts.h"
  #include "data/data_folder.h"
-@@ -899,7 +900,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
+@@ -372,6 +373,7 @@ InnerWidget::InnerWidget(
+ 	}, lifetime());
+ 
+ 	rpl::merge(
++		Yukigram::Settings::CompactChatList->changes() | rpl::map_to(true),
+ 		session().settings().archiveCollapsedChanges() | rpl::map_to(false),
+ 		session().data().chatsFilters().changed() | rpl::map_to(true),
+ 		session().data().chatsFilters().tagsEnabledChanges(
+@@ -899,7 +901,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
  			}
  		}
  
-+	if (!Yukigram::Settings::CompactChatList.value()) {
++	if (!Yukigram::Settings::CompactChatList->current()) {
  		context.st = (forum || monoforum) ? &st::forumDialogRow : _st.get();
 +	}
  
  		auto chatsFilterTags = std::vector<QImage*>();
  		if (context.narrow) {
-@@ -1268,7 +1271,7 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
+@@ -1268,7 +1272,7 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
  							? _previewPressed
  							: _previewSelected));
  					Ui::RowPainter::Paint(p, result.get(), {
@@ -107,7 +114,7 @@ index 80fdc809be..cac57e5aef 100644
  						.folder = _openedFolder,
  						.forum = _openedForum,
  						.currentBg = currentBg(),
-@@ -1346,7 +1349,7 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
+@@ -1346,7 +1350,7 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
  							? _searchedPressed
  							: _searchedSelected));
  					Ui::RowPainter::Paint(p, result.get(), {
@@ -116,26 +123,26 @@ index 80fdc809be..cac57e5aef 100644
  						.folder = _openedFolder,
  						.forum = _openedForum,
  						.currentBg = currentBg(),
-@@ -1762,7 +1765,7 @@ void InnerWidget::performDrag() {
+@@ -1762,7 +1766,7 @@ void InnerWidget::performDrag() {
  			('@' + u).toUtf8());
  	}
  
 -	const auto &st = st::defaultDialogRow;
-+	const auto &st = (Yukigram::Settings::CompactChatList.value() ? st::defaultDialogRow : st::compactDialogRow);
++	const auto &st = (Yukigram::Settings::CompactChatList->current() ? st::defaultDialogRow : st::compactDialogRow);
  	auto pixmap = QPixmap(Size(st.height * style::DevicePixelRatio()));
  	pixmap.setDevicePixelRatio(style::DevicePixelRatio());
  	pixmap.fill(Qt::transparent);
-@@ -5319,7 +5322,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
+@@ -5319,7 +5323,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
  		: st::dialogsCallBadgeSize;
  	const auto stroke = st::dialogsOnlineBadgeStroke;
  	const auto skip = user
 -		? st::dialogsOnlineBadgeSkip
-+		? (Yukigram::Settings::CompactChatList.value() ? QPoint() : st::dialogsOnlineBadgeSkip)
++		? (Yukigram::Settings::CompactChatList->current() ? QPoint() : st::dialogsOnlineBadgeSkip)
  		: st::dialogsCallBadgeSkip;
  	const auto updateRect = QRect(
  		_st->photoSize - skip.x() - size,
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_row.cpp b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
-index acd8c8cb1c..03af91c327 100644
+index acd8c8cb1c..41c5483f8a 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -150,7 +157,7 @@ index acd8c8cb1c..03af91c327 100644
  const style::DialogRow &Row::ComputeSt(
  		not_null<const Entry*> entry,
  		FilterId filterId) {
-+	if (Yukigram::Settings::CompactChatList.value()) {
++	if (Yukigram::Settings::CompactChatList->current()) {
 +		return st::compactDialogRow;
 +	}
  	if (const auto history = entry->asHistory()) {
@@ -161,12 +168,12 @@ index acd8c8cb1c..03af91c327 100644
  	const auto stroke = st::dialogsOnlineBadgeStroke;
  	const auto skip = online
 -		? st::dialogsOnlineBadgeSkip
-+		? (Yukigram::Settings::CompactChatList.value() ? QPoint() : st::dialogsOnlineBadgeSkip)
++		? (Yukigram::Settings::CompactChatList->current() ? QPoint() : st::dialogsOnlineBadgeSkip)
  		: st::dialogsCallBadgeSkip;
  	const auto shrink = (size / 2) * (1. - topLayerProgress);
  
 diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
-index ac29683c5b..2e37c58cf1 100644
+index ac29683c5b..e025a73aa1 100644
 --- a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 +++ b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -182,7 +189,7 @@ index ac29683c5b..2e37c58cf1 100644
  			- size.width()
  			- rightButton->st->margin.right();
 -		const auto top = rightButton->st->margin.top();
-+		const auto top = (Yukigram::Settings::CompactChatList.value() ? st::defaultDialogRow.padding.top() : rightButton->st->margin.top());
++		const auto top = (Yukigram::Settings::CompactChatList->current() ? st::defaultDialogRow.padding.top() : rightButton->st->margin.top());
  		p.drawImage(
  			left,
  			top,
@@ -204,7 +211,7 @@ index ac29683c5b..2e37c58cf1 100644
  		BadgesState badgesState,
  		base::flags<Flag> flags,
  		PaintItemCallback &&paintItemCallback) {
-+	bool useFullRow = !Yukigram::Settings::CompactChatList.value()
++	bool useFullRow = !Yukigram::Settings::CompactChatList->current()
 +		|| in_context.narrow
 +		|| isFullRow
 +		|| entry->asFolder();
@@ -254,59 +261,34 @@ index ac29683c5b..2e37c58cf1 100644
  		QRect(0, 0, context.width, context.st->height),
  		entry,
  		nullptr,
-diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index b2ae3fa5f9..1896a90e5e 100644
---- a/Telegram/SourceFiles/settings/settings_experimental.cpp
-+++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -7,6 +7,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- */
- #include "settings/settings_experimental.h"
- #include "yukigram/settings/always_show_scheduled.h"
-+#include "yukigram/settings/compact_chat_list.h"
- #include "yukigram/settings/disable_animoji.h"
- #include "yukigram/settings/force_mobile_layout.h"
- #include "yukigram/settings/hide_wall_paper.h"
-@@ -216,6 +217,7 @@ void SetupExperimental(
- 
- 	addToggle(ChatHelpers::kOptionTabbedPanelShowOnClick);
- 	addToggle(Dialogs::kOptionForumHideChatsList);
-+	addToggle(Yukigram::Settings::kOptionCompactChatList);
- 	addToggle(Dialogs::Ui::kOptionDialogsMuteIcon);
- 	addToggle(Core::kOptionFractionalScalingEnabled);
- 	addToggle(Core::kOptionHighDpiDownscale);
 diff --git a/Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp b/Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp
 new file mode 100644
-index 0000000000..6ce3ddc400
+index 0000000000..6ec5580be9
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp
-@@ -0,0 +1,15 @@
+@@ -0,0 +1,12 @@
 +#include "yukigram/settings/compact_chat_list.h"
 +
-+namespace Yukigram {
-+namespace Settings {
++namespace Yukigram::Settings {
 +
-+base::options::toggle CompactChatList({
-+	.id = kOptionCompactChatList,
++rpl::variable<bool> *CompactChatList = Yukigram::Options::make(kOptionCompactChatList, {
 +	.name = "Compact chat list",
-+	.restartRequired = true,
++	.keywords = { u"yukigram"_q, u"compact"_q, u"chat"_q },
 +});
 +
 +const char kOptionCompactChatList[] = "compact-chat-list";
 +
 +}
-+}
 diff --git a/Telegram/SourceFiles/yukigram/settings/compact_chat_list.h b/Telegram/SourceFiles/yukigram/settings/compact_chat_list.h
 new file mode 100644
-index 0000000000..de4cf638c2
+index 0000000000..a000a4253d
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/compact_chat_list.h
-@@ -0,0 +1,7 @@
-+#include "base/options.h"
-+namespace Yukigram {
-+namespace Settings {
-+extern base::options::toggle CompactChatList;
+@@ -0,0 +1,5 @@
++#include "yukigram/options.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *CompactChatList;
 +extern const char kOptionCompactChatList[];
-+}
 +}
 -- 
 2.53.0
