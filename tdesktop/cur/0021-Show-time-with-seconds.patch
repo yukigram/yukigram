@@ -17,12 +17,11 @@ Original author: c0re100 <corehusky@gmail.com>
  .../polls/info_polls_results_inner_widget.cpp |  2 +-
  Telegram/SourceFiles/lang/lang_keys.cpp       | 29 +++++++++++++++++--
  Telegram/SourceFiles/lang/lang_keys.h         |  3 ++
- .../settings/settings_experimental.cpp        |  2 ++
  .../controls/who_reacted_context_action.cpp   |  2 +-
  .../SourceFiles/ui/text/format_values.cpp     | 21 ++++----------
- .../yukigram/settings/time_with_seconds.cpp   | 15 ++++++++++
- .../yukigram/settings/time_with_seconds.h     |  7 +++++
- 16 files changed, 80 insertions(+), 44 deletions(-)
+ .../yukigram/settings/time_with_seconds.cpp   | 13 +++++++++
+ .../yukigram/settings/time_with_seconds.h     |  5 ++++
+ 15 files changed, 74 insertions(+), 44 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
 
@@ -195,7 +194,7 @@ index 580b190077..ca20eab24d 100644
  	if (voteDate == nowDate) {
  		return;
 diff --git a/Telegram/SourceFiles/lang/lang_keys.cpp b/Telegram/SourceFiles/lang/lang_keys.cpp
-index f3269a4099..d834b9e083 100644
+index f3269a4099..24f1a95c5a 100644
 --- a/Telegram/SourceFiles/lang/lang_keys.cpp
 +++ b/Telegram/SourceFiles/lang/lang_keys.cpp
 @@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -238,12 +237,12 @@ index f3269a4099..d834b9e083 100644
 +}
 +
 +QString TimeFormat() {
-+	return Yukigram::Settings::TimeWithSeconds.value() ? longTimeFormat() : shortTimeFormat();
++	return Yukigram::Settings::TimeWithSeconds->current() ? longTimeFormat() : shortTimeFormat();
 +}
 +
 +QString DateTimeFormat() {
 +	auto format = QLocale::system().dateTimeFormat(QLocale::ShortFormat);
-+	if (Yukigram::Settings::TimeWithSeconds.value()) {
++	if (Yukigram::Settings::TimeWithSeconds->current()) {
 +		format.replace(shortTimeFormat(), longTimeFormat());
 +	}
 +	return format;
@@ -266,26 +265,6 @@ index ec576b07e3..e60a0ecb0b 100644
  [[nodiscard]] QString Id();
  [[nodiscard]] rpl::producer<> Updated();
  [[nodiscard]] QString GetNonDefaultValue(const QByteArray &key);
-diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index b42a893301..75abb2c2fd 100644
---- a/Telegram/SourceFiles/settings/settings_experimental.cpp
-+++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -6,6 +6,7 @@ For license and copyright information please follow this link:
- https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- */
- #include "settings/settings_experimental.h"
-+#include "yukigram/settings/time_with_seconds.h"
- 
- #include "data/components/passkeys.h"
- #include "main/main_session.h"
-@@ -234,6 +235,7 @@ void SetupExperimental(
- 	addToggle(Info::kAlternativeScrollProcessing);
- 	addToggle(kModerateCommonGroups);
- 	addToggle(kForceComposeSearchOneColumn);
-+	addToggle(Yukigram::Settings::kOptionTimeWithSeconds);
- 	addToggle(ChatHelpers::kOptionUnlimitedRecentStickers);
- 	addToggle(Ui::kOptionHideAiButton);
- }
 diff --git a/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp b/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
 index c0aa82fd18..328f935b6a 100644
 --- a/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
@@ -343,37 +322,33 @@ index 7b70065e1f..14d23593d9 100644
  	} else {
 diff --git a/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
 new file mode 100644
-index 0000000000..a3a1a5d733
+index 0000000000..f1150d2164
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
-@@ -0,0 +1,15 @@
+@@ -0,0 +1,13 @@
 +#include "yukigram/settings/time_with_seconds.h"
 +
-+namespace Yukigram {
-+namespace Settings {
++namespace Yukigram::Settings {
 +
-+base::options::toggle TimeWithSeconds({
-+	.id = kOptionTimeWithSeconds,
++rpl::variable<bool> *TimeWithSeconds = Yukigram::Options::make(kOptionTimeWithSeconds, {
 +	.name = "Show time with seconds",
++	.keywords = { u"yukigram"_q, u"time"_q, u"seconds"_q },
 +	.restartRequired = true,
 +});
 +
 +const char kOptionTimeWithSeconds[] = "time-with-seconds";
 +
 +}
-+}
 diff --git a/Telegram/SourceFiles/yukigram/settings/time_with_seconds.h b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
 new file mode 100644
-index 0000000000..2f466f6cff
+index 0000000000..3403d56ed7
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
-@@ -0,0 +1,7 @@
-+#include "base/options.h"
-+namespace Yukigram {
-+namespace Settings {
-+extern base::options::toggle TimeWithSeconds;
+@@ -0,0 +1,5 @@
++#include "yukigram/options.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *TimeWithSeconds;
 +extern const char kOptionTimeWithSeconds[];
-+}
 +}
 -- 
 2.53.0
