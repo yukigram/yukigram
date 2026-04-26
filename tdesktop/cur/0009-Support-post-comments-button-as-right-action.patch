@@ -106,21 +106,21 @@ index 7027e88378..66f9e0c168 100644
  		} else if (_comments) {
  			_comments = nullptr;
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 16fcd9289e..6bf0800f3c 100644
+index 31315bdae3..b031ca81d5 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -7,6 +7,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -6,6 +6,7 @@ For license and copyright information please follow this link:
+ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  */
  #include "settings/settings_experimental.h"
- #include "yukigram/settings/disable_animoji.h"
 +#include "yukigram/settings/right_action_comments.h"
  
  #include "data/components/passkeys.h"
  #include "main/main_session.h"
-@@ -235,6 +236,7 @@ void SetupExperimental(
+@@ -233,6 +234,7 @@ void SetupExperimental(
+ 	addToggle(Info::kAlternativeScrollProcessing);
  	addToggle(kModerateCommonGroups);
  	addToggle(kForceComposeSearchOneColumn);
- 	addToggle(Yukigram::Settings::kOptionDisableAnimoji);
 +	addToggle(Yukigram::Settings::kOptionRightActionComments);
  	addToggle(ChatHelpers::kOptionUnlimitedRecentStickers);
  	addToggle(Ui::kOptionHideAiButton);

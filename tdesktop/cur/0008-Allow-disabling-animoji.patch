@@ -4,12 +4,11 @@ Date: Fri, 3 Apr 2026 03:07:17 +0300
 Subject: [PATCH] Allow disabling animoji
 
 ---
- Telegram/CMakeLists.txt                           |  2 ++
- .../history/view/history_view_element.cpp         |  3 ++-
- .../settings/settings_experimental.cpp            |  2 ++
- .../yukigram/settings/disable_animoji.cpp         | 15 +++++++++++++++
- .../yukigram/settings/disable_animoji.h           |  7 +++++++
- 5 files changed, 28 insertions(+), 1 deletion(-)
+ Telegram/CMakeLists.txt                             |  2 ++
+ .../history/view/history_view_element.cpp           |  3 ++-
+ .../yukigram/settings/disable_animoji.cpp           | 13 +++++++++++++
+ .../SourceFiles/yukigram/settings/disable_animoji.h |  5 +++++
+ 4 files changed, 22 insertions(+), 1 deletion(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/disable_animoji.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/disable_animoji.h
 
@@ -27,7 +26,7 @@ index 3974fbb5aa..e69049662e 100644
      apiwrap.h
      config.h
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 1b595c77a8..2da8a95895 100644
+index 1b595c77a8..e22dea7cf1 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -43,63 +42,39 @@ index 1b595c77a8..2da8a95895 100644
  		const auto emojiStickers = &history()->session().emojiStickersPack();
  		const auto skipPremiumEffect = false;
 -		if (const auto sticker = emojiStickers->stickerForEmoji(emoji)) {
-+		if (const auto sticker = emojiStickers->stickerForEmoji(emoji); sticker && (!Yukigram::Settings::DisableAnimoji.value())) {
++		if (const auto sticker = emojiStickers->stickerForEmoji(emoji); sticker && (!Yukigram::Settings::DisableAnimoji->current())) {
  			auto content = std::make_unique<Sticker>(
  				this,
  				sticker.document,
-diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 31315bdae3..16fcd9289e 100644
---- a/Telegram/SourceFiles/settings/settings_experimental.cpp
-+++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -6,6 +6,7 @@ For license and copyright information please follow this link:
- https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- */
- #include "settings/settings_experimental.h"
-+#include "yukigram/settings/disable_animoji.h"
- 
- #include "data/components/passkeys.h"
- #include "main/main_session.h"
-@@ -233,6 +234,7 @@ void SetupExperimental(
- 	addToggle(Info::kAlternativeScrollProcessing);
- 	addToggle(kModerateCommonGroups);
- 	addToggle(kForceComposeSearchOneColumn);
-+	addToggle(Yukigram::Settings::kOptionDisableAnimoji);
- 	addToggle(ChatHelpers::kOptionUnlimitedRecentStickers);
- 	addToggle(Ui::kOptionHideAiButton);
- }
 diff --git a/Telegram/SourceFiles/yukigram/settings/disable_animoji.cpp b/Telegram/SourceFiles/yukigram/settings/disable_animoji.cpp
 new file mode 100644
-index 0000000000..8348afe449
+index 0000000000..24148462fe
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/disable_animoji.cpp
-@@ -0,0 +1,15 @@
+@@ -0,0 +1,13 @@
 +#include "yukigram/settings/disable_animoji.h"
 +
-+namespace Yukigram {
-+namespace Settings {
++namespace Yukigram::Settings {
 +
-+base::options::toggle DisableAnimoji({
-+	.id = kOptionDisableAnimoji,
++rpl::variable<bool> *DisableAnimoji = Yukigram::Options::make(kOptionDisableAnimoji, {
 +	.name = "Disable animated big emoji",
++	.keywords = { u"yukigram"_q, u"animoji"_q, u"emoji"_q },
 +	.restartRequired = true,
 +});
 +
 +const char kOptionDisableAnimoji[] = "disable-animoji";
 +
 +}
-+}
 diff --git a/Telegram/SourceFiles/yukigram/settings/disable_animoji.h b/Telegram/SourceFiles/yukigram/settings/disable_animoji.h
 new file mode 100644
-index 0000000000..a78053ad52
+index 0000000000..f065050a34
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/disable_animoji.h
-@@ -0,0 +1,7 @@
-+#include "base/options.h"
-+namespace Yukigram {
-+namespace Settings {
-+extern base::options::toggle DisableAnimoji;
+@@ -0,0 +1,5 @@
++#include "yukigram/options.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *DisableAnimoji;
 +extern const char kOptionDisableAnimoji[];
-+}
 +}
 -- 
 2.53.0
