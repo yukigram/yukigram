@@ -225,6 +225,10 @@ For development versions, use `io.github.yukigram.devel`
 
 ### with nix binary cache
 
+Do not run non-release nix builds from binary caches
+without using `customNixpakConfig`!
+Doing otherwise may leave your tdata in a corrupted state.
+
 I think it is possible,
 but I haven't confirmed it myself.
 Can possibly be done with `python3 -m http.server`
