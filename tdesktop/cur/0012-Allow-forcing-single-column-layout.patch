@@ -4,14 +4,14 @@ Date: Fri, 3 Apr 2026 03:16:20 +0300
 Subject: [PATCH] Allow forcing single-column layout
 
 ---
- Telegram/CMakeLists.txt                          |  2 ++
- Telegram/SourceFiles/mainwidget.cpp              |  3 ++-
- .../settings/settings_experimental.cpp           |  3 +++
- Telegram/SourceFiles/window/window_adaptive.cpp  |  3 ++-
- .../window/window_session_controller.cpp         |  2 ++
- .../yukigram/settings/force_mobile_layout.cpp    | 16 ++++++++++++++++
- .../yukigram/settings/force_mobile_layout.h      |  7 +++++++
- 7 files changed, 34 insertions(+), 2 deletions(-)
+ Telegram/CMakeLists.txt                             |  2 ++
+ Telegram/SourceFiles/mainwidget.cpp                 |  3 ++-
+ .../SourceFiles/settings/settings_experimental.cpp  |  1 +
+ Telegram/SourceFiles/window/window_adaptive.cpp     |  3 ++-
+ .../window/window_session_controller.cpp            |  2 ++
+ .../yukigram/settings/force_mobile_layout.cpp       | 13 +++++++++++++
+ .../yukigram/settings/force_mobile_layout.h         |  5 +++++
+ 7 files changed, 27 insertions(+), 2 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/force_mobile_layout.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/force_mobile_layout.h
 
@@ -29,7 +29,7 @@ index f93fd64eef..130d0f024d 100644
      yukigram/settings/mpris_call_hangup.h
      yukigram/settings/right_action_comments.cpp
 diff --git a/Telegram/SourceFiles/mainwidget.cpp b/Telegram/SourceFiles/mainwidget.cpp
-index beac8028dd..f6027d9f56 100644
+index beac8028dd..3928beb9e2 100644
 --- a/Telegram/SourceFiles/mainwidget.cpp
 +++ b/Telegram/SourceFiles/mainwidget.cpp
 @@ -36,6 +36,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -45,23 +45,15 @@ index beac8028dd..f6027d9f56 100644
  	// Check if we are in a single-column layout in a wide enough window
  	// for the normal layout. If so, switch to the normal layout.
 -	if (layout.windowLayout == Window::Adaptive::WindowLayout::OneColumn) {
-+	if ((!Yukigram::Settings::ForceMobileLayout.value()) && layout.windowLayout == Window::Adaptive::WindowLayout::OneColumn) {
++	if ((!Yukigram::Settings::ForceMobileLayout->current()) && layout.windowLayout == Window::Adaptive::WindowLayout::OneColumn) {
  		auto chatWidth = layout.chatWidth;
  		//if (session().settings().tabbedSelectorSectionEnabled()
  		//	&& chatWidth >= _history->minimalWidthForTabbedSelectorSection()) {
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 31315bdae3..7e990185fa 100644
+index 31315bdae3..b42a893301 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -6,6 +6,7 @@ For license and copyright information please follow this link:
- https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- */
- #include "settings/settings_experimental.h"
-+#include "yukigram/settings/force_mobile_layout.h"
- 
- #include "data/components/passkeys.h"
- #include "main/main_session.h"
-@@ -37,6 +38,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -37,6 +37,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "mtproto/session_private.h"
  #include "webview/webview_embed.h"
  #include "window/main_window.h"
@@ -69,16 +61,8 @@ index 31315bdae3..7e990185fa 100644
  #include "window/window_peer_menu.h"
  #include "window/window_session_controller.h"
  #include "window/window_controller.h"
-@@ -230,6 +232,7 @@ void SetupExperimental(
- 		addToggle(kOptionFastButtonsMode);
- 	}
- 	addToggle(Window::kOptionDisableTouchbar);
-+	addToggle(Yukigram::Settings::kOptionForceMobileLayout);
- 	addToggle(Info::kAlternativeScrollProcessing);
- 	addToggle(kModerateCommonGroups);
- 	addToggle(kForceComposeSearchOneColumn);
 diff --git a/Telegram/SourceFiles/window/window_adaptive.cpp b/Telegram/SourceFiles/window/window_adaptive.cpp
-index 784164db99..3c55523547 100644
+index 784164db99..6586692775 100644
 --- a/Telegram/SourceFiles/window/window_adaptive.cpp
 +++ b/Telegram/SourceFiles/window/window_adaptive.cpp
 @@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -94,12 +78,12 @@ index 784164db99..3c55523547 100644
  
  void Adaptive::setWindowLayout(WindowLayout value) {
 -	_layout = value;
-+	_layout = (Yukigram::Settings::ForceMobileLayout.value() ? WindowLayout::OneColumn : value);
++	_layout = (Yukigram::Settings::ForceMobileLayout->current() ? WindowLayout::OneColumn : value);
  }
  
  void Adaptive::setChatLayout(ChatLayout value) {
 diff --git a/Telegram/SourceFiles/window/window_session_controller.cpp b/Telegram/SourceFiles/window/window_session_controller.cpp
-index 9f1fa45258..72fc35944d 100644
+index 9f1fa45258..897ed90b28 100644
 --- a/Telegram/SourceFiles/window/window_session_controller.cpp
 +++ b/Telegram/SourceFiles/window/window_session_controller.cpp
 @@ -87,6 +87,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -114,44 +98,39 @@ index 9f1fa45258..72fc35944d 100644
  	auto dialogsWidth = 0, chatWidth = 0, thirdWidth = 0;
  
  	auto useOneColumnLayout = [&] {
-+		if (Yukigram::Settings::ForceMobileLayout.value()) return true;
++		if (Yukigram::Settings::ForceMobileLayout->current()) return true;
  		auto minimalNormal = st::columnMinimalWidthLeft
  			+ st::columnMinimalWidthMain;
  		if (_hasDialogs && bodyWidth < minimalNormal) {
 diff --git a/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.cpp b/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.cpp
 new file mode 100644
-index 0000000000..5b4b3f10ed
+index 0000000000..b64b204a3d
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.cpp
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,13 @@
 +#include "yukigram/settings/force_mobile_layout.h"
 +
-+namespace Yukigram {
-+namespace Settings {
++namespace Yukigram::Settings {
 +
-+base::options::toggle ForceMobileLayout({
-+	.id = kOptionForceMobileLayout,
-+	.name = "Force mobile-like layout",
-+	.description = "Always use one-column layout. Useful for PostmarketOS users",
++rpl::variable<bool> *ForceMobileLayout = Yukigram::Options::make(kOptionForceMobileLayout, {
++	.name = "Force single-column layout",
++	.keywords = { u"yukigram"_q, u"layout"_q, u"small"_q, u"phone"_q, u"mobile"_q },
 +	.restartRequired = true,
 +});
 +
 +const char kOptionForceMobileLayout[] = "force-mobile-layout";
 +
 +}
-+}
 diff --git a/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.h b/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.h
 new file mode 100644
-index 0000000000..3228b2545d
+index 0000000000..d47753c42e
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.h
-@@ -0,0 +1,7 @@
-+#include "base/options.h"
-+namespace Yukigram {
-+namespace Settings {
-+extern base::options::toggle ForceMobileLayout;
+@@ -0,0 +1,5 @@
++#include "yukigram/options.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *ForceMobileLayout;
 +extern const char kOptionForceMobileLayout[];
-+}
 +}
 -- 
 2.53.0

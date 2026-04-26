@@ -267,18 +267,18 @@ index ec576b07e3..e60a0ecb0b 100644
  [[nodiscard]] rpl::producer<> Updated();
  [[nodiscard]] QString GetNonDefaultValue(const QByteArray &key);
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 55e1d4e0cc..bd0b87b2cb 100644
+index f3a0228813..2ef184997b 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -7,6 +7,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ */
  #include "settings/settings_experimental.h"
  #include "yukigram/settings/always_show_scheduled.h"
- #include "yukigram/settings/force_mobile_layout.h"
 +#include "yukigram/settings/time_with_seconds.h"
  #include "yukigram/settings/wide_messages.h"
  
  #include "data/components/passkeys.h"
-@@ -240,6 +241,7 @@ void SetupExperimental(
+@@ -238,6 +239,7 @@ void SetupExperimental(
  	addToggle(Info::kAlternativeScrollProcessing);
  	addToggle(kModerateCommonGroups);
  	addToggle(kForceComposeSearchOneColumn);
