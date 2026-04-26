@@ -174,10 +174,10 @@ index 4742827c69..179b1b6b5e 100644
 +
  } // namespace Calls
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 0b65d03f82..97066cbcff 100644
+index 0963759fbf..78bfbf68ee 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -26,6 +26,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -27,6 +27,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "core/application.h"
  #include "core/launcher.h"
  #include "core/sandbox.h"

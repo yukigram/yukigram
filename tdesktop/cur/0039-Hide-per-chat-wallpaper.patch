@@ -73,11 +73,11 @@ index e7bfd2d511..2e325d1a84 100644
  class Image;
  
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 174e0adcc3..e8765991b5 100644
+index 4cc906f27e..a8ad0ec643 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "settings/settings_experimental.h"
+@@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "yukigram/settings/disable_animoji.h"
  
  #include "data/components/passkeys.h"
 +#include "data/data_wall_paper.h"

@@ -121,10 +121,10 @@ index e65a82a67a..e87c0261c6 100644
  public:
  	Message(
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index af2dd0b35c..0b65d03f82 100644
+index 16fcd9289e..0963759fbf 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -15,6 +15,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -16,6 +16,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "ui/wrap/vertical_layout.h"
  #include "ui/wrap/slide_wrap.h"
  #include "ui/widgets/buttons.h"
@@ -135,7 +135,7 @@ index af2dd0b35c..0b65d03f82 100644
 @@ -235,6 +236,7 @@ void SetupExperimental(
  	addToggle(kModerateCommonGroups);
  	addToggle(kForceComposeSearchOneColumn);
- 	addToggle(HistoryView::kOptionDisableAnimoji);
+ 	addToggle(Yukigram::Settings::kOptionDisableAnimoji);
 +	addToggle(HistoryView::kOptionCommentsButtonAlwaysRight);
  	addToggle(ChatHelpers::kOptionUnlimitedRecentStickers);
  	addToggle(Ui::kOptionHideAiButton);

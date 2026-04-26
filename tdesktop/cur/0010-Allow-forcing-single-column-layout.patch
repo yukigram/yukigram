@@ -25,17 +25,17 @@ index beac8028dd..b8d42a2c8d 100644
  		//if (session().settings().tabbedSelectorSectionEnabled()
  		//	&& chatWidth >= _history->minimalWidthForTabbedSelectorSection()) {
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 97066cbcff..f588c05c07 100644
+index 78bfbf68ee..c37fffc1a9 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -40,6 +40,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "mtproto/session_private.h"
  #include "webview/webview_embed.h"
  #include "window/main_window.h"
 +#include "window/window_adaptive.h"
  #include "window/window_peer_menu.h"
  #include "window/window_session_controller.h"
- #include "history/view/history_view_element.h"
+ #include "window/window_controller.h"
 @@ -234,6 +235,7 @@ void SetupExperimental(
  		addToggle(kOptionFastButtonsMode);
  	}

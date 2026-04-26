@@ -83,10 +83,10 @@ index ef3d261c86..7c9013e598 100644
  		int64 tonStake = 0;
  		int stars = 0;
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 5e573cd006..9642915724 100644
+index 5cfd5e4c50..a6d1ba4c0b 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
-@@ -709,6 +709,9 @@ QString DateTooltipText(not_null<Element*> view) {
+@@ -700,6 +700,9 @@ QString DateTooltipText(not_null<Element*> view) {
  	if (const auto stars = item->out() ? item->starsPaid() : 0) {
  		dateText += '\n' + tr::lng_you_paid_stars(tr::now, lt_count, stars);
  	}
@@ -97,19 +97,19 @@ index 5e573cd006..9642915724 100644
  }
  
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index a3a38d740d..174e0adcc3 100644
+index 7c92d8f3b9..4cc906f27e 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -45,6 +45,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "window/window_adaptive.h"
  #include "window/window_peer_menu.h"
  #include "window/window_session_controller.h"
- #include "history/view/history_view_element.h"
 +#include "history/view/history_view_bottom_info.h"
  #include "window/window_controller.h"
  #include "window/notifications_manager.h"
  #include "info/info_flexible_scroll.h"
 @@ -246,6 +247,7 @@ void SetupExperimental(
- 	addToggle(HistoryView::kOptionDisableAnimoji);
+ 	addToggle(Yukigram::Settings::kOptionDisableAnimoji);
  	addToggle(HistoryView::kOptionCommentsButtonAlwaysRight);
  	addToggle(Lang::kOptionTimeWithSeconds);
 +	addToggle(HistoryView::kOptionShowMsgId);
