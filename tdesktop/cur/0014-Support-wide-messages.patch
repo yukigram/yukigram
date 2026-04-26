@@ -18,9 +18,9 @@ Subject: [PATCH] Support wide messages
  .../history/view/media/history_view_photo.cpp       | 10 +++++++---
  .../history/view/media/history_view_web_page.cpp    |  4 ++++
  .../window/themes/window_theme_preview.cpp          |  7 ++++---
- .../SourceFiles/yukigram/settings/wide_messages.cpp | 13 +++++++++++++
+ .../SourceFiles/yukigram/settings/wide_messages.cpp | 12 ++++++++++++
  .../SourceFiles/yukigram/settings/wide_messages.h   |  5 +++++
- 16 files changed, 70 insertions(+), 23 deletions(-)
+ 16 files changed, 69 insertions(+), 23 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/wide_messages.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/wide_messages.h
 
@@ -414,10 +414,10 @@ index 0130e318a0..19439f7fdc 100644
  	auto textHeight = bubble.text.countHeight(textWidth);
 diff --git a/Telegram/SourceFiles/yukigram/settings/wide_messages.cpp b/Telegram/SourceFiles/yukigram/settings/wide_messages.cpp
 new file mode 100644
-index 0000000000..9e37b9b20b
+index 0000000000..f6f84a9230
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/wide_messages.cpp
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,12 @@
 +#include "yukigram/settings/wide_messages.h"
 +
 +namespace Yukigram::Settings {
@@ -425,7 +425,6 @@ index 0000000000..9e37b9b20b
 +rpl::variable<bool> *WideMessages = Yukigram::Options::make(kOptionWideMessages, {
 +	.name = "Wide messages",
 +	.keywords = { u"yukigram"_q, u"layout"_q, u"messages"_q, u"wide"_q },
-+	.restartRequired = true,
 +});
 +
 +const char kOptionWideMessages[] = "wide-messages";
