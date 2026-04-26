@@ -4,47 +4,102 @@ Date: Fri, 17 Apr 2026 03:21:22 +0300
 Subject: [PATCH] Hide per-chat wallpaper
 
 ---
- Telegram/SourceFiles/data/data_channel.cpp              | 2 +-
- Telegram/SourceFiles/data/data_user.cpp                 | 2 +-
- Telegram/SourceFiles/data/data_wall_paper.cpp           | 9 +++++++++
- Telegram/SourceFiles/data/data_wall_paper.h             | 4 ++++
- Telegram/SourceFiles/settings/settings_experimental.cpp | 2 ++
- 5 files changed, 17 insertions(+), 2 deletions(-)
+ Telegram/CMakeLists.txt                          |  2 ++
+ Telegram/SourceFiles/data/data_channel.cpp       |  3 ++-
+ Telegram/SourceFiles/data/data_user.cpp          |  3 ++-
+ .../settings/settings_experimental.cpp           |  2 ++
+ .../yukigram/settings/hide_wall_paper.cpp        | 16 ++++++++++++++++
+ .../yukigram/settings/hide_wall_paper.h          |  7 +++++++
+ 6 files changed, 31 insertions(+), 2 deletions(-)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_wall_paper.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_wall_paper.h
 
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index d243f7ffbf..8d6f2dfd58 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1895,6 +1895,8 @@ PRIVATE
+     yukigram/settings/disable_animoji.h
+     yukigram/settings/force_mobile_layout.cpp
+     yukigram/settings/force_mobile_layout.h
++    yukigram/settings/hide_wall_paper.cpp
++    yukigram/settings/hide_wall_paper.h
+     yukigram/settings/mpris_call_hangup.cpp
+     yukigram/settings/mpris_call_hangup.h
+     yukigram/settings/right_action_comments.cpp
 diff --git a/Telegram/SourceFiles/data/data_channel.cpp b/Telegram/SourceFiles/data/data_channel.cpp
-index 4aee47b812..536db63e59 100644
+index 4aee47b812..1f808efdb7 100644
 --- a/Telegram/SourceFiles/data/data_channel.cpp
 +++ b/Telegram/SourceFiles/data/data_channel.cpp
-@@ -1470,7 +1470,7 @@ void ApplyChannelUpdate(
+@@ -29,6 +29,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "data/notify/data_notify_settings.h"
+ #include "main/main_session.h"
+ #include "main/session/send_as_peers.h"
++#include "yukigram/settings/hide_wall_paper.h"
+ #include "base/unixtime.h"
+ #include "core/application.h"
+ #include "history/history.h"
+@@ -1470,7 +1471,7 @@ void ApplyChannelUpdate(
  		session->sendAsPeers().setChosen(channel, PeerId());
  	}
  
 -	if (const auto paper = update.vwallpaper()) {
-+	if (const auto paper = update.vwallpaper(); paper && !HideWallPaper.value()) {
++	if (const auto paper = update.vwallpaper(); paper && !Yukigram::Settings::HideWallPaper.value()) {
  		channel->setWallPaper(
  			Data::WallPaper::Create(&channel->session(), *paper));
  	} else {
 diff --git a/Telegram/SourceFiles/data/data_user.cpp b/Telegram/SourceFiles/data/data_user.cpp
-index 2a5c93abdb..7a5831db20 100644
+index 2a5c93abdb..dd8ce0ba09 100644
 --- a/Telegram/SourceFiles/data/data_user.cpp
 +++ b/Telegram/SourceFiles/data/data_user.cpp
-@@ -992,7 +992,7 @@ void ApplyUserUpdate(not_null<UserData*> user, const MTPDuserFull &update) {
+@@ -17,6 +17,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "storage/localstorage.h"
+ #include "storage/storage_account.h"
+ #include "storage/storage_user_photos.h"
++#include "yukigram/settings/hide_wall_paper.h"
+ #include "main/main_session.h"
+ #include "data/business/data_business_common.h"
+ #include "data/business/data_business_info.h"
+@@ -992,7 +993,7 @@ void ApplyUserUpdate(not_null<UserData*> user, const MTPDuserFull &update) {
  		}
  	}
  
 -	if (const auto paper = update.vwallpaper()) {
-+	if (const auto paper = update.vwallpaper(); paper && !HideWallPaper.value()) {
++	if (const auto paper = update.vwallpaper(); paper && !Yukigram::Settings::HideWallPaper.value()) {
  		user->setWallPaper(
  			Data::WallPaper::Create(&user->session(), *paper),
  			update.is_wallpaper_overridden());
-diff --git a/Telegram/SourceFiles/data/data_wall_paper.cpp b/Telegram/SourceFiles/data/data_wall_paper.cpp
-index 0234bdbb41..b5b5facf24 100644
---- a/Telegram/SourceFiles/data/data_wall_paper.cpp
-+++ b/Telegram/SourceFiles/data/data_wall_paper.cpp
-@@ -16,6 +16,15 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "core/application.h"
- #include "main/main_session.h"
- 
+diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
+index 26471b17e7..c4a0fa0d95 100644
+--- a/Telegram/SourceFiles/settings/settings_experimental.cpp
++++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
+@@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "yukigram/settings/always_show_scheduled.h"
+ #include "yukigram/settings/disable_animoji.h"
+ #include "yukigram/settings/force_mobile_layout.h"
++#include "yukigram/settings/hide_wall_paper.h"
+ #include "yukigram/settings/mpris_call_hangup.h"
+ #include "yukigram/settings/right_action_comments.h"
+ #include "yukigram/settings/show_message_id.h"
+@@ -223,6 +224,7 @@ void SetupExperimental(
+ 	addToggle(Ui::kOptionUseSmallMsgBubbleRadius);
+ 	addToggle(Media::Player::kOptionDisableAutoplayNext);
+ 	addToggle(kOptionWideMessages);
++	addToggle(Yukigram::Settings::kOptionHideWallPaper);
+ 	addToggle(Webview::kOptionWebviewDebugEnabled);
+ 	addToggle(Webview::kOptionWebviewLegacyEdge);
+ 	addToggle(Yukigram::Settings::kOptionAlwaysShowScheduled);
+diff --git a/Telegram/SourceFiles/yukigram/settings/hide_wall_paper.cpp b/Telegram/SourceFiles/yukigram/settings/hide_wall_paper.cpp
+new file mode 100644
+index 0000000000..cd60f554e9
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/hide_wall_paper.cpp
+@@ -0,0 +1,16 @@
++#include "yukigram/settings/hide_wall_paper.h"
++
++namespace Yukigram {
++namespace Settings {
++
 +base::options::toggle HideWallPaper({
 +	.id = kOptionHideWallPaper,
 +	.name = "Hide per-chat wallpaper",
@@ -54,44 +109,21 @@ index 0234bdbb41..b5b5facf24 100644
 +
 +const char kOptionHideWallPaper[] = "hide-wall-paper";
 +
- namespace Ui {
- 
- QColor ColorFromSerialized(MTPint serialized) {
-diff --git a/Telegram/SourceFiles/data/data_wall_paper.h b/Telegram/SourceFiles/data/data_wall_paper.h
-index e7bfd2d511..2e325d1a84 100644
---- a/Telegram/SourceFiles/data/data_wall_paper.h
-+++ b/Telegram/SourceFiles/data/data_wall_paper.h
-@@ -8,6 +8,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #pragma once
- 
- #include "base/flags.h"
++}
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/hide_wall_paper.h b/Telegram/SourceFiles/yukigram/settings/hide_wall_paper.h
+new file mode 100644
+index 0000000000..2b177328c9
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/hide_wall_paper.h
+@@ -0,0 +1,7 @@
 +#include "base/options.h"
-+
++namespace Yukigram {
++namespace Settings {
 +extern base::options::toggle HideWallPaper;
 +extern const char kOptionHideWallPaper[];
- 
- class Image;
- 
-diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 26471b17e7..4c89cbb392 100644
---- a/Telegram/SourceFiles/settings/settings_experimental.cpp
-+++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -14,6 +14,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "yukigram/settings/show_message_id.h"
- 
- #include "data/components/passkeys.h"
-+#include "data/data_wall_paper.h"
- #include "main/main_session.h"
- #include "ui/boxes/confirm_box.h"
- #include "ui/text/text_entity.h"
-@@ -223,6 +224,7 @@ void SetupExperimental(
- 	addToggle(Ui::kOptionUseSmallMsgBubbleRadius);
- 	addToggle(Media::Player::kOptionDisableAutoplayNext);
- 	addToggle(kOptionWideMessages);
-+	addToggle(kOptionHideWallPaper);
- 	addToggle(Webview::kOptionWebviewDebugEnabled);
- 	addToggle(Webview::kOptionWebviewLegacyEdge);
- 	addToggle(Yukigram::Settings::kOptionAlwaysShowScheduled);
++}
++}
 -- 
 2.53.0
 

@@ -242,7 +242,7 @@ index d5a36aeae7..8dfae7d1ea 100644
  	not_null<PeerData*> peer,
  	const PaintContext &context);
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 4c89cbb392..66a799bbf3 100644
+index c4a0fa0d95..8e6780f288 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -215,6 +215,7 @@ void SetupExperimental(
