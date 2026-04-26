@@ -1,0 +1,151 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Sun, 26 Apr 2026 22:07:47 +0300
+Subject: [PATCH] Yukigram options framework
+
+---
+ Telegram/CMakeLists.txt                   |  2 +
+ Telegram/SourceFiles/core/launcher.cpp    |  3 ++
+ Telegram/SourceFiles/yukigram/options.cpp | 46 +++++++++++++++++++++++
+ Telegram/SourceFiles/yukigram/options.h   | 35 +++++++++++++++++
+ 4 files changed, 86 insertions(+)
+ create mode 100644 Telegram/SourceFiles/yukigram/options.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/options.h
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index 1f89a2926f..fad839b1c5 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1889,6 +1889,8 @@ PRIVATE
+     window/themes/window_themes_generate_name.cpp
+     window/themes/window_themes_generate_name.h
+     yukigram/appid.h
++    yukigram/options.cpp
++    yukigram/options.h
+     apiwrap.cpp
+     apiwrap.h
+     config.h
+diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
+index 9491e5760f..6137e21622 100644
+--- a/Telegram/SourceFiles/core/launcher.cpp
++++ b/Telegram/SourceFiles/core/launcher.cpp
+@@ -19,6 +19,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "base/concurrent_timer.h"
+ #include "base/options.h"
+ #include "yukigram/appid.h"
++#include "yukigram/options.h"
+ 
+ #include <QtCore/QLoggingCategory>
+ #include <QtCore/QStandardPaths>
+@@ -388,6 +389,7 @@ int Launcher::exec() {
+ 	// Must be started before Platform is started.
+ 	Logs::start();
+ 	base::options::init(cWorkingDir() + "tdata/experimental_options.json");
++	Yukigram::Options::init();
+ 
+ 	// Must be called after options are inited.
+ 	initHighDpi();
+@@ -629,6 +631,7 @@ void Launcher::processArguments() {
+ int Launcher::executeApplication() {
+ 	FilteredCommandLineArguments arguments(_argc, _argv);
+ 	Sandbox sandbox(arguments.count(), arguments.values());
++	Yukigram::Options::link(); // call after QApplication init
+ 	Ui::MainQueueProcessor processor;
+ 	base::ConcurrentTimerEnvironment environment;
+ 	return sandbox.start();
+diff --git a/Telegram/SourceFiles/yukigram/options.cpp b/Telegram/SourceFiles/yukigram/options.cpp
+new file mode 100644
+index 0000000000..a717736077
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/options.cpp
+@@ -0,0 +1,46 @@
++#include "yukigram/options.h"
++
++namespace Yukigram::Options {
++
++std::map<std::string_view, Toggle> toggles;
++
++rpl::variable<bool> *make(const char *key, Description &&d, bool defaultValue) {
++	const auto v = std::make_shared<rpl::variable<bool>>(defaultValue);
++
++	const auto base = std::make_shared<
++		base::options::toggle,
++		base::options::descriptor<bool>
++	>({
++		.id = key,
++		.defaultValue = defaultValue,
++		.restartRequired = d.restartRequired,
++	});
++	rpl::lifetime lifetime;
++
++	toggles[std::string_view(key)] = {
++		.d = std::move(d),
++		.v = v,
++		._base = base,
++		._lifetime = std::move(lifetime),
++	};
++
++	return v.get();
++}
++
++void init() {
++	for (auto &[key, toggle] : toggles) {
++		*toggle.v = toggle._base->value();
++	}
++}
++
++void link() {
++	for (auto &[key, toggle] : toggles) {
++		const auto base = toggle._base;
++		toggle.v->value() | rpl::on_next([=](bool value) {
++			base->set(value);
++		}, toggle._lifetime);
++	}
++}
++
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/options.h b/Telegram/SourceFiles/yukigram/options.h
+new file mode 100644
+index 0000000000..1b75c11d89
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/options.h
+@@ -0,0 +1,35 @@
++#pragma once
++
++#include "base/options.h"
++#include "rpl/rpl.h"
++
++#include <QString>
++#include <QStringList>
++#include <map>
++#include <memory>
++#include <string_view>
++
++namespace Yukigram::Options {
++
++struct Description {
++	std::string_view name = "";
++	std::string_view description = "";
++	QStringList keywords = {};
++	bool restartRequired = false;
++};
++
++struct Toggle {
++	Description d;
++	std::shared_ptr<rpl::variable<bool>> v;
++	std::shared_ptr<base::options::toggle> _base;
++	rpl::lifetime _lifetime;
++};
++
++extern std::map<std::string_view, Toggle> toggles;
++
++rpl::variable<bool> *make(const char *key, Description &&d, bool defaultValue = false);
++
++void init();
++void link();
++
++}
+-- 
+2.53.0
+

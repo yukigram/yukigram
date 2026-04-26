@@ -1,0 +1,219 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Mon, 27 Apr 2026 00:04:23 +0300
+Subject: [PATCH] Yukigram settings
+
+Co-Authored-By: Lunya <241520024+lunya-miaou@users.noreply.github.com>
+---
+ Telegram/CMakeLists.txt                       |   2 +
+ Telegram/Resources/langs/lang.strings         |   1 +
+ .../settings/sections/settings_main.cpp       |   8 ++
+ .../settings/sections/settings_yukigram.cpp   | 127 ++++++++++++++++++
+ .../settings/sections/settings_yukigram.h     |   9 ++
+ 5 files changed, 147 insertions(+)
+ create mode 100644 Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+ create mode 100644 Telegram/SourceFiles/settings/sections/settings_yukigram.h
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index fad839b1c5..3974fbb5aa 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1701,6 +1701,8 @@ PRIVATE
+     settings/sections/settings_shortcuts.h
+     settings/sections/settings_websites.cpp
+     settings/sections/settings_websites.h
++    settings/sections/settings_yukigram.cpp
++    settings/sections/settings_yukigram.h
+     storage/details/storage_file_utilities.cpp
+     storage/details/storage_file_utilities.h
+     storage/details/storage_settings_scheme.cpp
+diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
+index f4397be36d..4ecfd16be0 100644
+--- a/Telegram/Resources/langs/lang.strings
++++ b/Telegram/Resources/langs/lang.strings
+@@ -848,6 +848,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ "lng_settings_add_account_about" = "You can add up to four accounts with different phone numbers.";
+ "lng_settings_peer_to_peer_about" = "Disabling peer-to-peer will relay all calls through Telegram servers to avoid revealing your IP address, but may decrease audio and video quality.";
+ "lng_settings_advanced" = "Advanced";
++"lng_settings_yukigram" = "Yukigram settings";
+ "lng_settings_stickers_emoji" = "Stickers and emoji";
+ "lng_settings_messages" = "Messages";
+ "lng_settings_themes" = "Themes";
+diff --git a/Telegram/SourceFiles/settings/sections/settings_main.cpp b/Telegram/SourceFiles/settings/sections/settings_main.cpp
+index 3d4eda91da..59ce88648c 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_main.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_main.cpp
+@@ -58,6 +58,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "settings/sections/settings_premium.h"
+ #include "settings/sections/settings_privacy_security.h"
+ #include "settings/settings_scale_preview.h"
++#include "settings/sections/settings_yukigram.h"
+ #include "storage/localstorage.h"
+ #include "ui/basic_click_handlers.h"
+ #include "ui/boxes/confirm_box.h"
+@@ -453,6 +454,13 @@ void BuildSectionButtons(SectionBuilder &builder) {
+ 		.keywords = { u"battery"_q, u"animations"_q, u"power"_q, u"saving"_q },
+ 	});
+ 
++	builder.addSectionButton({
++		.title = tr::lng_settings_yukigram(),
++		.targetSection = YukigramId(),
++		.icon = { &st::menuIconSettings },
++		.keywords = { u"yukigram"_q },
++	});
++
+ 	builder.addButton({
+ 		.id = u"main/language"_q,
+ 		.title = tr::lng_settings_language(),
+diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+new file mode 100644
+index 0000000000..2a5913ccb1
+--- /dev/null
++++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+@@ -0,0 +1,127 @@
++#include "settings/sections/settings_yukigram.h"
++#include "yukigram/options.h"
++
++#include "settings/settings_common_session.h"
++
++#include "base/options.h"
++#include "core/application.h"
++#include "lang/lang_keys.h"
++#include "settings/settings_builder.h"
++#include "settings/sections/settings_main.h"
++#include "ui/boxes/confirm_box.h"
++#include "ui/ui_utility.h"
++#include "ui/widgets/buttons.h"
++#include "ui/wrap/vertical_layout.h"
++#include "window/section_widget.h"
++#include "window/window_session_controller.h"
++#include "styles/style_menu_icons.h"
++#include "styles/style_settings.h"
++
++#include <QtGui/QGuiApplication>
++
++namespace Settings {
++
++namespace {
++
++using namespace Builder;
++
++void BuildToggle(
++	SectionBuilder &builder,
++	std::string_view key,
++	const Yukigram::Options::Description &d,
++	std::shared_ptr<rpl::variable<bool>> v
++) {
++	const auto controller = builder.controller();
++	if (!controller) {
++		return;
++	}
++
++	const auto qs_sv = [](std::string_view v) { return QString::fromStdString(std::string(v)); };
++
++	const auto name = qs_sv(d.name.empty() ? key : d.name);
++
++	const auto button = builder.addButton({
++		.id = QString("yukigram/%1").arg(key),
++		.title = rpl::single(name),
++		.st = &st::settingsButtonNoIcon,
++		.toggled = rpl::single(v->current()),
++		.keywords = std::move(d.keywords),
++	});
++
++	button->toggledValue(
++	) | rpl::filter([=](bool toggled) {
++		return toggled != v->current();
++	}) | rpl::on_next([=](bool toggled) {
++		*v = toggled;
++		if (d.restartRequired) {
++			controller->show(Ui::MakeConfirmBox({
++				.text = tr::lng_settings_need_restart(),
++				.confirmed = [] { Core::Restart(); },
++				.confirmText = tr::lng_settings_restart_now(),
++				.cancelText = tr::lng_settings_restart_later(),
++			}));
++		}
++	}, button->lifetime());
++
++	const auto &description = qs_sv(d.description);
++	if (!description.isEmpty()) {
++		builder.addSkip(st::settingsCheckboxesSkip);
++		builder.addDividerText(rpl::single(description));
++		builder.addSkip(st::settingsCheckboxesSkip);
++	}
++}
++
++void BuildYukigramSectionContent(SectionBuilder &builder) {
++	for (auto &[key, toggle] : Yukigram::Options::toggles) {
++		BuildToggle(builder, key, toggle.d, toggle.v);
++	}
++}
++
++class Yukigram : public Section<Yukigram> {
++public:
++	Yukigram(
++		QWidget *parent,
++		not_null<Window::SessionController*> controller);
++
++	[[nodiscard]] rpl::producer<QString> title() override;
++
++private:
++	void setupContent();
++
++};
++
++const auto kMeta = BuildHelper({
++	.id = Yukigram::Id(),
++	.parentId = MainId(),
++	.title = &tr::lng_settings_yukigram,
++	.icon = &st::menuIconSettings,
++}, [](SectionBuilder &builder) {
++	BuildYukigramSectionContent(builder);
++});
++
++const SectionBuildMethod kYukigramSection = kMeta.build;
++
++Yukigram::Yukigram(
++	QWidget *parent,
++	not_null<Window::SessionController*> controller)
++: Section(parent, controller) {
++	setupContent();
++}
++
++rpl::producer<QString> Yukigram::title() {
++	return tr::lng_settings_yukigram();
++}
++
++void Yukigram::setupContent() {
++	const auto content = Ui::CreateChild<Ui::VerticalLayout>(this);
++	build(content, kYukigramSection);
++	Ui::ResizeFitChild(this, content);
++}
++
++} // namespace
++
++Type YukigramId() {
++	return Yukigram::Id();
++}
++
++} // namespace Settings
+\ No newline at end of file
+diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.h b/Telegram/SourceFiles/settings/sections/settings_yukigram.h
+new file mode 100644
+index 0000000000..2ae5460740
+--- /dev/null
++++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.h
+@@ -0,0 +1,9 @@
++#pragma once
++
++#include "settings/settings_type.h"
++
++namespace Settings {
++
++[[nodiscard]] Type YukigramId();
++
++} // namespace Settings
+-- 
+2.53.0
+

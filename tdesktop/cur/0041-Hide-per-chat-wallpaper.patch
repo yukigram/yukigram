@@ -15,10 +15,10 @@ Subject: [PATCH] Hide per-chat wallpaper
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_wall_paper.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index e532b58a25..0ae3be9aa4 100644
+index ca04aad441..fb9810172a 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1895,6 +1895,8 @@ PRIVATE
+@@ -1899,6 +1899,8 @@ PRIVATE
      yukigram/settings/disable_animoji.h
      yukigram/settings/force_mobile_layout.cpp
      yukigram/settings/force_mobile_layout.h

@@ -8,10 +8,10 @@ Subject: [PATCH] Immediate restart button
  1 file changed, 7 insertions(+)
 
 diff --git a/Telegram/SourceFiles/settings/sections/settings_main.cpp b/Telegram/SourceFiles/settings/sections/settings_main.cpp
-index 3d4eda91da..07a44dce4c 100644
+index 59ce88648c..34a3eadc5d 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_main.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_main.cpp
-@@ -669,6 +669,13 @@ void Main::fillTopBarMenu(const Ui::Menu::MenuCallback &addAction) {
+@@ -677,6 +677,13 @@ void Main::fillTopBarMenu(const Ui::Menu::MenuCallback &addAction) {
  			&st::menuIconEdit);
  	}
  	const auto window = &controller()->window();
