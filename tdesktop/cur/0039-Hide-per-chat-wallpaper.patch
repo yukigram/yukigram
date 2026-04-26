@@ -73,11 +73,11 @@ index e7bfd2d511..2e325d1a84 100644
  class Image;
  
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 1ba1e77d5e..51395335c1 100644
+index 26471b17e7..4c89cbb392 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -13,6 +13,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "yukigram/settings/right_action_comments.h"
+@@ -14,6 +14,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "yukigram/settings/show_message_id.h"
  
  #include "data/components/passkeys.h"
 +#include "data/data_wall_paper.h"
