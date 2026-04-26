@@ -9,7 +9,7 @@ Subject: [PATCH] Show unofficial client users in chat
  2 files changed, 4 insertions(+)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index f883f423ed..8799fcd3c6 100644
+index 30f1f6489e..296f4b9bca 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -146,6 +146,8 @@ std::optional<style::icon> ChatTypeIcon(HistoryItem *item) {

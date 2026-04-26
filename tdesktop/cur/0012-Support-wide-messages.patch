@@ -137,10 +137,10 @@ index 88ac50002f..51069e8f08 100644
  					}
  					auto widthForDate = maxwidth - st::msgServiceMargin.left() - st::msgServiceMargin.left();
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index fbe99c531e..437909f1a5 100644
+index 66f9e0c168..3ff42a6b7e 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
-@@ -15,6 +15,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -14,6 +14,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "core/click_handler_types.h" // ClickHandlerContext
  #include "core/ui_integration.h"
  #include "history/view/history_view_cursor_state.h"
@@ -148,7 +148,7 @@ index fbe99c531e..437909f1a5 100644
  #include "history/history_item_components.h"
  #include "history/history_item_helpers.h"
  #include "history/view/media/history_view_media_generic.h"
-@@ -5033,7 +5034,9 @@ QRect Message::countGeometry() const {
+@@ -5023,7 +5024,9 @@ QRect Message::countGeometry() const {
  	//	contentLeft += st::msgPhotoSkip - (hmaxwidth - hwidth);
  	}
  	accumulate_min(contentWidth, maxWidth());
@@ -158,7 +158,7 @@ index fbe99c531e..437909f1a5 100644
  	if (mediaWidth < contentWidth) {
  		const auto textualWidth = bubbleTextualWidth();
  		if (mediaWidth < textualWidth
-@@ -5164,8 +5167,10 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -5154,8 +5157,10 @@ int Message::resizeContentGetHeight(int newWidth) {
  		}
  	}
  	accumulate_min(contentWidth, maxWidth());
@@ -170,7 +170,7 @@ index fbe99c531e..437909f1a5 100644
  	const auto textualWidth = bubbleTextualWidth();
  	if (mediaDisplayed) {
  		media->resizeGetHeight(contentWidth);
-@@ -5238,7 +5243,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -5228,7 +5233,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  		if (reactionsInBubble) {
  			_reactions->resizeGetHeight(textWidth);
  		}
@@ -389,7 +389,7 @@ index 5950801174..8e56bca917 100644
  	auto newHeight = 0;
  
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index c37fffc1a9..9db85dc1d5 100644
+index 4e141610c4..d4b9b9b762 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -26,6 +26,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

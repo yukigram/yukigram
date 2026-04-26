@@ -97,7 +97,7 @@ index 5cfd5e4c50..a6d1ba4c0b 100644
  }
  
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 7c92d8f3b9..4cc906f27e 100644
+index 119123936a..57d8c1ced3 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -45,6 +45,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -110,7 +110,7 @@ index 7c92d8f3b9..4cc906f27e 100644
  #include "info/info_flexible_scroll.h"
 @@ -246,6 +247,7 @@ void SetupExperimental(
  	addToggle(Yukigram::Settings::kOptionDisableAnimoji);
- 	addToggle(HistoryView::kOptionCommentsButtonAlwaysRight);
+ 	addToggle(Yukigram::Settings::kOptionRightActionComments);
  	addToggle(Lang::kOptionTimeWithSeconds);
 +	addToggle(HistoryView::kOptionShowMsgId);
  	addToggle(ChatHelpers::kOptionUnlimitedRecentStickers);

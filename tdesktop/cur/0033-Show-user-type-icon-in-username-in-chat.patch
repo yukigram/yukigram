@@ -11,7 +11,7 @@ Original author: RadRussianRus <radrussianrus@gmail.com>
  2 files changed, 43 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index d2346aefa8..f883f423ed 100644
+index b3307805e7..30f1f6489e 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -132,6 +132,26 @@ void ApplyRevealGradient(
@@ -41,7 +41,7 @@ index d2346aefa8..f883f423ed 100644
  struct SecondRightAction {
  	std::unique_ptr<Ui::RippleAnimation> ripple;
  	ClickHandlerPtr link;
-@@ -906,6 +926,9 @@ QSize Message::performCountOptimalSize() {
+@@ -896,6 +916,9 @@ QSize Message::performCountOptimalSize() {
  				if (Has<RightBadge>()) {
  					namew += st::msgPadding.right() + rightBadgeWidth();
  				}
@@ -51,7 +51,7 @@ index d2346aefa8..f883f423ed 100644
  				accumulate_max(maxWidth, namew);
  				accumulate_max(nonTextMax, namew);
  			} else if (via && !displayForwardedFrom()) {
-@@ -1826,6 +1849,12 @@ void Message::paintFromName(
+@@ -1816,6 +1839,12 @@ void Message::paintFromName(
  		availableWidth -= st::msgPadding.right() + badgeWidth;
  	}
  
@@ -64,7 +64,7 @@ index d2346aefa8..f883f423ed 100644
  	const auto stm = context.messageStyle();
  	const auto from = item->displayFrom();
  	const auto info = from ? nullptr : item->displayHiddenSenderInfo();
-@@ -3283,6 +3312,8 @@ bool Message::getStateFromName(
+@@ -3273,6 +3302,8 @@ bool Message::getStateFromName(
  			availableWidth -= st::msgPadding.right() + badgeWidth;
  		}
  		const auto item = data();
@@ -73,7 +73,7 @@ index d2346aefa8..f883f423ed 100644
  		const auto from = item->displayFrom();
  		const auto nameText = [&]() -> const Ui::Text::String * {
  			if (from) {
-@@ -3314,7 +3345,7 @@ bool Message::getStateFromName(
+@@ -3304,7 +3335,7 @@ bool Message::getStateFromName(
  		}
  		if (point.x() >= availableLeft
  			&& point.x() < availableLeft + availableWidth
