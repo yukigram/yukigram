@@ -8,7 +8,7 @@ Subject: [PATCH] Disable dbus activation
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/xdg/io.github.yukigram.desktop b/lib/xdg/io.github.yukigram.desktop
-index 8956aba6de..c9cb29fd8e 100644
+index 93a1536930..85c099ecff 100644
 --- a/lib/xdg/io.github.yukigram.desktop
 +++ b/lib/xdg/io.github.yukigram.desktop
 @@ -11,7 +11,7 @@ Categories=Chat;Network;InstantMessaging;Qt;
