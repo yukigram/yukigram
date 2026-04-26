@@ -18,7 +18,7 @@ Subject: [PATCH] Compact chat list
  create mode 100644 Telegram/SourceFiles/yukigram/settings/compact_chat_list.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 8d6f2dfd58..930ddd8246 100644
+index 3e179d2b2d..a7d6d4c349 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1891,6 +1891,8 @@ PRIVATE
@@ -255,7 +255,7 @@ index ac29683c5b..2e37c58cf1 100644
  		entry,
  		nullptr,
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index c4a0fa0d95..976831c6d4 100644
+index ed9e498c4b..b4cacf2ba4 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -7,6 +7,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

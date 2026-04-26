@@ -6,21 +6,39 @@ Subject: [PATCH] Show time with seconds
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 ---
- Telegram/SourceFiles/api/api_who_reacted.cpp  | 19 +++-------
- .../SourceFiles/data/data_peer_values.cpp     | 10 ++---
+ Telegram/CMakeLists.txt                       |  2 ++
+ Telegram/SourceFiles/api/api_who_reacted.cpp  | 19 ++++--------
+ .../SourceFiles/data/data_peer_values.cpp     | 10 +++----
  .../history/history_inner_widget.cpp          |  2 +-
- Telegram/SourceFiles/history/history_item.cpp |  4 +-
+ Telegram/SourceFiles/history/history_item.cpp |  4 +--
  .../history/view/history_view_bottom_info.cpp |  2 +-
  .../history/view/history_view_list_widget.cpp |  2 +-
  .../history/view/media/history_view_call.cpp  |  2 +-
  .../polls/info_polls_results_inner_widget.cpp |  2 +-
- Telegram/SourceFiles/lang/lang_keys.cpp       | 37 ++++++++++++++++++-
- Telegram/SourceFiles/lang/lang_keys.h         |  4 ++
- .../settings/settings_experimental.cpp        |  1 +
+ Telegram/SourceFiles/lang/lang_keys.cpp       | 29 +++++++++++++++++--
+ Telegram/SourceFiles/lang/lang_keys.h         |  3 ++
+ .../settings/settings_experimental.cpp        |  3 +-
  .../controls/who_reacted_context_action.cpp   |  2 +-
- .../SourceFiles/ui/text/format_values.cpp     | 21 +++--------
- 13 files changed, 64 insertions(+), 44 deletions(-)
+ .../SourceFiles/ui/text/format_values.cpp     | 21 ++++----------
+ .../yukigram/settings/time_with_seconds.cpp   | 15 ++++++++++
+ .../yukigram/settings/time_with_seconds.h     |  7 +++++
+ 16 files changed, 80 insertions(+), 45 deletions(-)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
 
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index 36817d345c..1c77124546 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1899,6 +1899,8 @@ PRIVATE
+     yukigram/settings/mpris_call_hangup.h
+     yukigram/settings/right_action_comments.cpp
+     yukigram/settings/right_action_comments.h
++    yukigram/settings/time_with_seconds.cpp
++    yukigram/settings/time_with_seconds.h
+     apiwrap.cpp
+     apiwrap.h
+     config.h
 diff --git a/Telegram/SourceFiles/api/api_who_reacted.cpp b/Telegram/SourceFiles/api/api_who_reacted.cpp
 index f3af5312fb..248bf82662 100644
 --- a/Telegram/SourceFiles/api/api_who_reacted.cpp
@@ -177,16 +195,16 @@ index 580b190077..ca20eab24d 100644
  	if (voteDate == nowDate) {
  		return;
 diff --git a/Telegram/SourceFiles/lang/lang_keys.cpp b/Telegram/SourceFiles/lang/lang_keys.cpp
-index f3269a4099..393d98b7e2 100644
+index f3269a4099..d834b9e083 100644
 --- a/Telegram/SourceFiles/lang/lang_keys.cpp
 +++ b/Telegram/SourceFiles/lang/lang_keys.cpp
-@@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "lang/lang_keys.h"
- 
+@@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "base/const_string.h"
-+#include "base/options.h"
  #include "lang/lang_file_parser.h"
  #include "ui/integration.h"
++#include "yukigram/settings/time_with_seconds.h"
+ 
+ #include <QtCore/QLocale>
  
 @@ -180,7 +181,7 @@ QString langDateTime(const QDateTime &date) {
  		lt_date,
@@ -197,7 +215,7 @@ index f3269a4099..393d98b7e2 100644
  }
  
  QString langDateTimeFull(const QDateTime &date) {
-@@ -189,11 +190,43 @@ QString langDateTimeFull(const QDateTime &date) {
+@@ -189,11 +190,35 @@ QString langDateTimeFull(const QDateTime &date) {
  		lt_date,
  		langDayOfMonthFull(date.date()),
  		lt_time,
@@ -207,14 +225,6 @@ index f3269a4099..393d98b7e2 100644
  
  namespace Lang {
  
-+base::options::toggle TimeWithSeconds({
-+	.id = kOptionTimeWithSeconds,
-+	.name = "Show time with seconds",
-+	.restartRequired = true,
-+});
-+
-+const char kOptionTimeWithSeconds[] = "time-with-seconds";
-+
 +QString longTimeFormat() {
 +	return QLocale::system().timeFormat(QLocale::LongFormat)
 +		.remove("t") // Convert to Medium format
@@ -228,12 +238,12 @@ index f3269a4099..393d98b7e2 100644
 +}
 +
 +QString TimeFormat() {
-+	return TimeWithSeconds.value() ? longTimeFormat() : shortTimeFormat();
++	return Yukigram::Settings::TimeWithSeconds.value() ? longTimeFormat() : shortTimeFormat();
 +}
 +
 +QString DateTimeFormat() {
 +	auto format = QLocale::system().dateTimeFormat(QLocale::ShortFormat);
-+	if (TimeWithSeconds.value()) {
++	if (Yukigram::Settings::TimeWithSeconds.value()) {
 +		format.replace(shortTimeFormat(), longTimeFormat());
 +	}
 +	return format;
@@ -243,14 +253,13 @@ index f3269a4099..393d98b7e2 100644
  	return kDefaultLanguage.utf16();
  }
 diff --git a/Telegram/SourceFiles/lang/lang_keys.h b/Telegram/SourceFiles/lang/lang_keys.h
-index ec576b07e3..f007cf633a 100644
+index ec576b07e3..e60a0ecb0b 100644
 --- a/Telegram/SourceFiles/lang/lang_keys.h
 +++ b/Telegram/SourceFiles/lang/lang_keys.h
-@@ -37,6 +37,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -37,6 +37,9 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  
  namespace Lang {
  
-+extern const char kOptionTimeWithSeconds[];
 +[[nodiscard]] QString TimeFormat();
 +[[nodiscard]] QString DateTimeFormat();
 +
@@ -258,14 +267,22 @@ index ec576b07e3..f007cf633a 100644
  [[nodiscard]] rpl::producer<> Updated();
  [[nodiscard]] QString GetNonDefaultValue(const QByteArray &key);
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index d2f21dca80..b846ede69b 100644
+index d2f21dca80..e0e718378d 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
+@@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "yukigram/settings/force_mobile_layout.h"
+ #include "yukigram/settings/mpris_call_hangup.h"
+ #include "yukigram/settings/right_action_comments.h"
++#include "yukigram/settings/time_with_seconds.h"
+ 
+ #include "data/components/passkeys.h"
+ #include "main/main_session.h"
 @@ -246,6 +246,7 @@ void SetupExperimental(
  	addToggle(kForceComposeSearchOneColumn);
  	addToggle(Yukigram::Settings::kOptionDisableAnimoji);
  	addToggle(Yukigram::Settings::kOptionRightActionComments);
-+	addToggle(Lang::kOptionTimeWithSeconds);
++	addToggle(Yukigram::Settings::kOptionTimeWithSeconds);
  	addToggle(ChatHelpers::kOptionUnlimitedRecentStickers);
  	addToggle(Ui::kOptionHideAiButton);
  }
@@ -324,6 +341,40 @@ index 7b70065e1f..14d23593d9 100644
  	} else if (std::abs(lastDate.daysTo(nowDate)) < 7) {
  		return langDayOfWeek(lastDate);
  	} else {
+diff --git a/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
+new file mode 100644
+index 0000000000..a3a1a5d733
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
+@@ -0,0 +1,15 @@
++#include "yukigram/settings/time_with_seconds.h"
++
++namespace Yukigram {
++namespace Settings {
++
++base::options::toggle TimeWithSeconds({
++	.id = kOptionTimeWithSeconds,
++	.name = "Show time with seconds",
++	.restartRequired = true,
++});
++
++const char kOptionTimeWithSeconds[] = "time-with-seconds";
++
++}
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/time_with_seconds.h b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
+new file mode 100644
+index 0000000000..2f466f6cff
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
+@@ -0,0 +1,7 @@
++#include "base/options.h"
++namespace Yukigram {
++namespace Settings {
++extern base::options::toggle TimeWithSeconds;
++extern const char kOptionTimeWithSeconds[];
++}
++}
 -- 
 2.53.0
 
