@@ -119,7 +119,7 @@ jobs:
       - name: Change appId
         if: github.event_name == 'workflow_dispatch'
         run: |
-          sed s/io.github.yukigram/io.github.yukigram.devel/ yukigram/flatpak/io.github.yukigram.yml
+          sed -i s/io.github.yukigram/io.github.yukigram.devel/ yukigram/flatpak/io.github.yukigram.yml
 
       - name: Build
         run: |
