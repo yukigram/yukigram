@@ -124,10 +124,10 @@ index 17ae0779cc..2c0e0c32a9 100644
  	[[nodiscard]] auto reactionButtonParameters(
  		not_null<const Element*> view,
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index cec596f861..b13bfbede7 100644
+index 5769872753..b20a98d3b1 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -9568,7 +9568,7 @@ bool HistoryWidget::updateCanSendMessage() {
+@@ -9559,7 +9559,7 @@ bool HistoryWidget::updateCanSendMessage() {
  	return true;
  }
  
@@ -136,7 +136,7 @@ index cec596f861..b13bfbede7 100644
  	if (!_list) {
  		return;
  	}
-@@ -9577,7 +9577,7 @@ void HistoryWidget::forwardSelected() {
+@@ -9568,7 +9568,7 @@ void HistoryWidget::forwardSelected() {
  		if (const auto strong = weak.get()) {
  			strong->clearSelected();
  		}
@@ -146,10 +146,10 @@ index cec596f861..b13bfbede7 100644
  
  void HistoryWidget::confirmDeleteSelected() {
 diff --git a/Telegram/SourceFiles/history/history_widget.h b/Telegram/SourceFiles/history/history_widget.h
-index e467e39ada..446bbbf3f4 100644
+index 3f79a66915..39923c36fa 100644
 --- a/Telegram/SourceFiles/history/history_widget.h
 +++ b/Telegram/SourceFiles/history/history_widget.h
-@@ -294,7 +294,7 @@ public:
+@@ -291,7 +291,7 @@ public:
  
  	QPixmap grabForShowAnimation(const Window::SectionSlideParams &params);
  
