@@ -108,7 +108,7 @@ index 2e8ee8c52d..4a11612dad 100644
  }
  
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index f700d31430..b739badc80 100644
+index b02b5e4489..94f8c23ce1 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -3698,7 +3698,7 @@ TextForMimeData HistoryInner::getSelectedText() const {
@@ -156,7 +156,7 @@ index 1dcb93feb4..d9e1b4d257 100644
  	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
  	const auto authorWidth = st::msgDateFont->width(author);
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 617dc45d96..620a8ec1aa 100644
+index 275c573717..5df6501092 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -2686,7 +2686,7 @@ TextForMimeData ListWidget::getSelectedText() const {
@@ -267,7 +267,7 @@ index ec576b07e3..e60a0ecb0b 100644
  [[nodiscard]] rpl::producer<> Updated();
  [[nodiscard]] QString GetNonDefaultValue(const QByteArray &key);
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index f3a0228813..2ef184997b 100644
+index d0fe696250..20f38328a6 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -7,6 +7,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -275,10 +275,10 @@ index f3a0228813..2ef184997b 100644
  #include "settings/settings_experimental.h"
  #include "yukigram/settings/always_show_scheduled.h"
 +#include "yukigram/settings/time_with_seconds.h"
- #include "yukigram/settings/wide_messages.h"
  
  #include "data/components/passkeys.h"
-@@ -238,6 +239,7 @@ void SetupExperimental(
+ #include "main/main_session.h"
+@@ -236,6 +237,7 @@ void SetupExperimental(
  	addToggle(Info::kAlternativeScrollProcessing);
  	addToggle(kModerateCommonGroups);
  	addToggle(kForceComposeSearchOneColumn);

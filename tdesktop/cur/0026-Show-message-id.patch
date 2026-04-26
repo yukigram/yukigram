@@ -75,7 +75,7 @@ index ef3d261c86..81e2f918b2 100644
  		int64 tonStake = 0;
  		int stars = 0;
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 682f297ed6..0a55d42450 100644
+index 26f63b109f..284bf79f2c 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -700,6 +700,9 @@ QString DateTooltipText(not_null<Element*> view) {
@@ -89,7 +89,7 @@ index 682f297ed6..0a55d42450 100644
  }
  
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 2ef184997b..f46b0efe39 100644
+index 20f38328a6..6de61d1bcd 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -7,6 +7,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -98,9 +98,9 @@ index 2ef184997b..f46b0efe39 100644
  #include "yukigram/settings/always_show_scheduled.h"
 +#include "yukigram/settings/show_message_id.h"
  #include "yukigram/settings/time_with_seconds.h"
- #include "yukigram/settings/wide_messages.h"
  
-@@ -240,6 +241,7 @@ void SetupExperimental(
+ #include "data/components/passkeys.h"
+@@ -238,6 +239,7 @@ void SetupExperimental(
  	addToggle(kModerateCommonGroups);
  	addToggle(kForceComposeSearchOneColumn);
  	addToggle(Yukigram::Settings::kOptionTimeWithSeconds);

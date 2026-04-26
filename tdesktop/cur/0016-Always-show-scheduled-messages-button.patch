@@ -48,7 +48,7 @@ index 0f3a21055b..5769872753 100644
  		&& (session().scheduledMessages().count(_history) > 0);
  	if (!_scheduled && has) {
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 5f933a984a..f3a0228813 100644
+index b42a893301..d0fe696250 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -6,6 +6,7 @@ For license and copyright information please follow this link:
@@ -56,11 +56,11 @@ index 5f933a984a..f3a0228813 100644
  */
  #include "settings/settings_experimental.h"
 +#include "yukigram/settings/always_show_scheduled.h"
- #include "yukigram/settings/wide_messages.h"
  
  #include "data/components/passkeys.h"
-@@ -219,6 +220,7 @@ void SetupExperimental(
- 	addToggle(Yukigram::Settings::kOptionWideMessages);
+ #include "main/main_session.h"
+@@ -217,6 +218,7 @@ void SetupExperimental(
+ 	addToggle(Media::Player::kOptionDisableAutoplayNext);
  	addToggle(Webview::kOptionWebviewDebugEnabled);
  	addToggle(Webview::kOptionWebviewLegacyEdge);
 +	addToggle(Yukigram::Settings::kOptionAlwaysShowScheduled);

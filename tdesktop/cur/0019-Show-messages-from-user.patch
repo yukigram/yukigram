@@ -27,7 +27,7 @@ index e3adb3f6df..11f41cd2a1 100644
  	if (user) {
  		const auto isSelf = user->isSelf();
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 7221fddba2..f700d31430 100644
+index 137c5ca700..b02b5e4489 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -2719,6 +2719,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
