@@ -11,7 +11,7 @@ Original author: RadRussianRus <radrussianrus@gmail.com>
  2 files changed, 43 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index b3307805e7..30f1f6489e 100644
+index 4d13469dd9..4b87719a7e 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -132,6 +132,26 @@ void ApplyRevealGradient(

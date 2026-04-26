@@ -17,17 +17,17 @@ Original author: c0re100 <corehusky@gmail.com>
  .../polls/info_polls_results_inner_widget.cpp |  2 +-
  Telegram/SourceFiles/lang/lang_keys.cpp       | 29 +++++++++++++++++--
  Telegram/SourceFiles/lang/lang_keys.h         |  3 ++
- .../settings/settings_experimental.cpp        |  3 +-
+ .../settings/settings_experimental.cpp        |  2 ++
  .../controls/who_reacted_context_action.cpp   |  2 +-
  .../SourceFiles/ui/text/format_values.cpp     | 21 ++++----------
  .../yukigram/settings/time_with_seconds.cpp   | 15 ++++++++++
  .../yukigram/settings/time_with_seconds.h     |  7 +++++
- 16 files changed, 80 insertions(+), 45 deletions(-)
+ 16 files changed, 80 insertions(+), 44 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 36817d345c..1c77124546 100644
+index 246c12fe68..8e879b9295 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1899,6 +1899,8 @@ PRIVATE
@@ -36,9 +36,9 @@ index 36817d345c..1c77124546 100644
      yukigram/settings/right_action_comments.h
 +    yukigram/settings/time_with_seconds.cpp
 +    yukigram/settings/time_with_seconds.h
+     yukigram/settings/wide_messages.cpp
+     yukigram/settings/wide_messages.h
      apiwrap.cpp
-     apiwrap.h
-     config.h
 diff --git a/Telegram/SourceFiles/api/api_who_reacted.cpp b/Telegram/SourceFiles/api/api_who_reacted.cpp
 index f3af5312fb..248bf82662 100644
 --- a/Telegram/SourceFiles/api/api_who_reacted.cpp
@@ -108,10 +108,10 @@ index 2e8ee8c52d..4a11612dad 100644
  }
  
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 3e00950e54..1744afc42e 100644
+index f700d31430..b739badc80 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3707,7 +3707,7 @@ TextForMimeData HistoryInner::getSelectedText() const {
+@@ -3698,7 +3698,7 @@ TextForMimeData HistoryInner::getSelectedText() const {
  		const auto i = texts.emplace(item->position(), Part{
  			.name = item->author()->name(),
  			.time = QString("[%1] ").arg(
@@ -156,7 +156,7 @@ index 1dcb93feb4..d9e1b4d257 100644
  	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
  	const auto authorWidth = st::msgDateFont->width(author);
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 51069e8f08..6448d95153 100644
+index 617dc45d96..620a8ec1aa 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -2686,7 +2686,7 @@ TextForMimeData ListWidget::getSelectedText() const {
@@ -267,7 +267,7 @@ index ec576b07e3..e60a0ecb0b 100644
  [[nodiscard]] rpl::producer<> Updated();
  [[nodiscard]] QString GetNonDefaultValue(const QByteArray &key);
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index d2f21dca80..e0e718378d 100644
+index 380f4979a9..4cbd853c62 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -275,10 +275,10 @@ index d2f21dca80..e0e718378d 100644
  #include "yukigram/settings/mpris_call_hangup.h"
  #include "yukigram/settings/right_action_comments.h"
 +#include "yukigram/settings/time_with_seconds.h"
+ #include "yukigram/settings/wide_messages.h"
  
  #include "data/components/passkeys.h"
- #include "main/main_session.h"
-@@ -246,6 +246,7 @@ void SetupExperimental(
+@@ -246,6 +247,7 @@ void SetupExperimental(
  	addToggle(kForceComposeSearchOneColumn);
  	addToggle(Yukigram::Settings::kOptionDisableAnimoji);
  	addToggle(Yukigram::Settings::kOptionRightActionComments);
