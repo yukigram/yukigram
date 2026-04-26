@@ -25,7 +25,7 @@ index beac8028dd..b8d42a2c8d 100644
  		//if (session().settings().tabbedSelectorSectionEnabled()
  		//	&& chatWidth >= _history->minimalWidthForTabbedSelectorSection()) {
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index e949f799c9..4e141610c4 100644
+index 1dec1f5816..24d3f1551e 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -40,6 +40,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
