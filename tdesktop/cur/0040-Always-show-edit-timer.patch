@@ -10,7 +10,7 @@ Original author: RadRussianRus <radrussianrus@gmail.com>
  1 file changed, 3 insertions(+), 7 deletions(-)
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index fd69401043..c1c1abe630 100644
+index 359b8bd202..c7044ad8d1 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -10108,10 +10108,6 @@ void HistoryWidget::paintEditHeader(

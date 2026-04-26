@@ -89,18 +89,18 @@ index 26f63b109f..284bf79f2c 100644
  }
  
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 20f38328a6..6de61d1bcd 100644
+index 75abb2c2fd..0a9324356f 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -7,6 +7,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -6,6 +6,7 @@ For license and copyright information please follow this link:
+ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  */
  #include "settings/settings_experimental.h"
- #include "yukigram/settings/always_show_scheduled.h"
 +#include "yukigram/settings/show_message_id.h"
  #include "yukigram/settings/time_with_seconds.h"
  
  #include "data/components/passkeys.h"
-@@ -238,6 +239,7 @@ void SetupExperimental(
+@@ -236,6 +237,7 @@ void SetupExperimental(
  	addToggle(kModerateCommonGroups);
  	addToggle(kForceComposeSearchOneColumn);
  	addToggle(Yukigram::Settings::kOptionTimeWithSeconds);
