@@ -89,20 +89,20 @@ index 682f297ed6..0a55d42450 100644
  }
  
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index ffd19c09ae..6889c3b410 100644
+index 4183754f7f..a06259cce4 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "yukigram/settings/always_show_scheduled.h"
  #include "yukigram/settings/force_mobile_layout.h"
  #include "yukigram/settings/mpris_call_hangup.h"
- #include "yukigram/settings/right_action_comments.h"
 +#include "yukigram/settings/show_message_id.h"
  #include "yukigram/settings/time_with_seconds.h"
  #include "yukigram/settings/wide_messages.h"
  
-@@ -246,6 +247,7 @@ void SetupExperimental(
+@@ -244,6 +245,7 @@ void SetupExperimental(
+ 	addToggle(kModerateCommonGroups);
  	addToggle(kForceComposeSearchOneColumn);
- 	addToggle(Yukigram::Settings::kOptionRightActionComments);
  	addToggle(Yukigram::Settings::kOptionTimeWithSeconds);
 +	addToggle(Yukigram::Settings::kOptionShowMsgId);
  	addToggle(ChatHelpers::kOptionUnlimitedRecentStickers);

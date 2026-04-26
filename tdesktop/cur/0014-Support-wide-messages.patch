@@ -123,7 +123,7 @@ index 88ac50002f..617dc45d96 100644
  					}
  					auto widthForDate = maxwidth - st::msgServiceMargin.left() - st::msgServiceMargin.left();
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 66f9e0c168..ed256a6693 100644
+index 018322bf47..4fe57c14d6 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -13,6 +13,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -375,18 +375,18 @@ index 5950801174..aeb86d4e83 100644
  	auto newHeight = 0;
  
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 7b9a2e5d12..3d582fcc07 100644
+index da2e4453cb..02d1765951 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "settings/settings_experimental.h"
  #include "yukigram/settings/force_mobile_layout.h"
  #include "yukigram/settings/mpris_call_hangup.h"
- #include "yukigram/settings/right_action_comments.h"
 +#include "yukigram/settings/wide_messages.h"
  
  #include "data/components/passkeys.h"
  #include "main/main_session.h"
-@@ -218,6 +219,7 @@ void SetupExperimental(
+@@ -217,6 +218,7 @@ void SetupExperimental(
  	addToggle(Info::Profile::kOptionShowChannelJoinedBelowAbout);
  	addToggle(Ui::kOptionUseSmallMsgBubbleRadius);
  	addToggle(Media::Player::kOptionDisableAutoplayNext);
