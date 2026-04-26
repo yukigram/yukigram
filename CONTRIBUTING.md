@@ -41,7 +41,7 @@ ln -s ../../hooks/pre-commit .git/hooks
 ```shell
 cd yukigram-worktree
 git checkout --detach test && git submodule update --recursive
-CONFIG=Debug ./build.sh
+DEVEL=true CONFIG=Debug ./build.sh
 ```
 
 The `cd` to `yukigram-worktree` instead of `tdesktop` is load-bearing,

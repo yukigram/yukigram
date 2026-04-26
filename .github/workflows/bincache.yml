@@ -63,6 +63,11 @@ jobs:
           git am ../yukigram/tdesktop
           popd
 
+      - name: Use .devel appId
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo DEVEL=true >> $GITHUB_ENV
+
       - name: Build
         run: |
           set -exuo pipefail
