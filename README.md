@@ -71,7 +71,6 @@ Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 
 Contributions welcome!
 
-- Yukigram settings search support
 - Ban button for join requests
 - Client-side user muting (as in 64Gram)
 - Disable Cocoon AI summary in Instant View
