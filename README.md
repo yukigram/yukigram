@@ -64,6 +64,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
     (current one is `$XDG_DATA_HOME/io.github.yukigram`,
     or with `.devel` appended for development builds)
 1. Option to hide "Send As" channels that require Premium to use
+1. Option to hide "Send As" button completely
 
 Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 
