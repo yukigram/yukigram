@@ -4,11 +4,12 @@ Date: Sun, 26 Apr 2026 22:07:47 +0300
 Subject: [PATCH] Yukigram options framework
 
 ---
- Telegram/CMakeLists.txt                   |  2 +
- Telegram/SourceFiles/core/launcher.cpp    |  3 ++
- Telegram/SourceFiles/yukigram/options.cpp | 46 +++++++++++++++++++++++
- Telegram/SourceFiles/yukigram/options.h   | 35 +++++++++++++++++
- 4 files changed, 86 insertions(+)
+ Telegram/CMakeLists.txt                       |  2 +
+ Telegram/SourceFiles/core/launcher.cpp        |  3 ++
+ .../settings/settings_experimental.cpp        |  2 +
+ Telegram/SourceFiles/yukigram/options.cpp     | 53 +++++++++++++++++++
+ Telegram/SourceFiles/yukigram/options.h       | 39 ++++++++++++++
+ 5 files changed, 99 insertions(+)
  create mode 100644 Telegram/SourceFiles/yukigram/options.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/options.h
 
@@ -53,12 +54,32 @@ index 9491e5760f..6137e21622 100644
  	Ui::MainQueueProcessor processor;
  	base::ConcurrentTimerEnvironment environment;
  	return sandbox.start();
+diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
+index 31315bdae3..d20f877e0d 100644
+--- a/Telegram/SourceFiles/settings/settings_experimental.cpp
++++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
+@@ -6,6 +6,7 @@ For license and copyright information please follow this link:
+ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ */
+ #include "settings/settings_experimental.h"
++#include "yukigram/options.h"
+ 
+ #include "data/components/passkeys.h"
+ #include "main/main_session.h"
+@@ -144,6 +145,7 @@ void AddOption(
+ 			return;
+ 		}
+ 		option.set(toggled);
++		Yukigram::Options::update_value(option.id().toStdString().c_str(), toggled);
+ 		if (restarter) {
+ 			restarter->callOnce(st::settingsButtonNoIcon.toggle.duration);
+ 		}
 diff --git a/Telegram/SourceFiles/yukigram/options.cpp b/Telegram/SourceFiles/yukigram/options.cpp
 new file mode 100644
-index 0000000000..a717736077
+index 0000000000..e7efd757cd
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.cpp
-@@ -0,0 +1,46 @@
+@@ -0,0 +1,53 @@
 +#include "yukigram/options.h"
 +
 +namespace Yukigram::Options {
@@ -68,14 +89,16 @@ index 0000000000..a717736077
 +rpl::variable<bool> *make(const char *key, Description &&d, bool defaultValue) {
 +	const auto v = std::make_shared<rpl::variable<bool>>(defaultValue);
 +
-+	const auto base = std::make_shared<
-+		base::options::toggle,
-+		base::options::descriptor<bool>
-+	>({
-+		.id = key,
-+		.defaultValue = defaultValue,
-+		.restartRequired = d.restartRequired,
-+	});
++	const auto base = d.mirrorExperimental ? std::nullopt : std::optional(
++		std::make_shared<
++			base::options::toggle,
++			base::options::descriptor<bool>
++		>({
++			.id = key,
++			.defaultValue = defaultValue,
++			.restartRequired = d.restartRequired,
++		})
++	);
 +	rpl::lifetime lifetime;
 +
 +	toggles[std::string_view(key)] = {
@@ -88,17 +111,22 @@ index 0000000000..a717736077
 +	return v.get();
 +}
 +
++void update_value(const char *key, bool value) {
++	if (auto it = toggles.find(std::string_view(key)); it != toggles.end()) {
++		*it->second.v = value;
++	}
++}
++
 +void init() {
 +	for (auto &[key, toggle] : toggles) {
-+		*toggle.v = toggle._base->value();
++		*toggle.v = base::options::lookup<bool>(std::string(key).c_str()).value();
 +	}
 +}
 +
 +void link() {
 +	for (auto &[key, toggle] : toggles) {
-+		const auto base = toggle._base;
 +		toggle.v->value() | rpl::on_next([=](bool value) {
-+			base->set(value);
++			base::options::lookup<bool>(std::string(key).c_str()).set(value);
 +		}, toggle._lifetime);
 +	}
 +}
@@ -107,10 +135,10 @@ index 0000000000..a717736077
 +}
 diff --git a/Telegram/SourceFiles/yukigram/options.h b/Telegram/SourceFiles/yukigram/options.h
 new file mode 100644
-index 0000000000..1b75c11d89
+index 0000000000..34039acf6d
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.h
-@@ -0,0 +1,35 @@
+@@ -0,0 +1,39 @@
 +#pragma once
 +
 +#include "base/options.h"
@@ -120,6 +148,7 @@ index 0000000000..1b75c11d89
 +#include <QStringList>
 +#include <map>
 +#include <memory>
++#include <optional>
 +#include <string_view>
 +
 +namespace Yukigram::Options {
@@ -129,18 +158,21 @@ index 0000000000..1b75c11d89
 +	std::string_view description = "";
 +	QStringList keywords = {};
 +	bool restartRequired = false;
++	bool mirrorExperimental = false;
 +};
 +
 +struct Toggle {
 +	Description d;
 +	std::shared_ptr<rpl::variable<bool>> v;
-+	std::shared_ptr<base::options::toggle> _base;
++	std::optional<std::shared_ptr<base::options::toggle>> _base;
 +	rpl::lifetime _lifetime;
 +};
 +
 +extern std::map<std::string_view, Toggle> toggles;
 +
 +rpl::variable<bool> *make(const char *key, Description &&d, bool defaultValue = false);
++
++void update_value(const char *key, bool value);
 +
 +void init();
 +void link();
