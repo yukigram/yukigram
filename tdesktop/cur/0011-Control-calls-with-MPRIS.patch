@@ -17,9 +17,9 @@ Co-Authored-By: Sonya Sireneva <sleirsgoevy@gmail.com>
  Telegram/CMakeLists.txt                       |  2 +
  Telegram/SourceFiles/calls/calls_instance.cpp | 90 ++++++++++++++++++-
  Telegram/SourceFiles/calls/calls_instance.h   |  7 ++
- .../yukigram/settings/mpris_call_hangup.cpp   | 14 +++
+ .../yukigram/settings/mpris_call_hangup.cpp   | 17 ++++
  .../yukigram/settings/mpris_call_hangup.h     |  5 ++
- 5 files changed, 117 insertions(+), 1 deletion(-)
+ 5 files changed, 120 insertions(+), 1 deletion(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.h
 
@@ -171,17 +171,20 @@ index 4742827c69..5b3fba6167 100644
  } // namespace Calls
 diff --git a/Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.cpp b/Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.cpp
 new file mode 100644
-index 0000000000..959dff0c8d
+index 0000000000..df121c3b54
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.cpp
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,17 @@
 +#include "yukigram/settings/mpris_call_hangup.h"
 +
 +namespace Yukigram::Settings {
 +
 +rpl::variable<bool> *MprisCallHangup = Yukigram::Options::make(kOptionMprisCallHangup, {
 +	.name = "Control calls with MPRIS",
-+	.description = "Hangup/Decline with Prev/Next/Stop. Accept with Play/Pause/PlayPause. Conflicts with internal media player",
++	.description =
++		"Use Prev/Next/Stop to hangup or decline.\n"
++		"Use Play/Pause/PlayPause to accept.\n"
++		"This option conflicts with internal media player controls",
 +	.keywords = { u"yukigram"_q, u"mpris"_q, u"hangup"_q, u"call"_q },
 +	.restartRequired = true,
 +});
