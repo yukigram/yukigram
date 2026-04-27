@@ -24,13 +24,13 @@ Co-Authored-By: Sonya Sireneva <sleirsgoevy@gmail.com>
  create mode 100644 Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index b6cb9056ab..f93fd64eef 100644
+index 2cec80d309..1f674a9cee 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1895,6 +1895,8 @@ PRIVATE
-     yukigram/options.h
+@@ -1896,6 +1896,8 @@ PRIVATE
      yukigram/settings/disable_animoji.cpp
      yukigram/settings/disable_animoji.h
+     yukigram/settings/mirrored.cpp
 +    yukigram/settings/mpris_call_hangup.cpp
 +    yukigram/settings/mpris_call_hangup.h
      yukigram/settings/right_action_comments.cpp

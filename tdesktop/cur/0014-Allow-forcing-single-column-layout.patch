@@ -16,7 +16,7 @@ Subject: [PATCH] Allow forcing single-column layout
  create mode 100644 Telegram/SourceFiles/yukigram/settings/force_mobile_layout.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index f93fd64eef..130d0f024d 100644
+index 1f674a9cee..11ada3baff 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1895,6 +1895,8 @@ PRIVATE
@@ -25,9 +25,9 @@ index f93fd64eef..130d0f024d 100644
      yukigram/settings/disable_animoji.h
 +    yukigram/settings/force_mobile_layout.cpp
 +    yukigram/settings/force_mobile_layout.h
+     yukigram/settings/mirrored.cpp
      yukigram/settings/mpris_call_hangup.cpp
      yukigram/settings/mpris_call_hangup.h
-     yukigram/settings/right_action_comments.cpp
 diff --git a/Telegram/SourceFiles/mainwidget.cpp b/Telegram/SourceFiles/mainwidget.cpp
 index beac8028dd..3928beb9e2 100644
 --- a/Telegram/SourceFiles/mainwidget.cpp

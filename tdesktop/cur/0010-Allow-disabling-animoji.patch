@@ -13,7 +13,7 @@ Subject: [PATCH] Allow disabling animoji
  create mode 100644 Telegram/SourceFiles/yukigram/settings/disable_animoji.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 3974fbb5aa..e69049662e 100644
+index 6201e121ad..836df866dc 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1893,6 +1893,8 @@ PRIVATE
@@ -22,9 +22,9 @@ index 3974fbb5aa..e69049662e 100644
      yukigram/options.h
 +    yukigram/settings/disable_animoji.cpp
 +    yukigram/settings/disable_animoji.h
+     yukigram/settings/mirrored.cpp
      apiwrap.cpp
      apiwrap.h
-     config.h
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
 index 1b595c77a8..e22dea7cf1 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp

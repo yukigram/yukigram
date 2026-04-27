@@ -13,13 +13,13 @@ Subject: [PATCH] Support post comments button as right action
  create mode 100644 Telegram/SourceFiles/yukigram/settings/right_action_comments.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index e69049662e..b6cb9056ab 100644
+index 836df866dc..2cec80d309 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1895,6 +1895,8 @@ PRIVATE
-     yukigram/options.h
+@@ -1896,6 +1896,8 @@ PRIVATE
      yukigram/settings/disable_animoji.cpp
      yukigram/settings/disable_animoji.h
+     yukigram/settings/mirrored.cpp
 +    yukigram/settings/right_action_comments.cpp
 +    yukigram/settings/right_action_comments.h
      apiwrap.cpp

@@ -13,7 +13,7 @@ Subject: [PATCH] Always show scheduled messages button
  create mode 100644 Telegram/SourceFiles/yukigram/settings/always_show_scheduled.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index be84b41106..70676ab7e1 100644
+index 748647b7a1..91499993a5 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1893,6 +1893,8 @@ PRIVATE

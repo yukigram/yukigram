@@ -25,10 +25,10 @@ Subject: [PATCH] Support wide messages
  create mode 100644 Telegram/SourceFiles/yukigram/settings/wide_messages.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 130d0f024d..be84b41106 100644
+index 11ada3baff..748647b7a1 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1901,6 +1901,8 @@ PRIVATE
+@@ -1902,6 +1902,8 @@ PRIVATE
      yukigram/settings/mpris_call_hangup.h
      yukigram/settings/right_action_comments.cpp
      yukigram/settings/right_action_comments.h
