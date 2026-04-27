@@ -266,3 +266,27 @@ are provided under [CC0-1.0].
 [Unlicense]: ./LICENSES/Unlicense.txt
 [MIT]: ./LICENSES/MIT.txt
 [`REUSE.toml`]: ./REUSE.toml
+
+## On AI
+
+Telegram Desktop developers are using AI-generated code
+and are adding a bunch of useless AI features.
+Yukigram has no intention of completely ripping out
+AI code from Telegram Desktop sources,
+or has no intention of diverging codebases.
+Therefore, it is clear that patch developers and maintainers
+will definitely have some AI code exposure.
+
+Most of the initial patches were written by me
+by looking at surrounding 64Gram code
+from times before the so-called vibe coding was popular.
+Other patches were taken from forks
+that developed them years ago.
+
+I want to make this project
+at least somewhat clear from AI code,
+so please refrain from sending AI-assisted code here.
+
+**This project is proudly made by real humans.**
+
+Thank you for not wasting my time.
