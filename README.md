@@ -213,9 +213,17 @@ In the meantime, use [Nix](#with-nix) or [Flatpak](#with-flatpak).
 
 ### with other package manager
 
-Check your package manager's manual on how to add patches to packages
+Check your package manager's manual
+on how to add patches to packages
 and package Telegram Desktop (of correct version)
 with your selection of patches.
+
+Unofficial packages that seem correct
+and may be used instead of a manual from-source build:
+
+- AUR package [`yukigram-desktop`][aur-yukigram]
+
+[aur-yukigram]: https://aur.archlinux.org/packages/yukigram-desktop
 
 ## Previous versions
 
