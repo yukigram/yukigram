@@ -60,6 +60,9 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. Collapsed chats in dialogs view (as in Kotatogram)
 1. Allow using symbolic (monochrome) tray icon from icon theme
     instead of bundled one with Yukigram name.
+1. Support `$XDG_DATA_HOME/Yukigram` as a fallback data directory for Yukigram
+    (current one is `$XDG_DATA_HOME/io.github.yukigram`,
+    or with `.devel` appended for development builds)
 
 Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 

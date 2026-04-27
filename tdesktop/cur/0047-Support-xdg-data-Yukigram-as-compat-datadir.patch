@@ -1,0 +1,52 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Mon, 27 Apr 2026 13:55:23 +0300
+Subject: [PATCH] Support xdg-data/Yukigram as compat datadir
+
+---
+ .../platform/linux/specific_linux.cpp         | 20 +++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/Telegram/SourceFiles/platform/linux/specific_linux.cpp b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
+index 60077548f7..8a7b14d54c 100644
+--- a/Telegram/SourceFiles/platform/linux/specific_linux.cpp
++++ b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
+@@ -687,19 +687,31 @@ QString ExecutablePathForShortcuts() {
+ } // namespace Platform
+ 
+ QString psAppDataPath() {
++	const auto hasPreviousProfileAt = [](QString path) {
++		auto oldSettingsBase = path + u"tdata/settings"_q;
++		if (QFile::exists(oldSettingsBase + '0')
++			|| QFile::exists(oldSettingsBase + '1')
++			|| QFile::exists(oldSettingsBase + 's')) {
++			return true;
++		}
++		return false;
++	};
++
+ 	// Previously we used ~/.TelegramDesktop, so look there first.
+ 	// If we find data there, we should still use it.
+ 	auto home = QDir::homePath();
+ 	if (!home.isEmpty()) {
+ 		auto oldPath = home + u"/.TelegramDesktop/"_q;
+-		auto oldSettingsBase = oldPath + u"tdata/settings"_q;
+-		if (QFile::exists(oldSettingsBase + '0')
+-			|| QFile::exists(oldSettingsBase + '1')
+-			|| QFile::exists(oldSettingsBase + 's')) {
++		if (hasPreviousProfileAt(oldPath)) {
+ 			return oldPath;
+ 		}
+ 	}
+ 
++	const auto prevPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/Yukigram/";
++	if (hasPreviousProfileAt(prevPath)) {
++		return prevPath;
++	}
++
+ 	return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + '/';
+ }
+ 
+-- 
+2.53.0
+

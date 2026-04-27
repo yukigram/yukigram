@@ -39,6 +39,7 @@ path = [
     "tdesktop/cur/*-Allow-opening-group-from-peer-info.patch",
     "tdesktop/cur/*-Compact-chat-list.patch",
     "tdesktop/cur/*-Symbolic-tray-icon-from-icon-theme.patch",
+    "tdesktop/cur/*-Support-xdg-data-Yukigram-as-compat-datadir.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors <https://github.com/yukigram/yukigram>"
