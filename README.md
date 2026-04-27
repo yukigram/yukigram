@@ -55,6 +55,8 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. Option to hide per-chat wallpaper and use wallpaper from theme instead
 1. Allow opening group from peer info
 1. Collapsed chats in dialogs view (as in Kotatogram)
+1. Allow using symbolic (monochrome) tray icon from icon theme
+    instead of bundled one with Yukigram name.
 
 Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 
