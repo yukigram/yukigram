@@ -1,0 +1,48 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Mon, 27 Apr 2026 04:53:51 +0300
+Subject: [PATCH] Yukigram settings deep links
+
+---
+ .../core/deep_links/deep_links_settings.cpp    | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp b/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp
+index 2bf81c8c03..84b8908d7c 100644
+--- a/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp
++++ b/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp
+@@ -69,6 +69,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "ui/power_saving.h"
+ #include "settings/sections/settings_privacy_security.h"
+ #include "settings/sections/settings_websites.h"
++#include "settings/sections/settings_yukigram.h"
++#include "yukigram/options.h"
+ #include "boxes/connection_box.h"
+ #include "boxes/local_storage_box.h"
+ #include "mainwindow.h"
+@@ -2078,6 +2080,22 @@ void RegisterSettingsHandlers(Router &router) {
+ 		},
+ 	});
+ 
++	// Yukigram settings deep links
++	router.add(u"settings"_q, {
++		.path = u"yukigram"_q,
++		.action = SettingsSection{ ::Settings::YukigramId() },
++	});
++	for (auto &[key, _] : Yukigram::Options::toggles) {
++		const auto path = u"yukigram/%1"_q.arg(key);
++		router.add(u"settings"_q, {
++			.path = path,
++			.action = SettingsControl{
++				::Settings::YukigramId(),
++				path,
++			}
++		});
++	}
++
+ 	router.add(u"settings"_q, {
+ 		.path = u"themes"_q,
+ 		.action = AliasTo{ u"settings"_q, u"appearance/themes"_q },
+-- 
+2.53.0
+

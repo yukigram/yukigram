@@ -12,6 +12,8 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. Yukigram branding
 1. Yukigram options framework
 1. Yukigram settings page
+1. Yukigram settings deeplinks
+    (`tg://settings/yukigram/...`)
 1. tg://nya link support
 1. No sponsored messages
 1. Immediate restart button

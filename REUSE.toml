@@ -10,6 +10,7 @@ path = [
     "tdesktop/cur/*-Yukigram-build-support.patch",
     "tdesktop/cur/*-Yukigram-options-framework.patch",
     "tdesktop/cur/*-Yukigram-settings.patch",
+    "tdesktop/cur/*-Yukigram-settings-deep-links.patch",
     "tdesktop/cur/*-tg-nya-handler.patch",
     "tdesktop/cur/*-Disable-sponsored-messages.patch",
     "tdesktop/cur/*-Immediate-restart-button.patch",
