@@ -50,7 +50,7 @@ jobs:
           set -exuo pipefail
           pushd yukigram
           commit=$(git describe --abbrev=12 HEAD)
-          sed -i s/@commit/$commit/ tdesktop/cur/0001-Yukigram-branding.patch
+          sed -i s/@commit/$commit/ tdesktop/cur/0002-Yukigram-branding.patch
           popd
 
       - name: Apply patches
