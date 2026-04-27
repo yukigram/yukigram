@@ -1,8 +1,9 @@
 {
   lib,
+  stdenv,
   telegram-desktop,
 }:
-telegram-desktop.override {
+(telegram-desktop.override {
   pname = "yukigram";
   unwrapped = telegram-desktop.unwrapped.overrideAttrs (final: prev: {
     name = "yukigram-unwrapped";
@@ -22,4 +23,10 @@ telegram-desktop.override {
       mainProgram = "yukigram";
     };
   });
-}
+}).overrideAttrs (final: prev: {
+  # Disable substitution in `share/dbus-1/services/` as there is no absolute path now
+  postFixup =
+    if stdenv.hostPlatform.isLinux
+    then ""
+    else prev.postFixup;
+})
