@@ -6,12 +6,11 @@ Subject: [PATCH] Allow forcing single-column layout
 ---
  Telegram/CMakeLists.txt                              |  2 ++
  Telegram/SourceFiles/mainwidget.cpp                  |  3 ++-
- .../SourceFiles/settings/settings_experimental.cpp   |  1 +
  Telegram/SourceFiles/window/window_adaptive.cpp      |  3 ++-
  .../SourceFiles/window/window_session_controller.cpp |  2 ++
  .../yukigram/settings/force_mobile_layout.cpp        | 12 ++++++++++++
  .../yukigram/settings/force_mobile_layout.h          |  5 +++++
- 7 files changed, 26 insertions(+), 2 deletions(-)
+ 6 files changed, 25 insertions(+), 2 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/force_mobile_layout.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/force_mobile_layout.h
 
@@ -49,18 +48,6 @@ index beac8028dd..3928beb9e2 100644
  		auto chatWidth = layout.chatWidth;
  		//if (session().settings().tabbedSelectorSectionEnabled()
  		//	&& chatWidth >= _history->minimalWidthForTabbedSelectorSection()) {
-diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index d20f877e0d..53e4d6d2b2 100644
---- a/Telegram/SourceFiles/settings/settings_experimental.cpp
-+++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
-@@ -38,6 +38,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "mtproto/session_private.h"
- #include "webview/webview_embed.h"
- #include "window/main_window.h"
-+#include "window/window_adaptive.h"
- #include "window/window_peer_menu.h"
- #include "window/window_session_controller.h"
- #include "window/window_controller.h"
 diff --git a/Telegram/SourceFiles/window/window_adaptive.cpp b/Telegram/SourceFiles/window/window_adaptive.cpp
 index 784164db99..6586692775 100644
 --- a/Telegram/SourceFiles/window/window_adaptive.cpp
