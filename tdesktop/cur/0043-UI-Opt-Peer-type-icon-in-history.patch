@@ -9,9 +9,9 @@ Original author: RadRussianRus <radrussianrus@gmail.com>
  Telegram/CMakeLists.txt                       |  2 +
  .../history/view/history_view_message.cpp     | 37 ++++++++++++++++++-
  Telegram/SourceFiles/ui/chat/chat.style       | 11 ++++++
- .../settings/history_peer_type_icons.cpp      | 12 ++++++
+ .../settings/history_peer_type_icons.cpp      | 13 +++++++
  .../settings/history_peer_type_icons.h        |  5 +++
- 5 files changed, 66 insertions(+), 1 deletion(-)
+ 5 files changed, 67 insertions(+), 1 deletion(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h
 
@@ -135,10 +135,10 @@ index 66bd72ca84..a8d7910fbb 100644
  	shift: 12px;
 diff --git a/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
 new file mode 100644
-index 0000000000..3452244767
+index 0000000000..1204369c6f
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
-@@ -0,0 +1,12 @@
+@@ -0,0 +1,13 @@
 +#include "yukigram/settings/history_peer_type_icons.h"
 +
 +namespace Yukigram::Settings {
@@ -146,6 +146,7 @@ index 0000000000..3452244767
 +rpl::variable<bool> *HistoryPeerTypeIcons = Yukigram::Options::make(kOptionHistoryPeerTypeIcons, {
 +	.name = "Show peer type icon in name in history",
 +	.keywords = { u"yukigram"_q, u"peer"_q, u"user"_q, u"icon"_q, u"bot"_q, u"channel"_q, u"group"_q, u"chat"_q, u"forum"_q },
++	.category = "history",
 +});
 +
 +const char kOptionHistoryPeerTypeIcons[] = "history-peer-type-icons";

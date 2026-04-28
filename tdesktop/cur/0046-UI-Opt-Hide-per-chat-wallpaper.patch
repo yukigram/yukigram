@@ -4,12 +4,12 @@ Date: Fri, 17 Apr 2026 03:21:22 +0300
 Subject: [PATCH] [UI][Opt] Hide per-chat wallpaper
 
 ---
- Telegram/CMakeLists.txt                              |  2 ++
- Telegram/SourceFiles/data/data_channel.cpp           |  3 ++-
- Telegram/SourceFiles/data/data_user.cpp              |  3 ++-
- .../yukigram/settings/hide_wall_paper.cpp            | 12 ++++++++++++
- .../SourceFiles/yukigram/settings/hide_wall_paper.h  |  5 +++++
- 5 files changed, 23 insertions(+), 2 deletions(-)
+ Telegram/CMakeLists.txt                             |  2 ++
+ Telegram/SourceFiles/data/data_channel.cpp          |  3 ++-
+ Telegram/SourceFiles/data/data_user.cpp             |  3 ++-
+ .../yukigram/settings/hide_wall_paper.cpp           | 13 +++++++++++++
+ .../SourceFiles/yukigram/settings/hide_wall_paper.h |  5 +++++
+ 5 files changed, 24 insertions(+), 2 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_wall_paper.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_wall_paper.h
 
@@ -70,10 +70,10 @@ index 2a5c93abdb..c6e45b0827 100644
  			update.is_wallpaper_overridden());
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_wall_paper.cpp b/Telegram/SourceFiles/yukigram/settings/hide_wall_paper.cpp
 new file mode 100644
-index 0000000000..b178d1b0c5
+index 0000000000..392705aaf5
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/hide_wall_paper.cpp
-@@ -0,0 +1,12 @@
+@@ -0,0 +1,13 @@
 +#include "yukigram/settings/hide_wall_paper.h"
 +
 +namespace Yukigram::Settings {
@@ -81,6 +81,7 @@ index 0000000000..b178d1b0c5
 +rpl::variable<bool> *HideWallPaper = Yukigram::Options::make(kOptionHideWallPaper, {
 +	.name = "Hide per-chat wallpaper",
 +	.keywords = { u"yukigram"_q, u"wallpaper"_q },
++	.category = "history",
 +});
 +
 +const char kOptionHideWallPaper[] = "hide-wall-paper";

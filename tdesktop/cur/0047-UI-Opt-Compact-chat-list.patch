@@ -10,9 +10,9 @@ Subject: [PATCH] [UI][Opt] Compact chat list
  .../dialogs/dialogs_inner_widget.cpp          | 12 ++++++---
  Telegram/SourceFiles/dialogs/dialogs_row.cpp  |  6 ++++-
  .../SourceFiles/dialogs/ui/dialogs_layout.cpp | 25 +++++++++++++++++--
- .../yukigram/settings/compact_chat_list.cpp   | 12 +++++++++
+ .../yukigram/settings/compact_chat_list.cpp   | 13 ++++++++++
  .../yukigram/settings/compact_chat_list.h     |  5 ++++
- 8 files changed, 65 insertions(+), 7 deletions(-)
+ 8 files changed, 66 insertions(+), 7 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/compact_chat_list.h
 
@@ -263,10 +263,10 @@ index ac29683c5b..e025a73aa1 100644
  		nullptr,
 diff --git a/Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp b/Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp
 new file mode 100644
-index 0000000000..6ec5580be9
+index 0000000000..620d82a851
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp
-@@ -0,0 +1,12 @@
+@@ -0,0 +1,13 @@
 +#include "yukigram/settings/compact_chat_list.h"
 +
 +namespace Yukigram::Settings {
@@ -274,6 +274,7 @@ index 0000000000..6ec5580be9
 +rpl::variable<bool> *CompactChatList = Yukigram::Options::make(kOptionCompactChatList, {
 +	.name = "Compact chat list",
 +	.keywords = { u"yukigram"_q, u"compact"_q, u"chat"_q },
++	.category = "dialogs",
 +});
 +
 +const char kOptionCompactChatList[] = "compact-chat-list";

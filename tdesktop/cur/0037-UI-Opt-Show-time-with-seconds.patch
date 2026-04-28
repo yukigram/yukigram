@@ -19,9 +19,9 @@ Original author: c0re100 <corehusky@gmail.com>
  Telegram/SourceFiles/lang/lang_keys.h         |  3 ++
  .../controls/who_reacted_context_action.cpp   |  2 +-
  .../SourceFiles/ui/text/format_values.cpp     | 21 ++++----------
- .../yukigram/settings/time_with_seconds.cpp   | 13 +++++++++
+ .../yukigram/settings/time_with_seconds.cpp   | 14 +++++++++
  .../yukigram/settings/time_with_seconds.h     |  5 ++++
- 15 files changed, 74 insertions(+), 44 deletions(-)
+ 15 files changed, 75 insertions(+), 44 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
 
@@ -322,10 +322,10 @@ index 7b70065e1f..14d23593d9 100644
  	} else {
 diff --git a/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
 new file mode 100644
-index 0000000000..f1150d2164
+index 0000000000..d564183f3e
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,14 @@
 +#include "yukigram/settings/time_with_seconds.h"
 +
 +namespace Yukigram::Settings {
@@ -333,6 +333,7 @@ index 0000000000..f1150d2164
 +rpl::variable<bool> *TimeWithSeconds = Yukigram::Options::make(kOptionTimeWithSeconds, {
 +	.name = "Show time with seconds",
 +	.keywords = { u"yukigram"_q, u"time"_q, u"seconds"_q },
++	.category = "interface",
 +	.restartRequired = true,
 +});
 +

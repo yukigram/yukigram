@@ -4,11 +4,11 @@ Date: Fri, 3 Apr 2026 04:45:03 +0300
 Subject: [PATCH] [UI][Opt] Show scheduled messages button
 
 ---
- Telegram/CMakeLists.txt                              |  2 ++
- Telegram/SourceFiles/history/history_widget.cpp      |  3 ++-
- .../yukigram/settings/always_show_scheduled.cpp      | 12 ++++++++++++
- .../yukigram/settings/always_show_scheduled.h        |  5 +++++
- 4 files changed, 21 insertions(+), 1 deletion(-)
+ Telegram/CMakeLists.txt                             |  2 ++
+ Telegram/SourceFiles/history/history_widget.cpp     |  3 ++-
+ .../yukigram/settings/always_show_scheduled.cpp     | 13 +++++++++++++
+ .../yukigram/settings/always_show_scheduled.h       |  5 +++++
+ 4 files changed, 22 insertions(+), 1 deletion(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/always_show_scheduled.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/always_show_scheduled.h
 
@@ -48,10 +48,10 @@ index eeda7013ea..c7044ad8d1 100644
  	if (!_scheduled && has) {
 diff --git a/Telegram/SourceFiles/yukigram/settings/always_show_scheduled.cpp b/Telegram/SourceFiles/yukigram/settings/always_show_scheduled.cpp
 new file mode 100644
-index 0000000000..f903bc2858
+index 0000000000..71361e988b
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/always_show_scheduled.cpp
-@@ -0,0 +1,12 @@
+@@ -0,0 +1,13 @@
 +#include "yukigram/settings/always_show_scheduled.h"
 +
 +namespace Yukigram::Settings {
@@ -59,6 +59,7 @@ index 0000000000..f903bc2858
 +rpl::variable<bool> *AlwaysShowScheduled = Yukigram::Options::make(kOptionAlwaysShowScheduled, {
 +	.name = "Always show scheduled messages button",
 +	.keywords = { u"yukigram"_q, u"scheduled"_q, u"delay"_q },
++	.category = "compose",
 +});
 +
 +const char kOptionAlwaysShowScheduled[] = "always-show-scheduled";

@@ -5,11 +5,11 @@ Subject: [PATCH] Yukigram options framework
 
 ---
  Telegram/CMakeLists.txt                       |  2 +
- Telegram/SourceFiles/core/launcher.cpp        |  3 ++
+ Telegram/SourceFiles/core/launcher.cpp        |  3 +
  .../settings/settings_experimental.cpp        |  2 +
- Telegram/SourceFiles/yukigram/options.cpp     | 53 +++++++++++++++++++
- Telegram/SourceFiles/yukigram/options.h       | 39 ++++++++++++++
- 5 files changed, 99 insertions(+)
+ Telegram/SourceFiles/yukigram/options.cpp     | 65 +++++++++++++++++++
+ Telegram/SourceFiles/yukigram/options.h       | 44 +++++++++++++
+ 5 files changed, 116 insertions(+)
  create mode 100644 Telegram/SourceFiles/yukigram/options.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/options.h
 
@@ -76,15 +76,25 @@ index 31315bdae3..d20f877e0d 100644
  		}
 diff --git a/Telegram/SourceFiles/yukigram/options.cpp b/Telegram/SourceFiles/yukigram/options.cpp
 new file mode 100644
-index 0000000000..e7efd757cd
+index 0000000000..2dbc214751
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.cpp
-@@ -0,0 +1,53 @@
+@@ -0,0 +1,65 @@
 +#include "yukigram/options.h"
 +
 +namespace Yukigram::Options {
 +
++std::vector<std::pair<std::string_view, std::string_view>> categories {
++	{"", ""},
++	{"interface", "Interface"},
++	{"dialogs", "Chat list"},
++	{"history", "Message history"},
++	{"compose", "Composing messages"},
++	{"system", "System"},
++};
++
 +std::map<std::string_view, Toggle> toggles;
++std::map<std::string_view, std::vector<std::string_view>> toggles_by_category;
 +
 +rpl::variable<bool> *make(const char *key, Description &&d, bool defaultValue) {
 +	const auto v = std::make_shared<rpl::variable<bool>>(defaultValue);
@@ -101,7 +111,9 @@ index 0000000000..e7efd757cd
 +	);
 +	rpl::lifetime lifetime;
 +
-+	toggles[std::string_view(key)] = {
++	const auto key_v = std::string_view(key);
++	toggles_by_category[d.category].push_back(key_v);
++	toggles[key_v] = {
 +		.d = std::move(d),
 +		.v = v,
 +		._base = base,
@@ -135,10 +147,10 @@ index 0000000000..e7efd757cd
 +}
 diff --git a/Telegram/SourceFiles/yukigram/options.h b/Telegram/SourceFiles/yukigram/options.h
 new file mode 100644
-index 0000000000..34039acf6d
+index 0000000000..a4b0e7d6b5
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.h
-@@ -0,0 +1,39 @@
+@@ -0,0 +1,44 @@
 +#pragma once
 +
 +#include "base/options.h"
@@ -150,13 +162,15 @@ index 0000000000..34039acf6d
 +#include <memory>
 +#include <optional>
 +#include <string_view>
++#include <vector>
 +
 +namespace Yukigram::Options {
 +
 +struct Description {
-+	std::string_view name = "";
-+	std::string_view description = "";
++	std::string_view name;
++	std::string_view description;
 +	QStringList keywords = {};
++	std::string_view category;
 +	bool restartRequired = false;
 +	bool mirrorExperimental = false;
 +};
@@ -168,7 +182,10 @@ index 0000000000..34039acf6d
 +	rpl::lifetime _lifetime;
 +};
 +
++extern std::vector<std::pair<std::string_view, std::string_view>> categories;
++
 +extern std::map<std::string_view, Toggle> toggles;
++extern std::map<std::string_view, std::vector<std::string_view>> toggles_by_category;
 +
 +rpl::variable<bool> *make(const char *key, Description &&d, bool defaultValue = false);
 +

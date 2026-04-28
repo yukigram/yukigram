@@ -6,13 +6,13 @@ Subject: [PATCH] [UI][Opt] Show message id
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 ---
- Telegram/CMakeLists.txt                             |  2 ++
- .../history/view/history_view_bottom_info.cpp       |  7 ++++++-
- .../history/view/history_view_bottom_info.h         |  1 +
- .../history/view/history_view_element.cpp           |  3 +++
- .../yukigram/settings/show_message_id.cpp           | 13 +++++++++++++
- .../SourceFiles/yukigram/settings/show_message_id.h |  5 +++++
- 6 files changed, 30 insertions(+), 1 deletion(-)
+ Telegram/CMakeLists.txt                            |  2 ++
+ .../history/view/history_view_bottom_info.cpp      |  7 ++++++-
+ .../history/view/history_view_bottom_info.h        |  1 +
+ .../history/view/history_view_element.cpp          |  3 +++
+ .../yukigram/settings/show_message_id.cpp          | 14 ++++++++++++++
+ .../yukigram/settings/show_message_id.h            |  5 +++++
+ 6 files changed, 31 insertions(+), 1 deletion(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/show_message_id.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/show_message_id.h
 
@@ -89,10 +89,10 @@ index 26f63b109f..284bf79f2c 100644
  
 diff --git a/Telegram/SourceFiles/yukigram/settings/show_message_id.cpp b/Telegram/SourceFiles/yukigram/settings/show_message_id.cpp
 new file mode 100644
-index 0000000000..8d7a8ab01c
+index 0000000000..42a501e94e
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/show_message_id.cpp
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,14 @@
 +#include "yukigram/settings/show_message_id.h"
 +
 +namespace Yukigram::Settings {
@@ -100,6 +100,7 @@ index 0000000000..8d7a8ab01c
 +rpl::variable<bool> *ShowMsgId = Yukigram::Options::make(kOptionShowMsgId, {
 +	.name = "Show message ID",
 +	.keywords = { u"yukigram"_q, u"message"_q, u"id"_q },
++	.category = "history",
 +	.restartRequired = true,
 +});
 +
