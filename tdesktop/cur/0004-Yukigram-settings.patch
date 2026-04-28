@@ -15,7 +15,7 @@ Co-Authored-By: Lunya <241520024+lunya-miaou@users.noreply.github.com>
  create mode 100644 Telegram/SourceFiles/settings/sections/settings_yukigram.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index fad839b1c5..3974fbb5aa 100644
+index 7e8c9e176a..35977ac725 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1701,6 +1701,8 @@ PRIVATE
@@ -67,12 +67,12 @@ index 3d4eda91da..59ce88648c 100644
  		.title = tr::lng_settings_language(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 new file mode 100644
-index 0000000000..1e65a22558
+index 0000000000..9ad1d79280
 --- /dev/null
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 @@ -0,0 +1,152 @@
 +#include "settings/sections/settings_yukigram.h"
-+#include "yukigram/options.h"
++#include "yukigram/options_database.h"
 +
 +#include "settings/settings_common_session.h"
 +

@@ -15,10 +15,10 @@ Subject: [PATCH] [UI][Opt] Single-column layout
  create mode 100644 Telegram/SourceFiles/yukigram/settings/force_mobile_layout.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index f56832057a..d5ee0db99b 100644
+index f1218dcddd..1dbe83fb9e 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1895,6 +1895,8 @@ PRIVATE
+@@ -1897,6 +1897,8 @@ PRIVATE
      yukigram/options.h
      yukigram/settings/disable_animoji.cpp
      yukigram/settings/disable_animoji.h

@@ -13,12 +13,12 @@ Subject: [PATCH] [UI][Opt] Show scheduled messages button
  create mode 100644 Telegram/SourceFiles/yukigram/settings/always_show_scheduled.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 6241f6865b..6d32664317 100644
+index f128a5e19f..5c469300ad 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1893,6 +1893,8 @@ PRIVATE
-     yukigram/appid.h
-     yukigram/options.cpp
+@@ -1895,6 +1895,8 @@ PRIVATE
+     yukigram/options_database.h
+     yukigram/options_runtime.h
      yukigram/options.h
 +    yukigram/settings/always_show_scheduled.cpp
 +    yukigram/settings/always_show_scheduled.h

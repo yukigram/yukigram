@@ -8,7 +8,7 @@ Subject: [PATCH] Yukigram settings deep links
  1 file changed, 28 insertions(+)
 
 diff --git a/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp b/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp
-index 2bf81c8c03..7b944dbd30 100644
+index 2bf81c8c03..23b495fb5a 100644
 --- a/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp
 +++ b/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp
 @@ -69,6 +69,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 2bf81c8c03..7b944dbd30 100644
  #include "settings/sections/settings_privacy_security.h"
  #include "settings/sections/settings_websites.h"
 +#include "settings/sections/settings_yukigram.h"
-+#include "yukigram/options.h"
++#include "yukigram/options_database.h"
  #include "boxes/connection_box.h"
  #include "boxes/local_storage_box.h"
  #include "mainwindow.h"

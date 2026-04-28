@@ -10,12 +10,12 @@ Subject: [PATCH] Mirror select Experimental settings
  create mode 100644 Telegram/SourceFiles/yukigram/settings/mirrored.cpp
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 3974fbb5aa..6201e121ad 100644
+index 35977ac725..8a672a9c51 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1893,6 +1893,7 @@ PRIVATE
-     yukigram/appid.h
-     yukigram/options.cpp
+@@ -1895,6 +1895,7 @@ PRIVATE
+     yukigram/options_database.h
+     yukigram/options_runtime.h
      yukigram/options.h
 +    yukigram/settings/mirrored.cpp
      apiwrap.cpp

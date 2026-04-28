@@ -13,10 +13,10 @@ Subject: [PATCH] [UI][Opt] Hide Send As premium channels
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 8c68431b2e..9e223b80c9 100644
+index 2312f4cda1..6ed2a6fa05 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1901,6 +1901,8 @@ PRIVATE
+@@ -1903,6 +1903,8 @@ PRIVATE
      yukigram/settings/disable_animoji.h
      yukigram/settings/force_mobile_layout.cpp
      yukigram/settings/force_mobile_layout.h
