@@ -1,0 +1,27 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Sat, 4 Apr 2026 18:50:05 +0300
+Subject: [PATCH] [UI] Increase maxSignatureSize
+
+This patch is adapted from 64Gram.
+Original author: Js0n <29531167+JasonKhew96@users.noreply.github.com>
+---
+ Telegram/SourceFiles/ui/chat/chat.style | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
+index 724aca8104..a72f74f37b 100644
+--- a/Telegram/SourceFiles/ui/chat/chat.style
++++ b/Telegram/SourceFiles/ui/chat/chat.style
+@@ -217,7 +217,7 @@ maxStickerSize: 224px;
+ maxAnimatedEmojiSize: 112px;
+ maxGifSize: 320px;
+ maxVideoMessageSize: 240px;
+-maxSignatureSize: 144px;
++maxSignatureSize: 262px;
+ maxWallPaperWidth: 160px;
+ maxWallPaperHeight: 240px;
+ historyThemeSize: size(272px, 176px);
+-- 
+2.53.0
+

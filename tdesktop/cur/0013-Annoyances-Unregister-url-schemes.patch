@@ -1,0 +1,52 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Sat, 4 Apr 2026 18:42:15 +0300
+Subject: [PATCH] [Annoyances] Unregister url schemes
+
+Useless. Portable Linux mode is not supported, and provided .desktop
+file handles them just fine.
+
+Type "registertg" in settings to clean leftover files.
+---
+ Telegram/SourceFiles/core/application.cpp        | 4 ++--
+ Telegram/SourceFiles/settings/settings_codes.cpp | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Telegram/SourceFiles/core/application.cpp b/Telegram/SourceFiles/core/application.cpp
+index 6840b9eb35..d56d2ae215 100644
+--- a/Telegram/SourceFiles/core/application.cpp
++++ b/Telegram/SourceFiles/core/application.cpp
+@@ -1886,7 +1886,7 @@ void Application::RegisterUrlScheme() {
+ 		? u"-workdir \"%1\""_q.arg(cWorkingDir())
+ 		: QString();
+ 
+-	base::Platform::RegisterUrlScheme(base::Platform::UrlSchemeDescriptor{
++	base::Platform::UnregisterUrlScheme(base::Platform::UrlSchemeDescriptor{
+ 		.executable = Platform::ExecutablePathForShortcuts(),
+ 		.arguments = arguments,
+ 		.protocol = u"tg"_q,
+@@ -1897,7 +1897,7 @@ void Application::RegisterUrlScheme() {
+ 		.displayAppDescription = AppName.utf16(),
+ 	});
+ 
+-	base::Platform::RegisterUrlScheme(base::Platform::UrlSchemeDescriptor{
++	base::Platform::UnregisterUrlScheme(base::Platform::UrlSchemeDescriptor{
+ 		.executable = Platform::ExecutablePathForShortcuts(),
+ 		.arguments = arguments,
+ 		.protocol = u"tonsite"_q,
+diff --git a/Telegram/SourceFiles/settings/settings_codes.cpp b/Telegram/SourceFiles/settings/settings_codes.cpp
+index 68d0c112a7..beb165f4ba 100644
+--- a/Telegram/SourceFiles/settings/settings_codes.cpp
++++ b/Telegram/SourceFiles/settings/settings_codes.cpp
+@@ -166,7 +166,7 @@ auto GenerateCodes() {
+ 	});
+ 	codes.emplace(u"registertg"_q, [](SessionController *window) {
+ 		Core::Application::RegisterUrlScheme();
+-		Ui::Toast::Show("Forced custom scheme register.");
++		Ui::Toast::Show("Cleaned custom scheme register.");
+ 	});
+ 	codes.emplace(u"numberbuttons"_q, [](SessionController *window) {
+ 		using namespace base::options;
+-- 
+2.53.0
+

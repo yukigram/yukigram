@@ -106,14 +106,20 @@ git am -3 ../yukigram/tdesktop
 
 Add a commit as you normally do.
 Use `git rebase -i $TAG` to reorder patches if needed.
-Yukigram "structure" patches,
-such as "branding" or "build support"
-should go before "feature" patches,
-such as "wide messages" or "show message id".
+
+Patches, except for Yukigram structure ones
+(such as "branding" or "build support"),
+should have categories in their names
+and be placed in their respective category
+if possible.
+
+Categorized patches that add user-facing options
+should be marked with `[Opt]`.
 
 Before committing patch to this repo,
 please ensure the following is true:
 
+1. Every patch has a category
 1. The indentation of in patch hunks is consistent
 1. New files have newline at the end
     unless otherwise required by tools

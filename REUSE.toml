@@ -6,73 +6,73 @@ version = 1
 
 [[annotations]]
 path = [
-    "tdesktop/cur/*-Yukigram-branding.patch",
     "tdesktop/cur/*-Yukigram-build-support.patch",
+    "tdesktop/cur/*-Yukigram-branding.patch",
     "tdesktop/cur/*-Yukigram-options-framework.patch",
     "tdesktop/cur/*-Yukigram-settings.patch",
     "tdesktop/cur/*-Yukigram-settings-deep-links.patch",
     "tdesktop/cur/*-Mirror-select-Experimental-settings.patch",
-    "tdesktop/cur/*-tg-nya-handler.patch",
-    "tdesktop/cur/*-Disable-sponsored-messages.patch",
-    "tdesktop/cur/*-Immediate-restart-button.patch",
-    "tdesktop/cur/*-Allow-disabling-animoji.patch",
-    "tdesktop/cur/*-Support-post-comments-button-as-right-action.patch",
-    "tdesktop/cur/*-Control-calls-with-MPRIS.patch",
-    "tdesktop/cur/*-Remove-copy-restrictions.patch",
-    "tdesktop/cur/*-Allow-forcing-single-column-layout.patch",
-    "tdesktop/cur/*-Open-location-in-OpenStreetMap.patch",
-    "tdesktop/cur/*-Support-wide-messages.patch",
-    "tdesktop/cur/*-Allow-more-accounts.patch",
-    "tdesktop/cur/*-Always-show-scheduled-messages-button.patch",
-    "tdesktop/cur/*-Disable-AI-summaries-on-messages.patch",
-    "tdesktop/cur/*-Unregister-url-schemes.patch",
-    "tdesktop/cur/*-Increase-max-media-sizes.patch",
-    "tdesktop/cur/*-Forward-Copy-Steal-shortcuts.patch",
-    "tdesktop/cur/*-Disable-AI-compose-button-by-default.patch",
-    "tdesktop/cur/*-Disable-dbus-activation.patch",
-    "tdesktop/cur/*-Unshare-phone-number-by-default-on-adding-contact.patch",
-    "tdesktop/cur/*-Clickable-links-in-bio.patch",
-    "tdesktop/cur/*-Show-unofficial-client-users-in-chat.patch",
-    "tdesktop/cur/*-Hide-similar-channels-on-join-message-by-default.patch",
-    "tdesktop/cur/*-Hide-Join-group-button-in-open-groups.patch",
-    "tdesktop/cur/*-Hide-per-chat-wallpaper.patch",
-    "tdesktop/cur/*-Allow-opening-group-from-peer-info.patch",
-    "tdesktop/cur/*-Compact-chat-list.patch",
-    "tdesktop/cur/*-Symbolic-tray-icon-from-icon-theme.patch",
-    "tdesktop/cur/*-Support-xdg-data-Yukigram-as-compat-datadir.patch",
-    "tdesktop/cur/*-Hide-Send-As-premium-channels.patch",
-    "tdesktop/cur/*-Hide-Send-As-button.patch",
+    "tdesktop/cur/*-Fix-Disable-dbus-activation.patch",
+    "tdesktop/cur/*-Fix-Opt-Symbolic-tray-icon-from-icon-theme.patch",
+    "tdesktop/cur/*-Fix-Support-xdg-data-Yukigram-as-compat-datadir.patch",
+    "tdesktop/cur/*-Annoyances-Hide-sponsored-messages.patch",
+    "tdesktop/cur/*-Annoyances-Remove-copy-restrictions.patch",
+    "tdesktop/cur/*-Annoyances-Open-location-in-OpenStreetMap.patch",
+    "tdesktop/cur/*-Annoyances-Unregister-url-schemes.patch",
+    "tdesktop/cur/*-Annoyances-Disable-AI-message-summaries.patch",
+    "tdesktop/cur/*-Annoyances-Disable-AI-compose-button-by-default.patch",
+    "tdesktop/cur/*-Annoyances-Unshare-phone-number-by-default.patch",
+    "tdesktop/cur/*-Feature-tg-nya-handler.patch",
+    "tdesktop/cur/*-Feature-Immediate-restart.patch",
+    "tdesktop/cur/*-Feature-Opt-Control-calls-with-MPRIS.patch",
+    "tdesktop/cur/*-Feature-More-accounts.patch",
+    "tdesktop/cur/*-Feature-Forward-Copy-Steal-shortcuts.patch",
+    "tdesktop/cur/*-Feature-Clickable-links-in-bio.patch",
+    "tdesktop/cur/*-Feature-Hide-similar-channels-on-join-message-by-def.patch",
+    "tdesktop/cur/*-Feature-Hide-Join-group-button-in-open-groups.patch",
+    "tdesktop/cur/*-Feature-Open-group-from-peer-info.patch",
+    "tdesktop/cur/*-UI-Opt-Disable-animoji.patch",
+    "tdesktop/cur/*-UI-Opt-Right-action-comments.patch",
+    "tdesktop/cur/*-UI-Opt-Single-column-layout.patch",
+    "tdesktop/cur/*-UI-Opt-Wide-messages.patch",
+    "tdesktop/cur/*-UI-Opt-Show-scheduled-messages-button.patch",
+    "tdesktop/cur/*-UI-Increase-max-media-sizes.patch",
+    "tdesktop/cur/*-UI-unofficial-client-user-peer-type-icon.patch",
+    "tdesktop/cur/*-UI-Opt-Hide-per-chat-wallpaper.patch",
+    "tdesktop/cur/*-UI-Opt-Compact-chat-list.patch",
+    "tdesktop/cur/*-UI-Opt-Hide-Send-As-premium-channels.patch",
+    "tdesktop/cur/*-UI-Opt-Hide-Send-As-button.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors <https://github.com/yukigram/yukigram>"
 
 [[annotations]]
 path = [
-    "tdesktop/cur/*-Handle-tg-openmessage-and-tg-user-links.patch",
-    "tdesktop/cur/*-Show-messages-from-user.patch",
-    "tdesktop/cur/*-Show-time-on-service-messages.patch",
-    "tdesktop/cur/*-Show-time-with-seconds.patch",
-    "tdesktop/cur/*-Show-sticker-pack-owner.patch",
-    "tdesktop/cur/*-Quick-Recent-Actions-button.patch",
-    "tdesktop/cur/*-Quick-Admin-list-button.patch",
-    "tdesktop/cur/*-Show-message-id.patch",
-    "tdesktop/cur/*-Increase-maxSignatureSize.patch",
-    "tdesktop/cur/*-Show-member-join-date.patch",
+    "tdesktop/cur/*-Feature-Handle-tg-openmessage-and-tg-user-links.patch",
+    "tdesktop/cur/*-Feature-Show-sticker-pack-owner.patch",
+    "tdesktop/cur/*-Feature-Show-member-join-date.patch",
+    "tdesktop/cur/*-UI-Show-messages-from-user.patch",
+    "tdesktop/cur/*-UI-Show-time-on-service-messages.patch",
+    "tdesktop/cur/*-UI-Opt-Show-time-with-seconds.patch",
+    "tdesktop/cur/*-UI-Recent-Actions-button.patch",
+    "tdesktop/cur/*-UI-Admin-list-button.patch",
+    "tdesktop/cur/*-UI-Opt-Show-message-id.patch",
+    "tdesktop/cur/*-UI-Increase-maxSignatureSize.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors, 64Gram contributors <https://github.com/TDesktop-x64/tdesktop>"
 
 [[annotations]]
 path = [
-    "tdesktop/cur/*-Show-user-type-icon-in-username-in-chat.patch",
-    "tdesktop/cur/*-Always-show-edit-timer.patch",
+    "tdesktop/cur/*-Feature-Always-show-edit-timer.patch",
+    "tdesktop/cur/*-UI-Peer-type-icon-in-history.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors, Kotatogram contributors <https://github.com/kotatogram/kotatogram-desktop>"
 
 [[annotations]]
 path = [
-    "tdesktop/cur/*-Show-forwarded-message-date.patch",
+    "tdesktop/cur/*-UI-Show-forwarded-message-date.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors, Forkgram contributors <https://github.com/forkgram/tdesktop>"

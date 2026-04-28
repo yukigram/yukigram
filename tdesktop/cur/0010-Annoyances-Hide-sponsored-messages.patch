@@ -1,0 +1,43 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 03:04:39 +0300
+Subject: [PATCH] [Annoyances] Hide sponsored messages
+
+---
+ .../data/components/sponsored_messages.cpp          | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
+
+diff --git a/Telegram/SourceFiles/data/components/sponsored_messages.cpp b/Telegram/SourceFiles/data/components/sponsored_messages.cpp
+index 4e68421fff..a6f59ccc0c 100644
+--- a/Telegram/SourceFiles/data/components/sponsored_messages.cpp
++++ b/Telegram/SourceFiles/data/components/sponsored_messages.cpp
+@@ -239,25 +239,14 @@ void SponsoredMessages::inject(
+ }
+ 
+ bool SponsoredMessages::canHaveFor(not_null<History*> history) const {
+-	if (history->peer->isChannel()) {
+-		return true;
+-	} else if (const auto user = history->peer->asUser()) {
+-		return user->isBot();
+-	}
+ 	return false;
+ }
+ 
+ bool SponsoredMessages::canHaveFor(not_null<HistoryItem*> item) const {
+-	return item->history()->peer->isBroadcast()
+-		&& item->isRegular();
++	return false;
+ }
+ 
+ bool SponsoredMessages::isTopBarFor(not_null<History*> history) const {
+-	if (peerIsUser(history->peer->id)) {
+-		if (const auto user = history->peer->asUser()) {
+-			return user->isBot();
+-		}
+-	}
+ 	return false;
+ }
+ 
+-- 
+2.53.0
+

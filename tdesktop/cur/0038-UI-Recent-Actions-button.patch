@@ -1,0 +1,131 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Sat, 4 Apr 2026 15:01:06 +0300
+Subject: [PATCH] [UI] Recent Actions button
+
+This patch is adapted from 64Gram.
+Original author: c0re100 <corehusky@gmail.com>
+---
+ .../info/edit/group_manage_actions_topbar.svg | 13 +++++++++
+ .../view/history_view_top_bar_widget.cpp      | 28 +++++++++++++++++++
+ .../view/history_view_top_bar_widget.h        |  1 +
+ Telegram/SourceFiles/info/info.style          |  4 +++
+ 4 files changed, 46 insertions(+)
+ create mode 100644 Telegram/Resources/icons/info/edit/group_manage_actions_topbar.svg
+
+diff --git a/Telegram/Resources/icons/info/edit/group_manage_actions_topbar.svg b/Telegram/Resources/icons/info/edit/group_manage_actions_topbar.svg
+new file mode 100644
+index 0000000000..220814e44b
+--- /dev/null
++++ b/Telegram/Resources/icons/info/edit/group_manage_actions_topbar.svg
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
++    <path d="
++        M18,8
++        L22,8 A3,3,0,0,1,25,11
++        L25,23 A3,3,0,0,1,22,26
++        L10,26 A3,3,0,0,1,7,23
++        L7,11 A3,3,0,0,1,10,8
++        L14,8 A2,2,0,0,1,18,8 A2,2,0,0,1,14,8 Z
++        M13,16 l6,0 Z
++        M13,20 l6,0 Z
++    " stroke="#fff" fill="#0000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
++</svg>
+diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
+index 6397d451cc..ed63280083 100644
+--- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
+@@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "history/view/history_view_top_bar_widget.h"
+ 
+ #include "history/history.h"
++#include "history/admin_log/history_admin_log_section.h"
+ #include "history/view/history_view_send_action.h"
+ #include "boxes/add_contact_box.h"
+ #include "ui/boxes/confirm_box.h"
+@@ -126,6 +127,7 @@ TopBarWidget::TopBarWidget(
+ , _call(this, st::topBarCall)
+ , _groupCall(this, st::topBarGroupCall)
+ , _search(this, st::topBarSearch)
++, _recentActions(this, st::topBarRecentActions)
+ , _infoToggle(this, st::topBarInfo)
+ , _menuToggle(this, st::topBarMenuToggle)
+ , _titlePeerText(st::windowMinWidth / 3)
+@@ -159,6 +161,10 @@ TopBarWidget::TopBarWidget(
+ 	_groupCall->setClickedCallback([=] { groupCall(); });
+ 	_menuToggle->addClickHandler([=](auto) { showPeerMenu(); });
+ 	_menuToggle->setAcceptBoth(true, true);
++	_recentActions->setClickedCallback([=] {
++		const auto channel = _activeChat.key.peer()->asChannel();
++		_controller->showSection(std::make_shared<AdminLog::SectionMemento>(channel));
++	});
+ 	_infoToggle->setClickedCallback([=] { toggleInfoSection(); });
+ 	_back->setAcceptBoth();
+ 	_back->addClickHandler([=](Qt::MouseButton) {
+@@ -1189,6 +1195,10 @@ void TopBarWidget::updateControlsGeometry() {
+ 		_infoToggle->moveToRight(_rightTaken, otherButtonsTop);
+ 		_rightTaken += _infoToggle->width();
+ 	}
++	_recentActions->moveToRight(_rightTaken, otherButtonsTop);
++	if (!_recentActions->isHidden()) {
++		_rightTaken += _recentActions->width() + st::topBarSkip;
++	}
+ 	if (!_call->isHidden() || !_groupCall->isHidden()) {
+ 		_call->moveToRight(_rightTaken, otherButtonsTop);
+ 		_groupCall->moveToRight(_rightTaken, otherButtonsTop);
+@@ -1314,6 +1324,24 @@ void TopBarWidget::updateControlsVisibility() {
+ 		&& !isOneColumn
+ 		&& _controller->canShowThirdSection()
+ 		&& !_chooseForReportReason);
++	const auto isAdmin = [&] {
++		if (_activeChat.section == Section::ChatsList) {
++			return false;
++		}
++		if (const auto peer = _activeChat.key.peer()) {
++			if (peer->isMonoforum()) {
++				return false;
++			}
++			if (peer->isMegagroup() || peer->isChannel()) {
++				const auto channel = peer->asChannel();
++				if (channel->hasAdminRights() || channel->amCreator()) {
++					return true;
++				}
++			}
++		}
++		return false;
++	}();
++	_recentActions->setVisible(isAdmin);
+ 	const auto callsEnabled = [&] {
+ 		if (const auto peer = _activeChat.key.peer()) {
+ 			if (const auto user = peer->asUser()) {
+diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.h b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.h
+index fab04e6309..ca334d876b 100644
+--- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.h
++++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.h
+@@ -236,6 +236,7 @@ private:
+ 	object_ptr<Ui::IconButton> _call;
+ 	object_ptr<Ui::IconButton> _groupCall;
+ 	object_ptr<Ui::IconButton> _search;
++	object_ptr<Ui::IconButton> _recentActions;
+ 	object_ptr<Ui::IconButton> _infoToggle;
+ 	object_ptr<Ui::IconButton> _menuToggle;
+ 	base::unique_qptr<Ui::PopupMenu> _menu;
+diff --git a/Telegram/SourceFiles/info/info.style b/Telegram/SourceFiles/info/info.style
+index f3d0b09f01..894693d85a 100644
+--- a/Telegram/SourceFiles/info/info.style
++++ b/Telegram/SourceFiles/info/info.style
+@@ -1072,6 +1072,10 @@ topBarInfo: IconButton(topBarSearch) {
+ 	icon: icon {{ "top_bar_profile", menuIconFg }};
+ 	iconOver: icon {{ "top_bar_profile", menuIconFgOver }};
+ }
++topBarRecentActions: IconButton(topBarSearch) {
++	icon: icon {{ "info/edit/group_manage_actions_topbar", menuIconFg }};
++	iconOver: icon {{ "info/edit/group_manage_actions_topbar", menuIconFgOver }};
++}
+ topBarInfoActive: icon {{ "top_bar_profile", windowActiveTextFg }};
+ topBarActionSkip: 10px;
+ topBarActionButtonLargeRadius: 8px;
+-- 
+2.53.0
+

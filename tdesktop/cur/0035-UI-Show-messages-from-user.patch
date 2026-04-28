@@ -1,0 +1,122 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 15:02:59 +0300
+Subject: [PATCH] [UI] Show messages from user
+
+This patch is adapted from 64Gram.
+Original author: c0re100 <corehusky@gmail.com>
+---
+ .../boxes/peers/edit_participants_box.cpp     |  3 +++
+ .../history/history_inner_widget.cpp          | 11 ++++++++++
+ .../view/history_view_context_menu.cpp        | 22 +++++++++++++++++++
+ .../window/window_session_controller.h        | 11 ++++++++++
+ 4 files changed, 47 insertions(+)
+
+diff --git a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
+index 471ad10c1a..77fd8d23c6 100644
+--- a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
++++ b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
+@@ -1927,6 +1927,9 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
+ 			(participant->isUser()
+ 				? &st::menuIconProfile
+ 				: &st::menuIconInfo));
++		result->addAction(tr::lng_context_search_from(tr::now), [=] {
++			_navigation->parentController()->searchMessages2(QString(), _peer, participant);
++		}, &st::menuIconSearch);
+ 	}
+ 	if (user) {
+ 		const auto isSelf = user->isSelf();
+diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
+index 687920f1c3..b331604e38 100644
+--- a/Telegram/SourceFiles/history/history_inner_widget.cpp
++++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
+@@ -2722,6 +2722,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+ 				}
+ 			}
+ 		}
++		const auto peer = item->history()->peer;
++		if (peer->isChat() || peer->isMegagroup()) {
++			const auto msgSigned = pinItem->mainView()->data()->Get<HistoryMessageSigned>();
++			auto author = QString();
++			if (msgSigned) {
++				author = msgSigned->author;
++			}
++			_menu->addAction(tr::lng_context_search_from(tr::now), [=] {
++				controller->searchMessages2(author, peer, item->from());
++			}, &st::menuIconSearch);
++		}
+ 	};
+ 	const auto addPhotoActions = [&](not_null<PhotoData*> photo, HistoryItem *item) {
+ 		const auto media = photo->activeMediaView();
+diff --git a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
+index 3bc816d385..b2218bb316 100644
+--- a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
+@@ -446,6 +446,27 @@ void AddForwardAction(
+ 	AddForwardMessageAction(menu, request, list);
+ }
+ 
++void AddMsgsFromUserAction(
++		not_null<Ui::PopupMenu*> menu,
++		const ContextMenuRequest& request,
++		not_null<ListWidget*> list) {
++	const auto item = request.item;
++	if (!request.selectedItems.empty() || !item) {
++		return;
++	}
++	const auto peer = item->history()->peer;
++	if (peer->isChat() || peer->isMegagroup()) {
++		const auto msgSigned = item->Get<HistoryMessageSigned>();
++		auto author = QString();
++		if (msgSigned) {
++			author = msgSigned->author;
++		}
++		menu->addAction(tr::lng_context_search_from(tr::now), [=] {
++			list->controller()->searchMessages2(author, peer, item->from());
++		}, &st::menuIconSearch);
++	}
++}
++
+ bool AddSendNowSelectedAction(
+ 		not_null<Ui::PopupMenu*> menu,
+ 		const ContextMenuRequest &request,
+@@ -1061,6 +1082,7 @@ void AddMessageActions(
+ 		not_null<ListWidget*> list) {
+ 	AddPostLinkAction(menu, request);
+ 	AddForwardAction(menu, request, list);
++	AddMsgsFromUserAction(menu, request, list);
+ 	AddSendNowAction(menu, request, list);
+ 	AddDeleteAction(menu, request, list);
+ 	AddDownloadFilesAction(menu, request, list);
+diff --git a/Telegram/SourceFiles/window/window_session_controller.h b/Telegram/SourceFiles/window/window_session_controller.h
+index bead50cbe1..9b07770e4a 100644
+--- a/Telegram/SourceFiles/window/window_session_controller.h
++++ b/Telegram/SourceFiles/window/window_session_controller.h
+@@ -10,6 +10,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "base/timer.h"
+ #include "chat_helpers/compose/compose_show.h"
+ #include "data/data_chat_participant_status.h"
++#include "data/data_session.h"
++#include "data/data_peer.h"
+ #include "data/data_report.h"
+ #include "dialogs/dialogs_key.h"
+ #include "mtproto/sender.h"
+@@ -305,6 +307,15 @@ public:
+ 		Dialogs::Key inChat,
+ 		PeerData *searchFrom = nullptr);
+ 
++	void searchMessages2(const QString &query, PeerData* inPeer, PeerData *from) {
++		searchMessages(
++			query,
++			(inPeer && !inPeer->isUser())
++			? inPeer->owner().history(inPeer).get()
++			: Dialogs::Key(),
++			from ? from : inPeer);
++	}
++
+ 	void resolveBoostState(
+ 		not_null<ChannelData*> channel,
+ 		int boostsToLift = 0);
+-- 
+2.53.0
+

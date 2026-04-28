@@ -1,0 +1,139 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 03:09:38 +0300
+Subject: [PATCH] [UI][Opt] Right action comments
+
+---
+ Telegram/CMakeLists.txt                         |  2 ++
+ .../history/view/history_view_message.cpp       | 17 +++++++++++------
+ .../yukigram/settings/right_action_comments.cpp | 13 +++++++++++++
+ .../yukigram/settings/right_action_comments.h   |  5 +++++
+ 4 files changed, 31 insertions(+), 6 deletions(-)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/right_action_comments.h
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index 042dd39174..f56832057a 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1900,6 +1900,8 @@ PRIVATE
+     yukigram/settings/mirrored.cpp
+     yukigram/settings/mpris_call_hangup.cpp
+     yukigram/settings/mpris_call_hangup.h
++    yukigram/settings/right_action_comments.cpp
++    yukigram/settings/right_action_comments.h
+     apiwrap.cpp
+     apiwrap.h
+     config.h
+diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
+index 7f1636c872..40efc18980 100644
+--- a/Telegram/SourceFiles/history/view/history_view_message.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
+@@ -31,6 +31,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "boxes/premium_preview_box.h"
+ #include "boxes/share_box.h"
+ #include "boxes/peers/tag_info_box.h"
++#include "yukigram/settings/right_action_comments.h"
+ #include "ui/effects/reaction_fly_animation.h"
+ #include "ui/effects/ripple_animation.h"
+ #include "ui/text/text_utilities.h"
+@@ -566,7 +567,7 @@ void Message::animateReaction(Ui::ReactionFlyAnimationArgs &&args) {
+ 	if (bubble) {
+ 		// Entry page is always a bubble bottom.
+ 		auto inner = g;
+-		if (_comments) {
++		if (_comments && !displayRightActionComments()) {
+ 			inner.setHeight(inner.height() - st::historyCommentsButtonHeight);
+ 		}
+ 		auto trect = inner.marginsRemoved(st::msgPadding);
+@@ -1145,7 +1146,7 @@ void Message::draw(Painter &p, const PaintContext &context) const {
+ 	const auto customHighlight = mediaDisplayed && media->customHighlight();
+ 	if (!mediaSelectionIntervals.empty() || customHighlight) {
+ 		auto localMediaBottom = gForIntervals.top() + gForIntervals.height();
+-		if (data()->repliesAreComments() || data()->externalReply()) {
++		if ((data()->repliesAreComments() || data()->externalReply()) && !displayRightActionComments()) {
+ 			localMediaBottom -= st::historyCommentsButtonHeight;
+ 		}
+ 		if (_viewButton) {
+@@ -1678,6 +1679,9 @@ void Message::paintCommentsButton(
+ 	if (!data()->repliesAreComments() && !data()->externalReply()) {
+ 		return;
+ 	}
++	if (displayRightActionComments()) {
++		return;
++	}
+ 	if (!_comments) {
+ 		_comments = std::make_unique<CommentsButton>();
+ 		history()->owner().registerHeavyViewPart(const_cast<Message*>(this));
+@@ -2377,7 +2381,7 @@ PointState Message::pointState(QPoint point) const {
+ 			auto mediaOnBottom = (mediaDisplayed && media->isBubbleBottom()) || check || (entry/* && entry->isBubbleBottom()*/);
+ 			auto mediaOnTop = (mediaDisplayed && media->isBubbleTop()) || (entry && entry->isBubbleTop());
+ 
+-			if (item->repliesAreComments() || item->externalReply()) {
++			if ((item->repliesAreComments() || item->externalReply()) && !displayRightActionComments()) {
+ 				g.setHeight(g.height() - st::historyCommentsButtonHeight);
+ 			}
+ 
+@@ -2710,7 +2714,7 @@ BottomRippleMask Message::bottomRippleMask(int buttonHeight) const {
+ }
+ 
+ void Message::createCommentsButtonRipple() {
+-	auto mask = bottomRippleMask(st::historyCommentsButtonHeight);
++	auto mask = bottomRippleMask(displayRightActionComments() ? 0 : st::historyCommentsButtonHeight);
+ 	_comments->ripple = std::make_unique<Ui::RippleAnimation>(
+ 		st::defaultRippleAnimation,
+ 		std::move(mask.image),
+@@ -4520,9 +4524,10 @@ bool Message::displayRightActionComments() const {
+ 	return !isPinnedContext()
+ 		&& (context() != Context::SavedSublist)
+ 		&& data()->repliesAreComments()
++		&& (Yukigram::Settings::RightActionComments->current() || (true
+ 		&& media()
+ 		&& media()->isDisplayed()
+-		&& !hasBubble();
++		&& !hasBubble()));
+ }
+ 
+ std::optional<QSize> Message::rightActionSize() const {
+@@ -5326,7 +5331,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+ 			newHeight += (bottomInfoHeight - st::msgDateFont->height);
+ 		}
+ 
+-		if (item->repliesAreComments() || item->externalReply()) {
++		if ((item->repliesAreComments() || item->externalReply()) && !displayRightActionComments()) {
+ 			newHeight += st::historyCommentsButtonHeight;
+ 		} else if (_comments) {
+ 			_comments = nullptr;
+diff --git a/Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp b/Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp
+new file mode 100644
+index 0000000000..9a1ab8da06
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp
+@@ -0,0 +1,13 @@
++#include "yukigram/settings/right_action_comments.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *RightActionComments = Yukigram::Options::make(kOptionRightActionComments, {
++	.name = "Move comments button to the right",
++	.description = "Takes place of the share button, but results in more compact channel views",
++	.keywords = { u"yukigram"_q, u"comments"_q, u"right"_q, u"compact"_q },
++});
++
++const char kOptionRightActionComments[] = "comments-button-always-right";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/right_action_comments.h b/Telegram/SourceFiles/yukigram/settings/right_action_comments.h
+new file mode 100644
+index 0000000000..51899dd72b
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/right_action_comments.h
+@@ -0,0 +1,5 @@
++#include "yukigram/options.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *RightActionComments;
++extern const char kOptionRightActionComments[];
++}
+-- 
+2.53.0
+

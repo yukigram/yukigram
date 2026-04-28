@@ -1,0 +1,122 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Sat, 4 Apr 2026 18:50:05 +0300
+Subject: [PATCH] [UI][Opt] Show message id
+
+This patch is adapted from 64Gram.
+Original author: c0re100 <corehusky@gmail.com>
+---
+ Telegram/CMakeLists.txt                             |  2 ++
+ .../history/view/history_view_bottom_info.cpp       |  7 ++++++-
+ .../history/view/history_view_bottom_info.h         |  1 +
+ .../history/view/history_view_element.cpp           |  3 +++
+ .../yukigram/settings/show_message_id.cpp           | 13 +++++++++++++
+ .../SourceFiles/yukigram/settings/show_message_id.h |  5 +++++
+ 6 files changed, 30 insertions(+), 1 deletion(-)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/show_message_id.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/show_message_id.h
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index 8c00d7af58..d4dcdf0832 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1906,6 +1906,8 @@ PRIVATE
+     yukigram/settings/mpris_call_hangup.h
+     yukigram/settings/right_action_comments.cpp
+     yukigram/settings/right_action_comments.h
++    yukigram/settings/show_message_id.cpp
++    yukigram/settings/show_message_id.h
+     yukigram/settings/time_with_seconds.cpp
+     yukigram/settings/time_with_seconds.h
+     yukigram/settings/wide_messages.cpp
+diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
+index d9e1b4d257..a6d7fc1809 100644
+--- a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
+@@ -23,6 +23,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "history/view/media/history_view_media.h"
+ #include "history/view/history_view_message.h"
+ #include "history/view/history_view_cursor_state.h"
++#include "yukigram/settings/show_message_id.h"
+ #include "base/unixtime.h"
+ #include "chat_helpers/emoji_interactions.h"
+ #include "core/click_handler_types.h"
+@@ -457,7 +458,8 @@ void BottomInfo::layoutDateText() {
+ 	const auto prefix = !author.isEmpty() ? u", "_q : QString();
+ 	const auto date = edited + ((_data.flags & Data::Flag::ForwardedDate)
+ 		? Ui::FormatDateTimeSavedFrom(_data.date)
+-		: QLocale().toString(_data.date.time(), Lang::TimeFormat()));
++		: QLocale().toString(_data.date.time(), Lang::TimeFormat()))
++		+ _data.msgId;
+ 	const auto afterAuthor = prefix + date;
+ 	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
+ 	const auto authorWidth = st::msgDateFont->width(author);
+@@ -678,6 +680,9 @@ BottomInfo::Data BottomInfoDataFromMessage(not_null<Message*> message) {
+ 	if (item->isScheduled()) {
+ 		result.scheduleRepeatPeriod = item->scheduleRepeatPeriod();
+ 	}
++	if (item->fullId().msg > 0 && Yukigram::Settings::ShowMsgId->current()) {
++		result.msgId = QString(" (%1)").arg(item->fullId().msg.bare);
++	}
+ 	if (!forwarded) {
+ 		return result;
+ 	}
+diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.h b/Telegram/SourceFiles/history/view/history_view_bottom_info.h
+index ef3d261c86..81e2f918b2 100644
+--- a/Telegram/SourceFiles/history/view/history_view_bottom_info.h
++++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.h
+@@ -50,6 +50,7 @@ public:
+ 
+ 		QDateTime date;
+ 		QString author;
++		QString msgId;
+ 		EffectId effectId = 0;
+ 		int64 tonStake = 0;
+ 		int stars = 0;
+diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
+index 26f63b109f..284bf79f2c 100644
+--- a/Telegram/SourceFiles/history/view/history_view_element.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
+@@ -700,6 +700,9 @@ QString DateTooltipText(not_null<Element*> view) {
+ 	if (const auto stars = item->out() ? item->starsPaid() : 0) {
+ 		dateText += '\n' + tr::lng_you_paid_stars(tr::now, lt_count, stars);
+ 	}
++	if (const auto msgId = view->data()->fullId().msg) {
++		dateText += '\n' + QString("Message ID: %1").arg(msgId.bare);
++	}
+ 	return dateText;
+ }
+ 
+diff --git a/Telegram/SourceFiles/yukigram/settings/show_message_id.cpp b/Telegram/SourceFiles/yukigram/settings/show_message_id.cpp
+new file mode 100644
+index 0000000000..8d7a8ab01c
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/show_message_id.cpp
+@@ -0,0 +1,13 @@
++#include "yukigram/settings/show_message_id.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *ShowMsgId = Yukigram::Options::make(kOptionShowMsgId, {
++	.name = "Show message ID",
++	.keywords = { u"yukigram"_q, u"message"_q, u"id"_q },
++	.restartRequired = true,
++});
++
++const char kOptionShowMsgId[] = "show-msgid";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/show_message_id.h b/Telegram/SourceFiles/yukigram/settings/show_message_id.h
+new file mode 100644
+index 0000000000..c438481831
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/show_message_id.h
+@@ -0,0 +1,5 @@
++#include "yukigram/options.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *ShowMsgId;
++extern const char kOptionShowMsgId[];
++}
+-- 
+2.53.0
+

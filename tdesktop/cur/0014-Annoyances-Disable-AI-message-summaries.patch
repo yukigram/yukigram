@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 14:50:08 +0300
+Subject: [PATCH] [Annoyances] Disable AI message summaries
+
+---
+ Telegram/SourceFiles/history/view/history_view_message.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
+index 7027e88378..7f1636c872 100644
+--- a/Telegram/SourceFiles/history/view/history_view_message.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
+@@ -5665,7 +5665,7 @@ const HistoryMessageEdited *Message::displayedEditBadge() const {
+ }
+ 
+ void Message::ensureSummarizeButton() const {
+-	if (data()->canBeSummarized()
++	if (false && data()->canBeSummarized()
+ 		/*&& item->originalText().text.size() >= kSummarizeThreshold*/) {
+ 		if (!_summarize) {
+ 			_summarize
+-- 
+2.53.0
+

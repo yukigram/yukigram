@@ -1,0 +1,81 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 03:07:17 +0300
+Subject: [PATCH] [UI][Opt] Disable animoji
+
+---
+ Telegram/CMakeLists.txt                             |  2 ++
+ .../history/view/history_view_element.cpp           |  3 ++-
+ .../yukigram/settings/disable_animoji.cpp           | 13 +++++++++++++
+ .../SourceFiles/yukigram/settings/disable_animoji.h |  5 +++++
+ 4 files changed, 22 insertions(+), 1 deletion(-)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/disable_animoji.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/disable_animoji.h
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index 2298a8cac4..042dd39174 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1893,6 +1893,8 @@ PRIVATE
+     yukigram/appid.h
+     yukigram/options.cpp
+     yukigram/options.h
++    yukigram/settings/disable_animoji.cpp
++    yukigram/settings/disable_animoji.h
+     yukigram/settings/icon_theme_symbolic.cpp
+     yukigram/settings/icon_theme_symbolic.h
+     yukigram/settings/mirrored.cpp
+diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
+index 1b595c77a8..e22dea7cf1 100644
+--- a/Telegram/SourceFiles/history/view/history_view_element.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
+@@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "chat_helpers/stickers_emoji_pack.h"
+ #include "payments/payments_reaction_process.h" // TryAddingPaidReaction.
+ #include "window/window_session_controller.h"
++#include "yukigram/settings/disable_animoji.h"
+ #include "ui/chat/chat_style.h"
+ #include "ui/effects/glare.h"
+ #include "ui/effects/path_shift_gradient.h"
+@@ -1544,7 +1545,7 @@ void Element::refreshMedia(Element *replacing) {
+ 		const auto emoji = isolatedEmoji();
+ 		const auto emojiStickers = &history()->session().emojiStickersPack();
+ 		const auto skipPremiumEffect = false;
+-		if (const auto sticker = emojiStickers->stickerForEmoji(emoji)) {
++		if (const auto sticker = emojiStickers->stickerForEmoji(emoji); sticker && (!Yukigram::Settings::DisableAnimoji->current())) {
+ 			auto content = std::make_unique<Sticker>(
+ 				this,
+ 				sticker.document,
+diff --git a/Telegram/SourceFiles/yukigram/settings/disable_animoji.cpp b/Telegram/SourceFiles/yukigram/settings/disable_animoji.cpp
+new file mode 100644
+index 0000000000..24148462fe
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/disable_animoji.cpp
+@@ -0,0 +1,13 @@
++#include "yukigram/settings/disable_animoji.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *DisableAnimoji = Yukigram::Options::make(kOptionDisableAnimoji, {
++	.name = "Disable animated big emoji",
++	.keywords = { u"yukigram"_q, u"animoji"_q, u"emoji"_q },
++	.restartRequired = true,
++});
++
++const char kOptionDisableAnimoji[] = "disable-animoji";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/disable_animoji.h b/Telegram/SourceFiles/yukigram/settings/disable_animoji.h
+new file mode 100644
+index 0000000000..f065050a34
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/disable_animoji.h
+@@ -0,0 +1,5 @@
++#include "yukigram/options.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *DisableAnimoji;
++extern const char kOptionDisableAnimoji[];
++}
+-- 
+2.53.0
+

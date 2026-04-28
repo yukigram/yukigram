@@ -1,0 +1,109 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Wed, 15 Apr 2026 22:19:06 +0300
+Subject: [PATCH] [UI] Peer type icon in history
+
+This patch is adapted from Kotatogram.
+Original author: RadRussianRus <radrussianrus@gmail.com>
+---
+ .../history/view/history_view_message.cpp     | 33 ++++++++++++++++++-
+ Telegram/SourceFiles/ui/chat/chat.style       | 11 +++++++
+ 2 files changed, 43 insertions(+), 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
+index 9a746548cb..c7d8be59f1 100644
+--- a/Telegram/SourceFiles/history/view/history_view_message.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
+@@ -132,6 +132,26 @@ void ApplyRevealGradient(
+ 	}
+ }
+ 
++std::optional<style::icon> ChatTypeIcon(HistoryItem *item) {
++	if (!item->isPost() && item->displayFrom()) {
++		const auto from = item->displayFrom();
++		if (from->isChat() || from->isMegagroup()) {
++			return st::msgNameChatIcon;
++		} else if (from->isChannel()) {
++			return st::msgNameChannelIcon;
++		} else if (from->isForum()) {
++			return st::msgNameForumIcon;
++		} else if (const auto user = from->asUser()) {
++			if (user->isInaccessible()) {
++				return st::msgNameDeletedIcon;
++			} else if (user->isBot() && !user->isSupport() && !user->isRepliesChat()) {
++				return st::msgNameBotIcon;
++			}
++		}
++	}
++	return {};
++};
++
+ struct SecondRightAction {
+ 	std::unique_ptr<Ui::RippleAnimation> ripple;
+ 	ClickHandlerPtr link;
+@@ -896,6 +916,9 @@ QSize Message::performCountOptimalSize() {
+ 				if (Has<RightBadge>()) {
+ 					namew += st::msgPadding.right() + rightBadgeWidth();
+ 				}
++				if (const auto icon = ChatTypeIcon(item)) {
++					namew += icon->width() + st::dialogsChatTypeSkip;
++				}
+ 				accumulate_max(maxWidth, namew);
+ 				accumulate_max(nonTextMax, namew);
+ 			} else if (via && !displayForwardedFrom()) {
+@@ -1816,6 +1839,12 @@ void Message::paintFromName(
+ 		availableWidth -= st::msgPadding.right() + badgeWidth;
+ 	}
+ 
++	if (const auto icon = ChatTypeIcon(item)) {
++		icon->paint(p, QPoint(availableLeft, trect.top()), availableWidth);
++		availableLeft += icon->width() + st::dialogsChatTypeSkip;
++		availableWidth -= icon->width() + st::dialogsChatTypeSkip;
++	}
++
+ 	const auto stm = context.messageStyle();
+ 	const auto from = item->displayFrom();
+ 	const auto info = from ? nullptr : item->displayHiddenSenderInfo();
+@@ -3273,6 +3302,8 @@ bool Message::getStateFromName(
+ 			availableWidth -= st::msgPadding.right() + badgeWidth;
+ 		}
+ 		const auto item = data();
++		const auto chatIcon = ChatTypeIcon(item);
++		const auto chatIconWidth = chatIcon ? chatIcon->width() + st::dialogsChatTypeSkip : 0;
+ 		const auto from = item->displayFrom();
+ 		const auto nameText = [&]() -> const Ui::Text::String * {
+ 			if (from) {
+@@ -3304,7 +3335,7 @@ bool Message::getStateFromName(
+ 		}
+ 		if (point.x() >= availableLeft
+ 			&& point.x() < availableLeft + availableWidth
+-			&& point.x() < availableLeft + nameText->maxWidth()) {
++			&& point.x() < availableLeft + nameText->maxWidth() + chatIconWidth) {
+ 			outResult->link = fromLink();
+ 			recordLinkRipplePoint(point, trect.topLeft());
+ 			_fromLinkRipplePointSet = 1;
+diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
+index 66bd72ca84..a8d7910fbb 100644
+--- a/Telegram/SourceFiles/ui/chat/chat.style
++++ b/Telegram/SourceFiles/ui/chat/chat.style
+@@ -760,6 +760,17 @@ historyCommentsOpenInSelected: icon {{ "history_comments_open", msgFileThumbLink
+ historyCommentsOpenOut: icon {{ "history_comments_open", msgFileThumbLinkOutFg }};
+ historyCommentsOpenOutSelected: icon {{ "history_comments_open", msgFileThumbLinkOutFgSelected }};
+ 
++msgNameBotIcon: icon {{ "dialogs/dialogs_bot", historyPeer4NameFg, point(1px, 3px) }};
++msgNameBotIconSelected: icon {{ "dialogs/dialogs_bot", historyPeer4NameFgSelected, point(1px, 3px) }};
++msgNameChatIcon: icon {{ "dialogs/dialogs_chat", historyPeer4NameFg, point(1px, 4px) }};
++msgNameChatIconSelected: icon {{ "dialogs/dialogs_chat", historyPeer4NameFgSelected, point(1px, 4px) }};
++msgNameChannelIcon: icon {{ "dialogs/dialogs_channel", historyPeer4NameFg, point(3px, 4px) }};
++msgNameChannelIconSelected: icon {{ "dialogs/dialogs_channel", historyPeer4NameFgSelected, point(3px, 4px) }};
++msgNameDeletedIcon: icon {{ "dialogs/dialogs_sending", attentionButtonFg, point(4px, 4px) }};
++msgNameDeletedIconSelected: icon {{ "dialogs/dialogs_sending", attentionButtonFgOver, point(4px, 4px) }};
++msgNameForumIcon: icon {{ "dialogs/dialogs_forum", historyPeer4NameFg, point(1px, 4px) }};
++msgNameForumIconSelected: icon {{ "dialogs/dialogs_forum", historyPeer4NameFgSelected, point(1px, 4px) }};
++
+ historyGroupCallUserpics: GroupCallUserpics {
+ 	size: 32px;
+ 	shift: 12px;
+-- 
+2.53.0
+
