@@ -1,0 +1,82 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Tue, 28 Apr 2026 12:57:40 +0300
+Subject: [PATCH] [UI][Opt] Hide reply background emoji
+
+---
+ Telegram/CMakeLists.txt                            |  2 ++
+ .../history/view/history_view_reply.cpp            |  3 ++-
+ .../settings/hide_reply_background_emoji.cpp       | 14 ++++++++++++++
+ .../settings/hide_reply_background_emoji.h         |  5 +++++
+ 4 files changed, 23 insertions(+), 1 deletion(-)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.h
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index fca60b4e8f..cad5227aad 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1903,6 +1903,8 @@ PRIVATE
+     yukigram/settings/disable_animoji.h
+     yukigram/settings/force_mobile_layout.cpp
+     yukigram/settings/force_mobile_layout.h
++    yukigram/settings/hide_reply_background_emoji.cpp
++    yukigram/settings/hide_reply_background_emoji.h
+     yukigram/settings/hide_send_as_premium.cpp
+     yukigram/settings/hide_send_as_premium.h
+     yukigram/settings/hide_send_as.cpp
+diff --git a/Telegram/SourceFiles/history/view/history_view_reply.cpp b/Telegram/SourceFiles/history/view/history_view_reply.cpp
+index 02d79e12a3..fce66ff5ad 100644
+--- a/Telegram/SourceFiles/history/view/history_view_reply.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_reply.cpp
+@@ -35,6 +35,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "ui/painter.h"
+ #include "ui/power_saving.h"
+ #include "window/window_session_controller.h"
++#include "yukigram/settings/hide_reply_background_emoji.h"
+ #include "styles/style_chat.h"
+ #include "styles/style_dialogs.h"
+ #include "styles/style_polls.h"
+@@ -848,7 +849,7 @@ void Reply::paint(
+ 	}
+ 	Ui::Text::ValidateQuotePaintCache(*cache, quoteSt);
+ 	Ui::Text::FillQuotePaint(p, rect, *cache, quoteSt);
+-	if (backgroundEmojiData) {
++	if (!Yukigram::Settings::HideReplyBackgroundEmoji->current() && backgroundEmojiData) {
+ 		ValidateBackgroundEmoji(
+ 			backgroundEmojiId,
+ 			colorCollectible,
+diff --git a/Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.cpp b/Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.cpp
+new file mode 100644
+index 0000000000..717d73a9ef
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.cpp
+@@ -0,0 +1,14 @@
++#include "yukigram/settings/hide_reply_background_emoji.h"
++#include "yukigram/options.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *HideReplyBackgroundEmoji = Yukigram::Options::make(kOptionHideReplyBackgroundEmoji, {
++    .name = "Hide reply background emoji",
++    .keywords = { u"yukigram"_q, u"reply"_q, u"emoji"_q, u"background"_q },
++    .category = "history",
++});
++
++const char kOptionHideReplyBackgroundEmoji[] = "hide-reply-background-emoji";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.h b/Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.h
+new file mode 100644
+index 0000000000..13b957e076
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.h
+@@ -0,0 +1,5 @@
++#include "rpl/rpl.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *HideReplyBackgroundEmoji;
++extern const char kOptionHideReplyBackgroundEmoji[];
++}
+-- 
+2.53.0
+
