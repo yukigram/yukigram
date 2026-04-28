@@ -23,7 +23,7 @@ index 3974fbb5aa..6201e121ad 100644
      config.h
 diff --git a/Telegram/SourceFiles/yukigram/settings/mirrored.cpp b/Telegram/SourceFiles/yukigram/settings/mirrored.cpp
 new file mode 100644
-index 0000000000..ebde1bebbf
+index 0000000000..f040da0c76
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/mirrored.cpp
 @@ -0,0 +1,54 @@
@@ -68,7 +68,7 @@ index 0000000000..ebde1bebbf
 +});
 +
 +rpl::variable<bool> *ViewProfileInChatsListContextMenu = Yukigram::Options::make(Window::kOptionViewProfileInChatsListContextMenu, {
-+    .name = "View profile button in dialogs context menu",
++    .name = "View profile button in context menu",
 +    .keywords = { u"yukigram"_q, u"experimental"_q, u"profile"_q, u"chat list"_q, u"context"_q, u"menu"_q },
 +    .mirrorExperimental = true,
 +});

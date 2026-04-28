@@ -8,9 +8,9 @@ Co-Authored-By: Lunya <241520024+lunya-miaou@users.noreply.github.com>
  Telegram/CMakeLists.txt                       |   2 +
  Telegram/Resources/langs/lang.strings         |   1 +
  .../settings/sections/settings_main.cpp       |   8 ++
- .../settings/sections/settings_yukigram.cpp   | 127 ++++++++++++++++++
+ .../settings/sections/settings_yukigram.cpp   | 130 ++++++++++++++++++
  .../settings/sections/settings_yukigram.h     |   9 ++
- 5 files changed, 147 insertions(+)
+ 5 files changed, 150 insertions(+)
  create mode 100644 Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
  create mode 100644 Telegram/SourceFiles/settings/sections/settings_yukigram.h
 
@@ -67,10 +67,10 @@ index 3d4eda91da..59ce88648c 100644
  		.title = tr::lng_settings_language(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 new file mode 100644
-index 0000000000..b0f95f7eff
+index 0000000000..f9669d7c4b
 --- /dev/null
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-@@ -0,0 +1,127 @@
+@@ -0,0 +1,130 @@
 +#include "settings/sections/settings_yukigram.h"
 +#include "yukigram/options.h"
 +
@@ -108,10 +108,13 @@ index 0000000000..b0f95f7eff
 +
 +	const auto name = qs_sv(d.name.empty() ? key : d.name);
 +
++	const auto icon = d.mirrorExperimental ? &st::menuIconExperimental : nullptr;
++
 +	const auto button = builder.addButton({
 +		.id = QString("yukigram/%1").arg(key),
 +		.title = rpl::single(name),
-+		.st = &st::settingsButtonNoIcon,
++		.st = icon ? nullptr : &st::settingsButtonNoIcon,
++		.icon = { icon },
 +		.toggled = rpl::single(v->current()),
 +		.keywords = std::move(d.keywords),
 +	});
