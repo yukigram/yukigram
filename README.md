@@ -154,7 +154,7 @@ instead of plain binaries.
 
 ```shell
 flatpak remote-add --user --if-not-exists yukigram https://yukigram.github.io/yukigram/index.flatpakrepo
-flatpak install io.github.yukigram
+sudo flatpak install io.github.yukigram
 ```
 
 ### with nix
