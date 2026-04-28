@@ -10,9 +10,9 @@ Subject: [PATCH] [UI][Opt] Compact chat list
  .../dialogs/dialogs_inner_widget.cpp          | 12 ++++++---
  Telegram/SourceFiles/dialogs/dialogs_row.cpp  |  6 ++++-
  .../SourceFiles/dialogs/ui/dialogs_layout.cpp | 25 +++++++++++++++++--
- .../yukigram/settings/compact_chat_list.cpp   | 13 ++++++++++
+ .../yukigram/settings/compact_chat_list.cpp   | 14 +++++++++++
  .../yukigram/settings/compact_chat_list.h     |  5 ++++
- 8 files changed, 66 insertions(+), 7 deletions(-)
+ 8 files changed, 67 insertions(+), 7 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/compact_chat_list.h
 
@@ -263,11 +263,12 @@ index ac29683c5b..e025a73aa1 100644
  		nullptr,
 diff --git a/Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp b/Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp
 new file mode 100644
-index 0000000000..620d82a851
+index 0000000000..42409139a5
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,14 @@
 +#include "yukigram/settings/compact_chat_list.h"
++#include "yukigram/options.h"
 +
 +namespace Yukigram::Settings {
 +
@@ -282,11 +283,11 @@ index 0000000000..620d82a851
 +}
 diff --git a/Telegram/SourceFiles/yukigram/settings/compact_chat_list.h b/Telegram/SourceFiles/yukigram/settings/compact_chat_list.h
 new file mode 100644
-index 0000000000..a000a4253d
+index 0000000000..3dcea7ad9a
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/compact_chat_list.h
 @@ -0,0 +1,5 @@
-+#include "yukigram/options.h"
++#include "rpl/rpl.h"
 +namespace Yukigram::Settings {
 +extern rpl::variable<bool> *CompactChatList;
 +extern const char kOptionCompactChatList[];

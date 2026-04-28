@@ -9,9 +9,9 @@ Original author: RadRussianRus <radrussianrus@gmail.com>
  Telegram/CMakeLists.txt                       |  2 +
  .../history/view/history_view_message.cpp     | 37 ++++++++++++++++++-
  Telegram/SourceFiles/ui/chat/chat.style       | 11 ++++++
- .../settings/history_peer_type_icons.cpp      | 13 +++++++
+ .../settings/history_peer_type_icons.cpp      | 14 +++++++
  .../settings/history_peer_type_icons.h        |  5 +++
- 5 files changed, 67 insertions(+), 1 deletion(-)
+ 5 files changed, 68 insertions(+), 1 deletion(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h
 
@@ -135,11 +135,12 @@ index 66bd72ca84..a8d7910fbb 100644
  	shift: 12px;
 diff --git a/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
 new file mode 100644
-index 0000000000..4adc5ad8e2
+index 0000000000..23203dbd79
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,14 @@
 +#include "yukigram/settings/history_peer_type_icons.h"
++#include "yukigram/options.h"
 +
 +namespace Yukigram::Settings {
 +
@@ -154,11 +155,11 @@ index 0000000000..4adc5ad8e2
 +}
 diff --git a/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h
 new file mode 100644
-index 0000000000..b74ae1e045
+index 0000000000..ccee3ad817
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h
 @@ -0,0 +1,5 @@
-+#include "yukigram/options.h"
++#include "rpl/rpl.h"
 +namespace Yukigram::Settings {
 +extern rpl::variable<bool> *HistoryPeerTypeIcons;
 +extern const char kOptionHistoryPeerTypeIcons[];

@@ -19,9 +19,9 @@ Original author: c0re100 <corehusky@gmail.com>
  Telegram/SourceFiles/lang/lang_keys.h         |  3 ++
  .../controls/who_reacted_context_action.cpp   |  2 +-
  .../SourceFiles/ui/text/format_values.cpp     | 21 ++++----------
- .../yukigram/settings/time_with_seconds.cpp   | 14 +++++++++
+ .../yukigram/settings/time_with_seconds.cpp   | 15 ++++++++++
  .../yukigram/settings/time_with_seconds.h     |  5 ++++
- 15 files changed, 75 insertions(+), 44 deletions(-)
+ 15 files changed, 76 insertions(+), 44 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
 
@@ -322,11 +322,12 @@ index 7b70065e1f..14d23593d9 100644
  	} else {
 diff --git a/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
 new file mode 100644
-index 0000000000..d564183f3e
+index 0000000000..7198955bdd
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +#include "yukigram/settings/time_with_seconds.h"
++#include "yukigram/options.h"
 +
 +namespace Yukigram::Settings {
 +
@@ -342,11 +343,11 @@ index 0000000000..d564183f3e
 +}
 diff --git a/Telegram/SourceFiles/yukigram/settings/time_with_seconds.h b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
 new file mode 100644
-index 0000000000..3403d56ed7
+index 0000000000..a0f3cc7088
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
 @@ -0,0 +1,5 @@
-+#include "yukigram/options.h"
++#include "rpl/rpl.h"
 +namespace Yukigram::Settings {
 +extern rpl::variable<bool> *TimeWithSeconds;
 +extern const char kOptionTimeWithSeconds[];

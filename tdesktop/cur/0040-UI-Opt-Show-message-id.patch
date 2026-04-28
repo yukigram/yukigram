@@ -6,13 +6,13 @@ Subject: [PATCH] [UI][Opt] Show message id
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 ---
- Telegram/CMakeLists.txt                            |  2 ++
- .../history/view/history_view_bottom_info.cpp      |  7 ++++++-
- .../history/view/history_view_bottom_info.h        |  1 +
- .../history/view/history_view_element.cpp          |  3 +++
- .../yukigram/settings/show_message_id.cpp          | 14 ++++++++++++++
- .../yukigram/settings/show_message_id.h            |  5 +++++
- 6 files changed, 31 insertions(+), 1 deletion(-)
+ Telegram/CMakeLists.txt                           |  2 ++
+ .../history/view/history_view_bottom_info.cpp     |  7 ++++++-
+ .../history/view/history_view_bottom_info.h       |  1 +
+ .../history/view/history_view_element.cpp         |  3 +++
+ .../yukigram/settings/show_message_id.cpp         | 15 +++++++++++++++
+ .../yukigram/settings/show_message_id.h           |  5 +++++
+ 6 files changed, 32 insertions(+), 1 deletion(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/show_message_id.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/show_message_id.h
 
@@ -89,11 +89,12 @@ index 26f63b109f..284bf79f2c 100644
  
 diff --git a/Telegram/SourceFiles/yukigram/settings/show_message_id.cpp b/Telegram/SourceFiles/yukigram/settings/show_message_id.cpp
 new file mode 100644
-index 0000000000..42a501e94e
+index 0000000000..c8366bbf8c
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/show_message_id.cpp
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +#include "yukigram/settings/show_message_id.h"
++#include "yukigram/options.h"
 +
 +namespace Yukigram::Settings {
 +
@@ -109,11 +110,11 @@ index 0000000000..42a501e94e
 +}
 diff --git a/Telegram/SourceFiles/yukigram/settings/show_message_id.h b/Telegram/SourceFiles/yukigram/settings/show_message_id.h
 new file mode 100644
-index 0000000000..c438481831
+index 0000000000..8c19d311c2
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/show_message_id.h
 @@ -0,0 +1,5 @@
-+#include "yukigram/options.h"
++#include "rpl/rpl.h"
 +namespace Yukigram::Settings {
 +extern rpl::variable<bool> *ShowMsgId;
 +extern const char kOptionShowMsgId[];

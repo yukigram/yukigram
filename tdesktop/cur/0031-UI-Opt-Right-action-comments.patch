@@ -6,9 +6,9 @@ Subject: [PATCH] [UI][Opt] Right action comments
 ---
  Telegram/CMakeLists.txt                         |  2 ++
  .../history/view/history_view_message.cpp       | 17 +++++++++++------
- .../yukigram/settings/right_action_comments.cpp | 13 +++++++++++++
+ .../yukigram/settings/right_action_comments.cpp | 14 ++++++++++++++
  .../yukigram/settings/right_action_comments.h   |  5 +++++
- 4 files changed, 31 insertions(+), 6 deletions(-)
+ 4 files changed, 32 insertions(+), 6 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/right_action_comments.h
 
@@ -106,11 +106,12 @@ index 7f1636c872..40efc18980 100644
  			_comments = nullptr;
 diff --git a/Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp b/Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp
 new file mode 100644
-index 0000000000..ec4794fd7e
+index 0000000000..12a8faa3c6
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,14 @@
 +#include "yukigram/settings/right_action_comments.h"
++#include "yukigram/options.h"
 +
 +namespace Yukigram::Settings {
 +
@@ -125,11 +126,11 @@ index 0000000000..ec4794fd7e
 +}
 diff --git a/Telegram/SourceFiles/yukigram/settings/right_action_comments.h b/Telegram/SourceFiles/yukigram/settings/right_action_comments.h
 new file mode 100644
-index 0000000000..51899dd72b
+index 0000000000..9f9613c054
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/right_action_comments.h
 @@ -0,0 +1,5 @@
-+#include "yukigram/options.h"
++#include "rpl/rpl.h"
 +namespace Yukigram::Settings {
 +extern rpl::variable<bool> *RightActionComments;
 +extern const char kOptionRightActionComments[];

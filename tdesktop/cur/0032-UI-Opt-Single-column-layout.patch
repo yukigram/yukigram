@@ -4,13 +4,13 @@ Date: Fri, 3 Apr 2026 03:16:20 +0300
 Subject: [PATCH] [UI][Opt] Single-column layout
 
 ---
- Telegram/CMakeLists.txt                             |  2 ++
- Telegram/SourceFiles/mainwidget.cpp                 |  3 ++-
- Telegram/SourceFiles/window/window_adaptive.cpp     |  3 ++-
- .../window/window_session_controller.cpp            |  2 ++
- .../yukigram/settings/force_mobile_layout.cpp       | 13 +++++++++++++
- .../yukigram/settings/force_mobile_layout.h         |  5 +++++
- 6 files changed, 26 insertions(+), 2 deletions(-)
+ Telegram/CMakeLists.txt                            |  2 ++
+ Telegram/SourceFiles/mainwidget.cpp                |  3 ++-
+ Telegram/SourceFiles/window/window_adaptive.cpp    |  3 ++-
+ .../window/window_session_controller.cpp           |  2 ++
+ .../yukigram/settings/force_mobile_layout.cpp      | 14 ++++++++++++++
+ .../yukigram/settings/force_mobile_layout.h        |  5 +++++
+ 6 files changed, 27 insertions(+), 2 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/force_mobile_layout.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/force_mobile_layout.h
 
@@ -91,11 +91,12 @@ index 9f1fa45258..897ed90b28 100644
  		if (_hasDialogs && bodyWidth < minimalNormal) {
 diff --git a/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.cpp b/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.cpp
 new file mode 100644
-index 0000000000..c395a9ad6d
+index 0000000000..5c7d198744
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.cpp
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,14 @@
 +#include "yukigram/settings/force_mobile_layout.h"
++#include "yukigram/options.h"
 +
 +namespace Yukigram::Settings {
 +
@@ -110,11 +111,11 @@ index 0000000000..c395a9ad6d
 +}
 diff --git a/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.h b/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.h
 new file mode 100644
-index 0000000000..d47753c42e
+index 0000000000..8220914012
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.h
 @@ -0,0 +1,5 @@
-+#include "yukigram/options.h"
++#include "rpl/rpl.h"
 +namespace Yukigram::Settings {
 +extern rpl::variable<bool> *ForceMobileLayout;
 +extern const char kOptionForceMobileLayout[];

@@ -4,11 +4,11 @@ Date: Mon, 27 Apr 2026 03:39:34 +0300
 Subject: [PATCH] [Fix][Opt] Symbolic tray icon from icon theme
 
 ---
- Telegram/CMakeLists.txt                             |  2 ++
- Telegram/SourceFiles/platform/linux/tray_linux.cpp  | 13 ++++++++++++-
- .../yukigram/settings/icon_theme_symbolic.cpp       | 13 +++++++++++++
- .../yukigram/settings/icon_theme_symbolic.h         |  5 +++++
- 4 files changed, 32 insertions(+), 1 deletion(-)
+ Telegram/CMakeLists.txt                            |  2 ++
+ Telegram/SourceFiles/platform/linux/tray_linux.cpp | 13 ++++++++++++-
+ .../yukigram/settings/icon_theme_symbolic.cpp      | 14 ++++++++++++++
+ .../yukigram/settings/icon_theme_symbolic.h        |  5 +++++
+ 4 files changed, 33 insertions(+), 1 deletion(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/icon_theme_symbolic.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/icon_theme_symbolic.h
 
@@ -100,11 +100,12 @@ index d38631679f..80bfc1d48c 100644
  void Tray::createIcon() {
 diff --git a/Telegram/SourceFiles/yukigram/settings/icon_theme_symbolic.cpp b/Telegram/SourceFiles/yukigram/settings/icon_theme_symbolic.cpp
 new file mode 100644
-index 0000000000..1651d440a7
+index 0000000000..ad255375ab
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/icon_theme_symbolic.cpp
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,14 @@
 +#include "yukigram/settings/icon_theme_symbolic.h"
++#include "yukigram/options.h"
 +
 +namespace Yukigram::Settings {
 +
@@ -119,11 +120,11 @@ index 0000000000..1651d440a7
 +}
 diff --git a/Telegram/SourceFiles/yukigram/settings/icon_theme_symbolic.h b/Telegram/SourceFiles/yukigram/settings/icon_theme_symbolic.h
 new file mode 100644
-index 0000000000..b58265a7a6
+index 0000000000..b48127f692
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/icon_theme_symbolic.h
 @@ -0,0 +1,5 @@
-+#include "yukigram/options.h"
++#include "rpl/rpl.h"
 +namespace Yukigram::Settings {
 +extern rpl::variable<bool> *IconThemeSymbolic;
 +extern const char kOptionIconThemeSymbolic[];

@@ -4,11 +4,11 @@ Date: Tue, 28 Apr 2026 02:23:43 +0300
 Subject: [PATCH] [UI][Opt] Hide Send As premium channels
 
 ---
- Telegram/CMakeLists.txt                            |  2 ++
- .../SourceFiles/main/session/send_as_peers.cpp     |  3 +++
- .../yukigram/settings/hide_send_as_premium.cpp     | 14 ++++++++++++++
- .../yukigram/settings/hide_send_as_premium.h       |  5 +++++
- 4 files changed, 24 insertions(+)
+ Telegram/CMakeLists.txt                           |  2 ++
+ .../SourceFiles/main/session/send_as_peers.cpp    |  3 +++
+ .../yukigram/settings/hide_send_as_premium.cpp    | 15 +++++++++++++++
+ .../yukigram/settings/hide_send_as_premium.h      |  5 +++++
+ 4 files changed, 25 insertions(+)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.h
 
@@ -53,11 +53,12 @@ index 86113c3885..8f05412ba4 100644
  		if (parsed.size() > 1) {
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.cpp b/Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.cpp
 new file mode 100644
-index 0000000000..3990e062ae
+index 0000000000..47bab56b76
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.cpp
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +#include "yukigram/settings/hide_send_as_premium.h"
++#include "yukigram/options.h"
 +
 +namespace Yukigram::Settings {
 +
@@ -73,11 +74,11 @@ index 0000000000..3990e062ae
 +}
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.h b/Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.h
 new file mode 100644
-index 0000000000..8c27829b8f
+index 0000000000..45d59664d2
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.h
 @@ -0,0 +1,5 @@
-+#include "yukigram/options.h"
++#include "rpl/rpl.h"
 +namespace Yukigram::Settings {
 +extern rpl::variable<bool> *HideSendAsPremium;
 +extern const char kOptionHideSendAsPremium[];

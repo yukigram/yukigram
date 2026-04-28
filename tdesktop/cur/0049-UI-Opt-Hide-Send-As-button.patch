@@ -4,11 +4,11 @@ Date: Tue, 28 Apr 2026 02:36:42 +0300
 Subject: [PATCH] [UI][Opt] Hide Send As button
 
 ---
- Telegram/CMakeLists.txt                             |  2 ++
- Telegram/SourceFiles/history/history_widget.cpp     | 11 ++++++++++-
- .../SourceFiles/yukigram/settings/hide_send_as.cpp  | 13 +++++++++++++
- .../SourceFiles/yukigram/settings/hide_send_as.h    |  5 +++++
- 4 files changed, 30 insertions(+), 1 deletion(-)
+ Telegram/CMakeLists.txt                            |  2 ++
+ Telegram/SourceFiles/history/history_widget.cpp    | 11 ++++++++++-
+ .../SourceFiles/yukigram/settings/hide_send_as.cpp | 14 ++++++++++++++
+ .../SourceFiles/yukigram/settings/hide_send_as.h   |  5 +++++
+ 4 files changed, 31 insertions(+), 1 deletion(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_send_as.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_send_as.h
 
@@ -63,11 +63,12 @@ index c7044ad8d1..5b40c8a346 100644
  	} else if (_sendAs) {
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_send_as.cpp b/Telegram/SourceFiles/yukigram/settings/hide_send_as.cpp
 new file mode 100644
-index 0000000000..42d3e2c552
+index 0000000000..753c989745
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/hide_send_as.cpp
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,14 @@
 +#include "yukigram/settings/hide_send_as.h"
++#include "yukigram/options.h"
 +
 +namespace Yukigram::Settings {
 +
@@ -82,11 +83,11 @@ index 0000000000..42d3e2c552
 +}
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_send_as.h b/Telegram/SourceFiles/yukigram/settings/hide_send_as.h
 new file mode 100644
-index 0000000000..764e8340be
+index 0000000000..9113482f57
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/hide_send_as.h
 @@ -0,0 +1,5 @@
-+#include "yukigram/options.h"
++#include "rpl/rpl.h"
 +namespace Yukigram::Settings {
 +extern rpl::variable<bool> *HideSendAs;
 +extern const char kOptionHideSendAs[];
