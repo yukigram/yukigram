@@ -62,7 +62,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. (UI, optional) Show message id
 1. (UI) Increase maxSignatureSize to accomodate time with seconds and message id
 1. (UI) Larger stickers and round video messages
-1. (UI) Bot/chat/channel/forum/deleted icon near username in chat list
+1. (UI, optional) Bot/chat/channel/forum/deleted icon near username in chat list
 1. (UI) "Has unofficial client" icon near username in chat list
 1. (UI) Show date of forwarded messages without hover
 1. (UI, optional) Hide per-chat wallpaper and use wallpaper from theme instead

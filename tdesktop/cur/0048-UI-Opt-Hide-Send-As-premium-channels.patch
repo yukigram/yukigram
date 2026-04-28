@@ -13,7 +13,7 @@ Subject: [PATCH] [UI][Opt] Hide Send As premium channels
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index cd632c72b6..92d0f38dfe 100644
+index 8c68431b2e..9e223b80c9 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1901,6 +1901,8 @@ PRIVATE
@@ -24,7 +24,7 @@ index cd632c72b6..92d0f38dfe 100644
 +    yukigram/settings/hide_send_as_premium.h
      yukigram/settings/hide_wall_paper.cpp
      yukigram/settings/hide_wall_paper.h
-     yukigram/settings/icon_theme_symbolic.cpp
+     yukigram/settings/history_peer_type_icons.cpp
 diff --git a/Telegram/SourceFiles/main/session/send_as_peers.cpp b/Telegram/SourceFiles/main/session/send_as_peers.cpp
 index 86113c3885..8f05412ba4 100644
 --- a/Telegram/SourceFiles/main/session/send_as_peers.cpp

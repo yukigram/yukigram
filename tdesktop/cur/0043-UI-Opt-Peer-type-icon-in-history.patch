@@ -1,24 +1,53 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Wed, 15 Apr 2026 22:19:06 +0300
-Subject: [PATCH] [UI] Peer type icon in history
+Subject: [PATCH] [UI][Opt] Peer type icon in history
 
 This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
 ---
- .../history/view/history_view_message.cpp     | 33 ++++++++++++++++++-
- Telegram/SourceFiles/ui/chat/chat.style       | 11 +++++++
- 2 files changed, 43 insertions(+), 1 deletion(-)
+ Telegram/CMakeLists.txt                       |  2 +
+ .../history/view/history_view_message.cpp     | 37 ++++++++++++++++++-
+ Telegram/SourceFiles/ui/chat/chat.style       | 11 ++++++
+ .../settings/history_peer_type_icons.cpp      | 12 ++++++
+ .../settings/history_peer_type_icons.h        |  5 +++
+ 5 files changed, 66 insertions(+), 1 deletion(-)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h
 
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index d4dcdf0832..c6064980e8 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1899,6 +1899,8 @@ PRIVATE
+     yukigram/settings/disable_animoji.h
+     yukigram/settings/force_mobile_layout.cpp
+     yukigram/settings/force_mobile_layout.h
++    yukigram/settings/history_peer_type_icons.cpp
++    yukigram/settings/history_peer_type_icons.h
+     yukigram/settings/icon_theme_symbolic.cpp
+     yukigram/settings/icon_theme_symbolic.h
+     yukigram/settings/mirrored.cpp
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 9a746548cb..c7d8be59f1 100644
+index 9a746548cb..dbe251ddd5 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
-@@ -132,6 +132,26 @@ void ApplyRevealGradient(
+@@ -52,6 +52,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "mainwidget.h"
+ #include "main/main_session.h"
+ #include "settings/sections/settings_premium.h"
++#include "yukigram/settings/history_peer_type_icons.h"
+ #include "ui/text/text_options.h"
+ #include "ui/painter.h"
+ #include "window/themes/window_theme.h" // IsNightMode.
+@@ -132,6 +133,29 @@ void ApplyRevealGradient(
  	}
  }
  
 +std::optional<style::icon> ChatTypeIcon(HistoryItem *item) {
++	if (!Yukigram::Settings::HistoryPeerTypeIcons->current()) {
++		return {};
++	}
 +	if (!item->isPost() && item->displayFrom()) {
 +		const auto from = item->displayFrom();
 +		if (from->isChat() || from->isMegagroup()) {
@@ -41,7 +70,7 @@ index 9a746548cb..c7d8be59f1 100644
  struct SecondRightAction {
  	std::unique_ptr<Ui::RippleAnimation> ripple;
  	ClickHandlerPtr link;
-@@ -896,6 +916,9 @@ QSize Message::performCountOptimalSize() {
+@@ -896,6 +920,9 @@ QSize Message::performCountOptimalSize() {
  				if (Has<RightBadge>()) {
  					namew += st::msgPadding.right() + rightBadgeWidth();
  				}
@@ -51,7 +80,7 @@ index 9a746548cb..c7d8be59f1 100644
  				accumulate_max(maxWidth, namew);
  				accumulate_max(nonTextMax, namew);
  			} else if (via && !displayForwardedFrom()) {
-@@ -1816,6 +1839,12 @@ void Message::paintFromName(
+@@ -1816,6 +1843,12 @@ void Message::paintFromName(
  		availableWidth -= st::msgPadding.right() + badgeWidth;
  	}
  
@@ -64,7 +93,7 @@ index 9a746548cb..c7d8be59f1 100644
  	const auto stm = context.messageStyle();
  	const auto from = item->displayFrom();
  	const auto info = from ? nullptr : item->displayHiddenSenderInfo();
-@@ -3273,6 +3302,8 @@ bool Message::getStateFromName(
+@@ -3273,6 +3306,8 @@ bool Message::getStateFromName(
  			availableWidth -= st::msgPadding.right() + badgeWidth;
  		}
  		const auto item = data();
@@ -73,7 +102,7 @@ index 9a746548cb..c7d8be59f1 100644
  		const auto from = item->displayFrom();
  		const auto nameText = [&]() -> const Ui::Text::String * {
  			if (from) {
-@@ -3304,7 +3335,7 @@ bool Message::getStateFromName(
+@@ -3304,7 +3339,7 @@ bool Message::getStateFromName(
  		}
  		if (point.x() >= availableLeft
  			&& point.x() < availableLeft + availableWidth
@@ -104,6 +133,35 @@ index 66bd72ca84..a8d7910fbb 100644
  historyGroupCallUserpics: GroupCallUserpics {
  	size: 32px;
  	shift: 12px;
+diff --git a/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
+new file mode 100644
+index 0000000000..3452244767
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
+@@ -0,0 +1,12 @@
++#include "yukigram/settings/history_peer_type_icons.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *HistoryPeerTypeIcons = Yukigram::Options::make(kOptionHistoryPeerTypeIcons, {
++	.name = "Show peer type icon in name in history",
++	.keywords = { u"yukigram"_q, u"peer"_q, u"user"_q, u"icon"_q, u"bot"_q, u"channel"_q, u"group"_q, u"chat"_q, u"forum"_q },
++});
++
++const char kOptionHistoryPeerTypeIcons[] = "history-peer-type-icons";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h
+new file mode 100644
+index 0000000000..b74ae1e045
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h
+@@ -0,0 +1,5 @@
++#include "yukigram/options.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *HistoryPeerTypeIcons;
++extern const char kOptionHistoryPeerTypeIcons[];
++}
 -- 
 2.53.0
 
