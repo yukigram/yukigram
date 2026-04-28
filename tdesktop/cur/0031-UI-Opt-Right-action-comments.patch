@@ -6,9 +6,9 @@ Subject: [PATCH] [UI][Opt] Right action comments
 ---
  Telegram/CMakeLists.txt                         |  2 ++
  .../history/view/history_view_message.cpp       | 17 +++++++++++------
- .../yukigram/settings/right_action_comments.cpp | 14 ++++++++++++++
+ .../yukigram/settings/right_action_comments.cpp | 13 +++++++++++++
  .../yukigram/settings/right_action_comments.h   |  5 +++++
- 4 files changed, 32 insertions(+), 6 deletions(-)
+ 4 files changed, 31 insertions(+), 6 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/right_action_comments.h
 
@@ -106,17 +106,16 @@ index 7f1636c872..40efc18980 100644
  			_comments = nullptr;
 diff --git a/Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp b/Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp
 new file mode 100644
-index 0000000000..3b71ed98fe
+index 0000000000..ec4794fd7e
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,13 @@
 +#include "yukigram/settings/right_action_comments.h"
 +
 +namespace Yukigram::Settings {
 +
 +rpl::variable<bool> *RightActionComments = Yukigram::Options::make(kOptionRightActionComments, {
-+	.name = "Move comments button to the right",
-+	.description = "Takes place of the share button, but results in more compact channel views",
++	.name = "Right action comments button",
 +	.keywords = { u"yukigram"_q, u"comments"_q, u"right"_q, u"compact"_q },
 +	.category = "history",
 +});
