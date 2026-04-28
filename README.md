@@ -69,6 +69,8 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. (UI, optional) Collapsed chats in dialogs view (as in Kotatogram)
 1. (UI, optional) Hide "Send As" channels that require Premium to use
 1. (UI, optional) Hide "Send As" button completely
+1. (UI) Channel statistics button in kebab menu
+    near quick Recent Actions button
 
 Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 
