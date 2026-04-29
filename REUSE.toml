@@ -44,6 +44,7 @@ path = [
     "tdesktop/cur/*-UI-Opt-Hide-Send-As-button.patch",
     "tdesktop/cur/*-UI-Statistics-button-in-menu.patch",
     "tdesktop/cur/*-UI-Opt-Hide-reply-background-emoji.patch",
+    "tdesktop/cur/*-UI-Sensible-peer-id-and-join-date-rendering.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors <https://github.com/yukigram/yukigram>"

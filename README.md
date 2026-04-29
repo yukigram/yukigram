@@ -72,6 +72,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
 1. (UI) Channel statistics button in kebab menu
     near quick Recent Actions button
 1. (UI, optional) Hide reply backround emoji
+1. (UI) Move peer ID and join date in chat info from About to separate subsections
 
 Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 
