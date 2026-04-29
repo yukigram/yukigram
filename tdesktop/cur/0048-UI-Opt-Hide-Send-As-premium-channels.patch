@@ -13,7 +13,7 @@ Subject: [PATCH] [UI][Opt] Hide Send As premium channels
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 2312f4cda1..6ed2a6fa05 100644
+index 58ae402c03..2fb84f8081 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1903,6 +1903,8 @@ PRIVATE

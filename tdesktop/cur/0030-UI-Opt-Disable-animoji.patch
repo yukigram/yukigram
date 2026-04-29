@@ -13,7 +13,7 @@ Subject: [PATCH] [UI][Opt] Disable animoji
  create mode 100644 Telegram/SourceFiles/yukigram/settings/disable_animoji.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index ac393d8796..42c873d7e7 100644
+index 6326c8d908..fea3ee4a11 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1895,6 +1895,8 @@ PRIVATE

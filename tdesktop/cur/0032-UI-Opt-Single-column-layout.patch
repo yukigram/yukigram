@@ -15,7 +15,7 @@ Subject: [PATCH] [UI][Opt] Single-column layout
  create mode 100644 Telegram/SourceFiles/yukigram/settings/force_mobile_layout.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index f1218dcddd..1dbe83fb9e 100644
+index ec3425f4e6..6048ecf83e 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1897,6 +1897,8 @@ PRIVATE

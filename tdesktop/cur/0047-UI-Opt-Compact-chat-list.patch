@@ -17,7 +17,7 @@ Subject: [PATCH] [UI][Opt] Compact chat list
  create mode 100644 Telegram/SourceFiles/yukigram/settings/compact_chat_list.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index a7714cd371..2312f4cda1 100644
+index 0c0ff5039c..58ae402c03 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1897,6 +1897,8 @@ PRIVATE

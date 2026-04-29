@@ -35,7 +35,7 @@ Subject: [PATCH] Yukigram branding
  delete mode 100644 lib/xdg/org.telegram.desktop.service
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 1c7484a603..1f89a2926f 100644
+index 1c7484a603..0f2e271f02 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1888,6 +1888,7 @@ PRIVATE
@@ -88,7 +88,7 @@ index 1c7484a603..1f89a2926f 100644
      )
  endif()
  
-+if (CONFIG STREQUAL Release)
++if (NOT DEVEL)
 +    set(YUKIGRAM_DISPLAY_NAME "Yukigram")
 +else()
 +    set(YUKIGRAM_DISPLAY_NAME "Yukigram (Debug)")
