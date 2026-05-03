@@ -265,7 +265,7 @@ jobs:
           </head>
           <body>
           <h1>Yukigram builds for NixOS</h1>
-          <p>Specify <code>git+https://github.com/${{ github.event.repository.full_name }}</code> as the input URL in your flake.</p>
+          <p>Specify <code>github:${{ github.event.repository.full_name }}/${{ github.sha }}</code> as the input URL in your flake.</p>
           <p>Alternatively, you can import the Yukigram package on a non-flake system as follows:</p>
           <pre>import (fetchFromGitHub {
             owner = "yukigram";
