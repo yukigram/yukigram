@@ -185,7 +185,7 @@ jobs:
       - name: Fetch everything from caches
         run: |
           set -exuo pipefail
-          nix-build -j0 --keep-going || true
+          nix-build -A packages.default -j0 --keep-going || true
           find /nix/store -maxdepth 1 -mindepth 1 | sort > paths-from-nixos-cache.txt
 
       - name: Build packages
