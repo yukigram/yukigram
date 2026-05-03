@@ -174,36 +174,62 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup NIX_PATH
+        run: |
+          set -exuo pipefail
+          echo NIX_PATH=nixpkgs=$(nix-shell -I nixpkgs=channel:nixos-unstable -E 'with import <nixpkgs> {}; mkShellNoCC { packages = [npins]; }' --run 'npins get-path nixpkgs') >> $GITHUB_ENV
+
+      - name: Fetch everything from caches
+        run: |
+          set -exuo pipefail
+          nix-build -j0 --keep-going || true
+          find /nix/store -maxdepth 1 -mindepth 1 | sort > paths-from-nixos-cache.txt
+
       - name: Build packages
+        run: |
+          set -exuo pipefail
+          nix-build -E 'with import <nixpkgs> {}; closureInfo { rootPaths = [ (import ./. {}).packages.default ]; }'
+
+      - name: Convert private key
         env:
           NIX_BINARY_CACHE_KEY: ${{ secrets.NIX_BINARY_CACHE_KEY }}
         run: |
           set -exuo pipefail
-
-          export NIX_PATH=nixpkgs=$(nix-shell -I nixpkgs=channel:nixos-unstable -E 'with import <nixpkgs> {}; mkShellNoCC { packages = [npins]; }' --run 'npins get-path nixpkgs')
-
-          nix-build -j0 --keep-going || true
-          find /nix/store -maxdepth 1 -mindepth 1 | sort > paths-from-nixos-cache.txt
-          nix-build -E 'with import <nixpkgs> {}; closureInfo { rootPaths = [ (import ./. {}).packages.default ]; }'
-
           echo "$NIX_BINARY_CACHE_KEY" > bincache-key.priv
           nix --extra-experimental-features nix-command key convert-secret-to-public < bincache-key.priv > bincache-key.pub
+
+      - name: Collect built paths
+        run: |
+          set -exuo pipefail
+          comm -13 paths-from-nixos-cache.txt result/store-paths >built-paths
+
+      - name: Create local binary cache
+        run: |
+          set -exuo pipefail
 
           nix-shell -p nix-serve --run 'NIX_SECRET_KEY_FILE=$PWD/bincache-key.priv nix-serve &'
           while ! curl http://127.0.0.1:5000/; do sleep 1; done
 
           mkdir -p out/nar
           wget http://127.0.0.1:5000/nix-cache-info -O out/nix-cache-info
-          comm -13 paths-from-nixos-cache.txt result/store-paths | sed 's:/nix/store/\([^-]*\)-.*:\1:' | while read path; do
+          <built-paths sed 's:/nix/store/\([^-]*\)-.*:\1:' | while read path; do
             wget http://127.0.0.1:5000/$path.narinfo -O out/$path.narinfo
             nar="$(grep '^URL: ' out/$path.narinfo | cut -d ' ' -f 2-2)"
             wget http://127.0.0.1:5000/$nar -O out/$nar
           done
 
+          cp bincache-key.pub out/narPublicKey
+          rm bincacke-key.priv
+
+      - name: Save yukigram narHash
+        run: |
+          set -exuo pipefail
           FLAKE='(builtins.getFlake "git+file://'$(pwd)'?rev=${{ github.sha }}")'
           nix-hash --to-base32 "$(nix --extra-experimental-features 'nix-command flakes' eval --raw --expr "$FLAKE.narHash")" > out/narHash
-          cp bincache-key.pub out/narPublicKey
 
+      - name: Save architecture
+        run: |
+          set -exuo pipefail
           echo ARCH="$(uname -m)" >> $GITHUB_ENV
 
       - name: Upload artifact
