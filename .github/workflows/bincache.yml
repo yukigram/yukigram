@@ -9,6 +9,9 @@ on:
       short_run:
         description: 'Do a short run instead of normal one (10 minutes)'
         type: boolean
+      push_to_cachix:
+        description: 'Push builds to cachix'
+        type: boolean
 permissions:
   contents: read
   pages: write
@@ -226,6 +229,15 @@ jobs:
           set -exuo pipefail
           FLAKE='(builtins.getFlake "git+file://'$(pwd)'?rev=${{ github.sha }}")'
           nix-hash --to-base32 "$(nix --extra-experimental-features 'nix-command flakes' eval --raw --expr "$FLAKE.narHash")" > out/narHash
+
+      - name: Push to cachix
+        if: github.event_name != 'workflow_dispatch' || inputs.push_to_cachix
+        env:
+          CACHIX_AUTH_TOKEN: ${{ github.secrets.CACHIX_AUTH_TOKEN }}
+          CACHIX_SIGNING_KEY: ${{ github.secrets.NIX_BINARY_CACHE_KEY }}
+        run: |
+          set -exuo pipefail
+          nix-shell -p cachix --run 'cachix push yukigram-official' <built-paths
 
       - name: Save architecture
         run: |

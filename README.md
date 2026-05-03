@@ -173,6 +173,10 @@ to `extra-trusted-public-keys`.
 Add `https://yukigram.github.io/yukigram`
 to `extra-substituters`.
 
+Add `https://yukigram-official.cachix.org`
+to `extra-substituters`
+for previous and development versions.
+
 If you use Nix to manage nix config,
 activate a configuration with these settings at least once
 before adding Yukigram to packages.

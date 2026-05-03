@@ -1,6 +1,9 @@
 {
   nixConfig = {
-    extra-substituters = ["https://yukigram.github.io/yukigram"];
+    extra-substituters = [
+      "https://yukigram-official.cachix.org"
+      "https://yukigram.github.io/yukigram"
+    ];
     extra-trusted-public-keys = ["yukigram-nixos-binary-cache:JY9MpP2ESUmPx3cfIpcSRpBK9HQ1/mzHemsvjv1aiYU="];
   };
   outputs = {self, ...}: let
