@@ -124,8 +124,10 @@ and understand code easier.
 Please inspect these patches yourselves to make sure that you really trust the code.
 
 Note that due to limitations of [`git am`][git-am]
-and heavy use of submodules in upstream tdesktop,
+and its usage in this repo
 it is currently not possible to patch submodules.
+Some features may currently be unimplementable
+because of heavy use of submodules in upstream tdesktop.
 Support for such patching may be added in the future,
 when it becomes essential.
 
