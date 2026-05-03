@@ -163,9 +163,29 @@ sudo flatpak install io.github.yukigram
 
 ### with nix
 
-See [this page][nix-bincache] for details on how to set up binary caches.
+#### binary caches setup
 
-[nix-bincache]: https://yukigram.github.io/yukigram
+Add `yukigram-nixos-binary-cache:JY9MpP2ESUmPx3cfIpcSRpBK9HQ1/mzHemsvjv1aiYU=`
+to `extra-trusted-public-keys`.
+
+Add `https://yukigram.github.io/yukigram`
+to `extra-substituters`.
+
+If you use Nix to manage nix config,
+activate a configuration with these settings at least once
+before adding Yukigram to packages.
+
+If you supply these options as command-line-arguments,
+make sure to run builds from a trusted user,
+otherwise binary caches won't work.
+
+Binary caches are only built for tagged releases.
+Track `release` branch instead of `master`
+if your pinning tool does not support tracking tags.
+
+Recommended flake input formats are:
+- `github:yukigram/yukigram/release` for latest releases,
+- `github:yukigram/yukigram/v6.7.8.1` for pinned releases.
 
 #### with nixpak
 
