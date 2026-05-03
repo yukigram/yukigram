@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 3 Apr 2026 03:09:38 +0300
-Subject: [PATCH] [UI][Opt] Right action comments
+Subject: [PATCH] (UI)(Opt) Right action comments
 
 ---
  Telegram/CMakeLists.txt                         |  2 ++

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 17 Apr 2026 04:31:52 +0300
-Subject: [PATCH] [Feature] Open group from peer info
+Subject: [PATCH] (Feature) Open group from peer info
 
 ---
  .../info/profile/info_profile_top_bar.cpp       | 17 ++++++++++++++++-

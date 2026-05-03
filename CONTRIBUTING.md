@@ -114,7 +114,7 @@ and be placed in their respective category
 if possible.
 
 Categorized patches that add user-facing options
-should be marked with `[Opt]`.
+should be marked with `(Opt)`.
 
 Before committing patch to this repo,
 please ensure the following is true:

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Mon, 6 Apr 2026 14:52:44 +0300
-Subject: [PATCH] [Feature] Forward/Copy/Steal shortcuts
+Subject: [PATCH] (Feature) Forward/Copy/Steal shortcuts
 
 ---
  Telegram/SourceFiles/core/shortcuts.cpp       |  7 ++++

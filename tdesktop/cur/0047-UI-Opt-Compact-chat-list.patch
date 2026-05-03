@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Sun, 19 Apr 2026 04:49:10 +0300
-Subject: [PATCH] [UI][Opt] Compact chat list
+Subject: [PATCH] (UI)(Opt) Compact chat list
 
 ---
  Telegram/CMakeLists.txt                       |  2 ++

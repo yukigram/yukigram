@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Wed, 15 Apr 2026 22:19:06 +0300
-Subject: [PATCH] [UI][Opt] Peer type icon in history
+Subject: [PATCH] (UI)(Opt) Peer type icon in history
 
 This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>

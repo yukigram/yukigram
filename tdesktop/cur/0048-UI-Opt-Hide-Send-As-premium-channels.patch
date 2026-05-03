@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <sylfn@disroot.org>
 Date: Tue, 28 Apr 2026 02:23:43 +0300
-Subject: [PATCH] [UI][Opt] Hide Send As premium channels
+Subject: [PATCH] (UI)(Opt) Hide Send As premium channels
 
 ---
  Telegram/CMakeLists.txt                           |  2 ++

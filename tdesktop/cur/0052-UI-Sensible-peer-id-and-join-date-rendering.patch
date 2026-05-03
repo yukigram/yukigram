@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <sylfn@disroot.org>
 Date: Wed, 29 Apr 2026 10:01:56 +0300
-Subject: [PATCH] [UI] Sensible peer id and join date rendering
+Subject: [PATCH] (UI) Sensible peer id and join date rendering
 
 ---
  .../info/profile/info_profile_actions.cpp     | 83 ++++++++++---------
