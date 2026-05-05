@@ -32,6 +32,7 @@ path = [
     "tdesktop/cur/*-Feature-Hide-Join-group-button-in-open-groups.patch",
     "tdesktop/cur/*-Feature-Open-group-from-peer-info.patch",
     "tdesktop/cur/*-Feature-Show-mutual-contacts.patch",
+    "tdesktop/cur/*-Feature-Show-media-DC.patch",
     "tdesktop/cur/*-UI-Opt-Disable-animoji.patch",
     "tdesktop/cur/*-UI-Opt-Right-action-comments.patch",
     "tdesktop/cur/*-UI-Opt-Single-column-layout.patch",
