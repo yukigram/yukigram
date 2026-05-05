@@ -4,11 +4,11 @@ Date: Wed, 29 Apr 2026 10:01:56 +0300
 Subject: [PATCH] (UI) Sensible peer id and join date rendering
 
 ---
- .../info/profile/info_profile_actions.cpp     | 83 ++++++++++---------
- 1 file changed, 45 insertions(+), 38 deletions(-)
+ .../info/profile/info_profile_actions.cpp     | 84 ++++++++++---------
+ 1 file changed, 46 insertions(+), 38 deletions(-)
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-index 8cdc5c2f14..36999e7244 100644
+index 8cdc5c2f14..87e9522522 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 @@ -211,44 +211,7 @@ base::options::toggle ShowChannelJoinedBelowAbout({
@@ -113,15 +113,16 @@ index 8cdc5c2f14..36999e7244 100644
  		if (!user->isBot()) {
  			tracker.track(result->add(
  				CreateBirthday(result, controller, user),
-@@ -1808,6 +1813,8 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
- 			: AboutWithAdvancedValue(_peer));
- 		if (!_topic) {
- 			addTranslateToMenu(about.text, AboutWithAdvancedValue(_peer));
-+			setupPeerId();
-+			setupJoinDate();
+@@ -1786,6 +1791,9 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
+ 			});
  		}
- 	}
- 	wrap->toggleOn(tracker.atLeastOneShownValue());
+ 
++		setupPeerId();
++		setupJoinDate();
++
+ 		if (const auto channel = _topic ? nullptr : _peer->asChannel()) {
+ 			auto locationText = LocationValue(
+ 				channel
 -- 
 2.53.0
 
