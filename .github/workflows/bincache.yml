@@ -356,7 +356,7 @@ jobs:
       - name: Build packages
         run: |
           set -exuo pipefail
-          nix-build -E 'with import <nixpkgs> {}; closureInfo { rootPaths = [ (import ./. {}).packages.default ]; }'
+          nix-build -E 'with import <nixpkgs> {}; closureInfo { rootPaths = [ (import ./. {}).packages.nonisolated.unwrapped ]; }'
 
       - name: Filter out substitutable paths
         run: |
