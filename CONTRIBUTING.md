@@ -153,8 +153,8 @@ please ensure the following is true:
 1. The indentation of in patch hunks is consistent
 1. New files have newline at the end
     unless otherwise required by tools
-1. Patches list in README is updated accordingly
-1. Missing features list in README is updated accordingly
+1. Patches list in FEATURES is updated accordingly
+1. Missing features list in FEATURES is updated accordingly
 1. REUSE.toml mentions the patch in relevant sections
 
 ## Fixing previous patches
