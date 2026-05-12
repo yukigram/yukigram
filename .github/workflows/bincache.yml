@@ -51,7 +51,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: telegramdesktop/tdesktop
-          ref: v6.8.1
+          ref: v6.8.2
           path: yukigram-worktree
           submodules: recursive
 
@@ -273,7 +273,7 @@ jobs:
 
           pkgname=yukigram
           builddir="\${builddir/\$pkgver/__pkgver__}"
-          pkgver=6.8.1 # Upstream version
+          pkgver=6.8.2 # Upstream version
           pkgdesc="Yukigram (Telegram Desktop fork) messaging app"
           depends="\$depends ada"
           source="\${source/https:*-full.tar.gz/https://github.com/telegramdesktop/tdesktop/releases/download/v\$pkgver/tdesktop-\$pkgver-full.tar.gz}"

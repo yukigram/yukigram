@@ -9,9 +9,9 @@
 }).overrideAttrs (final: prev: {
   unwrapped = prev.unwrapped.overrideAttrs (final: prev: {
     name = "yukigram-unwrapped";
-    version = "6.8.1";
+    version = "6.8.2";
     src = prev.src.overrideAttrs {
-      hash = "sha256-CcibFBPbviakOsf+BpAF8U0CRWIt3zO/KiHycwRw2V0=";
+      hash = "sha256-1zKAywh6EXGDi5t7CKQRWADRKX0mFEMyeIoK4hrTFFQ=";
     };
     patches = let
       readDir' = d: lib.pipe d [builtins.readDir builtins.attrNames (map (lib.path.append d))];
