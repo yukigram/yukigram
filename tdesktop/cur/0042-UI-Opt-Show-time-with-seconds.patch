@@ -322,7 +322,7 @@ index 7b70065e1f..14d23593d9 100644
  	} else {
 diff --git a/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
 new file mode 100644
-index 0000000000..7198955bdd
+index 0000000000..97223be11c
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
 @@ -0,0 +1,15 @@
@@ -334,7 +334,7 @@ index 0000000000..7198955bdd
 +rpl::variable<bool> *TimeWithSeconds = Yukigram::Options::make(kOptionTimeWithSeconds, {
 +	.name = "Show time with seconds",
 +	.keywords = { u"yukigram"_q, u"time"_q, u"seconds"_q },
-+	.category = "interface",
++	.category = "tweaks",
 +	.restartRequired = true,
 +});
 +

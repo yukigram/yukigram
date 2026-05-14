@@ -86,7 +86,7 @@ index 5696811c3f..b94498e5b9 100644
  		if (const auto channel = _topic ? nullptr : _peer->asChannel()) {
 diff --git a/Telegram/SourceFiles/yukigram/settings/inferred_peer_dc.cpp b/Telegram/SourceFiles/yukigram/settings/inferred_peer_dc.cpp
 new file mode 100644
-index 0000000000..482ced2d77
+index 0000000000..9c29075a30
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/inferred_peer_dc.cpp
 @@ -0,0 +1,14 @@
@@ -98,7 +98,7 @@ index 0000000000..482ced2d77
 +rpl::variable<bool> *InferredPeerDc = Yukigram::Options::make(kOptionInferredPeerDc, {
 +	.name = "Show inferred peer DC",
 +	.keywords = { u"yukigram"_q, u"inferred"_q, u"peer"_q, u"dc"_q, u"datacenter"_q },
-+	.category = "interface",
++	.category = "tweaks",
 +});
 +
 +const char kOptionInferredPeerDc[] = "inferred-peer-dc";

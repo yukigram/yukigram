@@ -23,7 +23,7 @@ index ba6a367cef..583adabc79 100644
      config.h
 diff --git a/Telegram/SourceFiles/yukigram/settings/mirrored.cpp b/Telegram/SourceFiles/yukigram/settings/mirrored.cpp
 new file mode 100644
-index 0000000000..79ce35a5fb
+index 0000000000..3afd74d793
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/mirrored.cpp
 @@ -0,0 +1,69 @@
@@ -62,14 +62,14 @@ index 0000000000..79ce35a5fb
 +rpl::variable<bool> *ShowPeerIdBelowAbout = Yukigram::Options::make(Info::Profile::kOptionShowPeerIdBelowAbout, {
 +	.name = "Show peer ID",
 +	.keywords = { u"yukigram"_q, u"experimental"_q, u"peer"_q, u"id"_q },
-+	.category = "interface",
++	.category = "tweaks",
 +	.mirrorExperimental = true,
 +});
 +
 +rpl::variable<bool> *ShowChannelJoinedBelowAbout = Yukigram::Options::make(Info::Profile::kOptionShowChannelJoinedBelowAbout, {
 +	.name = "Show channel join date",
 +	.keywords = { u"yukigram"_q, u"experimental"_q, u"channel"_q, u"join"_q, u"date"_q },
-+	.category = "interface",
++	.category = "tweaks",
 +	.mirrorExperimental = true,
 +});
 +

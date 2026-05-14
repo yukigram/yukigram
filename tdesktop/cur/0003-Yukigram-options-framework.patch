@@ -7,11 +7,11 @@ Subject: [PATCH] Yukigram options framework
  Telegram/CMakeLists.txt                       |  4 ++
  Telegram/SourceFiles/core/launcher.cpp        |  3 +
  .../settings/settings_experimental.cpp        |  2 +
- Telegram/SourceFiles/yukigram/options.cpp     | 70 +++++++++++++++++++
+ Telegram/SourceFiles/yukigram/options.cpp     | 71 +++++++++++++++++++
  Telegram/SourceFiles/yukigram/options.h       | 26 +++++++
  .../SourceFiles/yukigram/options_database.h   | 27 +++++++
  .../SourceFiles/yukigram/options_runtime.h    | 10 +++
- 7 files changed, 142 insertions(+)
+ 7 files changed, 143 insertions(+)
  create mode 100644 Telegram/SourceFiles/yukigram/options.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/options.h
  create mode 100644 Telegram/SourceFiles/yukigram/options_database.h
@@ -82,10 +82,10 @@ index 31315bdae3..ca702f15b5 100644
  		}
 diff --git a/Telegram/SourceFiles/yukigram/options.cpp b/Telegram/SourceFiles/yukigram/options.cpp
 new file mode 100644
-index 0000000000..9647813539
+index 0000000000..3feab7556d
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.cpp
-@@ -0,0 +1,70 @@
+@@ -0,0 +1,71 @@
 +#include "yukigram/options.h"
 +#include "yukigram/options_database.h"
 +#include "yukigram/options_runtime.h"
@@ -95,6 +95,7 @@ index 0000000000..9647813539
 +std::vector<std::pair<std::string_view, std::string_view>> categories {
 +	{"", ""},
 +	{"interface", "Interface"},
++	{"tweaks", "Tweaks"},
 +	{"dialogs", "Chat list"},
 +	{"history", "Message history"},
 +	{"compose", "Composing messages"},
