@@ -47,7 +47,7 @@ index 37bc3ed695..2809c2dab4 100644
  		|| item->isFakeAboutView()
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_message_tail.cpp b/Telegram/SourceFiles/yukigram/settings/hide_message_tail.cpp
 new file mode 100644
-index 0000000000..034826bdc2
+index 0000000000..ac96491333
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/hide_message_tail.cpp
 @@ -0,0 +1,15 @@
@@ -59,7 +59,7 @@ index 0000000000..034826bdc2
 +rpl::variable<bool> *HideMessageTail = Yukigram::Options::make(kOptionHideMessageTail, {
 +	.name = "Hide message bubble tail",
 +	.keywords = { u"yukigram"_q, u"message"_q, u"bubble"_q, u"tail"_q },
-+	.category = "history",
++	.category = "style",
 +	.restartRequired = true,
 +});
 +

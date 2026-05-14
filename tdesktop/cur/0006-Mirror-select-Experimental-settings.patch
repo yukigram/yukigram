@@ -23,7 +23,7 @@ index ba6a367cef..583adabc79 100644
      config.h
 diff --git a/Telegram/SourceFiles/yukigram/settings/mirrored.cpp b/Telegram/SourceFiles/yukigram/settings/mirrored.cpp
 new file mode 100644
-index 0000000000..3afd74d793
+index 0000000000..f49a7fbe0a
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/mirrored.cpp
 @@ -0,0 +1,69 @@
@@ -90,7 +90,7 @@ index 0000000000..3afd74d793
 +rpl::variable<bool> *UseSmallMsgBubbleRadius = Yukigram::Options::make(Ui::kOptionUseSmallMsgBubbleRadius, {
 +	.name = "Use small message bubble radius",
 +	.keywords = { u"yukigram"_q, u"experimental"_q, u"round"_q, u"radius"_q, u"corner"_q, u"bubble"_q },
-+	.category = "history",
++	.category = "style",
 +	.restartRequired = true,
 +	.mirrorExperimental = true,
 +});
