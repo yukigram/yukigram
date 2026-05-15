@@ -1,100 +1,141 @@
 # Features (patch descriptions)
 
-<!-- Note:
-keep this list consistent with files in tdesktop/cur/
-use `1.` as list marker to make diffs shorter in case of drops or reorders
--->
-1. Yukigram build support
-1. Yukigram branding
-1. Yukigram options framework
-1. Yukigram settings page
-1. Yukigram settings deeplinks
+- :zap:: Patches unique to Yukigram among all clients.
+- :star:: Patches unique to Yukigram among current desktop clients.
+- :gear:: Patches that add gated functionality, i.e. need to be enabled in runtime.
+
+Patches listed by category,
+not by their numerical order.
+I have no idea how to "stably" link
+to a filename with changing part,
+and writing a full patch name
+seems ridiculous.
+
+## Structural patches
+
+These patches have no category attached to them,
+and other patches may not apply cleanly
+(or not apply at all)
+without them.
+
+- Yukigram build support
+- Yukigram branding
+- Yukigram options framework
+- Yukigram settings page
+- Yukigram settings deeplinks
     (`tg://settings/yukigram/...`)
-1. Mirror select Experimental settings to Yukigram settings page
-1. (Fix) Disable D-Bus activation
+- Mirror select Experimental settings to Yukigram settings page
+
+## Fixes of various bugs
+
+These patches have category `Fix`
+and generally are fixes for broken behaviour of various kinds.
+
+- Disable D-Bus activation
     (unbreak `.desktop` launching under non-GNOME)
-1. (Fix) Allow using symbolic (monochrome) tray icon from icon theme
+- Allow using symbolic (monochrome) tray icon from icon theme
     instead of bundled one with Yukigram name.
-1. (Fix) Support `$XDG_DATA_HOME/Yukigram` as a fallback data directory for Yukigram
+- Support `$XDG_DATA_HOME/Yukigram` as a fallback data directory for Yukigram
     (current one is `$XDG_DATA_HOME/io.github.yukigram`,
     or with `.devel` appended for development builds)
-1. (Annoyances) No sponsored messages and channels
-1. (Annoyances) No copy restrictions
+
+## Annoyances
+
+This is what I mean by "minus the bullshit"
+
+- No sponsored messages and channels
+- No copy restrictions
     (forward restrictions are still in place)
-1. (Annoyances) Use [OpenStreetMap] instead of Google Maps when opening a location
-1. (Annoyances) Disable registering url schemes
+- :star: Use [OpenStreetMap] instead of Google Maps when opening a location
+- :zap: Disable registering url schemes
     and remove litter in `~/.local/share/applications`
-1. (Annoyances) Disable AI message summaries
-1. (Annoyances) Disable AI compose button by default
-1. (Annoyances) Unshare phone number by default when adding contact
-1. (Annoyances) Send large photos by default
-1. (Annoyances) Disable AI Instant View summaries
-1. (Feature) tg://nya link support
-1. (Feature) Immediate restart button
-1. (Feature, optional) Control calls with MPRIS
+- Disable AI message summaries
+- Disable AI compose button by default
+- Unshare phone number by default when adding contact
+- Send large photos by default
+- :zap: Disable AI Instant View summaries
+
+[OpenStreetMap]: https://openstreetmap.org
+
+## Features
+
+I know this list is already called "features",
+but these are more or less The Features,
+i.e. they add shortcuts
+or something that could not have been done before.
+
+- tg://nya link support
+- Immediate restart button
+- :zap: :gear: Control calls with MPRIS
     (play/pause/play-pause: accept, next/prev/stop: decline/hangup)
-1. (Feature) Allow more than 3/6 accounts
-1. (Feature) tg://openmessage and tg://user links support
-1. (Feature) Show sticker/emoji pack owner
-1. (Feature) Shortcuts for forward (Alt+F), copy (Alt+C) and copy media only (Alt+Shift+C)
-1. (Feature) Show channel/group member join date
-1. (Feature) Clickable links in user bio
-1. (Feature) Hide "similar channels" section on channel join message by default
+- Allow more than 3/6 accounts
+- tg://openmessage and tg://user links support
+- Show sticker/emoji pack owner
+- Shortcuts for forward (Alt+F), copy (Alt+C) and copy media only (Alt+Shift+C)
+- Show channel/group member join date
+- Clickable links in user bio
+- :zap: Hide "similar channels" section on channel join message by default
     (it can still be toggled by clicking on join message itself)
-1. (Feature) Hide "Join group" bottom button
+- Hide "Join group" bottom button
     when it is possible to send messages without joining
     (e.g. in linked discussion groups)
-1. (Feature) Always show edit timer
-1. (Feature) Allow opening group from peer info
-1. (Feature) Show mutual contacts
-1. (Feature) Show media DC
-1. (Feature) Show more details in Active Sessions list
+- :zap: Always show edit timer
+- :star: Allow opening group from peer info
+- Show mutual contacts
+- Show media DC
+- :zap: Show more details in Active Sessions list
     (API ID, is unofficial client, session login date)
-1. (Feature) Additional emoji aliases
+- :zap: Additional emoji aliases
     (`:docker:` -> :whale:,
     `:podman:` -> :whale2:,
     `:bottom:` -> :pleading_face:)
-1. (UI, optional) Disable animated emoji (animoji)
-1. (UI, optional) Move post comments button to the right (more compact)
-1. (UI, optional) Single-column mobile-like layout
-1. (UI, optional) Wide messages
-1. (UI, optional) Always show "scheduled messages" button
-1. (UI) "Search messages from" button in more context menus
-1. (UI) Show time on service messages
-1. (UI, optional) Show time with seconds
-1. (UI) Quick recent actions button
-1. (UI) Quick admin list button
-1. (UI, optional) Show message id
-1. (UI) Increase maxSignatureSize to accomodate time with seconds and message id
-1. (UI) Larger stickers and round video messages
-1. (UI, optional) Bot/chat/channel/forum/deleted icon near username in chat list
-1. (UI) "Has unofficial client" icon near username in chat list
-1. (UI) Show date of forwarded messages without hover
-1. (UI, optional) Hide per-chat wallpaper and use wallpaper from theme instead
-1. (UI, optional) Collapsed chats in dialogs view (as in Kotatogram)
-1. (UI, optional) Hide "Send As" channels that require Premium to use
-1. (UI, optional) Hide "Send As" button completely
-1. (UI) Channel statistics button in kebab menu
+
+## User interface
+
+A catch-all group for everything.
+Most of these are opinionated and optional,
+and Telegram Desktop defaults are keeped wherever possible.
+
+- :gear: Disable animated emoji (animoji)
+- :zap: :gear: Move post comments button to the right (more compact)
+- :star: :gear: Single-column mobile-like layout
+- :gear: Wide messages
+- :gear: Always show "scheduled messages" button
+- "Search messages from" button in more context menus
+- Show time on service messages
+- :gear: Show time with seconds
+- Quick recent actions button
+- Quick admin list button
+- :gear: Show message id
+- Increase maxSignatureSize to accomodate time with seconds and message id
+- Larger stickers and round video messages
+- :gear: Bot/chat/channel/forum/deleted icon near username in chat list
+- :zap: "Has unofficial client" icon near username in chat list
+- Show date of forwarded messages without hover
+- :star: :gear: Hide per-chat wallpaper and use wallpaper from theme instead
+- :zap: :gear: Collapsed chats in dialogs view (as in Kotatogram)
+- :zap: :gear: Hide "Send As" channels that require Premium to use
+- :zap: :gear: Hide "Send As" button completely
+- :zap: Channel statistics button in kebab menu
     near quick Recent Actions button
-1. (UI, optional) Hide reply backround emoji
-1. (UI) Move peer ID and join date in chat info from About to separate subsections
-1. (UI, optional) Show inferred peer DC
-1. (UI, optional) Hide Star reaction button when no stars are sent
-1. (UI, optional) Hide Star reaction count completely
-1. (UI, optional) Hide message bubble tail
-1. (UI, optional) Use system emoji font
+- :zap: :gear: Hide reply backround emoji
+- Move peer ID and join date in chat info from About to separate subsections
+- :gear: Show inferred peer DC
+- :zap: :gear: Hide Star reaction button when no stars are sent
+- :zap: :gear: Hide Star reaction count completely
+- :gear: Hide message bubble tail
+- :star: :gear: Use system emoji font
     (from `emoji` font as defined by fontconfig)
     instead of bundled emoji packs
-1. (UI, optional) Custom monospace font
-1. (UI, optional) Hide popular stickers in suggested stickers
+- :gear: Custom monospace font
+- :gear: Hide popular stickers in suggested stickers
     (suggest only from installed packs)
-1. (UI, optional) Hide popular animated emoji packs from picker
+- :gear: Hide popular animated emoji packs from picker
     (show only installed packs in picker)
-1. (UI) New Supergroup button
+- New Supergroup button
 
 Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 
-[OpenStreetMap]: https://openstreetmap.org
 [64Gram]: https://github.com/TDesktop-x64/tdesktop
 [Forkgram]: https://github.com/forkgram/tdesktop
 [Kotatogram]: https://github.com/kotatogram/kotatogram-desktop
