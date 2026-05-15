@@ -90,6 +90,7 @@ use `1.` as list marker to make diffs shorter in case of drops or reorders
     (suggest only from installed packs)
 1. (UI, optional) Hide popular animated emoji packs from picker
     (show only installed packs in picker)
+1. (UI) New Supergroup button
 
 Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 

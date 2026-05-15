@@ -76,6 +76,7 @@ path = [
     "tdesktop/cur/*-UI-Admin-list-button.patch",
     "tdesktop/cur/*-UI-Opt-Show-message-id.patch",
     "tdesktop/cur/*-UI-Increase-maxSignatureSize.patch",
+    "tdesktop/cur/*-UI-New-Supergroup.patch"
 ]
 SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors, 64Gram contributors <https://github.com/TDesktop-x64/tdesktop>"
