@@ -101,13 +101,20 @@ Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 
 ## Missing features
 
+This is mostly a wishlist of sorts.
+I have not yet implemented them,
+and may never will.
+To avoid duplicating work,
+please tell me if you're going
+to implement any of these.
+
 Contributions welcome!
 
+- Inline diff in Recent Actions
 - Ban button for join requests
 - Client-side user muting (as in 64Gram)
+    or AyuGram-style Filters
 - Ability to change font size
 - Old-style spoilers
     (solid color, as in Telegram X)
-    (requires submodule patching)
 - Compile-time option to use QtWebEngine for Instant View
-    (requires submodule patching)
