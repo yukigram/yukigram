@@ -526,7 +526,7 @@ jobs:
       - name: Pack artifacts
         run: |
           set -exuo pipefail
-          set -o dotglob # to pack hidden top-level files
+          shopt -s dotglob # to pack hidden top-level files
           for a in nixos-{x86_64,aarch64} {binary,flatpak}-x86_64 postmarketos-{x86_64,aarch64,armv7}; do
             pushd $a
               tar czf ../$a.tar.gz *
