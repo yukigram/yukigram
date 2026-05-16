@@ -175,7 +175,7 @@ index 0000000000..9efde8c043
 +  </qresource>
 +</RCC>
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
-index 738ad20837..efb857e5b7 100644
+index 738ad20837..f64589163d 100644
 --- a/Telegram/SourceFiles/boxes/about_box.cpp
 +++ b/Telegram/SourceFiles/boxes/about_box.cpp
 @@ -49,7 +49,7 @@ rpl::producer<TextWithEntities> Text2() {
@@ -193,7 +193,7 @@ index 738ad20837..efb857e5b7 100644
  void AboutBox(not_null<Ui::GenericBox*> box) {
 -	box->setTitle(u"Telegram Desktop"_q);
 +	const auto commit_info = "@commit";
-+	box->setTitle(u"Yukigram "_q + (commit_info[0] != '@' ? commit_info : "v6.8.2.1"));
++	box->setTitle(u"Yukigram "_q + (commit_info[0] != '@' ? commit_info : "v6.8.2.2-pre.2"));
  
  	auto layout = box->verticalLayout();
  
