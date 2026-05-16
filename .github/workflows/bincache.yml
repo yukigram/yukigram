@@ -435,7 +435,7 @@ jobs:
           set -exuo pipefail
 
           mkdir website
-          for i in nixos-x86_64 nixos-aarch64 flatpak-x86_64 postmarketos-x86_64 postmarketos-aarch64 postmarketos-armv7; do
+          for i in nixos-{x86_64,aarch64} flatpak-x86_64 postmarketos-{x86_64,aarch64,armv7}; do
             cp -r $i/. website/
           done
           for p in website/packages/edge/*/; do
