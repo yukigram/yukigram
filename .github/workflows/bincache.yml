@@ -264,9 +264,7 @@ jobs:
 
           desc=$(git describe --abbrev=12 HEAD | tail -c +2)
           pkgver=$(<<<$desc cut -d- -f1)
-          pkgrel=$(<<<$desc-0 cut -d- -f2)
           echo pkgver=$pkgver >> $GITHUB_ENV
-          echo pkgrel=$pkgrel >> $GITHUB_ENV
 
       - name: Prepare package yukigram
         run: |
@@ -322,7 +320,7 @@ jobs:
         run: |
           set -exuo pipefail
           cd ~/.local/var/pmbootstrap/packages/edge/${{ matrix.arch }}
-          echo yukigram-$pkgver-r$pkgrel.apk | sudo tee yukigram.apk.link
+          echo yukigram-$pkgver-r0.apk | sudo tee yukigram.apk.link
 
       - uses: actions/upload-artifact@v7
         name: Upload artifact
