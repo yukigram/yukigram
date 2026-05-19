@@ -263,9 +263,23 @@ jobs:
         run: |
           set -exuo pipefail
 
-          desc=$(git describe --abbrev=12 HEAD | tail -c +2)
-          pkgver=$(<<<$desc cut -d- -f1)
+          if git describe --exact-match HEAD; then
+            # tagged version
+            pkgver=$(git describe HEAD)
+            pkgver=${pkgver//-/_/} # semver suffixes
+            pkgrel=0
+          else
+            # git version
+            date=$(git show --pretty='%cs')
+            date=${date//-/}
+            tag=$(git describe --abbrev=0 HEAD)
+            pkgver=${tag}_git${date}
+            pkgrel=$(git rev-list --count $tag..)
+          fi
+          pkgver=${pkgver/v/} # strip tag prefix (v6.8.2.2 -> 6.8.2.2)
+
           echo pkgver=$pkgver >> $GITHUB_ENV
+          echo pkgrel=$pkgrel >> $GITHUB_ENV
 
       - name: Prepare package yukigram
         run: |
@@ -289,7 +303,7 @@ jobs:
           source="\${source/https:*-full.tar.gz/https://github.com/telegramdesktop/tdesktop/releases/download/v\$pkgver/tdesktop-\$pkgver-full.tar.gz}"
           builddir="\${builddir/__pkgver__/\$pkgver}"
           pkgver=$pkgver # Yukigram version
-          pkgrel=0
+          pkgrel=$pkgrel
           $additional_sources
           sha512sums="\$sha512sums
           $additional_sha512sums"
@@ -321,7 +335,7 @@ jobs:
         run: |
           set -exuo pipefail
           cd ~/.local/var/pmbootstrap/packages/edge/${{ matrix.arch }}
-          echo yukigram-$pkgver-r0.apk | sudo tee yukigram.apk.link
+          echo yukigram-$pkgver-r$pkgrel.apk | sudo tee yukigram.apk.link
 
       - uses: actions/upload-artifact@v7
         name: Upload artifact
