@@ -85,6 +85,12 @@ These are placed under `(Features)` category.
 - Show media DC
 - :zap: Show more details in Active Sessions list
     (API ID, is unofficial client, session login date)
+- Mention users by id
+    (When creating a new link,
+    e.g. with Ctrl+K on a selection,
+    supply `tg://user?id=<user-id>` link
+    or the bare id itself
+    to create a mention)
 
 ### Shortcuts
 - Shortcuts for forward (Alt+F), copy (Alt+C) and copy media only (Alt+Shift+C)
