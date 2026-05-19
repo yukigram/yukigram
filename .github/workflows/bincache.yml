@@ -514,13 +514,18 @@ jobs:
             popd
           done
 
+      - name: Prepare output directory
+        run: |
+          set -exuo pipefail
+          mkdir out
+
       - name: Extract postmarketOS apk files
         run: |
           set -exuo pipefail
 
           for arch in x86_64 aarch64 armv7; do
             p=postmarketos-$arch/packages/edge/$arch/
-            cp $p/$(< $p/yukigram.apk.link) yukigram-$arch.apk
+            cp $p/$(< $p/yukigram.apk.link) out/yukigram-$arch.apk
           done
 
       - name: Pack artifacts
@@ -529,13 +534,13 @@ jobs:
           shopt -s dotglob # to pack hidden top-level files
           for a in nixos-{x86_64,aarch64} {binary,flatpak}-x86_64 postmarketos-{x86_64,aarch64,armv7}; do
             pushd $a
-              tar czf ../$a.tar.gz *
+              tar czf ../out/$a.tar.gz *
             popd
           done
 
       - name: Publish
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "*.tar.gz,*.apk"
+          artifacts: "out/*"
           prerelease: ${{ inputs.prerelease }}
           immutableCreate: true
