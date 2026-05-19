@@ -3,7 +3,7 @@
 This project follows the [REUSE specification][reuse-spec].
 
 Patches for Telegram Desktop (under `tdesktop/cur/`)
-are provided under [GPL-3.0-only]
+are provided under [GPL-3.0-or-later]
 with [OpenSSL exception][sqlitestudio-OpenSSL-exception].
 
 GitHub Actions workflows and flatpak manifest
@@ -25,7 +25,7 @@ Additionally, `.svg` files embedded inside patches in `tdesktop/cur/`, namely
 are provided under [CC0-1.0].
 
 [reuse-spec]: https://reuse.software/spec-3.3/
-[GPL-3.0-only]: ./LICENSES/GPL-3.0-only.txt
+[GPL-3.0-or-later]: ./LICENSES/GPL-3.0-or-later.txt
 [sqlitestudio-OpenSSL-exception]: ./LICENSES/LicenseRef-sqlitestudio-OpenSSL-exception.txt
 [CC0-1.0]: ./LICENSES/CC0-1.0.txt
 [Unlicense]: ./LICENSES/Unlicense.txt

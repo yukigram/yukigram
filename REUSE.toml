@@ -61,7 +61,7 @@ path = [
     "tdesktop/cur/*-UI-Opt-Hide-popular-stickers-in-suggested.patch",
     "tdesktop/cur/*-UI-Opt-Hide-popular-custom-emoji-in-picker.patch",
 ]
-SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
+SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors <https://github.com/yukigram/yukigram>"
 
 [[annotations]]
@@ -80,7 +80,7 @@ path = [
     "tdesktop/cur/*-UI-Go-to-first-message.patch",
     "tdesktop/cur/*-Feature-Mention-users-by-id.patch",
 ]
-SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
+SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors, 64Gram contributors <https://github.com/TDesktop-x64/tdesktop>"
 
 [[annotations]]
@@ -88,14 +88,14 @@ path = [
     "tdesktop/cur/*-Feature-Always-show-edit-timer.patch",
     "tdesktop/cur/*-UI-Opt-Peer-type-icon-in-history.patch",
 ]
-SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
+SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors, Kotatogram contributors <https://github.com/kotatogram/kotatogram-desktop>"
 
 [[annotations]]
 path = [
     "tdesktop/cur/*-UI-Show-forwarded-message-date.patch",
 ]
-SPDX-License-Identifier = "GPL-3.0-only WITH LicenseRef-sqlitestudio-OpenSSL-exception"
+SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors, Forkgram contributors <https://github.com/forkgram/tdesktop>"
 
 [[annotations]]
