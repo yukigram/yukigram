@@ -1,0 +1,244 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Wed, 13 May 2026 13:14:44 +0300
+Subject: [PATCH] (Interface)(Opt) Custom monospace font
+
+---
+ Telegram/SourceFiles/core/launcher.cpp        |  5 ++
+ .../settings/sections/settings_chat.cpp       | 74 ++++++++++++++++++-
+ .../SourceFiles/ui/boxes/choose_font_box.cpp  | 11 ++-
+ .../SourceFiles/ui/boxes/choose_font_box.h    |  3 +-
+ Telegram/lib_ui/ui/style/style_core_font.cpp  | 18 ++++-
+ 5 files changed, 106 insertions(+), 5 deletions(-)
+
+diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
+index 16504df5e7..b7d16ecbbc 100644
+--- a/Telegram/SourceFiles/core/launcher.cpp
++++ b/Telegram/SourceFiles/core/launcher.cpp
+@@ -25,6 +25,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include <QtCore/QStandardPaths>
+ #include <QtCore/QLibraryInfo>
+ 
++namespace style {
++extern QString Yukigram_MonospaceFont;
++}
++
+ namespace Core {
+ namespace {
+ 
+@@ -390,6 +394,7 @@ int Launcher::exec() {
+ 	Logs::start();
+ 	base::options::init(cWorkingDir() + "tdata/experimental_options.json");
+ 	Yukigram::Options::init();
++	style::Yukigram_MonospaceFont = base::options::lookup<QString>("monospace-font").value();
+ 
+ 	// Must be called after options are inited.
+ 	initHighDpi();
+diff --git a/Telegram/SourceFiles/settings/sections/settings_chat.cpp b/Telegram/SourceFiles/settings/sections/settings_chat.cpp
+index c4c4cfe15a..beb34383f0 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_chat.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_chat.cpp
+@@ -78,6 +78,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "base/call_delayed.h"
+ #include "support/support_common.h"
+ #include "support/support_templates.h"
++#include "base/options.h"
+ #include "main/main_session.h"
+ #include "main/main_session_settings.h"
+ #include "mainwidget.h"
+@@ -90,6 +91,15 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ 
+ #include <QAction>
+ 
++base::options::option<QString> MonospaceFontName({
++	.id = "monospace-font",
++	.name = "Monospace font family",
++});
++
++namespace style {
++extern QString Yukigram_MonospaceFont;
++}
++
+ namespace Settings {
+ namespace {
+ 
+@@ -862,6 +872,15 @@ void BuildThemeSettingsSection(SectionBuilder &builder) {
+ 			.icon = { &st::menuIconFont },
+ 		};
+ 	});
++
++	builder.add(nullptr, [] {
++		return SearchEntry{
++			.id = u"chat/mono-font"_q,
++			.title = u"Monospace font family"_q,
++			.keywords = { u"font"_q, u"family"_q, u"code"_q, u"monospace"_q },
++			.icon = { &st::menuIconFont },
++		};
++	});
+ }
+ 
+ void BuildCloudThemesSection(SectionBuilder &builder) {
+@@ -2798,7 +2817,7 @@ void SetupThemeSettings(
+ 			return result;
+ 		};
+ 		controller->show(
+-			Box(Ui::ChooseFontBox, generateBg, family->current(), save));
++			Box(Ui::ChooseFontBox, generateBg, family->current(), save, false));
+ 	});
+ 	if (highlights) {
+ 		highlights->push_back({
+@@ -2807,6 +2826,59 @@ void SetupThemeSettings(
+ 		});
+ 	}
+ 
++	const auto monofamily = container->lifetime().make_state<
++		rpl::variable<QString>
++	>(MonospaceFontName.value());
++	auto monolabel = monofamily->value() | rpl::map([](QString family) {
++		return family.isEmpty()
++			? tr::lng_font_default(tr::now)
++			: (family == style::SystemFontTag())
++			? tr::lng_font_system(tr::now)
++			: family;
++	});
++	const auto monofontButton = AddButtonWithLabel(
++		container,
++		rpl::single(u"Monospace font family"_q),
++		std::move(monolabel),
++		st::settingsButton,
++		{ &st::menuIconFont });
++	monofontButton->setClickedCallback([=] {
++		const auto save = [=](QString chosen) {
++			*family = chosen;
++			style::Yukigram_MonospaceFont = chosen;
++			MonospaceFontName.set(chosen);
++			Local::writeSettings();
++			Core::Restart();
++		};
++
++		const auto theme = std::shared_ptr<Ui::ChatTheme>(
++			Window::Theme::DefaultChatThemeOn(container->lifetime()));
++		const auto generateBg = [=] {
++			const auto size = st::boxWidth;
++			const auto ratio = style::DevicePixelRatio();
++			auto result = QImage(
++				QSize(size, size) * ratio,
++				QImage::Format_ARGB32_Premultiplied);
++			auto p = QPainter(&result);
++			Window::SectionWidget::PaintBackground(
++				p,
++				theme.get(),
++				QSize(size, size * 3),
++				QRect(0, 0, size, size));
++			p.end();
++
++			return result;
++		};
++		controller->show(
++			Box(Ui::ChooseFontBox, generateBg, monofamily->current(), save, true));
++	});
++	if (highlights) {
++		highlights->push_back({
++			u"chat/mono-font"_q,
++			{ monofontButton.get(), { .rippleShape = true } },
++		});
++	}
++
+ 	Ui::AddSkip(container, st::settingsCheckboxesSkip);
+ }
+ 
+diff --git a/Telegram/SourceFiles/ui/boxes/choose_font_box.cpp b/Telegram/SourceFiles/ui/boxes/choose_font_box.cpp
+index c298caeaee..a6810de1b2 100644
+--- a/Telegram/SourceFiles/ui/boxes/choose_font_box.cpp
++++ b/Telegram/SourceFiles/ui/boxes/choose_font_box.cpp
+@@ -28,6 +28,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ 
+ #include <QtGui/QFontDatabase>
+ 
++namespace style {
++QString Yukigram_ResolveMonospaceFont(QString name);
++}
++
+ namespace Ui {
+ namespace {
+ 
+@@ -851,7 +855,8 @@ void ChooseFontBox(
+ 		not_null<GenericBox*> box,
+ 		Fn<QImage()> generatePreviewBg,
+ 		const QString &family,
+-		Fn<void(QString)> save) {
++		Fn<void(QString)> save,
++		bool monospace) {
+ 	box->setTitle(tr::lng_font_box_title());
+ 
+ 	struct State {
+@@ -865,7 +870,9 @@ void ChooseFontBox(
+ 
+ 	const auto top = box->setPinnedToTopContent(
+ 		object_ptr<Ui::VerticalLayout>(box));
+-	top->add(MakePreview(top, generatePreviewBg, state->family.value()));
++	top->add(MakePreview(top, generatePreviewBg, state->family.value() | rpl::map([=](QString v) {
++		return monospace ? style::Yukigram_ResolveMonospaceFont(v) : v;
++	})));
+ 	const auto filter = top->add(object_ptr<Ui::MultiSelect>(
+ 		top,
+ 		st::defaultMultiSelect,
+diff --git a/Telegram/SourceFiles/ui/boxes/choose_font_box.h b/Telegram/SourceFiles/ui/boxes/choose_font_box.h
+index ed79f9bc40..14f0c56f07 100644
+--- a/Telegram/SourceFiles/ui/boxes/choose_font_box.h
++++ b/Telegram/SourceFiles/ui/boxes/choose_font_box.h
+@@ -15,6 +15,7 @@ void ChooseFontBox(
+ 	not_null<GenericBox*> box,
+ 	Fn<QImage()> generatePreviewBg,
+ 	const QString &family,
+-	Fn<void(QString)> save);
++	Fn<void(QString)> save,
++	bool monospace);
+ 
+ } // namespace Ui
+diff --git a/Telegram/lib_ui/ui/style/style_core_font.cpp b/Telegram/lib_ui/ui/style/style_core_font.cpp
+index 3f02d5d1db..b5b2b594dd 100644
+--- a/Telegram/lib_ui/ui/style/style_core_font.cpp
++++ b/Telegram/lib_ui/ui/style/style_core_font.cpp
+@@ -54,6 +54,10 @@ void SetCustomFont(const QString &font) {
+ 	Custom = font;
+ }
+ 
++extern QString Yukigram_MonospaceFont;
++QString Yukigram_MonospaceFont = "";
++QString Yukigram_ResolveMonospaceFont(QString name);
++
+ namespace internal {
+ 
+ struct ResolvedFont {
+@@ -136,7 +140,11 @@ bool LoadCustomFont(const QString &filePath) {
+ 	return QString();
+ }
+ 
+-[[nodiscard]] QString MonospaceFont() {
++[[nodiscard]] QString MonospaceFont(bool ignoreYukigram = false) {
++	if (!ignoreYukigram) {
++		return Yukigram_ResolveMonospaceFont(Yukigram_MonospaceFont);
++	}
++
+ 	static const auto family = [&]() -> QString {
+ 		const auto manual = ManualMonospaceFont();
+ 		const auto system = SystemMonospaceFont();
+@@ -514,6 +522,14 @@ OwnedFont::OwnedFont(const QString &custom, FontFlags flags, int size)
+ 
+ } // namespace internal
+ 
++QString Yukigram_ResolveMonospaceFont(QString name) {
++	return name.isEmpty()
++		? internal::MonospaceFont(true)
++		: name == SystemFontTag()
++		? internal::SystemMonospaceFont()
++		: name;
++}
++
+ const FontResolveResult *FindAdjustResult(const QFont &font) {
+ 	const auto key = internal::QtFontKey(font);
+ 	const auto i = internal::QtFontsKeys.find(key);
+-- 
+2.53.0
+

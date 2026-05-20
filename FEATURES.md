@@ -8,6 +8,11 @@ Patches are sorted by category first,
 then by an arbitrary subcategory,
 and then by their numerical order.
 
+To list patches in a category, use
+```shell
+printf "%s\n" tdesktop/cur/????-Category-*
+```
+
 ## Structural patches
 
 These patches have no category attached to them,
@@ -63,6 +68,8 @@ These are placed under `(Annoyances)` category.
     `:podman:` -> :whale2:,
     `:bottom:` -> :pleading_face:)
 
+These are placed under `(Minor)` category.
+
 ## Informative
 - Show sticker/emoji pack owner
 - Show channel/group member join date
@@ -71,6 +78,9 @@ These are placed under `(Annoyances)` category.
 - Show media DC
 - :zap: Show more details in Active Sessions list
     (API ID, is unofficial client, session login date)
+- :gear: Show inferred peer DC
+
+These are placed under `(Info)` category.
 
 ## Shortcuts
 - Immediate restart button
@@ -78,16 +88,19 @@ These are placed under `(Annoyances)` category.
 - Clickable links in user bio
 - :zap: Hide "similar channels" section on channel join message by default
     (it can still be toggled by clicking on join message itself)
-- :star: Allow opening group from peer info
 - Hide "Join group" bottom button
     when it is possible to send messages without joining
     (e.g. in linked discussion groups)
+- :star: Allow opening group from peer info
+
+These are placed under `(Shortcut)` category.
 
 ## Major
 - :zap: :gear: Control calls with MPRIS
     (play/pause/play-pause: accept,
     next/prev/stop: decline/hangup)
 - tg://openmessage and tg://user links support
+- New Supergroup button
 - Mention users by id
     (When creating a new link,
     e.g. with Ctrl+K on a selection,
@@ -95,19 +108,20 @@ These are placed under `(Annoyances)` category.
     or the bare id itself
     to create a mention)
 
+These are placed under `(Major)` category.
+
 ## Interface
 - :star: :gear: Single-column mobile-like layout
+- :gear: Show time with seconds
+- :zap: :gear: Collapsed chats in dialogs view
+    (as in Kotatogram)
+- Move peer ID and join date in chat info from About to separate subsections
 - :star: :gear: Use system emoji font
     (from `emoji` font as defined by fontconfig)
     instead of bundled emoji packs
 - :gear: Custom monospace font
 
-## Tweaks
-- :gear: Show time with seconds
-- :zap: :gear: Collapsed chats in dialogs view (as in Kotatogram)
-- Move peer ID and join date in chat info from About to separate subsections
-- :gear: Show inferred peer DC
-- New Supergroup button
+These are placed under `(Interface)` category.
 
 ## Chat
 - "Search messages from" button in more context menus
@@ -118,6 +132,8 @@ These are placed under `(Annoyances)` category.
     near quick Recent Actions button
 - Go to first message button
 
+These are placed under `(Chat)` category.
+
 ## Chat style
 - :gear: Wide messages
 - Increase maxSignatureSize to accomodate time with seconds and message id
@@ -126,17 +142,23 @@ These are placed under `(Annoyances)` category.
 - :zap: :gear: Hide reply backround emoji
 - :gear: Hide message bubble tail
 
+These are placed under `(Style)` category.
+
 ## Messages
 - :gear: Disable animated emoji (animoji)
 - :zap: :gear: Move post comments button to the right (more compact)
 - :gear: Show message id
-- :zap: :gear: Bot/chat/channel/forum/deleted icon near username in chat list
-- "Has unofficial client" icon near username in chat list
+- :zap: :gear: Bot/chat/channel/forum/deleted icon near message sender display name in message history
+- "Has unofficial client" icon near message sender display name in message history
 - Show date of forwarded messages without hover
+
+These are placed under `(Message)` category.
 
 ## Reactions
 - :zap: :gear: Hide Star reaction button when no stars are sent
 - :zap: :gear: Hide Star reaction count completely
+
+These are placed under `(Reactions)` category.
 
 ## Composing messages
 - :gear: Always show "scheduled messages" button
@@ -146,6 +168,8 @@ These are placed under `(Annoyances)` category.
     (suggest only from installed packs)
 - :gear: Hide popular animated emoji packs from picker
     (show only installed packs in picker)
+
+These are placed under `(Compose)` category.
 
 Some patches originate from [64Gram], [Forkgram] and [Kotatogram].
 

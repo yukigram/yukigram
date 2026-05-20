@@ -1,0 +1,84 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Wed, 6 May 2026 11:12:59 +0300
+Subject: [PATCH] (Reactions)(Opt) Hide Star reaction on no message stars
+
+---
+ Telegram/CMakeLists.txt                           |  2 ++
+ .../view/reactions/history_view_reactions.cpp     |  4 ++++
+ .../yukigram/settings/star_hide_empty.cpp         | 15 +++++++++++++++
+ .../yukigram/settings/star_hide_empty.h           |  5 +++++
+ 4 files changed, 26 insertions(+)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/star_hide_empty.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/star_hide_empty.h
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index ac4df5d2fc..f2b5fbcfd6 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1936,6 +1936,8 @@ PRIVATE
+     yukigram/settings/right_action_comments.h
+     yukigram/settings/show_message_id.cpp
+     yukigram/settings/show_message_id.h
++    yukigram/settings/star_hide_empty.cpp
++    yukigram/settings/star_hide_empty.h
+     yukigram/settings/time_with_seconds.cpp
+     yukigram/settings/time_with_seconds.h
+     yukigram/settings/wide_messages.cpp
+diff --git a/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp b/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp
+index 130b8eb778..3f1948e60b 100644
+--- a/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp
++++ b/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp
+@@ -29,6 +29,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "ui/painter.h"
+ #include "ui/rect.h"
+ #include "ui/power_saving.h"
++#include "yukigram/settings/star_hide_empty.h"
+ #include "styles/style_chat.h"
+ #include "styles/style_chat_helpers.h"
+ 
+@@ -211,6 +212,9 @@ void InlineList::layoutButtons() {
+ 	buttons.reserve(sorted.size());
+ 	for (const auto &reaction : sorted) {
+ 		const auto &id = reaction->id;
++		if (Yukigram::Settings::StarHideEmpty->current() && id.paid() && !reaction->count) {
++			continue;
++		}
+ 		const auto i = ranges::find(_buttons, id, &Button::id);
+ 		buttons.push_back((i != end(_buttons))
+ 			? std::move(*i)
+diff --git a/Telegram/SourceFiles/yukigram/settings/star_hide_empty.cpp b/Telegram/SourceFiles/yukigram/settings/star_hide_empty.cpp
+new file mode 100644
+index 0000000000..913cc46cab
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/star_hide_empty.cpp
+@@ -0,0 +1,15 @@
++#include "yukigram/settings/star_hide_empty.h"
++#include "yukigram/options.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *StarHideEmpty = Yukigram::Options::make(kOptionStarHideEmpty, {
++	.name = "Hide empty stars count",
++	.keywords = { u"yukigram"_q, u"star"_q, u"reaction"_q },
++	.category = "reactions",
++	.restartRequired = true,
++});
++
++const char kOptionStarHideEmpty[] = "star-hide-empty";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/star_hide_empty.h b/Telegram/SourceFiles/yukigram/settings/star_hide_empty.h
+new file mode 100644
+index 0000000000..9ce6b0a872
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/star_hide_empty.h
+@@ -0,0 +1,5 @@
++#include "rpl/rpl.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *StarHideEmpty;
++extern const char kOptionStarHideEmpty[];
++}
+-- 
+2.53.0
+

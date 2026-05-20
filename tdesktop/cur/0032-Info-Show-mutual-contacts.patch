@@ -1,0 +1,100 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Lunya <241520024+lunya-miaou@users.noreply.github.com>
+Date: Sun, 3 May 2026 12:59:23 +0000
+Subject: [PATCH] (Info) Show mutual contacts
+
+---
+ .../boxes/peer_list_controllers.cpp           | 38 ++++++++++++++++++-
+ .../SourceFiles/boxes/peer_list_controllers.h | 20 ++++++++++
+ 2 files changed, 57 insertions(+), 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
+index a83af75867..92e2280f8c 100644
+--- a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
++++ b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
+@@ -63,6 +63,42 @@ constexpr auto kSearchPerPage = 50;
+ 
+ } // namespace
+ 
++ContactRow::ContactRow(
++	not_null<UserData*> user)
++: PeerListRow(user)
++, _isMutual(user->flags() & UserDataFlag::MutualContact) {
++}
++
++QSize ContactRow::rightActionSize() const {
++	return QSize(
++		st::menuIconGroups.width(),
++		st::menuIconGroups.height());
++}
++
++QMargins ContactRow::rightActionMargins() const {
++	return QMargins(
++		st::contactsCheckPosition.x(),
++		(st::contactsPadding.top() + st::contactsPhotoSize + st::contactsPadding.bottom() - rightActionSize().height()) / 2,
++		st::defaultPeerListItem.photoPosition.x() + st::contactsCheckPosition.x(),
++		0);
++}
++
++bool ContactRow::rightActionDisabled() const {
++	return true;
++}
++
++void ContactRow::rightActionPaint(
++		Painter &p,
++		int x,
++		int y,
++		int outerWidth,
++		bool selected,
++		bool actionSelected) {
++	if (_isMutual) {
++		st::menuIconGroups.paint(p, x, y, outerWidth);
++	}
++}
++
+ object_ptr<Ui::BoxContent> PrepareContactsBox(
+ 		not_null<Window::SessionController*> window) {
+ 	using Mode = ContactsBoxController::SortMode;
+@@ -786,7 +822,7 @@ bool ContactsBoxController::appendRow(not_null<UserData*> user) {
+ 
+ std::unique_ptr<PeerListRow> ContactsBoxController::createRow(
+ 		not_null<UserData*> user) {
+-	return std::make_unique<PeerListRow>(user);
++	return std::make_unique<ContactRow>(user);
+ }
+ 
+ RecipientMoneyRestrictionError WriteMoneyRestrictionError(
+diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.h b/Telegram/SourceFiles/boxes/peer_list_controllers.h
+index 6eb90a0009..a829db20d5 100644
+--- a/Telegram/SourceFiles/boxes/peer_list_controllers.h
++++ b/Telegram/SourceFiles/boxes/peer_list_controllers.h
+@@ -39,6 +39,26 @@ namespace Window {
+ class SessionController;
+ } // namespace Window
+ 
++class ContactRow final : public PeerListRow {
++public:
++	ContactRow(not_null<UserData*> user);
++
++	QSize rightActionSize() const override;
++	QMargins rightActionMargins() const override;
++	bool rightActionDisabled() const override;
++	void rightActionPaint(
++		Painter &p,
++		int x,
++		int y,
++		int outerWidth,
++		bool selected,
++		bool actionSelected) override;
++
++private:
++	bool _isMutual = false;
++
++};
++
+ [[nodiscard]] object_ptr<Ui::BoxContent> PrepareContactsBox(
+ 	not_null<Window::SessionController*> sessionController);
+ [[nodiscard]] QBrush PeerListStoriesGradient(const style::PeerList &st);
+-- 
+2.53.0
+

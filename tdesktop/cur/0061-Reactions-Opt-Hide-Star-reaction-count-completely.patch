@@ -1,0 +1,84 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Wed, 6 May 2026 11:15:18 +0300
+Subject: [PATCH] (Reactions)(Opt) Hide Star reaction count completely
+
+---
+ Telegram/CMakeLists.txt                           |  2 ++
+ .../view/reactions/history_view_reactions.cpp     |  4 ++++
+ .../yukigram/settings/star_hide_always.cpp        | 15 +++++++++++++++
+ .../yukigram/settings/star_hide_always.h          |  5 +++++
+ 4 files changed, 26 insertions(+)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/star_hide_always.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/star_hide_always.h
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index f2b5fbcfd6..abf95b4808 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1936,6 +1936,8 @@ PRIVATE
+     yukigram/settings/right_action_comments.h
+     yukigram/settings/show_message_id.cpp
+     yukigram/settings/show_message_id.h
++    yukigram/settings/star_hide_always.cpp
++    yukigram/settings/star_hide_always.h
+     yukigram/settings/star_hide_empty.cpp
+     yukigram/settings/star_hide_empty.h
+     yukigram/settings/time_with_seconds.cpp
+diff --git a/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp b/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp
+index 3f1948e60b..60180e0d82 100644
+--- a/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp
++++ b/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp
+@@ -29,6 +29,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "ui/painter.h"
+ #include "ui/rect.h"
+ #include "ui/power_saving.h"
++#include "yukigram/settings/star_hide_always.h"
+ #include "yukigram/settings/star_hide_empty.h"
+ #include "styles/style_chat.h"
+ #include "styles/style_chat_helpers.h"
+@@ -212,6 +213,9 @@ void InlineList::layoutButtons() {
+ 	buttons.reserve(sorted.size());
+ 	for (const auto &reaction : sorted) {
+ 		const auto &id = reaction->id;
++		if (Yukigram::Settings::StarHideAlways->current() && id.paid()) {
++			continue;
++		}
+ 		if (Yukigram::Settings::StarHideEmpty->current() && id.paid() && !reaction->count) {
+ 			continue;
+ 		}
+diff --git a/Telegram/SourceFiles/yukigram/settings/star_hide_always.cpp b/Telegram/SourceFiles/yukigram/settings/star_hide_always.cpp
+new file mode 100644
+index 0000000000..8e8cb8d31f
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/star_hide_always.cpp
+@@ -0,0 +1,15 @@
++#include "yukigram/settings/star_hide_always.h"
++#include "yukigram/options.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *StarHideAlways = Yukigram::Options::make(kOptionStarHideAlways, {
++	.name = "Hide stars count",
++	.keywords = { u"yukigram"_q, u"star"_q, u"reaction"_q },
++	.category = "reactions",
++	.restartRequired = true,
++});
++
++const char kOptionStarHideAlways[] = "star-hide-always";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/star_hide_always.h b/Telegram/SourceFiles/yukigram/settings/star_hide_always.h
+new file mode 100644
+index 0000000000..cf1797862c
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/star_hide_always.h
+@@ -0,0 +1,5 @@
++#include "rpl/rpl.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *StarHideAlways;
++extern const char kOptionStarHideAlways[];
++}
+-- 
+2.53.0
+
