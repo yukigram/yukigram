@@ -305,10 +305,10 @@ flatpak-builder --force-clean build io.github.yukigram.yml
 
 ## Installing previous versions from artifacts
 
-### with flatpak
-
 Make a backup of your data!
 Downgrading versions is not supported.
+
+### with flatpak
 
 1. Download release asset `flatpak-x86_64` and unpack
 2. `flatpak install --user .../flatpak-x86_64/ io.github.yukigram`
