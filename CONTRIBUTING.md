@@ -317,10 +317,6 @@ For development versions, use `io.github.yukigram.devel`
 
 ### with nix binary cache
 
-Do not run non-release nix builds from binary caches
-without using `customNixpakConfig`!
-Doing otherwise may leave your tdata in a corrupted state.
-
 1. Download release asset `nixos-$arch` and unpack
 2. `cd .../nixos-$arch && python3 -m http.server`
 3. Add `--extra-substituters http://127.0.0.1:8000` to nix command line
@@ -328,13 +324,3 @@ Doing otherwise may leave your tdata in a corrupted state.
     and don't forget to add a trusted key
     if it's not added by other means,
     e.g. by using flake in this repo)
-
-Something in nixpak version differs
-from local-nixpak-dev and flatpak-dev versions,
-probably the appId or something,
-I haven't looked into that deeper,
-so to test nixpak version properly one should
-make a backup of `~/.var/app/io.github.yukigram*`
-and login in a new sesion.
-I will update this section once I have more info,
-but no one really knows when that will happen.
