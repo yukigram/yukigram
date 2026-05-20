@@ -229,11 +229,11 @@ Be aware that this command discards all uncommitted changes.
 
 1. change title of about box to reflect new version
     in `Telegram/SourceFiles/boxes/about_box.cpp`
-2. tag a new version with increased fourth component
+1. tag a new version with increased fourth component
     (v6.7.5.0 -> v6.7.5.1 -> v6.7.5.2)
-3. push `main` branch,
+1. push `main` branch,
     and then push corresponding tag
-4. (post-update only)
+1. (post-update only)
     once nixpak and flatpak builds are somewhat tested,
     post release announcement
     in [Yukigram channel]
