@@ -222,6 +222,8 @@ Downgrading versions is not supported.
 >   and rename `Yukigram` folder to `io.github.yukigram`.
 > 1. Go to `~/.var/app/io.github.yukigram.devel/data` (devel, flatpak or nixpak)
 >   and rename `Yukigram` folder to `io.github.yukigram.devel`.
+> 1. Go to `~/.var/app/io.github.yukigram.devel/data` (old nixpak with customNixpakConfig)
+>   and rename `io.github.yukigram` folder to `io.github.yukigram.devel` if that folder doesn't yet exist.
 > 1. Run Yukigram again.
 
 ### with flatpak
