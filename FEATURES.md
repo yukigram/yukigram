@@ -55,28 +55,15 @@ This is what I mean by "minus the bullshit"
 
 These are placed under `(Annoyances)` category.
 
-## Features
-
-I know this list is already called "features",
-but these are more or less The Features,
-i.e. they add shortcuts
-or something that could not have been done before.
-
-These are placed under `(Features)` category.
-
-### Minor tweaks
+## Minor
 - tg://nya link support
-- Immediate restart button
 - Allow more than 3/6 accounts
-- Clickable links in user bio
-- :zap: Hide "similar channels" section on channel join message by default
-    (it can still be toggled by clicking on join message itself)
 - :zap: Additional emoji aliases
     (`:docker:` -> :whale:,
     `:podman:` -> :whale2:,
     `:bottom:` -> :pleading_face:)
 
-### Additional information
+## Informative
 - Show sticker/emoji pack owner
 - Show channel/group member join date
 - :zap: Always show edit timer
@@ -85,14 +72,18 @@ These are placed under `(Features)` category.
 - :zap: Show more details in Active Sessions list
     (API ID, is unofficial client, session login date)
 
-### Shortcuts
+## Shortcuts
+- Immediate restart button
 - Shortcuts for forward (Alt+F), copy (Alt+C) and copy media only (Alt+Shift+C)
+- Clickable links in user bio
+- :zap: Hide "similar channels" section on channel join message by default
+    (it can still be toggled by clicking on join message itself)
 - :star: Allow opening group from peer info
 - Hide "Join group" bottom button
     when it is possible to send messages without joining
     (e.g. in linked discussion groups)
 
-### Major
+## Major
 - :zap: :gear: Control calls with MPRIS
     (play/pause/play-pause: accept,
     next/prev/stop: decline/hangup)
@@ -104,56 +95,50 @@ These are placed under `(Features)` category.
     or the bare id itself
     to create a mention)
 
-## User interface
-
-A catch-all group for everything.
-Most of these are opinionated and optional,
-and Telegram Desktop defaults are keeped wherever possible.
-
-These are placed under `(UI)` category.
-
-### Interface
+## Interface
 - :star: :gear: Single-column mobile-like layout
 - :star: :gear: Use system emoji font
     (from `emoji` font as defined by fontconfig)
     instead of bundled emoji packs
 - :gear: Custom monospace font
 
-### Tweaks
+## Tweaks
 - :gear: Show time with seconds
 - :zap: :gear: Collapsed chats in dialogs view (as in Kotatogram)
 - Move peer ID and join date in chat info from About to separate subsections
 - :gear: Show inferred peer DC
 - New Supergroup button
 
-### Chat itself
-- :gear: Wide messages
+## Chat
 - "Search messages from" button in more context menus
 - Show time on service messages
 - Quick recent actions button
 - Quick admin list button
-- :star: :gear: Hide per-chat wallpaper and use wallpaper from theme instead
 - :zap: Channel statistics button in kebab menu
     near quick Recent Actions button
 - Go to first message button
 
-### Messages
-- :gear: Disable animated emoji (animoji)
-- :zap: :gear: Move post comments button to the right (more compact)
-- :gear: Show message id
+## Chat style
+- :gear: Wide messages
 - Increase maxSignatureSize to accomodate time with seconds and message id
 - Larger stickers and round video messages
-- :zap: :gear: Bot/chat/channel/forum/deleted icon near username in chat list
-- "Has unofficial client" icon near username in chat list
-- Show date of forwarded messages without hover
+- :star: :gear: Hide per-chat wallpaper and use wallpaper from theme instead
 - :zap: :gear: Hide reply backround emoji
 - :gear: Hide message bubble tail
 
-### Reactions
+## Messages
+- :gear: Disable animated emoji (animoji)
+- :zap: :gear: Move post comments button to the right (more compact)
+- :gear: Show message id
+- :zap: :gear: Bot/chat/channel/forum/deleted icon near username in chat list
+- "Has unofficial client" icon near username in chat list
+- Show date of forwarded messages without hover
+
+## Reactions
 - :zap: :gear: Hide Star reaction button when no stars are sent
 - :zap: :gear: Hide Star reaction count completely
 
-### Composing messages
+## Composing messages
 - :gear: Always show "scheduled messages" button
 - :zap: :gear: Hide "Send As" channels that require Premium to use
 - :zap: :gear: Hide "Send As" button completely
