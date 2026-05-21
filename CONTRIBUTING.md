@@ -63,6 +63,15 @@ Nothing will be pushed.
 This expects both `yukigram` and `tdesktop`
 to be in a relatively clean state.
 
+#### `tdesktop-version.sh`
+
+Rebases the patchset to another tdesktop version.
+
+```shell
+cd yukigram
+s/tdesktop-version.sh v6.8.3
+```
+
 ### Git hooks
 
 #### pre-commit
@@ -229,46 +238,12 @@ Be aware that this command discards all uncommitted changes.
 
 ## Porting to newer tdesktop versions
 
-Proceed as if you were applying patches normally.
-Once the patchset fully applies,
-format patches and commit `tdesktop/$TAG: patches only`.
-
-Commits with "patches only" mark are *not* tested
-and may contain bugs fixed in next commits.
-
-A tag should be added when the version is sufficiently tested
-and is generally ready to be used.
+Use `tdesktop-version.sh` and follow its prompts.
 
 After the patchset has been applied,
 update its version with `patchset-version.sh`.
 
-### Updating build support
-
-This will probably break incremental builds,
-but is required to make environment consistent
-with what upstream expects.
-
-1. check [centos_env] for latest tag and update in `build.sh`
-2. check `Telegram/CMakeLists.txt` and update `install.sh`
-
-[centos_env]: https://github.com/telegramdesktop/tdesktop/pkgs/container/tdesktop%2Fcentos_env/versions
-
-### Updating Flatpak build
-
-1. update tdesktop version in `.github/workflows/bincache.yml`
-2. go to [org.telegram.desktop] and update changed permissions
-
-[org.telegram.desktop]: https://github.com/flathub/org.telegram.desktop
-
-### Updating PostmarketOS bulid
-
-1. update tdestkop version in `.github/workflows/bincache.yml`
-
-### Updating Nix package
-
-1. change version in `package.nix` and set hash to `lib.fakeHash`
-2. fail a build once to get the correct hash
-3. (optional) build again with `nix-build --argstr appId io.github.yukigram.devel`
+## Overnight Nix builds
 
 Before I have set incremental buils up for myself,
 I used the following oneliner to support overnight builds:
