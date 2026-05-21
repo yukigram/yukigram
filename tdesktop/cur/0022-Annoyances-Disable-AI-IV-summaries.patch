@@ -4,36 +4,23 @@ Date: Tue, 12 May 2026 01:21:33 +0300
 Subject: [PATCH] (Annoyances) Disable AI IV summaries
 
 ---
- Telegram/SourceFiles/iv/iv_prepare.cpp | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ .../iv/markdown/iv_markdown_prepare_native_blocks.cpp          | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Telegram/SourceFiles/iv/iv_prepare.cpp b/Telegram/SourceFiles/iv/iv_prepare.cpp
-index d9dee06ffa..5c0d2a204b 100644
---- a/Telegram/SourceFiles/iv/iv_prepare.cpp
-+++ b/Telegram/SourceFiles/iv/iv_prepare.cpp
-@@ -972,13 +972,21 @@ QByteArray Parser::utf(const tl::conditional<MTPstring> &text) {
- }
- 
- QByteArray Parser::wrap(const QByteArray &content, int views) {
-+	const auto summaryBegin = R"(<blockquote dir="auto">)"_q;
-+	const auto summaryEnd = R"(<cite dir="auto">Cocoon AI Summary</cite></blockquote>)"_q;
-+	const auto summaryEndIndex = content.indexOf(summaryEnd);
-+	const auto patchedContent = summaryEndIndex == -1
-+		? content
-+		: content.sliced(0, content.lastIndexOf(summaryBegin))
-+		+ content.sliced(summaryEndIndex + summaryEnd.length());
-+
- 	const auto sep = " \xE2\x80\xA2 ";
- 	const auto viewsText = views
- 		? (tr::lng_stories_views(tr::now, lt_count_decimal, views) + sep)
- 		: QString();
- 	return R"(
- <div class="page-slide">
--	<article>)"_q + content + R"(</article>
-+	<article>)"_q + patchedContent + R"(</article>
- </div>
- <div class="page-footer">
- 	<div class="content">
+diff --git a/Telegram/SourceFiles/iv/markdown/iv_markdown_prepare_native_blocks.cpp b/Telegram/SourceFiles/iv/markdown/iv_markdown_prepare_native_blocks.cpp
+index b41e0911a0..dc6d4dcbc7 100644
+--- a/Telegram/SourceFiles/iv/markdown/iv_markdown_prepare_native_blocks.cpp
++++ b/Telegram/SourceFiles/iv/markdown/iv_markdown_prepare_native_blocks.cpp
+@@ -984,6 +984,9 @@ iframe {
+ 	if (!PrepareNativeIvRichText(caption, &cite, &block.anchorId, state)) {
+ 		return false;
+ 	}
++	if (cite.text.text == u"Cocoon AI Summary"_q) {
++		return true;
++	}
+ 	if (!AppendPreparedIvRichBlock(
+ 		&block.children,
+ 		PreparedBlockKind::Paragraph,
 -- 
 2.53.0
 
