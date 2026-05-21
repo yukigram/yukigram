@@ -33,6 +33,36 @@ Flatten all the submodules in the current directory.
 Current directory must be a top-level repository,
 i.e. `.git` must be a directory.
 
+#### `rebase.sh`
+
+Rebase helper for rebasing everything after submodule flattening.
+Can take additional arguments, e.g.
+```shell
+cd tdesktop
+../yukigram/s/rebase.sh --interactive
+```
+can be used for commit reordering.
+
+#### `format-patch.sh`
+
+`git format-patch` wrapper that formats everything after submodule flattening.
+
+#### `patchset-version.sh`
+
+Updates patchset version and other metadata.
+
+```shell
+cd yukigram
+s/patchset-version.sh v6.8.2.0 # for normal releases
+s/patchset-version.sh v6.8.3.2-beta # for pre-releases
+```
+
+This will create a commit and a tag.
+Nothing will be pushed.
+
+This expects both `yukigram` and `tdesktop`
+to be in a relatively clean state.
+
 ### Git hooks
 
 #### pre-commit
@@ -136,15 +166,8 @@ git am -3 ../yukigram/tdesktop
 
 Once you've applied current patchset,
 you can add a commit as you normally do.
-Use `git rebase -i HEAD^{/#flatten}`
+Use `../yukigram/s/rebase.sh -i`
 to reorder patches if needed.
-
-Use of `HEAD^{/#flatten}` is needed
-to avoid repeating `$TAG`
-and therefore make commands version-independent,
-and to avoid rebasing over "submodule flattening"
-which, if done, yields weird warnings
-about submodule directories not being empty.
 
 Patches, except for Yukigram structure ones
 (such as "branding" or "build support"),
@@ -181,36 +204,15 @@ To apply all fixups:
 
 ```shell
 cd tdesktop
-git rebase --interactive --autosquash HEAD^{/#flatten}
+../yukigram/s/rebase.sh
 ```
 
 ## Formatting patches
 
 ```shell
 cd yukigram
-git format-patch --zero-commit -N -o ../yukigram/tdesktop/cur --base HEAD^{/#flatten}{^,}
+../yukigram/s/format-patch.sh
 ```
-
-`--zero-commit` is needed
-to make first line of `.patch` files
-(the `From ... Mon Sep 17 00:00:00 2001` line)
-stable across rebases and reapplies.
-
-`-N` disables patch numbering,
-making `[PATCH 45/67]` in subject line
-become `[PATCH]`,
-which allows patches to be
-more stable across reorders and patch additions.
-
-`--base HEAD^{/#flatten}{^,}` sets
-
-- base commit to `HEAD^{/#flatten}^`,
-    i.e. the commit immediately preceding the submodule flattening
-- formatted commits range to `HEAD^{/#flatten}`,
-    i.e. all commits reachable from `HEAD`,
-    but not from `HEAD^{/#flatten}`,
-    or, in plain words,
-    everything after the submodule flattening.
 
 If patches were renamed or reordered,
 `yukigram/tdesktop/cur` directory might need cleaning.
@@ -225,39 +227,20 @@ rm tdesktop/cur/*.patch
 
 Be aware that this command discards all uncommitted changes.
 
-## Updating patchset version
-
-1. change title of about box to reflect new version
-    in `Telegram/SourceFiles/boxes/about_box.cpp`
-1. change unwrapped package version
-    in `package.nix`
-1. change `DEVEL` value
-    in `package.nix`
-1. change `mainProgram` value
-    in `package.nix`
-1. tag a new version with increased fourth component
-    (v6.7.5.0 -> v6.7.5.1 -> v6.7.5.2)
-1. push `main` branch,
-    and then push corresponding tag
-1. (post-update only)
-    once nixpak and flatpak builds are somewhat tested,
-    post release announcement
-    in [Yukigram channel]
-
-[Yukigram channel]: https://t.me/yukigram
-
 ## Porting to newer tdesktop versions
 
 Proceed as if you were applying patches normally.
-Update patchset version to new tdesktop version.
 Once the patchset fully applies,
-format patches and commit `$TAG: patches only`.
+format patches and commit `tdesktop/$TAG: patches only`.
 
 Commits with "patches only" mark are *not* tested
 and may contain bugs fixed in next commits.
 
 A tag should be added when the version is sufficiently tested
 and is generally ready to be used.
+
+After the patchset has been applied,
+update its version with `patchset-version.sh`.
 
 ### Updating build support
 
