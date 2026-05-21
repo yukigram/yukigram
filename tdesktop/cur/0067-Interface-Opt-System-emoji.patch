@@ -13,7 +13,7 @@ Subject: [PATCH] (Interface)(Opt) System emoji
  create mode 100644 Telegram/SourceFiles/yukigram/settings/system_emoji.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index a17f9b7215..551e99e889 100644
+index 5dea36a939..b714c8e89a 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1978,6 +1978,8 @@ PRIVATE

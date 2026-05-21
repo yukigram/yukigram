@@ -13,7 +13,7 @@ Subject: [PATCH] (Style)(Opt) Hide message tail
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_message_tail.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index f61cff77f9..a17f9b7215 100644
+index 8e51590a20..5dea36a939 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1951,6 +1951,8 @@ PRIVATE

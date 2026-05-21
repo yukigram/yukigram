@@ -36,7 +36,7 @@ let
             })
           ];
         executableName = "yukigram";
-        runScript = path + "/yukigram";
+        runScript = path + "/io.github.yukigram.devel";
       });
   };
   d = import ./. {};

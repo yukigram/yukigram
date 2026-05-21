@@ -25,7 +25,7 @@ Subject: [PATCH] (Style)(Opt) Wide messages
  create mode 100644 Telegram/SourceFiles/yukigram/settings/wide_messages.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 601af275c8..297aff727f 100644
+index 828448bca6..c481c78f24 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1954,6 +1954,8 @@ PRIVATE

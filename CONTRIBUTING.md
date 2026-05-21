@@ -230,10 +230,11 @@ Be aware that this command discards all uncommitted changes.
 1. change title of about box to reflect new version
     in `Telegram/SourceFiles/boxes/about_box.cpp`
 1. change unwrapped package version
-    and `DEVEL` value
     in `package.nix`
-1. adjust `.devel` suffix in `appId`
-    in `nixpak.nix`
+1. change `DEVEL` value
+    in `package.nix`
+1. change `mainProgram` value
+    in `package.nix`
 1. tag a new version with increased fourth component
     (v6.7.5.0 -> v6.7.5.1 -> v6.7.5.2)
 1. push `main` branch,

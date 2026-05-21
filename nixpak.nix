@@ -4,7 +4,7 @@
   nixpak,
   mkNixPak ? config: nixpak.lib.nixpak {inherit lib pkgs;} {inherit config;},
   yukigram,
-  appId ? "io.github.yukigram.devel",
+  appId ? yukigram.meta.mainProgram,
   customNixpakConfig ? {},
 }:
 mkNixPak {

@@ -13,7 +13,7 @@ Subject: [PATCH] (Message)(Opt) Right action comments
  create mode 100644 Telegram/SourceFiles/yukigram/settings/right_action_comments.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index ad1b94dc29..a2f520f991 100644
+index f13f8f5dd1..0d4dba6115 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1950,6 +1950,8 @@ PRIVATE

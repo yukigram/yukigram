@@ -17,7 +17,7 @@ Original author: c0re100 <corehusky@gmail.com>
  create mode 100644 Telegram/SourceFiles/yukigram/settings/show_message_id.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 06180236a5..e8919e6346 100644
+index 363e72be59..aabdc30064 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1956,6 +1956,8 @@ PRIVATE

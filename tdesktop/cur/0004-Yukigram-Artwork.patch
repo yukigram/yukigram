@@ -12,7 +12,7 @@ Subject: [PATCH] (Yukigram) Artwork
  create mode 100644 Telegram/Resources/art/yukigram.svg
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 2c2a36071d..48eac59641 100644
+index deae6e8d46..794f123e48 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -2400,20 +2400,7 @@ if (LINUX AND DESKTOP_APP_USE_PACKAGED)

@@ -13,7 +13,7 @@ Subject: [PATCH] (Info)(Opt) Show inferred peer DC
  create mode 100644 Telegram/SourceFiles/yukigram/settings/inferred_peer_dc.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index acc99ef839..c7271cf7f4 100644
+index 04269c3bc5..24277efa11 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1961,6 +1961,8 @@ PRIVATE

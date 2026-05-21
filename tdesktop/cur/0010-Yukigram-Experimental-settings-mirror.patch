@@ -10,7 +10,7 @@ Subject: [PATCH] (Yukigram) Experimental settings mirror
  create mode 100644 Telegram/SourceFiles/yukigram/settings/mirrored.cpp
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index bbe0360fbb..dd568d89bc 100644
+index 70c68bf761..f012f663f1 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1943,6 +1943,7 @@ PRIVATE

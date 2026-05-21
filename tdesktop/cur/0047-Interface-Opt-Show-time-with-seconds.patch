@@ -26,7 +26,7 @@ Original author: c0re100 <corehusky@gmail.com>
  create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 40292d4696..06180236a5 100644
+index 9305161fb7..363e72be59 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1956,6 +1956,8 @@ PRIVATE

@@ -4,40 +4,16 @@ Date: Wed, 20 May 2026 17:57:10 +0300
 Subject: [PATCH] (Yukigram) Metadata
 
 ---
- Telegram/CMakeLists.txt                                |  4 ++--
- Telegram/SourceFiles/boxes/about_box.cpp               |  2 +-
- Telegram/SourceFiles/core/version.h                    |  4 ++--
- Telegram/SourceFiles/intro/intro_start.cpp             |  2 +-
- .../settings/sections/settings_notifications.cpp       |  2 +-
- Telegram/SourceFiles/window/main_window.cpp            |  2 +-
- Telegram/SourceFiles/window/window_main_menu.cpp       |  4 ++--
- lib/xdg/io.github.yukigram.desktop                     | 10 +++++-----
- lib/xdg/io.github.yukigram.metainfo.xml                |  8 ++++----
- lib/xdg/io.github.yukigram.service                     |  2 +-
- 10 files changed, 20 insertions(+), 20 deletions(-)
+ Telegram/SourceFiles/boxes/about_box.cpp                    | 2 +-
+ Telegram/SourceFiles/core/version.h                         | 4 ++--
+ Telegram/SourceFiles/intro/intro_start.cpp                  | 2 +-
+ .../settings/sections/settings_notifications.cpp            | 2 +-
+ Telegram/SourceFiles/window/main_window.cpp                 | 2 +-
+ Telegram/SourceFiles/window/window_main_menu.cpp            | 4 ++--
+ lib/xdg/io.github.yukigram.desktop                          | 4 ++--
+ lib/xdg/io.github.yukigram.metainfo.xml                     | 6 +++---
+ 8 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index e36e34d555..2c2a36071d 100644
---- a/Telegram/CMakeLists.txt
-+++ b/Telegram/CMakeLists.txt
-@@ -2169,7 +2169,7 @@ else()
-         set(bundle_identifier "com.tdesktop.Telegram")
-     endif()
-     set(bundle_entitlements "Telegram.entitlements")
--    set(output_name "Telegram")
-+    set(output_name "yukigram")
- endif()
- 
- if (CMAKE_GENERATOR STREQUAL Xcode)
-@@ -2215,7 +2215,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
- if (APPLE
-     OR is_multi_config
-     OR NOT CMAKE_EXECUTABLE_SUFFIX STREQUAL ""
--    OR NOT "${output_name}" STREQUAL "Telegram")
-+    OR NOT "${output_name}" STREQUAL "yukigram")
-     set(output_folder ${CMAKE_BINARY_DIR})
- else()
-     set(output_folder ${CMAKE_BINARY_DIR}/bin)
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
 index 738ad20837..3a488ae04c 100644
 --- a/Telegram/SourceFiles/boxes/about_box.cpp
@@ -121,32 +97,26 @@ index 89ecba366f..a26a7cc91a 100644
  	_version->setMarkedText(
  		tr::link(
 diff --git a/lib/xdg/io.github.yukigram.desktop b/lib/xdg/io.github.yukigram.desktop
-index 28e8b3b7cb..fc47676bad 100644
+index 7e77a820fa..bbe84df56f 100644
 --- a/lib/xdg/io.github.yukigram.desktop
 +++ b/lib/xdg/io.github.yukigram.desktop
-@@ -1,8 +1,8 @@
+@@ -1,6 +1,6 @@
  [Desktop Entry]
  Name=@YUKIGRAM_DISPLAY_NAME@
 -Comment=New era of messaging
--TryExec=Telegram
--Exec=Telegram -- %U
 +Comment=Telegram Desktop, patched
-+TryExec=yukigram
-+Exec=yukigram -- %U
+ TryExec=@YUKIGRAM_APP_ID@
+ Exec=@YUKIGRAM_APP_ID@ -- %U
  Icon=@YUKIGRAM_APP_ID@
- Terminal=false
- StartupWMClass=@YUKIGRAM_APP_ID@
-@@ -17,6 +17,6 @@ X-GNOME-UsesNotifications=true
- X-GNOME-SingleWindow=true
+@@ -18,5 +18,5 @@ X-GNOME-SingleWindow=true
  
  [Desktop Action quit]
--Exec=Telegram -quit
+ Exec=@YUKIGRAM_APP_ID@ -quit
 -Name=Quit Telegram
-+Exec=yukigram -quit
 +Name=Quit Yukigram
  Icon=application-exit
 diff --git a/lib/xdg/io.github.yukigram.metainfo.xml b/lib/xdg/io.github.yukigram.metainfo.xml
-index 61fb172afe..182cf9c666 100644
+index c65e2f02c4..93fd8899cf 100644
 --- a/lib/xdg/io.github.yukigram.metainfo.xml
 +++ b/lib/xdg/io.github.yukigram.metainfo.xml
 @@ -3,8 +3,8 @@
@@ -169,24 +139,6 @@ index 61fb172afe..182cf9c666 100644
      <url type="translate">https://translations.telegram.org/</url>
      <url type="vcs-browser">https://github.com/telegramdesktop/tdesktop</url>
      <url type="contribute">https://github.com/telegramdesktop/tdesktop/blob/dev/.github/CONTRIBUTING.md</url>
-@@ -108,7 +108,7 @@
-     </content_rating>
-     <launchable type="desktop-id">@YUKIGRAM_APP_ID@.desktop</launchable>
-     <provides>
--        <binary>Telegram</binary>
-+        <binary>yukigram</binary>
-         <dbus type="session">@YUKIGRAM_APP_ID@</dbus>
-         <mediatype>x-scheme-handler/tg</mediatype>
-         <mediatype>x-scheme-handler/tonsite</mediatype>
-diff --git a/lib/xdg/io.github.yukigram.service b/lib/xdg/io.github.yukigram.service
-index c4c85188d6..9664e828cc 100644
---- a/lib/xdg/io.github.yukigram.service
-+++ b/lib/xdg/io.github.yukigram.service
-@@ -1,3 +1,3 @@
- [D-BUS Service]
- Name=@YUKIGRAM_APP_ID@
--Exec=Telegram
-+Exec=yukigram
 -- 
 2.53.0
 
