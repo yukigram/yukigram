@@ -216,6 +216,9 @@ Downgrading versions is not supported.
 >
 > 1. Close Yukigram.
 > 1. Update Yukigram to a recent enough version.
+> 1. Rename `~/.TelegramDesktop` folder
+>   to `${XDG_DATA_HOME:-~/.local/share}/io.github.yukigram`
+>   (nonisolated package that was used for a dozen years).
 > 1. Go to `${XDG_DATA_HOME:-~/.local/share}` (nonisolated package).
 >   and rename `Yukigram` folder to `io.github.yukigram`.
 > 1. Go to `~/.var/app/io.github.yukigram/data` (flatpak or nixpak)
