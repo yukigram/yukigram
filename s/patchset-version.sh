@@ -22,6 +22,10 @@ sed -i -E -f - package.nix <<EOF
 /mainProgram =/s/".*"/"$APP_ID"/
 EOF
 
+sed -i -E -f - flatpak/io.github.yukigram.yml <<EOF
+s/io.github.yukigram(.devel)?/$APP_ID/
+EOF
+
 pushd ../tdesktop
 sed -i -E -f - Telegram/SourceFiles/boxes/about_box.cpp <<EOF
 /box->setTitle/s/: ".*"/: "$VERSION"/
@@ -32,6 +36,6 @@ git commit --fixup 'HEAD^{/Yukigram) Version}' --allow-empty
 ../yukigram/s/format-patch.sh
 popd
 
-git add package.nix tdesktop/cur/????-Yukigram-Version.patch
+git add package.nix flatpak/io.github.yukigram.yml tdesktop/cur/????-Yukigram-Version.patch
 git commit -m "$VERSION"
 git tag -m "$VERSION" "$VERSION"
