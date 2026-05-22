@@ -523,7 +523,7 @@ jobs:
 
           for d in binary-x86_64; do
             pushd $d
-              chmod +x bin/yukigram
+              chmod +x bin/io.github.yukigram*
             popd
           done
 
