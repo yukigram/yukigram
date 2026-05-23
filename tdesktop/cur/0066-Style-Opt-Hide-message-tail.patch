@@ -26,7 +26,7 @@ index 57ba4431e8..220f99e702 100644
      yukigram/settings/hide_reply_background_emoji.h
      yukigram/settings/hide_send_as_premium.cpp
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index f60b6b8cae..0f1d40b95e 100644
+index d314932894..e74ef29b44 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -30,6 +30,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -37,7 +37,7 @@ index f60b6b8cae..0f1d40b95e 100644
  #include "boxes/premium_preview_box.h"
  #include "boxes/share_box.h"
  #include "boxes/peers/tag_info_box.h"
-@@ -5213,6 +5214,7 @@ Ui::BubbleRounding Message::countMessageRounding() const {
+@@ -5211,6 +5212,7 @@ Ui::BubbleRounding Message::countMessageRounding() const {
  	const auto item = data();
  	const auto keyboard = item->inlineReplyKeyboard();
  	const auto skipTail = smallBottom
