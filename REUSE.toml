@@ -124,7 +124,7 @@ SPDX-FileCopyrightText = "none"
 path = [
     "*.nix",
     "hooks/*",
-    "s/*.sh",
+    "s/*",
 ]
 SPDX-License-Identifier = "CC0-1.0 OR Unlicense"
 SPDX-FileCopyrightText = "Yukigram contributors"

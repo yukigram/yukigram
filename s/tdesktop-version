@@ -53,7 +53,7 @@ pushd ../tdesktop
 git fetch --all
 git reset --hard "$Version"
 git submodule update --init --recursive
-../yukigram/s/flatten.sh
+../yukigram/s/flatten
 
 # Apply patches and fix conflicts
 if ! git am -3 ../yukigram/tdesktop; then
@@ -81,11 +81,11 @@ sed -i -E -f - run-in-docker.sh <<EOF
 EOF
 git add run-in-docker.sh
 git commit --fixup 'HEAD^{/Yukigram) Build support}' --allow-empty
-../yukigram/s/rebase.sh
+../yukigram/s/rebase
 
 # Clean up patches directory in case patches were dropped
 find ../yukigram/tdesktop/cur/ -name '*.patch' -delete
-../yukigram/s/format-patch.sh
+../yukigram/s/format-patch
 popd
 git add tdesktop/cur/
 git commit -m "tdesktop/$Version: patches"

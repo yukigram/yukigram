@@ -67,8 +67,8 @@ EOF
     git add changelog.txt
     git commit --fixup 'HEAD^{/Yukigram) Changelog}' --allow-empty
 
-    ../yukigram/s/rebase.sh
-    ../yukigram/s/format-patch.sh
+    ../yukigram/s/rebase
+    ../yukigram/s/format-patch
 
     popd
 

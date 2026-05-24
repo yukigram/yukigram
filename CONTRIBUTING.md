@@ -19,7 +19,7 @@ git clone https://github.com/telegramdesktop/tdesktop
 cd tdesktop
 git submodule update --init --recursive
 git checkout -b test
-../yukigram/s/flatten.sh
+../yukigram/s/flatten
 git worktree add ../yukigram-worktree
 ```
 
@@ -27,34 +27,34 @@ git worktree add ../yukigram-worktree
 
 Folder `s` contains a collection of mildly useful scripts.
 
-#### `flatten.sh`
+#### `flatten`
 
 Flatten all the submodules in the current directory.
 Current directory must be a top-level repository,
 i.e. `.git` must be a directory.
 
-#### `rebase.sh`
+#### `rebase`
 
 Rebase helper for rebasing everything after submodule flattening.
 Can take additional arguments, e.g.
 ```shell
 cd tdesktop
-../yukigram/s/rebase.sh --interactive
+../yukigram/s/rebase --interactive
 ```
 can be used for commit reordering.
 
-#### `format-patch.sh`
+#### `format-patch`
 
 `git format-patch` wrapper that formats everything after submodule flattening.
 
-#### `patchset-version.sh`
+#### `patchset-version`
 
 Updates patchset version and other metadata.
 
 ```shell
 cd yukigram
-s/patchset-version.sh v6.8.2.0 # creates a normal release
-s/patchset-version.sh v6.8.3.2-beta # creates a pre-releases
+s/patchset-version v6.8.2.0 # creates a normal release
+s/patchset-version v6.8.3.2-beta # creates a pre-releases
 ```
 
 This will create a commit and a tag.
@@ -77,26 +77,26 @@ is recommended for creating a release:
 ```shell
 cd yukigram
 
-s/patchset-version.sh v6.8.2.0-rc.1
+s/patchset-version v6.8.2.0-rc.1
 git push; git push --tags
 # manually run a workflow *from tag* with cachix and pre-release enabled
 # wait for the run to succeed
 # test beta
 # if the beta was a failure, repeat with incremented rc.N
 
-s/patchset-version.sh v6.8.2.0
+s/patchset-version v6.8.2.0
 git push; git push --tags
 # wait for the run to succeed
 # test release just in case
 ```
 
-#### `tdesktop-version.sh`
+#### `tdesktop-version`
 
 Rebases the patchset to another tdesktop version.
 
 ```shell
 cd yukigram
-s/tdesktop-version.sh v6.8.3
+s/tdesktop-version v6.8.3
 ```
 
 ### Git hooks
@@ -190,7 +190,7 @@ Three-way am is recommended to simplify conflicts.
 TAG=v6.7.3
 git reset --hard $TAG
 git submodule update --init --recursive
-../yukigram/s/flatten.sh
+../yukigram/s/flatten
 git am -3 ../yukigram/tdesktop
 # resolve conflicts
 ```
@@ -207,7 +207,7 @@ git am -3 ../yukigram/tdesktop
 
 Once you've applied current patchset,
 you can add a commit as you normally do.
-Use `../yukigram/s/rebase.sh -i`
+Use `../yukigram/s/rebase -i`
 to reorder patches if needed.
 
 Patches, except for Yukigram structure ones
@@ -245,14 +245,14 @@ To apply all fixups:
 
 ```shell
 cd tdesktop
-../yukigram/s/rebase.sh
+../yukigram/s/rebase
 ```
 
 ## Formatting patches
 
 ```shell
 cd yukigram
-../yukigram/s/format-patch.sh
+../yukigram/s/format-patch
 ```
 
 If patches were renamed or reordered,
