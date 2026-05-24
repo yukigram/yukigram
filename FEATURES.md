@@ -136,6 +136,7 @@ These are placed under `(Major)` category.
     (from `emoji` font as defined by fontconfig)
     instead of bundled emoji packs
 - :gear: Custom monospace font
+- Video controls for GIFs
 
 These are placed under `(Interface)` category.
 

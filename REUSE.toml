@@ -95,6 +95,7 @@ SPDX-FileCopyrightText = "Yukigram contributors, 64Gram contributors <https://gi
 path = [
     "tdesktop/cur/*-Info-Always-show-edit-timer.patch",
     "tdesktop/cur/*-Message-Opt-Peer-type-icon-in-history.patch",
+    "tdesktop/cur/*-Interface-Video-controls-for-GIFs.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors, Kotatogram contributors <https://github.com/kotatogram/kotatogram-desktop>"
