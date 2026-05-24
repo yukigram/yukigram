@@ -89,7 +89,11 @@ if your pinning tool does not support tracking tags.
 
 Recommended flake input formats are:
 - `github:yukigram/yukigram/release` for latest releases,
-- `github:yukigram/yukigram/v6.7.8.1` for pinned releases.
+- `github:yukigram/yukigram/v6.7.8.1` for pinned releases,
+- `github:yukigram/yukigram/beta` for latest pre-release.
+
+Pre-release Nix builds are published
+only to Cachix and release artifacts.
 
 #### with nixpak
 
