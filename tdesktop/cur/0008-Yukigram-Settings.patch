@@ -67,7 +67,7 @@ index 3d4eda91da..59ce88648c 100644
  		.title = tr::lng_settings_language(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 new file mode 100644
-index 0000000000..9ad1d79280
+index 0000000000..3bbc6ce748
 --- /dev/null
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 @@ -0,0 +1,152 @@
@@ -152,8 +152,8 @@ index 0000000000..9ad1d79280
 +
 +void BuildYukigramSectionContent(SectionBuilder &builder) {
 +	bool isFirstNamedSection = true;
-+	for (const auto &[category, name] : Yukigram::Options::categories) {
-+		auto &toggles = Yukigram::Options::toggles_by_category[category];
++	for (const auto &[category, name] : Yukigram::Options::Categories()) {
++		auto &toggles = Yukigram::Options::TogglesByCategory()[category];
 +		if (!category.empty() && !toggles.empty()) {
 +			if (isFirstNamedSection) {
 +				isFirstNamedSection = false;
@@ -169,7 +169,7 @@ index 0000000000..9ad1d79280
 +			});
 +		}
 +		for (const auto &key : toggles) {
-+			auto &toggle = Yukigram::Options::toggles[key];
++			auto &toggle = Yukigram::Options::Toggles()[key];
 +			BuildToggle(builder, key, toggle.d, toggle.v);
 +		}
 +	}

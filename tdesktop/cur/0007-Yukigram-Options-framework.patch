@@ -7,11 +7,11 @@ Subject: [PATCH] (Yukigram) Options framework
  Telegram/CMakeLists.txt                       |  4 +
  Telegram/SourceFiles/core/launcher.cpp        |  3 +
  .../settings/settings_experimental.cpp        |  2 +
- Telegram/SourceFiles/yukigram/options.cpp     | 73 +++++++++++++++++++
- Telegram/SourceFiles/yukigram/options.h       | 26 +++++++
- .../SourceFiles/yukigram/options_database.h   | 27 +++++++
+ Telegram/SourceFiles/yukigram/options.cpp     | 83 +++++++++++++++++++
+ Telegram/SourceFiles/yukigram/options.h       | 26 ++++++
+ .../SourceFiles/yukigram/options_database.h   | 27 ++++++
  .../SourceFiles/yukigram/options_runtime.h    | 10 +++
- 7 files changed, 145 insertions(+)
+ 7 files changed, 155 insertions(+)
  create mode 100644 Telegram/SourceFiles/yukigram/options.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/options.h
  create mode 100644 Telegram/SourceFiles/yukigram/options_database.h
@@ -82,31 +82,41 @@ index f51189f900..44da7be77f 100644
  		}
 diff --git a/Telegram/SourceFiles/yukigram/options.cpp b/Telegram/SourceFiles/yukigram/options.cpp
 new file mode 100644
-index 0000000000..832469e3b7
+index 0000000000..4b5c39cc92
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.cpp
-@@ -0,0 +1,73 @@
+@@ -0,0 +1,83 @@
 +#include "yukigram/options.h"
 +#include "yukigram/options_database.h"
 +#include "yukigram/options_runtime.h"
 +
 +namespace Yukigram::Options {
 +
-+std::vector<std::pair<std::string_view, std::string_view>> categories {
-+	{"", ""},
-+	{"interface", "Interface"},
-+	{"tweaks", "Tweaks"},
-+	{"dialogs", "Chat list"},
-+	{"style", "Chat style"},
-+	{"history", "Messages"},
-+	{"reactions", "Reactions"},
-+	{"compose", "Composing messages"},
-+	{"picker", "Stickers and Emoji picker"},
-+	{"system", "System"},
-+};
++const std::vector<std::pair<std::string_view, std::string_view>> &Categories() {
++	static std::vector<std::pair<std::string_view, std::string_view>> m = {
++		{"", ""},
++		{"interface", "Interface"},
++		{"tweaks", "Tweaks"},
++		{"dialogs", "Chat list"},
++		{"style", "Chat style"},
++		{"history", "Messages"},
++		{"reactions", "Reactions"},
++		{"compose", "Composing messages"},
++		{"picker", "Stickers and Emoji picker"},
++		{"system", "System"},
++	};
++	return m;
++}
 +
-+std::map<std::string_view, Toggle> toggles;
-+std::map<std::string_view, std::vector<std::string_view>> toggles_by_category;
++std::map<std::string_view, Toggle> &Toggles() {
++	static std::map<std::string_view, Toggle> m;
++	return m;
++}
++
++std::map<std::string_view, std::vector<std::string_view>> &TogglesByCategory() {
++	static std::map<std::string_view, std::vector<std::string_view>> m;
++	return m;
++}
 +
 +rpl::variable<bool> *make(const char *key, Description &&d, std::function<void(bool)> link, bool defaultValue) {
 +	const auto v = std::make_shared<rpl::variable<bool>>(defaultValue);
@@ -124,8 +134,8 @@ index 0000000000..832469e3b7
 +	rpl::lifetime lifetime;
 +
 +	const auto key_v = std::string_view(key);
-+	toggles_by_category[d.category].push_back(key_v);
-+	toggles[key_v] = {
++	TogglesByCategory()[d.category].push_back(key_v);
++	Toggles()[key_v] = {
 +		.d = std::move(d),
 +		.v = v,
 +		._base = base,
@@ -137,19 +147,19 @@ index 0000000000..832469e3b7
 +}
 +
 +void update_value(const char *key, bool value) {
-+	if (auto it = toggles.find(std::string_view(key)); it != toggles.end()) {
++	if (auto it = Toggles().find(std::string_view(key)); it != Toggles().end()) {
 +		*it->second.v = value;
 +	}
 +}
 +
 +void init() {
-+	for (auto &[key, toggle] : toggles) {
++	for (auto &[key, toggle] : Toggles()) {
 +		*toggle.v = base::options::lookup<bool>(std::string(key).c_str()).value();
 +	}
 +}
 +
 +void link() {
-+	for (auto &[key, toggle] : toggles) {
++	for (auto &[key, toggle] : Toggles()) {
 +		toggle.v->value() | rpl::on_next([=, link = std::move(toggle.link)](bool value) {
 +			base::options::lookup<bool>(std::string(key).c_str()).set(value);
 +			link(value);
@@ -193,7 +203,7 @@ index 0000000000..7b270e3260
 +}
 diff --git a/Telegram/SourceFiles/yukigram/options_database.h b/Telegram/SourceFiles/yukigram/options_database.h
 new file mode 100644
-index 0000000000..13dd616f58
+index 0000000000..9b17e9c3d7
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options_database.h
 @@ -0,0 +1,27 @@
@@ -218,10 +228,10 @@ index 0000000000..13dd616f58
 +	std::function<void(bool)> link;
 +};
 +
-+extern std::vector<std::pair<std::string_view, std::string_view>> categories;
++const std::vector<std::pair<std::string_view, std::string_view>> &Categories();
 +
-+extern std::map<std::string_view, Toggle> toggles;
-+extern std::map<std::string_view, std::vector<std::string_view>> toggles_by_category;
++std::map<std::string_view, Toggle> &Toggles();
++std::map<std::string_view, std::vector<std::string_view>> &TogglesByCategory();
 +
 +}
 diff --git a/Telegram/SourceFiles/yukigram/options_runtime.h b/Telegram/SourceFiles/yukigram/options_runtime.h
