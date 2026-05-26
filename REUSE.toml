@@ -87,6 +87,7 @@ path = [
     "tdesktop/cur/*-Major-New-Supergroup.patch",
     "tdesktop/cur/*-Chat-Go-to-first-message.patch",
     "tdesktop/cur/*-Major-Mention-users-by-id.patch",
+    "tdesktop/cur/*-Fix-Ignore-old-tdesktop-tdata.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors, 64Gram contributors <https://github.com/TDesktop-x64/tdesktop>"

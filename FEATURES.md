@@ -52,6 +52,7 @@ These are placed under `(Yukigram)` category.
     and not per-invocation)
 - More appstream changelog versions (25 instead of 10),
     better version parsing
+- Disable `~/.TelegramDesktop` tdata fallback
 
 These are placed under `(Fix)` category.
 
