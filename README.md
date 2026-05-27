@@ -1,6 +1,8 @@
-# Yukigram, a collection of tdesktop patches
+# Yukigram: unofficial patch-based [Telegram Desktop][tdesktop] fork
 
-Telegram Desktop, minus the bullshit, plus the features.
+[tdesktop]: https://github.com/telegramdesktop/tdesktop
+
+Minus the bullshit, plus the features.
 
 [Full feature/bug list] /
 [Contributing notes] /

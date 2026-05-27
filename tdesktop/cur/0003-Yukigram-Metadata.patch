@@ -116,7 +116,7 @@ index 7e77a820fa..bbe84df56f 100644
 +Name=Quit Yukigram
  Icon=application-exit
 diff --git a/lib/xdg/io.github.yukigram.metainfo.xml b/lib/xdg/io.github.yukigram.metainfo.xml
-index c65e2f02c4..3bdb699796 100644
+index c65e2f02c4..62392575d3 100644
 --- a/lib/xdg/io.github.yukigram.metainfo.xml
 +++ b/lib/xdg/io.github.yukigram.metainfo.xml
 @@ -3,33 +3,21 @@
@@ -126,7 +126,7 @@ index c65e2f02c4..3bdb699796 100644
 -    <name>Telegram</name>
 -    <summary>New era of messaging</summary>
 +    <name>Yukigram</name>
-+    <summary>Telegram Desktop, patched</summary>
++    <summary>Unofficial patch-based Telegram Desktop fork</summary>
      <description>
 -        <p>Pure instant messaging — simple, fast, secure, and synced across all your devices. One of the world's top 10 most downloaded apps with over 500 million active users.</p>
 -        <p>FAST: Telegram is the fastest messaging app on the market, connecting people via a unique, distributed network of data centers around the globe.</p>
