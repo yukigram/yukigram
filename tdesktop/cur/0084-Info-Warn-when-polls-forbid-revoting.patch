@@ -1,0 +1,81 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Wed, 27 May 2026 16:15:06 +0000
+Subject: [PATCH] (Info) Warn when polls forbid revoting
+
+---
+ .../history/view/media/history_view_poll.cpp  | 37 +++++++++++++++----
+ 1 file changed, 30 insertions(+), 7 deletions(-)
+
+diff --git a/Telegram/SourceFiles/history/view/media/history_view_poll.cpp b/Telegram/SourceFiles/history/view/media/history_view_poll.cpp
+index fe195ab1cc..2b6bd7b5a5 100644
+--- a/Telegram/SourceFiles/history/view/media/history_view_poll.cpp
++++ b/Telegram/SourceFiles/history/view/media/history_view_poll.cpp
+@@ -22,6 +22,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "history/view/history_view_text_helper.h"
+ #include "history/view/media/menu/history_view_poll_menu.h"
+ #include "calls/calls_instance.h"
++#include "ui/boxes/confirm_box.h"
+ #include "ui/widgets/dropdown_menu.h"
+ #include "ui/widgets/menu/menu_action.h"
+ #include "ui/chat/message_bubble.h"
+@@ -2178,9 +2179,9 @@ void Poll::updateTexts() {
+ 				? ((_flags & Flag::PublicVotes)
+ 					? tr::lng_polls_public_quiz(tr::now)
+ 					: tr::lng_polls_anonymous_quiz(tr::now))
+-				: ((_flags & Flag::PublicVotes)
++				: (((_flags & Flag::PublicVotes)
+ 					? tr::lng_polls_public(tr::now)
+-					: tr::lng_polls_anonymous(tr::now))));
++					: tr::lng_polls_anonymous(tr::now)) + (_flags & Flag::RevotingDisabled ? ", no revotes" : ""))));
+ 	}
+ 	if (_footerPart->_adminBackVoteLabel.isEmpty()) {
+ 		_footerPart->_adminBackVoteLabel.setMarkedText(
+@@ -2799,17 +2800,39 @@ ClickHandlerPtr Poll::Options::createAnswerClickHandler(
+ 			}
+ 		}));
+ 	} else {
+-		result = std::make_shared<LambdaClickHandler>(crl::guard(_owner, [=] {
++		result = std::make_shared<LambdaClickHandler>(crl::guard(_owner, [=](ClickContext context) {
+ 			if (Logs::DebugEnabled() && base::IsCtrlPressed()) {
+ 				TextUtilities::SetClipboardText(
+ 					TextForMimeData::Simple(_owner->_poll->debugString()));
+ 				return;
+ 			}
+ 			if (_owner->canVote()) {
+-				_owner->_optionsPart->_votedFromHere = true;
+-				_owner->history()->session().api().polls().sendVotes(
+-					_owner->_parent->data()->fullId(),
+-					{ option });
++				auto castVote = [&] {
++					_owner->_optionsPart->_votedFromHere = true;
++					_owner->history()->session().api().polls().sendVotes(
++						_owner->_parent->data()->fullId(),
++						{ option });
++				};
++
++				const auto my = context.other.value<ClickHandlerContext>();
++				const auto controller = my.sessionWindow.get();
++				if (!controller || (&controller->session() != &_owner->history()->session())) {
++					return;
++				}
++
++				if (_owner->_flags & PollData::Flag::RevotingDisabled) {
++					controller->show(Ui::MakeConfirmBox({
++						.text = rpl::single(u"This poll does not allow revoting"_q),
++						.confirmed = [=](Fn<void()> &&close) {
++							castVote();
++							close();
++						},
++						.confirmText = rpl::single(u"Vote anyway"_q),
++						.cancelText = rpl::single(u"Discard vote"_q),
++					}));
++				} else {
++					castVote();
++				}
+ 			} else if (_owner->voteRestricted()) {
+ 				_owner->showVoteRestrictionToast();
+ 			} else if (_owner->showVotes()) {
+-- 
+2.53.0
+

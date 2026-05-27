@@ -8,13 +8,13 @@ Subject: [PATCH] (Yukigram) Changelog
  1 file changed, 256 insertions(+)
 
 diff --git a/changelog.txt b/changelog.txt
-index 46242d956c..62ad30aae0 100644
+index 46242d956c..773ba31228 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,3 +1,16 @@
 +9999 wip (01.01.99)
 +
-+- No changes
++- Warn when polls forbid revoting
 +
 +6.8.4.0 beta (27.05.26)
 +

@@ -69,6 +69,7 @@ path = [
     "tdesktop/cur/*-Yukigram-Changelog.patch",
     "tdesktop/cur/*-Major-Split-Stickers-and-GIFs-chat-permission-toggle.patch",
     "tdesktop/cur/*-Fix-Ignore-old-tdesktop-tdata.patch",
+    "tdesktop/cur/*-Info-Warn-when-polls-forbid-revoting.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors <https://github.com/yukigram/yukigram>"

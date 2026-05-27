@@ -97,6 +97,7 @@ These are placed under `(Minor)` category.
 - :gear: Show inferred peer DC
 - :star: Chat types in some in peer list boxes
 - :star: More info in folder chat list
+- :zap: Warn when polls forbid revoting
 
 These are placed under `(Info)` category.
 
