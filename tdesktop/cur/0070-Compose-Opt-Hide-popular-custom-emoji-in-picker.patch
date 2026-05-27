@@ -13,10 +13,10 @@ Subject: [PATCH] (Compose)(Opt) Hide popular custom emoji in picker
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_popular_emoji_picker.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index a8677a05e7..b7413ddfbf 100644
+index 09d994e586..b3fcfc520e 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1953,6 +1953,8 @@ PRIVATE
+@@ -1957,6 +1957,8 @@ PRIVATE
      yukigram/settings/force_mobile_layout.h
      yukigram/settings/hide_message_tail.cpp
      yukigram/settings/hide_message_tail.h

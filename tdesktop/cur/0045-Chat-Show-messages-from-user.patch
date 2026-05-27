@@ -13,7 +13,7 @@ Original author: c0re100 <corehusky@gmail.com>
  4 files changed, 47 insertions(+)
 
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
-index 471ad10c1a..77fd8d23c6 100644
+index 20e35cada0..fefc936816 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
 @@ -1927,6 +1927,9 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
@@ -24,13 +24,13 @@ index 471ad10c1a..77fd8d23c6 100644
 +			_navigation->parentController()->searchMessages2(QString(), _peer, participant);
 +		}, &st::menuIconSearch);
  	}
- 	if (user) {
+ 	if (user && !_peer->isBroadcast()) {
  		const auto isSelf = user->isSelf();
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 75e77f3862..1a4dc7e4e3 100644
+index fe2900de1d..c8cf4ac7f4 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -2806,6 +2806,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+@@ -2829,6 +2829,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
  				}
  			}
  		}

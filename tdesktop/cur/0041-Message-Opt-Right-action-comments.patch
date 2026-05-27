@@ -13,10 +13,10 @@ Subject: [PATCH] (Message)(Opt) Right action comments
  create mode 100644 Telegram/SourceFiles/yukigram/settings/right_action_comments.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index dcdeea6b67..d22bb0f402 100644
+index 029f7b38fe..9dbbbc404d 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1950,6 +1950,8 @@ PRIVATE
+@@ -1954,6 +1954,8 @@ PRIVATE
      yukigram/settings/mirrored.cpp
      yukigram/settings/mpris_call_hangup.cpp
      yukigram/settings/mpris_call_hangup.h
@@ -26,7 +26,7 @@ index dcdeea6b67..d22bb0f402 100644
      apiwrap.h
      config.h
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 6a334a3227..4b97e1bbcc 100644
+index 22321dd539..ef6fe69e90 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -32,6 +32,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -65,7 +65,7 @@ index 6a334a3227..4b97e1bbcc 100644
  	if (!_comments) {
  		_comments = std::make_unique<CommentsButton>();
  		history()->owner().registerHeavyViewPart(const_cast<Message*>(this));
-@@ -2417,7 +2421,7 @@ PointState Message::pointState(QPoint point) const {
+@@ -2420,7 +2424,7 @@ PointState Message::pointState(QPoint point) const {
  			auto mediaOnBottom = (mediaDisplayed && media->isBubbleBottom()) || check || (entry/* && entry->isBubbleBottom()*/);
  			auto mediaOnTop = (mediaDisplayed && media->isBubbleTop()) || (entry && entry->isBubbleTop());
  
@@ -74,7 +74,7 @@ index 6a334a3227..4b97e1bbcc 100644
  				g.setHeight(g.height() - st::historyCommentsButtonHeight);
  			}
  
-@@ -2754,7 +2758,7 @@ BottomRippleMask Message::bottomRippleMask(int buttonHeight) const {
+@@ -2757,7 +2761,7 @@ BottomRippleMask Message::bottomRippleMask(int buttonHeight) const {
  }
  
  void Message::createCommentsButtonRipple() {
@@ -83,7 +83,7 @@ index 6a334a3227..4b97e1bbcc 100644
  	_comments->ripple = std::make_unique<Ui::RippleAnimation>(
  		st::defaultRippleAnimation,
  		std::move(mask.image),
-@@ -4592,9 +4596,10 @@ bool Message::displayRightActionComments() const {
+@@ -4595,9 +4599,10 @@ bool Message::displayRightActionComments() const {
  	return !isPinnedContext()
  		&& (context() != Context::SavedSublist)
  		&& data()->repliesAreComments()
@@ -95,7 +95,7 @@ index 6a334a3227..4b97e1bbcc 100644
  }
  
  std::optional<QSize> Message::rightActionSize() const {
-@@ -5427,7 +5432,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -5430,7 +5435,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  			newHeight += (bottomInfoHeight - st::msgDateFont->height);
  		}
  

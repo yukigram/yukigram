@@ -8,7 +8,7 @@ Subject: [PATCH] (Info) Show media DC
  1 file changed, 11 insertions(+)
 
 diff --git a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-index 3e679fa487..55cfca2312 100644
+index 79564e69d5..19b2700a6f 100644
 --- a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 +++ b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 @@ -1580,6 +1580,17 @@ void OverlayWidget::updateControls() {

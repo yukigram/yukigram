@@ -13,10 +13,10 @@ Subject: [PATCH] (Fix)(Opt) Symbolic tray icon from icon theme
  create mode 100644 Telegram/SourceFiles/yukigram/settings/icon_theme_symbolic.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index adc774ce16..5554564f51 100644
+index f0626cccb4..43192c9445 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1943,6 +1943,8 @@ PRIVATE
+@@ -1947,6 +1947,8 @@ PRIVATE
      yukigram/options_database.h
      yukigram/options_runtime.h
      yukigram/options.h

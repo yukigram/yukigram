@@ -15,10 +15,10 @@ Subject: [PATCH] (Shortcut) Forward/Copy/Steal
  8 files changed, 70 insertions(+), 12 deletions(-)
 
 diff --git a/Telegram/SourceFiles/core/shortcuts.cpp b/Telegram/SourceFiles/core/shortcuts.cpp
-index 09f07e2d5b..d718b6507a 100644
+index 4ca872a75e..ed2463c77b 100644
 --- a/Telegram/SourceFiles/core/shortcuts.cpp
 +++ b/Telegram/SourceFiles/core/shortcuts.cpp
-@@ -138,6 +138,9 @@ const auto CommandByName = base::flat_map<QString, Command>{
+@@ -139,6 +139,9 @@ const auto CommandByName = base::flat_map<QString, Command>{
  	{ u"record_round"_q                  , Command::RecordRound },
  	{ u"show_admin_log"_q                , Command::ShowAdminLog },
  	//
@@ -28,7 +28,7 @@ index 09f07e2d5b..d718b6507a 100644
  };
  
  const base::flat_map<Command, QString> &CommandNames() {
-@@ -531,6 +534,10 @@ void Manager::fillDefaults() {
+@@ -533,6 +536,10 @@ void Manager::fillDefaults() {
  
  	set(u"ctrl+r"_q, Command::RecordVoice);
  
@@ -40,10 +40,10 @@ index 09f07e2d5b..d718b6507a 100644
  }
  
 diff --git a/Telegram/SourceFiles/core/shortcuts.h b/Telegram/SourceFiles/core/shortcuts.h
-index ff59b47658..8f723c44ee 100644
+index 2d6005ee8d..917cfd78fc 100644
 --- a/Telegram/SourceFiles/core/shortcuts.h
 +++ b/Telegram/SourceFiles/core/shortcuts.h
-@@ -87,6 +87,10 @@ enum class Command {
+@@ -88,6 +88,10 @@ enum class Command {
  	SupportScrollToCurrent,
  	SupportHistoryBack,
  	SupportHistoryForward,
@@ -55,7 +55,7 @@ index ff59b47658..8f723c44ee 100644
  
  [[maybe_unused]] constexpr auto kShowFolder = {
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 6e377b653d..c7a7b8058c 100644
+index 400b303373..8581b22c58 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -66,7 +66,7 @@ index 6e377b653d..c7a7b8058c 100644
  #include "core/click_handler_types.h"
  #include "core/phone_click_handler.h"
  #include "data/data_chat_participant_status.h"
-@@ -481,6 +482,8 @@ HistoryInner::HistoryInner(
+@@ -482,6 +483,8 @@ HistoryInner::HistoryInner(
  		update();
  	}, lifetime());
  
@@ -75,7 +75,7 @@ index 6e377b653d..c7a7b8058c 100644
  	HistoryView::Reactions::SetupManagerList(
  		_reactionsManager.get(),
  		_reactionsItem.value());
-@@ -5948,6 +5951,38 @@ bool CanSendReply(not_null<const HistoryItem*> item) {
+@@ -5971,6 +5974,38 @@ bool CanSendReply(not_null<const HistoryItem*> item) {
  	return true;
  }
  
@@ -127,10 +127,10 @@ index 208139327c..03c44cf103 100644
  	[[nodiscard]] auto reactionButtonParameters(
  		not_null<const Element*> view,
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 4d7ff9819a..7d97e01465 100644
+index c88bf656fc..a3ada86c99 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -9606,7 +9606,7 @@ bool HistoryWidget::updateCanSendMessage() {
+@@ -9630,7 +9630,7 @@ bool HistoryWidget::updateCanSendMessage() {
  	return true;
  }
  
@@ -139,7 +139,7 @@ index 4d7ff9819a..7d97e01465 100644
  	if (!_list) {
  		return;
  	}
-@@ -9615,7 +9615,7 @@ void HistoryWidget::forwardSelected() {
+@@ -9639,7 +9639,7 @@ void HistoryWidget::forwardSelected() {
  		if (const auto strong = weak.get()) {
  			strong->clearSelected();
  		}
@@ -149,7 +149,7 @@ index 4d7ff9819a..7d97e01465 100644
  
  void HistoryWidget::confirmDeleteSelected() {
 diff --git a/Telegram/SourceFiles/history/history_widget.h b/Telegram/SourceFiles/history/history_widget.h
-index 09ac181178..f2c1728791 100644
+index 710878a874..ee49480da8 100644
 --- a/Telegram/SourceFiles/history/history_widget.h
 +++ b/Telegram/SourceFiles/history/history_widget.h
 @@ -291,7 +291,7 @@ public:

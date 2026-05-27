@@ -13,10 +13,10 @@ Type "registertg" in settings to clean leftover files.
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/Telegram/SourceFiles/core/application.cpp b/Telegram/SourceFiles/core/application.cpp
-index ca9a3775c3..47386b4262 100644
+index 34d67906f5..968b01fab7 100644
 --- a/Telegram/SourceFiles/core/application.cpp
 +++ b/Telegram/SourceFiles/core/application.cpp
-@@ -1904,7 +1904,7 @@ void Application::RegisterUrlScheme() {
+@@ -1909,7 +1909,7 @@ void Application::RegisterUrlScheme() {
  		? u"-workdir \"%1\""_q.arg(cWorkingDir())
  		: QString();
  
@@ -25,7 +25,7 @@ index ca9a3775c3..47386b4262 100644
  		.executable = Platform::ExecutablePathForShortcuts(),
  		.arguments = arguments,
  		.protocol = u"tg"_q,
-@@ -1915,7 +1915,7 @@ void Application::RegisterUrlScheme() {
+@@ -1920,7 +1920,7 @@ void Application::RegisterUrlScheme() {
  		.displayAppDescription = AppName.utf16(),
  	});
  

@@ -13,10 +13,10 @@ Subject: [PATCH] (Info)(Opt) Show inferred peer DC
  create mode 100644 Telegram/SourceFiles/yukigram/settings/inferred_peer_dc.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index ef629b66c8..b63a2fed74 100644
+index 7b23069412..fa516ba62d 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1961,6 +1961,8 @@ PRIVATE
+@@ -1965,6 +1965,8 @@ PRIVATE
      yukigram/settings/hide_wall_paper.h
      yukigram/settings/history_peer_type_icons.cpp
      yukigram/settings/history_peer_type_icons.h
@@ -26,7 +26,7 @@ index ef629b66c8..b63a2fed74 100644
      yukigram/settings/icon_theme_symbolic.h
      yukigram/settings/mirrored.cpp
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-index 93d72537d8..5681213e7f 100644
+index 1cdb208727..2aa64076bf 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 @@ -41,6 +41,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -45,7 +45,7 @@ index 93d72537d8..5681213e7f 100644
  #include "styles/style_boxes.h"
  #include "styles/style_channel_earn.h" // st::channelEarnCurrencyCommonMargins
  #include "styles/style_info.h"
-@@ -1631,6 +1633,22 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
+@@ -1586,6 +1588,22 @@ Section DetailsFiller::makeInfo() {
  			);
  		}
  	};
@@ -68,7 +68,7 @@ index 93d72537d8..5681213e7f 100644
  	const auto setupJoinDate = [&] {
  		if (ShowChannelJoinedBelowAbout.value()) {
  			if (const auto channel = _peer->asChannel()) {
-@@ -1734,6 +1752,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
+@@ -1689,6 +1707,7 @@ Section DetailsFiller::makeInfo() {
  		});
  
  		setupPeerId();
@@ -76,14 +76,14 @@ index 93d72537d8..5681213e7f 100644
  
  		if (!user->isBot()) {
  			tracker.track(result->add(
-@@ -1855,6 +1874,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
+@@ -1810,6 +1829,7 @@ Section DetailsFiller::makeInfo() {
  		}
  
  		setupPeerId();
 +		setupPeerDc();
  		setupJoinDate();
  	}
- 	wrap->toggleOn(tracker.atLeastOneShownValue());
+ 	raw->toggleOn(tracker.atLeastOneShownValue());
 diff --git a/Telegram/SourceFiles/yukigram/settings/inferred_peer_dc.cpp b/Telegram/SourceFiles/yukigram/settings/inferred_peer_dc.cpp
 new file mode 100644
 index 0000000000..9c29075a30

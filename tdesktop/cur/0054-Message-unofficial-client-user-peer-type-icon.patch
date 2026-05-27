@@ -9,7 +9,7 @@ Subject: [PATCH] (Message) "unofficial client user" peer type icon
  2 files changed, 4 insertions(+)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 0101c033b2..d314932894 100644
+index 2d7ec53cda..d98af17c2e 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -161,6 +161,8 @@ std::optional<style::icon> ChatTypeIcon(HistoryItem *item) {

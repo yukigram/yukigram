@@ -18,10 +18,10 @@ Subject: [PATCH] (Yukigram) Options framework
  create mode 100644 Telegram/SourceFiles/yukigram/options_runtime.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index eeb4a7b858..5e13d07a3f 100644
+index 9eecfac1ce..b4cbbbe6de 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1937,6 +1937,10 @@ PRIVATE
+@@ -1941,6 +1941,10 @@ PRIVATE
      window/themes/window_themes_generate_name.cpp
      window/themes/window_themes_generate_name.h
      yukigram/appid.h
@@ -33,7 +33,7 @@ index eeb4a7b858..5e13d07a3f 100644
      apiwrap.h
      config.h
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
-index 3865bddae0..eb84fc697c 100644
+index 94c44cbc70..69e54bd90b 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
 +++ b/Telegram/SourceFiles/core/launcher.cpp
 @@ -19,6 +19,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -44,7 +44,7 @@ index 3865bddae0..eb84fc697c 100644
  
  #include <QtCore/QLoggingCategory>
  #include <QtCore/QStandardPaths>
-@@ -413,6 +414,7 @@ int Launcher::exec() {
+@@ -419,6 +420,7 @@ int Launcher::exec() {
  	// Must be started before Platform is started.
  	Logs::start();
  	base::options::init(cWorkingDir() + "tdata/experimental_options.json");
@@ -52,7 +52,7 @@ index 3865bddae0..eb84fc697c 100644
  
  	// Must be called after options are inited.
  	initHighDpi();
-@@ -654,6 +656,7 @@ void Launcher::processArguments() {
+@@ -660,6 +662,7 @@ void Launcher::processArguments() {
  int Launcher::executeApplication() {
  	FilteredCommandLineArguments arguments(_argc, _argv);
  	Sandbox sandbox(arguments.count(), arguments.values());
@@ -61,7 +61,7 @@ index 3865bddae0..eb84fc697c 100644
  	base::ConcurrentTimerEnvironment environment;
  	return sandbox.start();
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index f51189f900..44da7be77f 100644
+index 5a521869d4..051cb50089 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -6,6 +6,7 @@ For license and copyright information please follow this link:
@@ -72,7 +72,7 @@ index f51189f900..44da7be77f 100644
  
  #include "data/components/passkeys.h"
  #include "main/main_session.h"
-@@ -159,6 +160,7 @@ void AddOption(
+@@ -158,6 +159,7 @@ void AddOption(
  			return;
  		}
  		option.set(toggled);

@@ -12,7 +12,7 @@ Subject: [PATCH] (Interface)(Opt) Custom monospace font
  5 files changed, 106 insertions(+), 5 deletions(-)
 
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
-index eb84fc697c..9d9992366e 100644
+index 69e54bd90b..4ae79c0a0c 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
 +++ b/Telegram/SourceFiles/core/launcher.cpp
 @@ -25,6 +25,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -26,7 +26,7 @@ index eb84fc697c..9d9992366e 100644
  namespace Core {
  namespace {
  
-@@ -415,6 +419,7 @@ int Launcher::exec() {
+@@ -421,6 +425,7 @@ int Launcher::exec() {
  	Logs::start();
  	base::options::init(cWorkingDir() + "tdata/experimental_options.json");
  	Yukigram::Options::init();

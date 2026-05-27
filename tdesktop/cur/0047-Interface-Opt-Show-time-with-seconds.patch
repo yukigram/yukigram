@@ -26,10 +26,10 @@ Original author: c0re100 <corehusky@gmail.com>
  create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index b6a12846a0..f57d16ab04 100644
+index 8589ad81a8..f3dbfedbe9 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1956,6 +1956,8 @@ PRIVATE
+@@ -1960,6 +1960,8 @@ PRIVATE
      yukigram/settings/mpris_call_hangup.h
      yukigram/settings/right_action_comments.cpp
      yukigram/settings/right_action_comments.h
@@ -107,10 +107,10 @@ index 2e8ee8c52d..4a11612dad 100644
  }
  
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 1a4dc7e4e3..d760f000b2 100644
+index c8cf4ac7f4..b09229bb0c 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3795,7 +3795,7 @@ TextForMimeData HistoryInner::getSelectedText() const {
+@@ -3818,7 +3818,7 @@ TextForMimeData HistoryInner::getSelectedText() const {
  		const auto i = texts.emplace(item->position(), Part{
  			.name = item->author()->name(),
  			.time = QString("[%1] ").arg(
@@ -120,7 +120,7 @@ index 1a4dc7e4e3..d760f000b2 100644
  		}).first;
  		fullSize += i->second.time.size()
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
-index 4ebac19f48..a0dfe4b648 100644
+index 35e67676fa..52c3d6db08 100644
 --- a/Telegram/SourceFiles/history/history_item.cpp
 +++ b/Telegram/SourceFiles/history/history_item.cpp
 @@ -1349,7 +1349,7 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
@@ -132,7 +132,7 @@ index 4ebac19f48..a0dfe4b648 100644
  	}
  	return QString();
  }
-@@ -7774,7 +7774,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
+@@ -7781,7 +7781,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
  	};
  	const auto time = QLocale().toString(
  		scheduled.time(),
@@ -155,10 +155,10 @@ index 1dcb93feb4..d9e1b4d257 100644
  	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
  	const auto authorWidth = st::msgDateFont->width(author);
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index a4666d9e41..5d4f6e593f 100644
+index 34cb5f67de..6a045eda6b 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-@@ -2805,7 +2805,7 @@ TextForMimeData ListWidget::getSelectedText() const {
+@@ -2807,7 +2807,7 @@ TextForMimeData ListWidget::getSelectedText() const {
  			not_null<HistoryItem*> item,
  			TextForMimeData &&unwrapped) {
  		auto time = QString("[%1] ").arg(

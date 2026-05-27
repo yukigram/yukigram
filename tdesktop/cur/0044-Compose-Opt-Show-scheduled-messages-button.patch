@@ -13,10 +13,10 @@ Subject: [PATCH] (Compose)(Opt) Show scheduled messages button
  create mode 100644 Telegram/SourceFiles/yukigram/settings/always_show_scheduled.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index d594f15e50..b6a12846a0 100644
+index 40e4cd5212..8589ad81a8 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1943,6 +1943,8 @@ PRIVATE
+@@ -1947,6 +1947,8 @@ PRIVATE
      yukigram/options_database.h
      yukigram/options_runtime.h
      yukigram/options.h
@@ -26,10 +26,10 @@ index d594f15e50..b6a12846a0 100644
      yukigram/settings/disable_animoji.h
      yukigram/settings/force_mobile_layout.cpp
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index a5fb9cca5f..26a0ba8fb3 100644
+index 1e85946d3b..c50db344c2 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -34,6 +34,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -35,6 +35,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "core/file_utilities.h"
  #include "core/mime_type.h"
  #include "history/view/history_view_draw_to_reply.h"
@@ -37,7 +37,7 @@ index a5fb9cca5f..26a0ba8fb3 100644
  #include "ui/emoji_config.h"
  #include "ui/chat/attach/attach_prepare.h"
  #include "ui/chat/choose_theme_controller.h"
-@@ -3367,7 +3368,7 @@ void HistoryWidget::setupScheduledToggle() {
+@@ -3375,7 +3376,7 @@ void HistoryWidget::setupScheduledToggle() {
  }
  
  void HistoryWidget::refreshScheduledToggle() {

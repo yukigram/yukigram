@@ -13,10 +13,10 @@ Subject: [PATCH] (Style)(Opt) Hide reply background emoji
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 839c9631fa..ef629b66c8 100644
+index d26c4b9b16..7b23069412 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1951,6 +1951,8 @@ PRIVATE
+@@ -1955,6 +1955,8 @@ PRIVATE
      yukigram/settings/disable_animoji.h
      yukigram/settings/force_mobile_layout.cpp
      yukigram/settings/force_mobile_layout.h

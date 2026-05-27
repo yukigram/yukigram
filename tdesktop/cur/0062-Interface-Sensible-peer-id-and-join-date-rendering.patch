@@ -4,15 +4,15 @@ Date: Wed, 29 Apr 2026 10:01:56 +0300
 Subject: [PATCH] (Interface) Sensible peer id and join date rendering
 
 ---
- .../info/profile/info_profile_actions.cpp     | 98 +++++++++----------
- 1 file changed, 49 insertions(+), 49 deletions(-)
+ .../info/profile/info_profile_actions.cpp     | 103 ++++++++++--------
+ 1 file changed, 56 insertions(+), 47 deletions(-)
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-index d80b631b96..93d72537d8 100644
+index a829ca7d30..1cdb208727 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-@@ -225,51 +225,6 @@ base::options::toggle ShowChannelJoinedBelowAbout({
- 	return result;
+@@ -216,49 +216,13 @@ base::options::toggle ShowChannelJoinedBelowAbout({
+ 	return Ui::CreateSkipWidget(parent, st::infoProfileSkip);
  }
  
 -[[nodiscard]] rpl::producer<TextWithEntities> AboutWithAdvancedValue(
@@ -58,12 +58,17 @@ index d80b631b96..93d72537d8 100644
 -		}
 -		return std::move(value);
 -	});
--}
--
++[[nodiscard]] object_ptr<Ui::SlideWrap<>> CreateSlideSkipWidget(
++		not_null<Ui::RpWidget*> parent) {
++	auto result = Ui::CreateSlideSkipWidget(
++		parent,
++		st::infoProfileSkip);
++	result->setDuration(st::infoSlideDuration);
++	return result;
+ }
+ 
  [[nodiscard]] bool AreNonTrivialHours(const Data::WorkingHours &hours) {
- 	if (!hours) {
- 		return false;
-@@ -1655,6 +1610,46 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
+@@ -1601,6 +1565,46 @@ Section DetailsFiller::makeInfo() {
  				}
  			});
  	};
@@ -110,7 +115,7 @@ index d80b631b96..93d72537d8 100644
  	if (const auto user = _peer->asUser()) {
  		if (user->session().supportMode()) {
  			addInfoLineGeneric(
-@@ -1689,8 +1684,8 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
+@@ -1635,8 +1639,8 @@ Section DetailsFiller::makeInfo() {
  			? tr::lng_info_about_label()
  			: tr::lng_info_bio_label();
  		addTranslateToMenu(
@@ -121,7 +126,7 @@ index d80b631b96..93d72537d8 100644
  
  		const auto usernameLine = addInfoOneLine(
  			UsernamesSubtext(_peer, tr::lng_info_username_label()),
-@@ -1738,6 +1733,8 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
+@@ -1684,6 +1688,8 @@ Section DetailsFiller::makeInfo() {
  			return false;
  		});
  
@@ -130,7 +135,7 @@ index d80b631b96..93d72537d8 100644
  		if (!user->isBot()) {
  			tracker.track(result->add(
  				CreateBirthday(result, controller, user),
-@@ -1852,10 +1849,13 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
+@@ -1798,10 +1804,13 @@ Section DetailsFiller::makeInfo() {
  
  		const auto about = addInfoLine(tr::lng_info_about_label(), _topic
  			? rpl::single(TextWithEntities())
@@ -144,8 +149,8 @@ index d80b631b96..93d72537d8 100644
 +		setupPeerId();
 +		setupJoinDate();
  	}
- 	wrap->toggleOn(tracker.atLeastOneShownValue());
- 	wrap->finishAnimating();
+ 	raw->toggleOn(tracker.atLeastOneShownValue());
+ 	raw->finishAnimating();
 -- 
 2.53.0
 
