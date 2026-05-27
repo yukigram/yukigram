@@ -7,8 +7,8 @@ Subject: [PATCH] (Interface)(Opt) System emoji
  Telegram/CMakeLists.txt                       |  2 ++
  .../yukigram/settings/system_emoji.cpp        | 20 +++++++++++++++++++
  .../yukigram/settings/system_emoji.h          |  5 +++++
- Telegram/lib_ui/ui/emoji_config.cpp           | 11 ++++++++++
- 4 files changed, 38 insertions(+)
+ Telegram/lib_ui/ui/emoji_config.cpp           | 12 +++++++++++
+ 4 files changed, 39 insertions(+)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/system_emoji.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/system_emoji.h
 
@@ -63,7 +63,7 @@ index 0000000000..1bce51908a
 +extern const char kOptionSystemEmoji[];
 +}
 diff --git a/Telegram/lib_ui/ui/emoji_config.cpp b/Telegram/lib_ui/ui/emoji_config.cpp
-index f92235f536..8bbfac1a39 100644
+index f92235f536..0b34dbd869 100644
 --- a/Telegram/lib_ui/ui/emoji_config.cpp
 +++ b/Telegram/lib_ui/ui/emoji_config.cpp
 @@ -71,6 +71,7 @@ private:
@@ -74,11 +74,12 @@ index f92235f536..8bbfac1a39 100644
  auto SizeNormal = -1;
  auto SizeLarge = -1;
  auto SpritesCount = -1;
-@@ -782,7 +783,17 @@ const QPixmap &SinglePixmap(EmojiPtr emoji, int fontHeight) {
+@@ -782,7 +783,18 @@ const QPixmap &SinglePixmap(EmojiPtr emoji, int fontHeight) {
  	).first->second;
  }
  
-+extern bool Yukigram_UseSystemEmojiFont = false;
++extern bool Yukigram_UseSystemEmojiFont;
++bool Yukigram_UseSystemEmojiFont = false;
 +
  void Draw(QPainter &p, EmojiPtr emoji, int size, int x, int y) {
 +	if (Yukigram_UseSystemEmojiFont) {

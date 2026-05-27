@@ -4,14 +4,14 @@ Date: Wed, 29 Apr 2026 10:01:56 +0300
 Subject: [PATCH] (Interface) Sensible peer id and join date rendering
 
 ---
- .../info/profile/info_profile_actions.cpp     | 103 ++++++++++--------
- 1 file changed, 56 insertions(+), 47 deletions(-)
+ .../info/profile/info_profile_actions.cpp     | 98 +++++++++----------
+ 1 file changed, 49 insertions(+), 49 deletions(-)
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-index a829ca7d30..1cdb208727 100644
+index a829ca7d30..0d6871544f 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-@@ -216,49 +216,13 @@ base::options::toggle ShowChannelJoinedBelowAbout({
+@@ -216,51 +216,6 @@ base::options::toggle ShowChannelJoinedBelowAbout({
  	return Ui::CreateSkipWidget(parent, st::infoProfileSkip);
  }
  
@@ -58,17 +58,12 @@ index a829ca7d30..1cdb208727 100644
 -		}
 -		return std::move(value);
 -	});
-+[[nodiscard]] object_ptr<Ui::SlideWrap<>> CreateSlideSkipWidget(
-+		not_null<Ui::RpWidget*> parent) {
-+	auto result = Ui::CreateSlideSkipWidget(
-+		parent,
-+		st::infoProfileSkip);
-+	result->setDuration(st::infoSlideDuration);
-+	return result;
- }
- 
+-}
+-
  [[nodiscard]] bool AreNonTrivialHours(const Data::WorkingHours &hours) {
-@@ -1601,6 +1565,46 @@ Section DetailsFiller::makeInfo() {
+ 	if (!hours) {
+ 		return false;
+@@ -1601,6 +1556,46 @@ Section DetailsFiller::makeInfo() {
  				}
  			});
  	};
@@ -115,7 +110,7 @@ index a829ca7d30..1cdb208727 100644
  	if (const auto user = _peer->asUser()) {
  		if (user->session().supportMode()) {
  			addInfoLineGeneric(
-@@ -1635,8 +1639,8 @@ Section DetailsFiller::makeInfo() {
+@@ -1635,8 +1630,8 @@ Section DetailsFiller::makeInfo() {
  			? tr::lng_info_about_label()
  			: tr::lng_info_bio_label();
  		addTranslateToMenu(
@@ -126,7 +121,7 @@ index a829ca7d30..1cdb208727 100644
  
  		const auto usernameLine = addInfoOneLine(
  			UsernamesSubtext(_peer, tr::lng_info_username_label()),
-@@ -1684,6 +1688,8 @@ Section DetailsFiller::makeInfo() {
+@@ -1684,6 +1679,8 @@ Section DetailsFiller::makeInfo() {
  			return false;
  		});
  
@@ -135,7 +130,7 @@ index a829ca7d30..1cdb208727 100644
  		if (!user->isBot()) {
  			tracker.track(result->add(
  				CreateBirthday(result, controller, user),
-@@ -1798,10 +1804,13 @@ Section DetailsFiller::makeInfo() {
+@@ -1798,10 +1795,13 @@ Section DetailsFiller::makeInfo() {
  
  		const auto about = addInfoLine(tr::lng_info_about_label(), _topic
  			? rpl::single(TextWithEntities())
