@@ -4,14 +4,15 @@ Date: Sun, 26 Apr 2026 22:07:47 +0300
 Subject: [PATCH] (Yukigram) Options framework
 
 ---
- Telegram/CMakeLists.txt                       |  4 +
+ Telegram/CMakeLists.txt                       |  4 ++
+ Telegram/Resources/langs/yukigram/en.json     |  9 +++
  Telegram/SourceFiles/core/launcher.cpp        |  3 +
  .../settings/settings_experimental.cpp        |  2 +
- Telegram/SourceFiles/yukigram/options.cpp     | 83 +++++++++++++++++++
- Telegram/SourceFiles/yukigram/options.h       | 26 ++++++
- .../SourceFiles/yukigram/options_database.h   | 27 ++++++
+ Telegram/SourceFiles/yukigram/options.cpp     | 67 +++++++++++++++++++
+ Telegram/SourceFiles/yukigram/options.h       | 26 +++++++
+ .../SourceFiles/yukigram/options_database.h   | 25 +++++++
  .../SourceFiles/yukigram/options_runtime.h    | 10 +++
- 7 files changed, 155 insertions(+)
+ 8 files changed, 146 insertions(+)
  create mode 100644 Telegram/SourceFiles/yukigram/options.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/options.h
  create mode 100644 Telegram/SourceFiles/yukigram/options_database.h
@@ -32,6 +33,24 @@ index 00f224b188..035279a328 100644
      apiwrap.cpp
      apiwrap.h
      config.h
+diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
+index a54f5182fa..5698dc93e2 100644
+--- a/Telegram/Resources/langs/yukigram/en.json
++++ b/Telegram/Resources/langs/yukigram/en.json
+@@ -1,3 +1,12 @@
+ {
++    "optgroup/interface": "Interface",
++    "optgroup/tweaks": "Tweaks",
++    "optgroup/dialogs": "Chat list",
++    "optgroup/style": "Chat style",
++    "optgroup/history": "Messages",
++    "optgroup/reactions": "Reactions",
++    "optgroup/compose": "Composing messages",
++    "optgroup/picker": "Stickers and Emoji picker",
++    "optgroup/system": "System",
+     "_to_keep_the_diffs_nice": "Please make sure this string is kept at the bottom"
+ }
+\ No newline at end of file
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
 index 94c44cbc70..69e54bd90b 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
@@ -82,31 +101,15 @@ index 5a521869d4..051cb50089 100644
  		}
 diff --git a/Telegram/SourceFiles/yukigram/options.cpp b/Telegram/SourceFiles/yukigram/options.cpp
 new file mode 100644
-index 0000000000..4b5c39cc92
+index 0000000000..f89aee8e9e
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.cpp
-@@ -0,0 +1,83 @@
+@@ -0,0 +1,67 @@
 +#include "yukigram/options.h"
 +#include "yukigram/options_database.h"
 +#include "yukigram/options_runtime.h"
 +
 +namespace Yukigram::Options {
-+
-+const std::vector<std::pair<std::string_view, std::string_view>> &Categories() {
-+	static std::vector<std::pair<std::string_view, std::string_view>> m = {
-+		{"", ""},
-+		{"interface", "Interface"},
-+		{"tweaks", "Tweaks"},
-+		{"dialogs", "Chat list"},
-+		{"style", "Chat style"},
-+		{"history", "Messages"},
-+		{"reactions", "Reactions"},
-+		{"compose", "Composing messages"},
-+		{"picker", "Stickers and Emoji picker"},
-+		{"system", "System"},
-+	};
-+	return m;
-+}
 +
 +std::map<std::string_view, Toggle> &Toggles() {
 +	static std::map<std::string_view, Toggle> m;
@@ -203,10 +206,10 @@ index 0000000000..7b270e3260
 +}
 diff --git a/Telegram/SourceFiles/yukigram/options_database.h b/Telegram/SourceFiles/yukigram/options_database.h
 new file mode 100644
-index 0000000000..9b17e9c3d7
+index 0000000000..898da57fcb
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options_database.h
-@@ -0,0 +1,27 @@
+@@ -0,0 +1,25 @@
 +#pragma once
 +
 +#include "yukigram/options.h"
@@ -227,8 +230,6 @@ index 0000000000..9b17e9c3d7
 +	rpl::lifetime _lifetime;
 +	std::function<void(bool)> link;
 +};
-+
-+const std::vector<std::pair<std::string_view, std::string_view>> &Categories();
 +
 +std::map<std::string_view, Toggle> &Toggles();
 +std::map<std::string_view, std::vector<std::string_view>> &TogglesByCategory();

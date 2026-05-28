@@ -8,7 +8,7 @@ Subject: [PATCH] (Yukigram) Settings deep links
  1 file changed, 28 insertions(+)
 
 diff --git a/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp b/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp
-index 2bf81c8c03..8e53c55fef 100644
+index 2bf81c8c03..4634a2a6cd 100644
 --- a/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp
 +++ b/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp
 @@ -69,6 +69,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -29,7 +29,7 @@ index 2bf81c8c03..8e53c55fef 100644
 +		.path = u"yukigram"_q,
 +		.action = SettingsSection{ ::Settings::YukigramId() },
 +	});
-+	for (auto &[category, _] : Yukigram::Options::Categories()) {
++	for (auto &[category, _] : Yukigram::Options::TogglesByCategory()) {
 +		const auto path = u"yukigram/%1"_q.arg(category);
 +		router.add(u"settings"_q, {
 +			.path = path,

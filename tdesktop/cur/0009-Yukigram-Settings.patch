@@ -7,10 +7,11 @@ Co-Authored-By: Lunya <241520024+lunya-miaou@users.noreply.github.com>
 ---
  Telegram/CMakeLists.txt                       |   2 +
  Telegram/Resources/langs/lang.strings         |   1 +
+ Telegram/Resources/langs/yukigram/en.json     |   1 +
  .../settings/sections/settings_main.cpp       |   8 +
- .../settings/sections/settings_yukigram.cpp   | 153 ++++++++++++++++++
+ .../settings/sections/settings_yukigram.cpp   | 149 ++++++++++++++++++
  .../settings/sections/settings_yukigram.h     |   9 ++
- 5 files changed, 173 insertions(+)
+ 6 files changed, 170 insertions(+)
  create mode 100644 Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
  create mode 100644 Telegram/SourceFiles/settings/sections/settings_yukigram.h
 
@@ -39,6 +40,18 @@ index 3cf430918e..05011b4a9e 100644
  "lng_settings_stickers_emoji" = "Stickers and emoji";
  "lng_settings_messages" = "Messages";
  "lng_settings_themes" = "Themes";
+diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
+index 5698dc93e2..0ca46691d6 100644
+--- a/Telegram/Resources/langs/yukigram/en.json
++++ b/Telegram/Resources/langs/yukigram/en.json
+@@ -8,5 +8,6 @@
+     "optgroup/compose": "Composing messages",
+     "optgroup/picker": "Stickers and Emoji picker",
+     "optgroup/system": "System",
++    "settings/yukigram/title": "Yukigram settings",
+     "_to_keep_the_diffs_nice": "Please make sure this string is kept at the bottom"
+ }
+\ No newline at end of file
 diff --git a/Telegram/SourceFiles/settings/sections/settings_main.cpp b/Telegram/SourceFiles/settings/sections/settings_main.cpp
 index 3d4eda91da..59ce88648c 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_main.cpp
@@ -67,10 +80,10 @@ index 3d4eda91da..59ce88648c 100644
  		.title = tr::lng_settings_language(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 new file mode 100644
-index 0000000000..7ba6a26351
+index 0000000000..e2f64f2a29
 --- /dev/null
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-@@ -0,0 +1,153 @@
+@@ -0,0 +1,149 @@
 +#include "settings/sections/settings_yukigram.h"
 +#include "yukigram/options_database.h"
 +
@@ -109,9 +122,6 @@ index 0000000000..7ba6a26351
 +	const Yukigram::Options::Description &d,
 +	std::shared_ptr<rpl::variable<bool>> v
 +) {
-+
-+	const auto name = qs_sv(d.name.empty() ? key : d.name);
-+
 +	const auto icon = d.mirrorExperimental ? &st::menuIconExperimental : nullptr;
 +
 +	const auto button = builder.addButton({
@@ -153,8 +163,7 @@ index 0000000000..7ba6a26351
 +
 +void BuildYukigramSectionContent(SectionBuilder &builder) {
 +	bool isFirstNamedSection = true;
-+	for (const auto &[category, name] : Yukigram::Options::Categories()) {
-+		auto &toggles = Yukigram::Options::TogglesByCategory()[category];
++	for (const auto &[category, toggles] : Yukigram::Options::TogglesByCategory()) {
 +		if (!category.empty() && !toggles.empty()) {
 +			if (isFirstNamedSection) {
 +				isFirstNamedSection = false;
@@ -208,7 +217,7 @@ index 0000000000..7ba6a26351
 +}
 +
 +rpl::producer<QString> Yukigram::title() {
-+	return tr::lng_settings_yukigram();
++	return rktr("settings/yukigram/title");
 +}
 +
 +void Yukigram::setupContent() {
