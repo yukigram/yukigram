@@ -144,6 +144,7 @@ These are placed under `(Major)` category.
     instead of bundled emoji packs
 - :gear: Custom monospace font
 - Video controls for GIFs
+- :zap: :gear: Disable SHOUTING CASE on buttons
 
 These are placed under `(Interface)` category.
 
