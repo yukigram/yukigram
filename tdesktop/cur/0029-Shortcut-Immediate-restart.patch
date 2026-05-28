@@ -1,0 +1,51 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 03:06:08 +0300
+Subject: [PATCH] (Shortcut) Immediate restart
+
+---
+ Telegram/Resources/langs/yukigram/en.json                | 1 +
+ Telegram/SourceFiles/settings/sections/settings_main.cpp | 8 ++++++++
+ 2 files changed, 9 insertions(+)
+
+diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
+index e5d3d59002..c2a64bf552 100644
+--- a/Telegram/Resources/langs/yukigram/en.json
++++ b/Telegram/Resources/langs/yukigram/en.json
+@@ -32,6 +32,7 @@
+     "opt/use-small-msg-bubble-radius/desc": "",
+     "opt/view-profile-in-chats-list-context-menu/name": "View profile button in context menu",
+     "opt/view-profile-in-chats-list-context-menu/desc": "",
++    "settings/main/restart/title": "Restart now",
+     "settings/yukigram/title": "Yukigram settings",
+     "unsupported-message/text": "This message is not supported by your version of Yukigram. Please update to the latest version. If you are already using the latest version, this message might depend on a feature that is not yet implemented in Telegram Desktop, or Yukigram is lagging behind upstream.",
+     "unsupported-message/button/text": "View Yukigram channel",
+diff --git a/Telegram/SourceFiles/settings/sections/settings_main.cpp b/Telegram/SourceFiles/settings/sections/settings_main.cpp
+index 59ce88648c..5301f7ca4e 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_main.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_main.cpp
+@@ -35,6 +35,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "lang/lang_cloud_manager.h"
+ #include "lang/lang_instance.h"
+ #include "lang/lang_keys.h"
++#include "yukigram/lang.h"
+ #include "lottie/lottie_icon.h"
+ #include "menu/menu_checked_action.h"
+ #include "main/main_account.h"
+@@ -677,6 +678,13 @@ void Main::fillTopBarMenu(const Ui::Menu::MenuCallback &addAction) {
+ 			&st::menuIconEdit);
+ 	}
+ 	const auto window = &controller()->window();
++	const auto restart = addAction({
++		.text = ktr("settings/main/restart/title"),
++		.handler = [] { Core::Restart(); },
++		.icon = &st::menuIconLeaveAttention,
++		.isAttention = true
++	});
++	restart->setProperty("highlight-control-id", u"settings/restart"_q);
+ 	const auto logout = addAction({
+ 		.text = tr::lng_settings_logout(tr::now),
+ 		.handler = [=] { window->showLogoutConfirmation(); },
+-- 
+2.53.0
+

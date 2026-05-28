@@ -1,0 +1,121 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Mon, 27 Apr 2026 13:02:33 +0300
+Subject: [PATCH] (Yukigram) Experimental settings mirror
+
+---
+ Telegram/CMakeLists.txt                       |  1 +
+ Telegram/Resources/langs/yukigram/en.json     | 16 +++++
+ .../yukigram/settings/mirrored.cpp            | 61 +++++++++++++++++++
+ 3 files changed, 78 insertions(+)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/mirrored.cpp
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index 8d100b6fcc..4f216ba6c7 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1949,6 +1949,7 @@ PRIVATE
+     yukigram/options_database.h
+     yukigram/options_runtime.h
+     yukigram/options.h
++    yukigram/settings/mirrored.cpp
+     apiwrap.cpp
+     apiwrap.h
+     config.h
+diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
+index 8f0b6abba4..7917c9030a 100644
+--- a/Telegram/Resources/langs/yukigram/en.json
++++ b/Telegram/Resources/langs/yukigram/en.json
+@@ -13,6 +13,22 @@
+     "optgroup/compose": "Composing messages",
+     "optgroup/picker": "Stickers and Emoji picker",
+     "optgroup/system": "System",
++    "opt/force-compose-search-one-column/name": "Embedded search in single-column",
++    "opt/force-compose-search-one-column/desc": "",
++    "opt/forum-hide-chats-list/name": "Hide narrow column chat list in forums",
++    "opt/forum-hide-chats-list/desc": "",
++    "opt/show-channel-joined-below-about/name": "Show channel join date",
++    "opt/show-channel-joined-below-about/desc": "",
++    "opt/show-peer-id-below-about/name": "Show peer ID",
++    "opt/show-peer-id-below-about/desc": "",
++    "opt/tabbed-panel-show-on-click/name": "Click to show emoji picker",
++    "opt/tabbed-panel-show-on-click/desc": "",
++    "opt/unlimited-recent-stickers/name": "Unlimited recent stickers",
++    "opt/unlimited-recent-stickers/desc": "",
++    "opt/use-small-msg-bubble-radius/name": "Use small message bubble radius",
++    "opt/use-small-msg-bubble-radius/desc": "",
++    "opt/view-profile-in-chats-list-context-menu/name": "View profile button in context menu",
++    "opt/view-profile-in-chats-list-context-menu/desc": "",
+     "settings/yukigram/title": "Yukigram settings",
+     "unsupported-message/text": "This message is not supported by your version of Yukigram. Please update to the latest version. If you are already using the latest version, this message might depend on a feature that is not yet implemented in Telegram Desktop, or Yukigram is lagging behind upstream.",
+     "unsupported-message/button/text": "View Yukigram channel",
+diff --git a/Telegram/SourceFiles/yukigram/settings/mirrored.cpp b/Telegram/SourceFiles/yukigram/settings/mirrored.cpp
+new file mode 100644
+index 0000000000..84279f9b6e
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/mirrored.cpp
+@@ -0,0 +1,61 @@
++#include "yukigram/options.h"
++#include "chat_helpers/tabbed_panel.h"
++#include "chat_helpers/stickers_list_widget.h"
++#include "dialogs/dialogs_widget.h"
++#include "info/profile/info_profile_actions.h"
++#include "mainwidget.h"
++#include "window/window_peer_menu.h"
++#include "ui/chat/chat_style_radius.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *TabbedPanelShowOnClick = Yukigram::Options::make(ChatHelpers::kOptionTabbedPanelShowOnClick, {
++	.keywords = { u"yukigram"_q, u"experimental"_q, u"tabbed"_q, u"panel"_q, u"stickers"_q, u"gifs"_q, u"emoji"_q, u"hover"_q },
++	.category = "picker",
++	.mirrorExperimental = true,
++});
++
++rpl::variable<bool> *UnlimitedRecentStickers = Yukigram::Options::make(ChatHelpers::kOptionUnlimitedRecentStickers, {
++	.keywords = { u"yukigram"_q, u"experimental"_q, u"stickers"_q, u"limit"_q, u"unlimited"_q },
++	.category = "picker",
++	.mirrorExperimental = true,
++});
++
++rpl::variable<bool> *ForumHideChatsList = Yukigram::Options::make(Dialogs::kOptionForumHideChatsList, {
++	.keywords = { u"yukigram"_q, u"experimental"_q, u"forums"_q, u"chat list"_q, u"column"_q },
++	.category = "dialogs",
++	.mirrorExperimental = true,
++});
++
++rpl::variable<bool> *ShowPeerIdBelowAbout = Yukigram::Options::make(Info::Profile::kOptionShowPeerIdBelowAbout, {
++	.keywords = { u"yukigram"_q, u"experimental"_q, u"peer"_q, u"id"_q },
++	.category = "tweaks",
++	.mirrorExperimental = true,
++});
++
++rpl::variable<bool> *ShowChannelJoinedBelowAbout = Yukigram::Options::make(Info::Profile::kOptionShowChannelJoinedBelowAbout, {
++	.keywords = { u"yukigram"_q, u"experimental"_q, u"channel"_q, u"join"_q, u"date"_q },
++	.category = "tweaks",
++	.mirrorExperimental = true,
++});
++
++rpl::variable<bool> *ForceComposeSearchOneColumn = Yukigram::Options::make(kForceComposeSearchOneColumn, {
++	.keywords = { u"yukigram"_q, u"experimental"_q, u"embedded"_q, u"search"_q, u"chat"_q, u"column"_q, u"layout"_q, u"mobile"_q, u"phone"_q },
++	.category = "interface",
++	.mirrorExperimental = true,
++});
++
++rpl::variable<bool> *ViewProfileInChatsListContextMenu = Yukigram::Options::make(Window::kOptionViewProfileInChatsListContextMenu, {
++	.keywords = { u"yukigram"_q, u"experimental"_q, u"profile"_q, u"chat list"_q, u"context"_q, u"menu"_q },
++	.category = "dialogs",
++	.mirrorExperimental = true,
++});
++
++rpl::variable<bool> *UseSmallMsgBubbleRadius = Yukigram::Options::make(Ui::kOptionUseSmallMsgBubbleRadius, {
++	.keywords = { u"yukigram"_q, u"experimental"_q, u"round"_q, u"radius"_q, u"corner"_q, u"bubble"_q },
++	.category = "style",
++	.restartRequired = true,
++	.mirrorExperimental = true,
++});
++
++}
+-- 
+2.53.0
+

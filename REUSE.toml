@@ -12,6 +12,7 @@ path = [
     "tdesktop/cur/*-Yukigram-Artwork.patch",
     "tdesktop/cur/*-Yukigram-Version.patch",
     "tdesktop/cur/*-Yukigram-Keywords.patch",
+    "tdesktop/cur/*-Yukigram-Branding.patch",
     "tdesktop/cur/*-Yukigram-Options-framework.patch",
     "tdesktop/cur/*-Yukigram-Settings.patch",
     "tdesktop/cur/*-Yukigram-Settings-deep-links.patch",

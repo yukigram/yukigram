@@ -1,0 +1,118 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Sun, 24 May 2026 20:18:16 +0300
+Subject: [PATCH] (Chat)(Opt) Disable edit by Up key
+
+This patch is adapted from Kotatogram.
+Original author: RadRussianRus <radrussianrus@gmail.com>
+---
+ Telegram/CMakeLists.txt                             |  2 ++
+ Telegram/Resources/langs/yukigram/en.json           |  2 ++
+ Telegram/SourceFiles/history/history_widget.cpp     |  2 ++
+ .../view/controls/history_view_compose_controls.cpp |  3 ++-
+ .../yukigram/settings/disable_up_edit.cpp           | 13 +++++++++++++
+ .../SourceFiles/yukigram/settings/disable_up_edit.h |  5 +++++
+ 6 files changed, 26 insertions(+), 1 deletion(-)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/disable_up_edit.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/disable_up_edit.h
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index a218ff173b..97a7a78eea 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1955,6 +1955,8 @@ PRIVATE
+     yukigram/settings/compact_chat_list.h
+     yukigram/settings/disable_animoji.cpp
+     yukigram/settings/disable_animoji.h
++    yukigram/settings/disable_up_edit.cpp
++    yukigram/settings/disable_up_edit.h
+     yukigram/settings/force_mobile_layout.cpp
+     yukigram/settings/force_mobile_layout.h
+     yukigram/settings/hide_message_tail.cpp
+diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
+index 2f2e83f364..f329079035 100644
+--- a/Telegram/Resources/langs/yukigram/en.json
++++ b/Telegram/Resources/langs/yukigram/en.json
+@@ -38,6 +38,8 @@
+     "opt/compact-chat-list/desc": "",
+     "opt/disable-animoji/name": "Disable animated big emoji",
+     "opt/disable-animoji/desc": "",
++    "opt/disable-up-edit/name": "Disable edit by Up key",
++    "opt/disable-up-edit/desc": "",
+     "opt/force-compose-search-one-column/name": "Embedded search in single-column",
+     "opt/force-compose-search-one-column/desc": "",
+     "opt/force-mobile-layout/name": "Force single-column layout",
+diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
+index 4eabf04763..44a4261682 100644
+--- a/Telegram/SourceFiles/history/history_widget.cpp
++++ b/Telegram/SourceFiles/history/history_widget.cpp
+@@ -18,6 +18,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "api/api_unread_things.h"
+ #include "base/random.h"
+ #include "boxes/compose_ai_box.h"
++#include "yukigram/settings/disable_up_edit.h"
+ #include "ui/boxes/confirm_box.h"
+ #include "boxes/delete_messages_box.h"
+ #include "boxes/send_credits_box.h"
+@@ -8054,6 +8055,7 @@ void HistoryWidget::keyPressEvent(QKeyEvent *e) {
+ 		_scroll->keyPressEvent(e);
+ 	} else if (e->key() == Qt::Key_Up && !commonModifiers) {
+ 		if (!_field->empty()
++			|| Yukigram::Settings::DisableUpEdit->current()
+ 			|| !canWriteMessage()
+ 			|| _editMsgId
+ 			|| _replyTo) {
+diff --git a/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp b/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp
+index b7da4b70d0..ba8f8a6e80 100644
+--- a/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp
++++ b/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp
+@@ -88,6 +88,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "menu/menu_checked_action.h"
+ #include "menu/menu_send.h"
+ #include "settings/sections/settings_premium.h"
++#include "yukigram/settings/disable_up_edit.h"
+ #include "ui/item_text_options.h"
+ #include "ui/text/text_options.h"
+ #include "ui/text/text_utilities.h"
+@@ -2324,7 +2325,7 @@ void ComposeControls::initKeyHandler() {
+ 			_attachRequests.fire({});
+ 			return;
+ 		}
+-		if (key == Qt::Key_Up && !hasModifiers) {
++		if (key == Qt::Key_Up && !hasModifiers && !Yukigram::Settings::DisableUpEdit->current()) {
+ 			if (!isEditingMessage() && _field->empty()) {
+ 				_editLastMessageRequests.fire(std::move(keyEvent));
+ 				return;
+diff --git a/Telegram/SourceFiles/yukigram/settings/disable_up_edit.cpp b/Telegram/SourceFiles/yukigram/settings/disable_up_edit.cpp
+new file mode 100644
+index 0000000000..18f1576258
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/disable_up_edit.cpp
+@@ -0,0 +1,13 @@
++#include "yukigram/settings/disable_up_edit.h"
++#include "yukigram/options.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *DisableUpEdit = Yukigram::Options::make(kOptionDisableUpEdit, {
++	.keywords = { u"yukigram"_q, u"edit"_q, u"up"_q },
++	.category = "tweaks",
++});
++
++const char kOptionDisableUpEdit[] = "disable-up-edit";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/disable_up_edit.h b/Telegram/SourceFiles/yukigram/settings/disable_up_edit.h
+new file mode 100644
+index 0000000000..6a4cf57d12
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/disable_up_edit.h
+@@ -0,0 +1,5 @@
++#include "rpl/rpl.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *DisableUpEdit;
++extern const char kOptionDisableUpEdit[];
++}
+-- 
+2.53.0
+

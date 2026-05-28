@@ -1,0 +1,132 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Wed, 27 May 2026 19:11:30 +0000
+Subject: [PATCH] (Chat)(Opt) Hide bottom button bar
+
+---
+ Telegram/CMakeLists.txt                           |  2 ++
+ Telegram/Resources/langs/yukigram/en.json         |  2 ++
+ Telegram/SourceFiles/history/history_widget.cpp   | 15 +++++++++++++++
+ .../yukigram/settings/hide_bottom_bar.cpp         | 13 +++++++++++++
+ .../yukigram/settings/hide_bottom_bar.h           |  5 +++++
+ 5 files changed, 37 insertions(+)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.h
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index 97a7a78eea..7cb6d565c5 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1959,6 +1959,8 @@ PRIVATE
+     yukigram/settings/disable_up_edit.h
+     yukigram/settings/force_mobile_layout.cpp
+     yukigram/settings/force_mobile_layout.h
++    yukigram/settings/hide_bottom_bar.cpp
++    yukigram/settings/hide_bottom_bar.h
+     yukigram/settings/hide_message_tail.cpp
+     yukigram/settings/hide_message_tail.h
+     yukigram/settings/hide_popular_emoji_picker.cpp
+diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
+index 30fa9c7b9f..62a055b0e1 100644
+--- a/Telegram/Resources/langs/yukigram/en.json
++++ b/Telegram/Resources/langs/yukigram/en.json
+@@ -64,6 +64,8 @@
+     "opt/force-mobile-layout/desc": "",
+     "opt/forum-hide-chats-list/name": "Hide narrow column chat list in forums",
+     "opt/forum-hide-chats-list/desc": "",
++    "opt/hide-bottom-bar/name": "Hide bottom button bar",
++    "opt/hide-bottom-bar/desc": "",
+     "opt/hide-message-tail/name": "Hide message bubble tail",
+     "opt/hide-message-tail/desc": "",
+     "opt/hide-popular-emoji-picker/name": "Hide popular animoji from picker",
+diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
+index 44a4261682..0eb14c3296 100644
+--- a/Telegram/SourceFiles/history/history_widget.cpp
++++ b/Telegram/SourceFiles/history/history_widget.cpp
+@@ -100,6 +100,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "data/data_premium_limits.h" // Data::PremiumLimits.
+ #include "data/stickers/data_stickers.h"
+ #include "data/stickers/data_custom_emoji.h"
++#include "yukigram/settings/hide_bottom_bar.h"
+ #include "history/history.h"
+ #include "history/history_item.h"
+ #include "history/history_item_helpers.h" // GetErrorForSending.
+@@ -493,6 +494,12 @@ HistoryWidget::HistoryWidget(
+ 		updateControlsGeometry();
+ 	}, lifetime());
+ 
++	Yukigram::Settings::HideBottomBar->changes(
++	) | rpl::on_next([=] {
++		updateControlsVisibility();
++		updateControlsGeometry();
++	}, lifetime());
++
+ 	_fieldChatStyle = InitMessageField(controller, _field, [=](
+ 			not_null<DocumentData*> document) {
+ 		if (_peer && Data::AllowEmojiWithoutPremium(_peer, document)) {
+@@ -5884,6 +5891,7 @@ bool HistoryWidget::isBotStart() const {
+ 	const auto user = _peer ? _peer->asUser() : nullptr;
+ 	if (!user
+ 		|| !user->isBot()
++		// || (user->isBlocked() && Yukigram::Settings::HideBottomBar->current())
+ 		|| !_canSendMessages) {
+ 		return false;
+ 	} else if (!user->botInfo->startToken.isEmpty()) {
+@@ -5899,10 +5907,16 @@ bool HistoryWidget::isReportMessages() const {
+ }
+ 
+ bool HistoryWidget::isBlocked() const {
++	// if (Yukigram::Settings::HideBottomBar->current()) {
++	// 	return false;
++	// }
+ 	return _peer && _peer->isUser() && _peer->asUser()->isBlocked();
+ }
+ 
+ bool HistoryWidget::isJoinChannel() const {
++	if (Yukigram::Settings::HideBottomBar->current()) {
++		return false;
++	}
+ 	if (const auto channel = _peer ? _peer->asChannel() : nullptr) {
+ 		return !channel->amIn() && !channel->isMonoforum() && !_canSendMessages;
+ 	}
+@@ -5915,6 +5929,7 @@ bool HistoryWidget::isChoosingTheme() const {
+ 
+ bool HistoryWidget::isMuteUnmute() const {
+ 	return _peer
++		&& !Yukigram::Settings::HideBottomBar->current()
+ 		&& ((_peer->isBroadcast() && !_peer->asChannel()->canPostMessages())
+ 			|| (_peer->isGigagroup() && !Data::CanSendAnything(_peer))
+ 			|| _peer->isRepliesChat()
+diff --git a/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp b/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp
+new file mode 100644
+index 0000000000..df47a81555
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp
+@@ -0,0 +1,13 @@
++#include "yukigram/settings/hide_bottom_bar.h"
++#include "yukigram/options.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *HideBottomBar = Yukigram::Options::make(kOptionHideBottomBar, {
++	.keywords = { u"yukigram"_q, u"bottom"_q, u"bar"_q, u"join"_q, u"mute"_q, u"unmute"_q, u"gift"_q, u"direct"_q },
++	.category = "style",
++});
++
++const char kOptionHideBottomBar[] = "hide-bottom-bar";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.h b/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.h
+new file mode 100644
+index 0000000000..4efd4816a1
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.h
+@@ -0,0 +1,5 @@
++#include "rpl/rpl.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *HideBottomBar;
++extern const char kOptionHideBottomBar[];
++}
+-- 
+2.53.0
+
