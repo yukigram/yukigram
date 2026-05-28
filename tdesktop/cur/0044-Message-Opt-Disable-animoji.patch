@@ -27,10 +27,10 @@ index b99aed5b48..c69eed4150 100644
      yukigram/settings/icon_theme_symbolic.h
      yukigram/settings/mirrored.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index be9daa867b..153ad82b3b 100644
+index 78573dce76..79495867dd 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -8,6 +8,8 @@
+@@ -10,6 +10,8 @@
      "optgroup/compose": "Composing messages",
      "optgroup/picker": "Stickers and Emoji picker",
      "optgroup/system": "System",

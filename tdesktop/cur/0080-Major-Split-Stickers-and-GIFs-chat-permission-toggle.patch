@@ -5,13 +5,14 @@ Subject: [PATCH] (Major) Split Stickers and GIFs chat permission toggle
 
 ---
  Telegram/Resources/langs/lang.strings         |  4 +++
- .../boxes/peers/edit_peer_permissions_box.cpp | 28 +++----------------
- .../admin_log/history_admin_log_item.cpp      |  8 +++---
+ Telegram/Resources/langs/yukigram/en.json     |  4 +++
+ .../boxes/peers/edit_peer_permissions_box.cpp | 29 ++++---------------
+ .../admin_log/history_admin_log_item.cpp      |  8 ++---
  .../SourceFiles/history/history_widget.cpp    |  2 +-
  .../view/history_view_chat_section.cpp        |  3 +-
  .../view/history_view_scheduled_section.cpp   |  2 +-
  .../media/stories/media_stories_reply.cpp     |  2 +-
- 7 files changed, 17 insertions(+), 32 deletions(-)
+ 8 files changed, 22 insertions(+), 32 deletions(-)
 
 diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
 index 05011b4a9e..f30d409670 100644
@@ -28,11 +29,32 @@ index 05011b4a9e..f30d409670 100644
  "lng_admin_log_banned_embed_links" = "Embed links";
  "lng_admin_log_banned_send_polls" = "Send polls";
  "lng_admin_log_banned_send_reactions" = "Send reactions";
+diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
+index 17509f5b2d..e6bce2a544 100644
+--- a/Telegram/Resources/langs/yukigram/en.json
++++ b/Telegram/Resources/langs/yukigram/en.json
+@@ -1,4 +1,8 @@
+ {
++    "box/edit-peer-permissions/rights/games": "Games",
++    "box/edit-peer-permissions/rights/gifs": "GIFs",
++    "box/edit-peer-permissions/rights/inline": "Inline bots",
++    "box/edit-peer-permissions/rights/stickers": "Stickers",
+     "box/sticker-set/owner/title": "Owner",
+     "drawer/new-supergroup/title": "New supergroup",
+     "menu/first-message/title": "First message",
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_peer_permissions_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_peer_permissions_box.cpp
-index b74ebd6841..dbb37a004f 100644
+index b74ebd6841..d23a8cf92e 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_peer_permissions_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_peer_permissions_box.cpp
-@@ -85,10 +85,10 @@ constexpr auto kDefaultChargeStars = 10;
+@@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "boxes/peers/edit_peer_permissions_box.h"
+ 
+ #include "lang/lang_keys.h"
++#include "yukigram/lang.h"
+ #include "history/admin_log/history_admin_log_filter.h"
+ #include "core/ui_integration.h"
+ #include "data/stickers/data_custom_emoji.h"
+@@ -85,10 +86,10 @@ constexpr auto kDefaultChargeStars = 10;
  		{ Flag::SendMusic, tr::lng_rights_chat_music(tr::now) },
  		{ Flag::SendVoiceMessages, tr::lng_rights_chat_voice_messages(tr::now) },
  		{ Flag::SendFiles, tr::lng_rights_chat_files(tr::now) },
@@ -40,14 +62,14 @@ index b74ebd6841..dbb37a004f 100644
 -			| Flag::SendGifs
 -			| Flag::SendGames
 -			| Flag::SendInline, tr::lng_rights_chat_stickers(tr::now) },
-+		{ Flag::SendStickers, "Stickers" },
-+		{ Flag::SendGifs, "GIFs" },
-+		{ Flag::SendGames, "Games" },
-+		{ Flag::SendInline, "Inline bots" },
++		{ Flag::SendStickers, ktr("box/edit-peer-permissions/rights/stickers") },
++		{ Flag::SendGifs, ktr("box/edit-peer-permissions/rights/gifs") },
++		{ Flag::SendGames, ktr("box/edit-peer-permissions/rights/games") },
++		{ Flag::SendInline, ktr("box/edit-peer-permissions/rights/inline") },
  		{ Flag::EmbedLinks, tr::lng_rights_chat_send_links(tr::now) },
  		{ Flag::SendPolls, tr::lng_rights_chat_send_polls(tr::now) },
  		{ Flag::SendReactions, tr::lng_rights_chat_send_reactions(tr::now) },
-@@ -267,18 +267,6 @@ auto Dependencies(ChatRestrictions)
+@@ -267,18 +268,6 @@ auto Dependencies(ChatRestrictions)
  	using Flag = ChatRestriction;
  
  	return {
@@ -66,7 +88,7 @@ index b74ebd6841..dbb37a004f 100644
  		// embed_links -> send_plain
  		{ Flag::EmbedLinks, Flag::SendOther },
  
-@@ -1440,14 +1428,6 @@ ChatAdminRights DisabledByDefaultRestrictions(not_null<PeerData*> peer) {
+@@ -1440,14 +1429,6 @@ ChatAdminRights DisabledByDefaultRestrictions(not_null<PeerData*> peer) {
  ChatRestrictions FixDependentRestrictions(ChatRestrictions restrictions) {
  	const auto &dependencies = Dependencies(restrictions);
  

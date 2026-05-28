@@ -38,10 +38,10 @@ index bf15ea2999..b99aed5b48 100644
      apiwrap.h
      config.h
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 193a394618..be9daa867b 100644
+index ef7367e934..0b74a0b822 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -14,6 +14,8 @@
+@@ -15,6 +15,8 @@
      "opt/forum-hide-chats-list/desc": "",
      "opt/icon-theme-symbolic/name": "Use symbolic tray icon from icon theme",
      "opt/icon-theme-symbolic/desc": "",

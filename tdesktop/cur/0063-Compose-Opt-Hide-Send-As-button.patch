@@ -27,10 +27,10 @@ index 5c984795fe..f430f2b944 100644
      yukigram/settings/hide_wall_paper.h
      yukigram/settings/history_peer_type_icons.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index d4ba4668c1..e3c4205951 100644
+index 767aaa801c..cdfebc08d2 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -22,6 +22,8 @@
+@@ -24,6 +24,8 @@
      "opt/force-mobile-layout/desc": "",
      "opt/forum-hide-chats-list/name": "Hide narrow column chat list in forums",
      "opt/forum-hide-chats-list/desc": "",

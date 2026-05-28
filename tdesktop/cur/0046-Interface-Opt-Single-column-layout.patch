@@ -29,10 +29,10 @@ index 5dde2421a6..b597c621ed 100644
      yukigram/settings/icon_theme_symbolic.h
      yukigram/settings/mirrored.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 72f9c6382b..28bdf3e7d8 100644
+index 8a6da7544d..2f374c0868 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -14,6 +14,8 @@
+@@ -16,6 +16,8 @@
      "opt/disable-animoji/desc": "",
      "opt/force-compose-search-one-column/name": "Embedded search in single-column",
      "opt/force-compose-search-one-column/desc": "",

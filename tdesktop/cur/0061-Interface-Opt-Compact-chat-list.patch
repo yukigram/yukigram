@@ -31,10 +31,10 @@ index b89bfa40b7..ce19420093 100644
      yukigram/settings/disable_animoji.h
      yukigram/settings/force_mobile_layout.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index b3e14cbbfa..8ddd0b5e37 100644
+index 5afe844437..4defbdf19b 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -12,6 +12,8 @@
+@@ -14,6 +14,8 @@
      "opt/always-show-scheduled/desc": "",
      "opt/comments-button-always-right/name": "Right action comments button",
      "opt/comments-button-always-right/desc": "",

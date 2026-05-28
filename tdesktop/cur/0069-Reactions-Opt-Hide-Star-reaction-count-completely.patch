@@ -27,10 +27,10 @@ index 6ef33d8a1c..ab07601e1c 100644
      yukigram/settings/star_hide_empty.h
      yukigram/settings/time_with_seconds.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index d397a7d6b9..93c31d6925 100644
+index 6b9f9e014a..6595b92064 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -44,6 +44,8 @@
+@@ -55,6 +55,8 @@
      "opt/show-msgid/desc": "",
      "opt/show-peer-id-below-about/name": "Show peer ID",
      "opt/show-peer-id-below-about/desc": "",

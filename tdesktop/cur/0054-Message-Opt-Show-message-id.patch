@@ -31,10 +31,10 @@ index 7539507d83..df4eb26343 100644
      yukigram/settings/time_with_seconds.h
      yukigram/settings/wide_messages.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 0576afcd40..df1eebf0ce 100644
+index cbb0b01a3a..8aa5ea15e9 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -26,6 +26,8 @@
+@@ -28,6 +28,8 @@
      "opt/mpris-call-hangup/desc": "Use Prev/Next/Stop to hangup or decline.\nUse Play/Pause/PlayPause to accept.\nThis option conflicts with internal media player controls",
      "opt/show-channel-joined-below-about/name": "Show channel join date",
      "opt/show-channel-joined-below-about/desc": "",

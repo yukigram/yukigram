@@ -39,19 +39,18 @@ index b597c621ed..77d115d85a 100644
      apiwrap.h
      config.h
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 28bdf3e7d8..68ff756641 100644
+index 2f374c0868..dbbd3b7927 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -34,6 +34,8 @@
+@@ -36,6 +36,8 @@
      "opt/use-small-msg-bubble-radius/desc": "",
      "opt/view-profile-in-chats-list-context-menu/name": "View profile button in context menu",
      "opt/view-profile-in-chats-list-context-menu/desc": "",
 +    "opt/wide-messages/name": "Wide messages",
 +    "opt/wide-messages/desc": "",
-     "settings/yukigram/title": "Yukigram settings",
-     "_to_keep_the_diffs_nice": "Please make sure this string is kept at the bottom"
- }
-\ No newline at end of file
+     "settings/main/restart/title": "Restart now",
+     "settings/privacy/sessions/client-api-id": "Client API ID",
+     "settings/privacy/sessions/client/official": "Official",
 diff --git a/Telegram/SourceFiles/data/data_media_types.cpp b/Telegram/SourceFiles/data/data_media_types.cpp
 index 06b6b1a5cc..fa784559b3 100644
 --- a/Telegram/SourceFiles/data/data_media_types.cpp

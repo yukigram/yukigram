@@ -4,14 +4,41 @@ Date: Wed, 29 Apr 2026 10:01:56 +0300
 Subject: [PATCH] (Interface) Sensible peer id and join date rendering
 
 ---
- .../info/profile/info_profile_actions.cpp     | 98 +++++++++----------
- 1 file changed, 49 insertions(+), 49 deletions(-)
+ Telegram/Resources/langs/yukigram/en.json     |   8 ++
+ .../info/profile/info_profile_actions.cpp     | 101 +++++++++---------
+ 2 files changed, 60 insertions(+), 49 deletions(-)
 
+diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
+index 5efc4982b8..3186b6ccbc 100644
+--- a/Telegram/Resources/langs/yukigram/en.json
++++ b/Telegram/Resources/langs/yukigram/en.json
+@@ -1,5 +1,13 @@
+ {
+     "box/sticker-set/owner/title": "Owner",
++    "info/peer-id/broadcast": "Channel ID",
++    "info/peer-id/channel-like": "Channel-like ID",
++    "info/peer-id/forum": "Forum ID",
++    "info/peer-id/group": "Legacy group ID",
++    "info/peer-id/monoforum": "Monoforum ID",
++    "info/peer-id/supergroup": "Supergroup ID",
++    "info/peer-id/user": "User ID",
++    "info/peer-id/unknown": "Peer ID",
+     "nya": "Meow >.<",
+     "optgroup/interface": "Interface",
+     "optgroup/tweaks": "Tweaks",
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-index a829ca7d30..0d6871544f 100644
+index a829ca7d30..af61dc2c0a 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-@@ -216,51 +216,6 @@ base::options::toggle ShowChannelJoinedBelowAbout({
+@@ -69,6 +69,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "inline_bots/bot_attach_web_view.h"
+ #include "iv/iv_instance.h"
+ #include "lang/lang_keys.h"
++#include "yukigram/lang.h"
+ #include "main/main_session.h"
+ #include "menu/menu_mute.h"
+ #include "settings/settings_common.h"
+@@ -216,51 +217,6 @@ base::options::toggle ShowChannelJoinedBelowAbout({
  	return Ui::CreateSkipWidget(parent, st::infoProfileSkip);
  }
  
@@ -63,7 +90,7 @@ index a829ca7d30..0d6871544f 100644
  [[nodiscard]] bool AreNonTrivialHours(const Data::WorkingHours &hours) {
  	if (!hours) {
  		return false;
-@@ -1601,6 +1556,46 @@ Section DetailsFiller::makeInfo() {
+@@ -1601,6 +1557,48 @@ Section DetailsFiller::makeInfo() {
  				}
  			});
  	};
@@ -72,13 +99,15 @@ index a829ca7d30..0d6871544f 100644
 +			using namespace Ui::Text;
 +			const auto raw = _peer->id.value & PeerId::kChatTypeMask;
 +			addInfoOneLine(
-+				rpl::single(
-+					_peer->isChat() ? u"Legacy group ID"_q :
-+					_peer->isMonoforum() ? u"Monoforum ID"_q :
-+					_peer->isForum() ? u"Forum ID"_q :
-+					_peer->isMegagroup() ? u"Supergroup ID"_q :
-+					_peer->isChannel() ? u"Channel ID"_q :
-+					u"Peer ID"_q
++				rktr(
++					_peer->isChat() ? "info/peer-id/group" :
++					_peer->isMonoforum() ? "info/peer-id/monoforum" :
++					_peer->isForum() ? "info/peer-id/forum" :
++					_peer->isMegagroup() ? "info/peer-id/supergroup" :
++					_peer->isBroadcast() ? "info/peer-id/broadcast" :
++					_peer->isChannel() ? "info/peer-id/channel-like" :
++					_peer->isUser() ? "info/peer-id/user" :
++					"info/peer-id/unknown"
 +				),
 +				rpl::single(Link(
 +					Lang::FormatCountDecimal(raw),
@@ -110,7 +139,7 @@ index a829ca7d30..0d6871544f 100644
  	if (const auto user = _peer->asUser()) {
  		if (user->session().supportMode()) {
  			addInfoLineGeneric(
-@@ -1635,8 +1630,8 @@ Section DetailsFiller::makeInfo() {
+@@ -1635,8 +1633,8 @@ Section DetailsFiller::makeInfo() {
  			? tr::lng_info_about_label()
  			: tr::lng_info_bio_label();
  		addTranslateToMenu(
@@ -121,7 +150,7 @@ index a829ca7d30..0d6871544f 100644
  
  		const auto usernameLine = addInfoOneLine(
  			UsernamesSubtext(_peer, tr::lng_info_username_label()),
-@@ -1684,6 +1679,8 @@ Section DetailsFiller::makeInfo() {
+@@ -1684,6 +1682,8 @@ Section DetailsFiller::makeInfo() {
  			return false;
  		});
  
@@ -130,7 +159,7 @@ index a829ca7d30..0d6871544f 100644
  		if (!user->isBot()) {
  			tracker.track(result->add(
  				CreateBirthday(result, controller, user),
-@@ -1798,10 +1795,13 @@ Section DetailsFiller::makeInfo() {
+@@ -1798,10 +1798,13 @@ Section DetailsFiller::makeInfo() {
  
  		const auto about = addInfoLine(tr::lng_info_about_label(), _topic
  			? rpl::single(TextWithEntities())

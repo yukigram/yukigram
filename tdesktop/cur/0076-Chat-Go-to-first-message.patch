@@ -6,14 +6,35 @@ Subject: [PATCH] (Chat) Go to first message
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 ---
- Telegram/SourceFiles/window/window_peer_menu.cpp | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ Telegram/Resources/langs/yukigram/en.json       |  1 +
+ .../SourceFiles/window/window_peer_menu.cpp     | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+)
 
+diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
+index e88742a582..17509f5b2d 100644
+--- a/Telegram/Resources/langs/yukigram/en.json
++++ b/Telegram/Resources/langs/yukigram/en.json
+@@ -1,6 +1,7 @@
+ {
+     "box/sticker-set/owner/title": "Owner",
+     "drawer/new-supergroup/title": "New supergroup",
++    "menu/first-message/title": "First message",
+     "info/peer-dc/inferred": "Inferred DC",
+     "info/peer-id/broadcast": "Channel ID",
+     "info/peer-id/channel-like": "Channel-like ID",
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index 6bb17aadcd..d85831ac36 100644
+index 6bb17aadcd..97361a3098 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
-@@ -313,6 +313,7 @@ private:
+@@ -22,6 +22,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "api/api_chat_participants.h"
+ #include "api/api_global_privacy.h"
+ #include "lang/lang_keys.h"
++#include "yukigram/lang.h"
+ #include "lottie/lottie_icon.h"
+ #include "ui/boxes/confirm_box.h"
+ #include "base/random.h"
+@@ -313,6 +314,7 @@ private:
  	void addToggleNoForwards();
  	void addBlockUser();
  	void addViewDiscussion();
@@ -21,7 +42,7 @@ index 6bb17aadcd..d85831ac36 100644
  	void addDirectMessages();
  	void addToggleTopicClosed();
  	void addExportChat();
-@@ -917,6 +918,20 @@ void Filler::addViewDiscussion() {
+@@ -917,6 +919,20 @@ void Filler::addViewDiscussion() {
  	}, &st::menuIconDiscussion);
  }
  
@@ -31,7 +52,7 @@ index 6bb17aadcd..d85831ac36 100644
 +		return;
 +	}
 +	const auto navigation = _controller;
-+	_addAction(u"First message"_q, [=] {
++	_addAction(ktr("menu/first-message/title"), [=] {
 +		navigation->showPeerHistory(
 +			peer,
 +			Window::SectionShow::Way::Forward,
@@ -42,7 +63,7 @@ index 6bb17aadcd..d85831ac36 100644
  void Filler::addDirectMessages() {
  	const auto channel = _peer->asBroadcast();
  	if (!channel) {
-@@ -1762,6 +1777,7 @@ void Filler::fillHistoryActions() {
+@@ -1762,6 +1778,7 @@ void Filler::fillHistoryActions() {
  	addViewAsTopics();
  	addManageChat();
  	addViewStatistics();

@@ -4,13 +4,26 @@ Date: Wed, 13 May 2026 13:14:44 +0300
 Subject: [PATCH] (Interface)(Opt) Custom monospace font
 
 ---
+ Telegram/Resources/langs/yukigram/en.json     |  1 +
  Telegram/SourceFiles/core/launcher.cpp        |  5 ++
- .../settings/sections/settings_chat.cpp       | 74 ++++++++++++++++++-
+ .../settings/sections/settings_chat.cpp       | 75 ++++++++++++++++++-
  .../SourceFiles/ui/boxes/choose_font_box.cpp  | 11 ++-
  .../SourceFiles/ui/boxes/choose_font_box.h    |  3 +-
  Telegram/lib_ui/ui/style/style_core_font.cpp  | 18 ++++-
- 5 files changed, 106 insertions(+), 5 deletions(-)
+ 6 files changed, 108 insertions(+), 5 deletions(-)
 
+diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
+index 3a2cce09d4..c0aadff7a0 100644
+--- a/Telegram/Resources/langs/yukigram/en.json
++++ b/Telegram/Resources/langs/yukigram/en.json
+@@ -75,6 +75,7 @@
+     "opt/view-profile-in-chats-list-context-menu/desc": "",
+     "opt/wide-messages/name": "Wide messages",
+     "opt/wide-messages/desc": "",
++    "settings/chat/mono-font/title": "Monospace font family",
+     "settings/main/restart/title": "Restart now",
+     "settings/privacy/sessions/client-api-id": "Client API ID",
+     "settings/privacy/sessions/client/official": "Official",
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
 index 69e54bd90b..4ae79c0a0c 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
@@ -35,10 +48,18 @@ index 69e54bd90b..4ae79c0a0c 100644
  	// Must be called after options are inited.
  	initHighDpi();
 diff --git a/Telegram/SourceFiles/settings/sections/settings_chat.cpp b/Telegram/SourceFiles/settings/sections/settings_chat.cpp
-index c4c4cfe15a..beb34383f0 100644
+index c4c4cfe15a..8f54c7b902 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_chat.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_chat.cpp
-@@ -78,6 +78,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -52,6 +52,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "ui/widgets/menu/menu_add_action_callback.h"
+ #include "history/view/history_view_quick_action.h"
+ #include "lang/lang_keys.h"
++#include "yukigram/lang.h"
+ #include "lottie/lottie_icon.h"
+ #include "export/export_manager.h"
+ #include "window/themes/window_theme.h"
+@@ -78,6 +79,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "base/call_delayed.h"
  #include "support/support_common.h"
  #include "support/support_templates.h"
@@ -46,7 +67,7 @@ index c4c4cfe15a..beb34383f0 100644
  #include "main/main_session.h"
  #include "main/main_session_settings.h"
  #include "mainwidget.h"
-@@ -90,6 +91,15 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -90,6 +92,15 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  
  #include <QAction>
  
@@ -62,7 +83,7 @@ index c4c4cfe15a..beb34383f0 100644
  namespace Settings {
  namespace {
  
-@@ -862,6 +872,15 @@ void BuildThemeSettingsSection(SectionBuilder &builder) {
+@@ -862,6 +873,15 @@ void BuildThemeSettingsSection(SectionBuilder &builder) {
  			.icon = { &st::menuIconFont },
  		};
  	});
@@ -70,7 +91,7 @@ index c4c4cfe15a..beb34383f0 100644
 +	builder.add(nullptr, [] {
 +		return SearchEntry{
 +			.id = u"chat/mono-font"_q,
-+			.title = u"Monospace font family"_q,
++			.title = ktr("settings/chat/mono-font/title"),
 +			.keywords = { u"font"_q, u"family"_q, u"code"_q, u"monospace"_q },
 +			.icon = { &st::menuIconFont },
 +		};
@@ -78,7 +99,7 @@ index c4c4cfe15a..beb34383f0 100644
  }
  
  void BuildCloudThemesSection(SectionBuilder &builder) {
-@@ -2798,7 +2817,7 @@ void SetupThemeSettings(
+@@ -2798,7 +2818,7 @@ void SetupThemeSettings(
  			return result;
  		};
  		controller->show(
@@ -87,7 +108,7 @@ index c4c4cfe15a..beb34383f0 100644
  	});
  	if (highlights) {
  		highlights->push_back({
-@@ -2807,6 +2826,59 @@ void SetupThemeSettings(
+@@ -2807,6 +2827,59 @@ void SetupThemeSettings(
  		});
  	}
  
@@ -103,7 +124,7 @@ index c4c4cfe15a..beb34383f0 100644
 +	});
 +	const auto monofontButton = AddButtonWithLabel(
 +		container,
-+		rpl::single(u"Monospace font family"_q),
++		rktr("settings/chat/mono-font/title"),
 +		std::move(monolabel),
 +		st::settingsButton,
 +		{ &st::menuIconFont });

@@ -27,10 +27,10 @@ index 77d115d85a..7f884d73df 100644
      yukigram/settings/disable_animoji.h
      yukigram/settings/force_mobile_layout.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 68ff756641..bde11933e9 100644
+index dbbd3b7927..a67aa4bca3 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -8,6 +8,8 @@
+@@ -10,6 +10,8 @@
      "optgroup/compose": "Composing messages",
      "optgroup/picker": "Stickers and Emoji picker",
      "optgroup/system": "System",

@@ -5,11 +5,11 @@ Subject: [PATCH] (Info)(Opt) Show inferred peer DC
 
 ---
  Telegram/CMakeLists.txt                       |  2 ++
- Telegram/Resources/langs/yukigram/en.json     |  2 ++
+ Telegram/Resources/langs/yukigram/en.json     |  3 +++
  .../info/profile/info_profile_actions.cpp     | 20 +++++++++++++++++++
  .../yukigram/settings/inferred_peer_dc.cpp    | 13 ++++++++++++
  .../yukigram/settings/inferred_peer_dc.h      |  5 +++++
- 5 files changed, 42 insertions(+)
+ 5 files changed, 43 insertions(+)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/inferred_peer_dc.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/inferred_peer_dc.h
 
@@ -27,10 +27,17 @@ index ef5ab54870..991165113a 100644
      yukigram/settings/icon_theme_symbolic.h
      yukigram/settings/mirrored.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index ba277fa61a..8e1cba3496 100644
+index 3186b6ccbc..3464465740 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -34,6 +34,8 @@
+@@ -1,5 +1,6 @@
+ {
+     "box/sticker-set/owner/title": "Owner",
++    "info/peer-dc/inferred": "Inferred DC",
+     "info/peer-id/broadcast": "Channel ID",
+     "info/peer-id/channel-like": "Channel-like ID",
+     "info/peer-id/forum": "Forum ID",
+@@ -44,6 +45,8 @@
      "opt/history-peer-type-icons/desc": "",
      "opt/icon-theme-symbolic/name": "Use symbolic tray icon from icon theme",
      "opt/icon-theme-symbolic/desc": "",
@@ -40,7 +47,7 @@ index ba277fa61a..8e1cba3496 100644
      "opt/mpris-call-hangup/desc": "Use Prev/Next/Stop to hangup or decline.\nUse Play/Pause/PlayPause to accept.\nThis option conflicts with internal media player controls",
      "opt/show-channel-joined-below-about/name": "Show channel join date",
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-index 0d6871544f..8cd84d920b 100644
+index af61dc2c0a..9788d4ff76 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 @@ -41,6 +41,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -51,7 +58,7 @@ index 0d6871544f..8cd84d920b 100644
  #include "data/data_saved_sublist.h"
  #include "data/data_session.h"
  #include "data/data_user.h"
-@@ -100,6 +101,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -101,6 +102,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "window/window_peer_menu.h"
  #include "window/window_separate_id.h"
  #include "window/window_session_controller.h"
@@ -59,7 +66,7 @@ index 0d6871544f..8cd84d920b 100644
  #include "styles/style_boxes.h"
  #include "styles/style_channel_earn.h" // st::channelEarnCurrencyCommonMargins
  #include "styles/style_info.h"
-@@ -1577,6 +1579,22 @@ Section DetailsFiller::makeInfo() {
+@@ -1580,6 +1582,22 @@ Section DetailsFiller::makeInfo() {
  			);
  		}
  	};
@@ -70,7 +77,7 @@ index 0d6871544f..8cd84d920b 100644
 +					if (const auto dc = photo->mediaKey().first & 0xFFFF'FFFF) {
 +						using namespace Ui::Text;
 +						addInfoOneLine(
-+							rpl::single(u"Inferred DC"_q),
++							rktr("info/peer-dc/inferred"),
 +							rpl::single(WithEntities(u"DC%1"_q.arg(dc))),
 +							QString()
 +						);
@@ -82,7 +89,7 @@ index 0d6871544f..8cd84d920b 100644
  	const auto setupJoinDate = [&] {
  		if (ShowChannelJoinedBelowAbout.value()) {
  			if (const auto channel = _peer->asChannel()) {
-@@ -1680,6 +1698,7 @@ Section DetailsFiller::makeInfo() {
+@@ -1683,6 +1701,7 @@ Section DetailsFiller::makeInfo() {
  		});
  
  		setupPeerId();
@@ -90,7 +97,7 @@ index 0d6871544f..8cd84d920b 100644
  
  		if (!user->isBot()) {
  			tracker.track(result->add(
-@@ -1801,6 +1820,7 @@ Section DetailsFiller::makeInfo() {
+@@ -1804,6 +1823,7 @@ Section DetailsFiller::makeInfo() {
  		}
  
  		setupPeerId();

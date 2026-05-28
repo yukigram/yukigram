@@ -4,11 +4,30 @@ Date: Wed, 13 May 2026 21:51:40 +0300
 Subject: [PATCH] (Info) Show more session info
 
 ---
+ Telegram/Resources/langs/yukigram/en.json     |  6 +++++
  .../SourceFiles/api/api_authorizations.cpp    |  2 ++
  Telegram/SourceFiles/api/api_authorizations.h |  2 ++
- .../sections/settings_active_sessions.cpp     | 20 ++++++++++++-------
- 3 files changed, 17 insertions(+), 7 deletions(-)
+ .../sections/settings_active_sessions.cpp     | 26 ++++++++++++++-----
+ 4 files changed, 29 insertions(+), 7 deletions(-)
 
+diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
+index 08216d1b8d..78573dce76 100644
+--- a/Telegram/Resources/langs/yukigram/en.json
++++ b/Telegram/Resources/langs/yukigram/en.json
+@@ -31,6 +31,12 @@
+     "opt/view-profile-in-chats-list-context-menu/name": "View profile button in context menu",
+     "opt/view-profile-in-chats-list-context-menu/desc": "",
+     "settings/main/restart/title": "Restart now",
++    "settings/privacy/sessions/client-api-id": "Client API ID",
++    "settings/privacy/sessions/client/official": "Official",
++    "settings/privacy/sessions/client/unofficial": "Unofficial",
++    "settings/privacy/sessions/created-time": "First login at",
++    "settings/privacy/sessions/name/official": "{session}",
++    "settings/privacy/sessions/name/unofficial": "{session} (Unofficial)",
+     "settings/yukigram/title": "Yukigram settings",
+     "_to_keep_the_diffs_nice": "Please make sure this string is kept at the bottom"
+ }
+\ No newline at end of file
 diff --git a/Telegram/SourceFiles/api/api_authorizations.cpp b/Telegram/SourceFiles/api/api_authorizations.cpp
 index 9652e7fedd..86d93f377c 100644
 --- a/Telegram/SourceFiles/api/api_authorizations.cpp
@@ -45,17 +64,27 @@ index 25c97f3945..8663c2ac23 100644
  	};
  	using List = std::vector<Entry>;
 diff --git a/Telegram/SourceFiles/settings/sections/settings_active_sessions.cpp b/Telegram/SourceFiles/settings/sections/settings_active_sessions.cpp
-index bab18dca01..18ce0161d2 100644
+index bab18dca01..874b3fe02a 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_active_sessions.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_active_sessions.cpp
-@@ -455,11 +455,21 @@ void SessionInfoBox(
+@@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "core/application.h"
+ #include "core/core_settings.h"
+ #include "lang/lang_keys.h"
++#include "yukigram/lang.h"
+ #include "lottie/lottie_icon.h"
+ #include "main/main_session.h"
+ #include "settings/sections/settings_privacy_security.h"
+@@ -455,11 +456,23 @@ void SessionInfoBox(
  		tr::lng_sessions_application(),
  		data.info,
  		st::menuIconDevices);
 +	AddSessionInfoRow(
 +		container,
-+		rpl::single(u"Client API ID"_q),
-+		u"%1 (%2)"_q.arg(data.apiId).arg(data.officialApp ? u"Official"_q : u"Unofficial"_q),
++		rktr("settings/privacy/sessions/client-api-id"),
++		u"%1 (%2)"_q.arg(data.apiId).arg(data.officialApp
++			? ktr("settings/privacy/sessions/client/official")
++			: ktr("settings/privacy/sessions/client/unofficial")),
 +		st::menuIconInfo);
  	AddSessionInfoRow(
  		container,
@@ -64,13 +93,13 @@ index bab18dca01..18ce0161d2 100644
  		st::menuIconInfo);
 +	AddSessionInfoRow(
 +		container,
-+		rpl::single(u"First login at"_q),
++		rktr("settings/privacy/sessions/created-time"),
 +		langDateTimeFull(base::unixtime::parse(data.createdTime)),
 +		st::menuIconSchedule);
  	AddSessionInfoRow(
  		container,
  		tr::lng_sessions_ip(),
-@@ -490,17 +500,13 @@ void SessionInfoBox(
+@@ -490,17 +503,16 @@ void SessionInfoBox(
  
  Row::Row(not_null<RowDelegate*> delegate, const EntryData &data)
  : PeerListRow(data.hash)
@@ -87,7 +116,10 @@ index bab18dca01..18ce0161d2 100644
  void Row::update(const EntryData &data) {
  	_data = data;
 -	setCustomStatus(_data.info);
-+	setCustomStatus(_data.info + u"%1"_q.arg(_data.officialApp ? "" : " (Unofficial)"));
++	setCustomStatus(ktr(_data.officialApp
++		? "settings/privacy/sessions/name/official"
++		: "settings/privacy/sessions/name/unofficial",
++		{ "session", _data.info }));
  	refreshName(st::sessionListItem);
  	_location.setText(st::defaultTextStyle, LocationAndDate(_data));
  	_type = TypeFromEntry(_data);

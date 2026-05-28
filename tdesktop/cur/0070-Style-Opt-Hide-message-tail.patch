@@ -27,10 +27,10 @@ index ab07601e1c..9b0389f919 100644
      yukigram/settings/hide_reply_background_emoji.h
      yukigram/settings/hide_send_as_premium.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 93c31d6925..930ba29fe2 100644
+index 6595b92064..3ced760369 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -22,6 +22,8 @@
+@@ -33,6 +33,8 @@
      "opt/force-mobile-layout/desc": "",
      "opt/forum-hide-chats-list/name": "Hide narrow column chat list in forums",
      "opt/forum-hide-chats-list/desc": "",
