@@ -72,7 +72,7 @@ EOF
 
     popd
 
-    git add package.nix flatpak/io.github.yukigram.yml tdesktop/cur/????-Yukigram-Version.patch tdesktop/cur/????-Yukigram-Changelog.patch
+    git add package.nix flatpak/io.github.yukigram.yml tdesktop/cur/
 
     if [[ $Mode == tag ]]; then
         git commit -m "$Version"
