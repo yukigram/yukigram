@@ -8,11 +8,11 @@ Subject: [PATCH] (Yukigram) Changelog
  1 file changed, 266 insertions(+)
 
 diff --git a/changelog.txt b/changelog.txt
-index 46242d956c..96083e2cf7 100644
+index 46242d956c..73ec88e1d7 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,3 +1,26 @@
-+9999 wip (01.01.99)
++6.8.4.1 beta (29.05.26)
 +
 +- Warn when polls forbid revoting
 +- "Apply" instead of "Join" in peer info buttons
