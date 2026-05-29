@@ -7,9 +7,10 @@ Subject: [PATCH] (Chat)(Opt) Hide bottom button bar
  Telegram/CMakeLists.txt                           |  2 ++
  Telegram/Resources/langs/yukigram/en.json         |  2 ++
  Telegram/SourceFiles/history/history_widget.cpp   | 15 +++++++++++++++
+ .../history/view/history_view_chat_section.cpp    |  5 +++++
  .../yukigram/settings/hide_bottom_bar.cpp         | 13 +++++++++++++
  .../yukigram/settings/hide_bottom_bar.h           |  5 +++++
- 5 files changed, 37 insertions(+)
+ 6 files changed, 42 insertions(+)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.h
 
@@ -97,6 +98,29 @@ index 44a4261682..0eb14c3296 100644
  		&& ((_peer->isBroadcast() && !_peer->asChannel()->canPostMessages())
  			|| (_peer->isGigagroup() && !Data::CanSendAnything(_peer))
  			|| _peer->isRepliesChat()
+diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
+index 02330c2c67..85c2c505a9 100644
+--- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
+@@ -28,6 +28,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "history/history_drag_area.h"
+ #include "history/history_item_components.h"
+ #include "history/history_item_helpers.h" // GetErrorForSending.
++#include "yukigram/settings/hide_bottom_bar.h"
+ #include "ui/chat/pinned_bar.h"
+ #include "ui/chat/chat_style.h"
+ #include "ui/controls/swipe_handler.h"
+@@ -1703,6 +1704,10 @@ void ChatWidget::refreshJoinGroupButton() {
+ 		set(nullptr);
+ 	} else {
+ 		_canSendTexts = false;
++		if (Yukigram::Settings::HideBottomBar->current()) {
++			set(nullptr);
++			return;
++		}
+ 		if (!_joinGroup) {
+ 			set(std::make_unique<Ui::FlatButton>(
+ 				this,
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp b/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp
 new file mode 100644
 index 0000000000..df47a81555
