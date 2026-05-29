@@ -27,10 +27,10 @@ index c69eed4150..5dde2421a6 100644
      apiwrap.h
      config.h
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 7ec3fdbc06..5e727f8f92 100644
+index 04eaf13343..4b2556cff8 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -15,6 +15,8 @@
+@@ -18,6 +18,8 @@
      "optgroup/compose": "Composing messages",
      "optgroup/picker": "Stickers and Emoji picker",
      "optgroup/system": "System",

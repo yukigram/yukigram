@@ -27,18 +27,18 @@ index ef5ab54870..991165113a 100644
      yukigram/settings/icon_theme_symbolic.h
      yukigram/settings/mirrored.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 37ddee2789..2a5279f71d 100644
+index 861ca16196..846819ce80 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -4,6 +4,7 @@
-     "about/3/text": "Visit {channel_link} or {faq_link} for more info.",
-     "about/3/channel": "Yukigram channel",
+@@ -7,6 +7,7 @@
+     "box/forward/copy": "Copy to…",
+     "box/forward/steal": "Copy media only to…",
      "box/sticker-set/owner/title": "Owner",
 +    "info/peer-dc/inferred": "Inferred DC",
      "info/peer-id/broadcast": "Channel ID",
      "info/peer-id/channel-like": "Channel-like ID",
      "info/peer-id/forum": "Forum ID",
-@@ -49,6 +50,8 @@
+@@ -52,6 +53,8 @@
      "opt/history-peer-type-icons/desc": "",
      "opt/icon-theme-symbolic/name": "Use symbolic tray icon from icon theme",
      "opt/icon-theme-symbolic/desc": "",

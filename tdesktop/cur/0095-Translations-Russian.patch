@@ -4,17 +4,17 @@ Date: Thu, 28 May 2026 22:20:22 +0000
 Subject: [PATCH] (Translations) Russian
 
 ---
- Telegram/Resources/langs/yukigram/ru.json    | 144 +++++++++++++++++++
+ Telegram/Resources/langs/yukigram/ru.json    | 147 +++++++++++++++++++
  Telegram/Resources/qrc/telegram/yukigram.qrc |   1 +
- 2 files changed, 145 insertions(+)
+ 2 files changed, 148 insertions(+)
  create mode 100644 Telegram/Resources/langs/yukigram/ru.json
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..e158c504e9
+index 0000000000..0bd321f5a0
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
-@@ -0,0 +1,144 @@
+@@ -0,0 +1,147 @@
 +{
 +    "about/1/text": "Неофициальный форк {tdesktop_link},\nкоторый добавляет фичи и убирает мусор.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -24,6 +24,9 @@ index 0000000000..e158c504e9
 +    "box/edit-peer-permissions/rights/gifs": "GIFки",
 +    "box/edit-peer-permissions/rights/inline": "Инлайн-боты",
 +    "box/edit-peer-permissions/rights/stickers": "Стикеры",
++    "box/forward/forward": "Переслать в…",
++    "box/forward/copy": "Скопировать в…",
++    "box/forward/steal": "Только медиа в…",
 +    "box/peer-list/channel-like/broadcast": "канал",
 +    "box/peer-list/channel-like/forum": "форум",
 +    "box/peer-list/channel-like/monoforum": "монофорум",

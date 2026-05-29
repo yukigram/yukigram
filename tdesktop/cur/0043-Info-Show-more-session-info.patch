@@ -11,10 +11,10 @@ Subject: [PATCH] (Info) Show more session info
  4 files changed, 29 insertions(+), 7 deletions(-)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 36a03a1864..7b075d4bca 100644
+index 2a8f13bd7c..de94d6d9db 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -36,6 +36,12 @@
+@@ -39,6 +39,12 @@
      "opt/view-profile-in-chats-list-context-menu/name": "View profile button in context menu",
      "opt/view-profile-in-chats-list-context-menu/desc": "",
      "settings/main/restart/title": "Restart now",

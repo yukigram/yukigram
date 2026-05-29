@@ -13,10 +13,10 @@ Original author: RadRussianRus <radrussianrus@gmail.com>
  4 files changed, 81 insertions(+), 6 deletions(-)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 0512132cd9..0ea330c405 100644
+index 35d3a88a41..4d11303b80 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -12,7 +12,14 @@
+@@ -15,7 +15,14 @@
      "box/peer-list/channel-like/monoforum": "monoforum",
      "box/peer-list/channel-like/supergroup": "supergroup",
      "box/peer-list/channel-like/unknown": "channel-like",

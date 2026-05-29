@@ -13,12 +13,12 @@ Original author: c0re100 <corehusky@gmail.com>
  4 files changed, 16 insertions(+)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 5fafaac421..8d26987cda 100644
+index cf88e332d9..930ede9877 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -4,6 +4,7 @@
-     "about/3/text": "Visit {channel_link} or {faq_link} for more info.",
-     "about/3/channel": "Yukigram channel",
+@@ -7,6 +7,7 @@
+     "box/forward/copy": "Copy to…",
+     "box/forward/steal": "Copy media only to…",
      "box/sticker-set/owner/title": "Owner",
 +    "drawer/new-supergroup/title": "New supergroup",
      "info/peer-dc/inferred": "Inferred DC",

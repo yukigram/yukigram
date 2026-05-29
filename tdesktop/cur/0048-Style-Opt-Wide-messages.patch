@@ -39,10 +39,10 @@ index b597c621ed..77d115d85a 100644
      apiwrap.h
      config.h
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index ab6fc63728..da0c0665eb 100644
+index a38277fc29..be1eadbfd0 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -41,6 +41,8 @@
+@@ -44,6 +44,8 @@
      "opt/use-small-msg-bubble-radius/desc": "",
      "opt/view-profile-in-chats-list-context-menu/name": "View profile button in context menu",
      "opt/view-profile-in-chats-list-context-menu/desc": "",

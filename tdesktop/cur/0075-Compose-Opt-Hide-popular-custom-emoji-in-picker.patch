@@ -27,10 +27,10 @@ index 1653a090b4..a218ff173b 100644
      yukigram/settings/hide_popular_sticker_suggest.h
      yukigram/settings/hide_reply_background_emoji.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 3a75c1e0ba..5fafaac421 100644
+index 127bcf98b4..cf88e332d9 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -40,6 +40,8 @@
+@@ -43,6 +43,8 @@
      "opt/forum-hide-chats-list/desc": "",
      "opt/hide-message-tail/name": "Hide message bubble tail",
      "opt/hide-message-tail/desc": "",

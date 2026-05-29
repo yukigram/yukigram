@@ -4,16 +4,31 @@ Date: Mon, 6 Apr 2026 14:52:44 +0300
 Subject: [PATCH] (Shortcut) Forward/Copy/Steal
 
 ---
+ Telegram/Resources/langs/yukigram/en.json     |  3 ++
  Telegram/SourceFiles/core/shortcuts.cpp       |  7 ++++
  Telegram/SourceFiles/core/shortcuts.h         |  4 +++
- .../history/history_inner_widget.cpp          | 35 +++++++++++++++++++
+ .../history/history_inner_widget.cpp          | 35 ++++++++++++++++++
  .../history/history_inner_widget.h            |  1 +
  .../SourceFiles/history/history_widget.cpp    |  4 +--
  Telegram/SourceFiles/history/history_widget.h |  2 +-
- .../SourceFiles/window/window_peer_menu.cpp   | 20 +++++++----
+ .../SourceFiles/window/window_peer_menu.cpp   | 36 +++++++++++++++----
  .../SourceFiles/window/window_peer_menu.h     |  9 +++--
- 8 files changed, 70 insertions(+), 12 deletions(-)
+ 9 files changed, 89 insertions(+), 12 deletions(-)
 
+diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
+index 36a03a1864..2a8f13bd7c 100644
+--- a/Telegram/Resources/langs/yukigram/en.json
++++ b/Telegram/Resources/langs/yukigram/en.json
+@@ -3,6 +3,9 @@
+     "about/1/tdesktop": "Telegram Desktop",
+     "about/3/text": "Visit {channel_link} or {faq_link} for more info.",
+     "about/3/channel": "Yukigram channel",
++    "box/forward/forward": "Forward to…",
++    "box/forward/copy": "Copy to…",
++    "box/forward/steal": "Copy media only to…",
+     "box/sticker-set/owner/title": "Owner",
+     "intro/about": "Welcome to Yukigram, an unofficial patch-based Telegram Desktop fork.",
+     "nya": "Meow >.<",
 diff --git a/Telegram/SourceFiles/core/shortcuts.cpp b/Telegram/SourceFiles/core/shortcuts.cpp
 index 4ca872a75e..ed2463c77b 100644
 --- a/Telegram/SourceFiles/core/shortcuts.cpp
@@ -162,7 +177,7 @@ index 710878a874..ee49480da8 100644
  	void clearSelected();
  
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index bfb204253a..9428437f3f 100644
+index bfb204253a..6b35fd0ad2 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
 @@ -2853,7 +2853,8 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(
@@ -175,7 +190,28 @@ index bfb204253a..9428437f3f 100644
  	const auto session = &show->session();
  	const auto owner = &session->data();
  	const auto itemsList = owner->idsToItems(draft.ids);
-@@ -3081,6 +3082,8 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3038,6 +3039,20 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+ 		box->peerListContent()->restoreState(std::move(state));
+ 	};
+ 
++	const auto updateTitle = [&](not_null<State*> state) {
++		const auto flags = state->box->forwardOptions();
++		const auto getTitle = [&] {
++			if (!flags.dropNames) {
++				return "box/forward/forward";
++			} else if (!flags.dropCaptions) {
++				return "box/forward/copy";
++			} else {
++				return "box/forward/steal";
++			}
++		}();
++		state->controller->delegate()->peerListSetTitle(rktr(getTitle));
++	};
++
+ 	const auto state = [&] {
+ 		auto controller = std::make_unique<Controller>(session);
+ 		const auto controllerRaw = controller.get();
+@@ -3081,15 +3096,19 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  		boxRaw->setForwardOptions({
  			.sendersCount = sendersCount,
  			.captionsCount = captionsCount,
@@ -184,8 +220,9 @@ index bfb204253a..9428437f3f 100644
  		});
  		show->showBox(std::move(box));
  		auto state = State{ boxRaw, controllerRaw };
-@@ -3088,8 +3091,9 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+ 		return boxRaw->lifetime().make_state<State>(std::move(state));
  	}();
++	updateTitle(state);
  
  	{ // Chosen a single.
 -		auto chosen = [show, draft = std::move(draft)](
@@ -195,7 +232,15 @@ index bfb204253a..9428437f3f 100644
  			const auto peer = thread->peer();
  			if (peer->isSelf()
  				&& !draft.ids.empty()
-@@ -3388,21 +3392,25 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3277,6 +3296,7 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+ 				state->box->forwardOptions(),
+ 				[=](Ui::ForwardOptions o) {
+ 					state->box->setForwardOptions(o);
++					updateTitle(state);
+ 				},
+ 				state->menu->lifetime());
+ 
+@@ -3388,21 +3408,25 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  		not_null<Window::SessionNavigation*> navigation,
  		Data::ForwardDraft &&draft,

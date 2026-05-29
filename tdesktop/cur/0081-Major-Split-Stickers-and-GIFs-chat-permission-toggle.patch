@@ -30,7 +30,7 @@ index 05011b4a9e..f30d409670 100644
  "lng_admin_log_banned_send_polls" = "Send polls";
  "lng_admin_log_banned_send_reactions" = "Send reactions";
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 62b7f36a53..2f2e83f364 100644
+index f6a7cabadc..bcb90b42b2 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
 @@ -3,6 +3,10 @@
@@ -41,9 +41,9 @@ index 62b7f36a53..2f2e83f364 100644
 +    "box/edit-peer-permissions/rights/gifs": "GIFs",
 +    "box/edit-peer-permissions/rights/inline": "Inline bots",
 +    "box/edit-peer-permissions/rights/stickers": "Stickers",
-     "box/sticker-set/owner/title": "Owner",
-     "drawer/new-supergroup/title": "New supergroup",
-     "menu/first-message/title": "First message",
+     "box/forward/forward": "Forward to…",
+     "box/forward/copy": "Copy to…",
+     "box/forward/steal": "Copy media only to…",
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_peer_permissions_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_peer_permissions_box.cpp
 index b74ebd6841..d23a8cf92e 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_peer_permissions_box.cpp

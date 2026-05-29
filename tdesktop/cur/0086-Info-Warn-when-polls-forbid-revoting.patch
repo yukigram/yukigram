@@ -9,10 +9,10 @@ Subject: [PATCH] (Info) Warn when polls forbid revoting
  2 files changed, 40 insertions(+), 8 deletions(-)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 0ea330c405..7a0148c353 100644
+index 4d11303b80..5085ca21c7 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -39,6 +39,11 @@
+@@ -42,6 +42,11 @@
      "info/peer-id/user": "User ID",
      "info/peer-id/unknown": "Peer ID",
      "intro/about": "Welcome to Yukigram, an unofficial patch-based Telegram Desktop fork.",

@@ -28,10 +28,10 @@ index 7cb6d565c5..a85ecf61ff 100644
      yukigram/settings/right_action_comments.h
      yukigram/settings/show_message_id.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index e877015ff7..951550f854 100644
+index 263325d5f8..f47f70440f 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -95,6 +95,8 @@
+@@ -98,6 +98,8 @@
      "opt/inferred-peer-dc/desc": "",
      "opt/mpris-call-hangup/name": "Control calls with MPRIS",
      "opt/mpris-call-hangup/desc": "Use Prev/Next/Stop to hangup or decline.\nUse Play/Pause/PlayPause to accept.\nThis option conflicts with internal media player controls",

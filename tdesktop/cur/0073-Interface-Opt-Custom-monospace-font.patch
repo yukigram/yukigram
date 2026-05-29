@@ -13,10 +13,10 @@ Subject: [PATCH] (Interface)(Opt) Custom monospace font
  6 files changed, 108 insertions(+), 5 deletions(-)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 57c093d542..09242e178d 100644
+index 285d1231d5..1818f127b0 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -80,6 +80,7 @@
+@@ -83,6 +83,7 @@
      "opt/view-profile-in-chats-list-context-menu/desc": "",
      "opt/wide-messages/name": "Wide messages",
      "opt/wide-messages/desc": "",

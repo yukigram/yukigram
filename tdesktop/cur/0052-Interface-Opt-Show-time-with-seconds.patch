@@ -40,10 +40,10 @@ index 7f884d73df..7539507d83 100644
      yukigram/settings/wide_messages.h
      apiwrap.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index a451f34c4e..0ec69e7d01 100644
+index 969a9be658..48764bff74 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -37,6 +37,8 @@
+@@ -40,6 +40,8 @@
      "opt/show-peer-id-below-about/desc": "",
      "opt/tabbed-panel-show-on-click/name": "Click to show emoji picker",
      "opt/tabbed-panel-show-on-click/desc": "",

@@ -9,13 +9,13 @@ Subject: [PATCH] (Info) More info in PeerListBox
  2 files changed, 27 insertions(+), 8 deletions(-)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index f329079035..0512132cd9 100644
+index b92a0f442f..35d3a88a41 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -7,6 +7,18 @@
-     "box/edit-peer-permissions/rights/gifs": "GIFs",
-     "box/edit-peer-permissions/rights/inline": "Inline bots",
-     "box/edit-peer-permissions/rights/stickers": "Stickers",
+@@ -10,6 +10,18 @@
+     "box/forward/forward": "Forward to…",
+     "box/forward/copy": "Copy to…",
+     "box/forward/steal": "Copy media only to…",
 +    "box/peer-list/channel-like/broadcast": "channel",
 +    "box/peer-list/channel-like/forum": "forum",
 +    "box/peer-list/channel-like/monoforum": "monoforum",

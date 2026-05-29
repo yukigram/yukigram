@@ -11,11 +11,11 @@ Original author: c0re100 <corehusky@gmail.com>
  2 files changed, 18 insertions(+)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 8d26987cda..62b7f36a53 100644
+index 930ede9877..f6a7cabadc 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -5,6 +5,7 @@
-     "about/3/channel": "Yukigram channel",
+@@ -8,6 +8,7 @@
+     "box/forward/steal": "Copy media only to…",
      "box/sticker-set/owner/title": "Owner",
      "drawer/new-supergroup/title": "New supergroup",
 +    "menu/first-message/title": "First message",
@@ -23,7 +23,7 @@ index 8d26987cda..62b7f36a53 100644
      "info/peer-id/broadcast": "Channel ID",
      "info/peer-id/channel-like": "Channel-like ID",
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index 6bb17aadcd..97361a3098 100644
+index 02964bac5e..83d802a42d 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
 @@ -22,6 +22,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

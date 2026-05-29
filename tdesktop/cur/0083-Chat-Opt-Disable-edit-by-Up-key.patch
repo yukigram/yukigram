@@ -30,10 +30,10 @@ index a218ff173b..97a7a78eea 100644
      yukigram/settings/force_mobile_layout.h
      yukigram/settings/hide_message_tail.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 2f2e83f364..f329079035 100644
+index bcb90b42b2..b92a0f442f 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -38,6 +38,8 @@
+@@ -41,6 +41,8 @@
      "opt/compact-chat-list/desc": "",
      "opt/disable-animoji/name": "Disable animated big emoji",
      "opt/disable-animoji/desc": "",
