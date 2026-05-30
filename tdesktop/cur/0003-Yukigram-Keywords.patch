@@ -8,7 +8,7 @@ Subject: [PATCH] (Yukigram) Keywords
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/xdg/io.github.yukigram.desktop b/lib/xdg/io.github.yukigram.desktop
-index bbe84df56f..f74bdddddc 100644
+index 7e77a820fa..b9926b14b8 100644
 --- a/lib/xdg/io.github.yukigram.desktop
 +++ b/lib/xdg/io.github.yukigram.desktop
 @@ -9,7 +9,7 @@ StartupWMClass=@YUKIGRAM_APP_ID@

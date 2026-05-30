@@ -27,7 +27,7 @@ index a54f5182fa..928fa5f080 100644
  }
 \ No newline at end of file
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
-index 22820e48d5..ca5d98f864 100644
+index 3a488ae04c..cb3f6da6c3 100644
 --- a/Telegram/SourceFiles/boxes/about_box.cpp
 +++ b/Telegram/SourceFiles/boxes/about_box.cpp
 @@ -12,6 +12,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

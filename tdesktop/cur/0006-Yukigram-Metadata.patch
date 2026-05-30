@@ -97,7 +97,7 @@ index 89ecba366f..a26a7cc91a 100644
  	_version->setMarkedText(
  		tr::link(
 diff --git a/lib/xdg/io.github.yukigram.desktop b/lib/xdg/io.github.yukigram.desktop
-index 7e77a820fa..bbe84df56f 100644
+index b9926b14b8..f74bdddddc 100644
 --- a/lib/xdg/io.github.yukigram.desktop
 +++ b/lib/xdg/io.github.yukigram.desktop
 @@ -1,6 +1,6 @@

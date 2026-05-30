@@ -21,12 +21,12 @@ without these.
 
 - Build support
 - Application ID
-- Metadata (internal names, links, etc.)
-- Artwork
-- Version
 - Keywords for `.desktop` file
+- Artwork
 - Translations framework (from Kotatogram)
+- Metadata (internal names, links, etc.)
 - Branding (user-facing names)
+- Version
 - Options framework
 - Yukigram settings page
 - Deeplinks for Yukigram settings
