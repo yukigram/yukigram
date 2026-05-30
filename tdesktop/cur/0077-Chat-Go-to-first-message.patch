@@ -23,7 +23,7 @@ index 80e3f46568..d4e4b3f51c 100644
      "optgroup/interface": "Interface",
      "optgroup/tweaks": "Tweaks",
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index 02964bac5e..83d802a42d 100644
+index 851c629f2f..eebd432b12 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
 @@ -22,6 +22,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

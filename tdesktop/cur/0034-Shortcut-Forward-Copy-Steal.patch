@@ -177,7 +177,7 @@ index 710878a874..ee49480da8 100644
  	void clearSelected();
  
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index bfb204253a..6b35fd0ad2 100644
+index bfb204253a..b3f739718c 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
 @@ -2853,7 +2853,8 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(
@@ -194,8 +194,8 @@ index bfb204253a..6b35fd0ad2 100644
  		box->peerListContent()->restoreState(std::move(state));
  	};
  
-+	const auto updateTitle = [&](not_null<State*> state) {
-+		const auto flags = state->box->forwardOptions();
++	const auto updateTitle = [&](not_null<ListBox*> box) {
++		const auto flags = box->forwardOptions();
 +		const auto getTitle = [&] {
 +			if (!flags.dropNames) {
 +				return "box/forward/forward";
@@ -205,7 +205,7 @@ index bfb204253a..6b35fd0ad2 100644
 +				return "box/forward/steal";
 +			}
 +		}();
-+		state->controller->delegate()->peerListSetTitle(rktr(getTitle));
++		box->peerListSetTitle(rktr(getTitle));
 +	};
 +
  	const auto state = [&] {
@@ -219,10 +219,10 @@ index bfb204253a..6b35fd0ad2 100644
 +			.dropCaptions = steal > 1,
  		});
  		show->showBox(std::move(box));
++		updateTitle(boxRaw);
  		auto state = State{ boxRaw, controllerRaw };
  		return boxRaw->lifetime().make_state<State>(std::move(state));
  	}();
-+	updateTitle(state);
  
  	{ // Chosen a single.
 -		auto chosen = [show, draft = std::move(draft)](
@@ -236,7 +236,7 @@ index bfb204253a..6b35fd0ad2 100644
  				state->box->forwardOptions(),
  				[=](Ui::ForwardOptions o) {
  					state->box->setForwardOptions(o);
-+					updateTitle(state);
++					updateTitle(state->box);
  				},
  				state->menu->lifetime());
  
