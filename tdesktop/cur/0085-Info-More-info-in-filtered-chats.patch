@@ -13,7 +13,7 @@ Original author: RadRussianRus <radrussianrus@gmail.com>
  4 files changed, 81 insertions(+), 6 deletions(-)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 35d3a88a41..4d11303b80 100644
+index 62f86c8206..b289bc6afd 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
 @@ -15,7 +15,14 @@

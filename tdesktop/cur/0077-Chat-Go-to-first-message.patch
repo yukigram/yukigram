@@ -11,17 +11,17 @@ Original author: c0re100 <corehusky@gmail.com>
  2 files changed, 18 insertions(+)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 930ede9877..f6a7cabadc 100644
+index 930ede9877..c017fd4607 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -8,6 +8,7 @@
-     "box/forward/steal": "Copy media only to…",
-     "box/sticker-set/owner/title": "Owner",
-     "drawer/new-supergroup/title": "New supergroup",
+@@ -18,6 +18,7 @@
+     "info/peer-id/user": "User ID",
+     "info/peer-id/unknown": "Peer ID",
+     "intro/about": "Welcome to Yukigram, an unofficial patch-based Telegram Desktop fork.",
 +    "menu/first-message/title": "First message",
-     "info/peer-dc/inferred": "Inferred DC",
-     "info/peer-id/broadcast": "Channel ID",
-     "info/peer-id/channel-like": "Channel-like ID",
+     "nya": "Meow >.<",
+     "optgroup/interface": "Interface",
+     "optgroup/tweaks": "Tweaks",
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
 index 02964bac5e..83d802a42d 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp

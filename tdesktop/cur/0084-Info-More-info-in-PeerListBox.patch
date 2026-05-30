@@ -9,7 +9,7 @@ Subject: [PATCH] (Info) More info in PeerListBox
  2 files changed, 27 insertions(+), 8 deletions(-)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index b92a0f442f..35d3a88a41 100644
+index 4782578726..62f86c8206 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
 @@ -10,6 +10,18 @@
@@ -30,7 +30,7 @@ index b92a0f442f..35d3a88a41 100644
 +    "box/peer-list/count/subscribers#other": "{kind}, {count} subscribers",
      "box/sticker-set/owner/title": "Owner",
      "drawer/new-supergroup/title": "New supergroup",
-     "menu/first-message/title": "First message",
+     "info/peer-dc/inferred": "Inferred DC",
 diff --git a/Telegram/SourceFiles/boxes/peer_list_box.cpp b/Telegram/SourceFiles/boxes/peer_list_box.cpp
 index c54e1d2199..4535cf881d 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_box.cpp

@@ -30,7 +30,7 @@ index 05011b4a9e..f30d409670 100644
  "lng_admin_log_banned_send_polls" = "Send polls";
  "lng_admin_log_banned_send_reactions" = "Send reactions";
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index f6a7cabadc..bcb90b42b2 100644
+index c017fd4607..a9af8943a2 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
 @@ -3,6 +3,10 @@

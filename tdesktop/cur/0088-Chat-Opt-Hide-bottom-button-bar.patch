@@ -28,7 +28,7 @@ index 97a7a78eea..7cb6d565c5 100644
      yukigram/settings/hide_message_tail.h
      yukigram/settings/hide_popular_emoji_picker.cpp
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 631609fd45..263325d5f8 100644
+index 48e9349e47..86bae62d09 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
 @@ -74,6 +74,8 @@

@@ -9,10 +9,10 @@ Subject: [PATCH] (Info) Warn when polls forbid revoting
  2 files changed, 40 insertions(+), 8 deletions(-)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index 4d11303b80..5085ca21c7 100644
+index b289bc6afd..d2ec023258 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -42,6 +42,11 @@
+@@ -41,6 +41,11 @@
      "info/peer-id/user": "User ID",
      "info/peer-id/unknown": "Peer ID",
      "intro/about": "Welcome to Yukigram, an unofficial patch-based Telegram Desktop fork.",
@@ -21,9 +21,9 @@ index 4d11303b80..5085ca21c7 100644
 +    "media/poll/forbidden-revotes-warning/text": "This poll does not allow revoting",
 +    "media/poll/forbidden-revotes-warning/confirm": "Vote anyway",
 +    "media/poll/forbidden-revotes-warning/cancel": "Discard vote",
+     "menu/first-message/title": "First message",
      "nya": "Meow >.<",
      "optgroup/interface": "Interface",
-     "optgroup/tweaks": "Tweaks",
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_poll.cpp b/Telegram/SourceFiles/history/view/media/history_view_poll.cpp
 index fe195ab1cc..430a6b4ac8 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_poll.cpp
