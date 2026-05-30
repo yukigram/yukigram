@@ -1,0 +1,59 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Sun, 24 May 2026 20:42:59 +0300
+Subject: [PATCH] (Info) More info in PeerListBox
+
+---
+ Telegram/SourceFiles/boxes/peer_list_box.cpp | 23 +++++++++++++-------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
+
+diff --git a/Telegram/SourceFiles/boxes/peer_list_box.cpp b/Telegram/SourceFiles/boxes/peer_list_box.cpp
+index c54e1d2199..4535cf881d 100644
+--- a/Telegram/SourceFiles/boxes/peer_list_box.cpp
++++ b/Telegram/SourceFiles/boxes/peer_list_box.cpp
+@@ -25,8 +25,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "ui/painter.h"
+ #include "ui/ui_utility.h"
+ #include "lang/lang_keys.h"
++#include "yukigram/lang.h"
+ #include "storage/file_download.h"
+ #include "data/data_peer_values.h"
++#include "data/data_channel.h"
+ #include "data/data_chat.h"
+ #include "data/data_session.h"
+ #include "data/data_changes.h"
+@@ -645,18 +647,23 @@ void PeerListRow::refreshStatus() {
+ 			_statusValidTill = crl::now()
+ 				+ Data::OnlineChangeTimeout(user, time);
+ 		}
+-	} else if (auto chat = peer()->asChat()) {
++	} else if (const auto chat = peer()->asChat()) {
+ 		if (!chat->amIn()) {
+ 			setStatusText(tr::lng_chat_status_unaccessible(tr::now));
+-		} else if (chat->count > 0) {
+-			setStatusText(tr::lng_chat_status_members(tr::now, lt_count_decimal, chat->count));
+ 		} else {
+-			setStatusText(tr::lng_group_status(tr::now));
++			setStatusText(ktr("box/peer-list/count/members", chat->count, { "kind", ktr("box/peer-list/group") }, { "count", QString::number(chat->count) }));
+ 		}
+-	} else if (peer()->isMegagroup()) {
+-		setStatusText(tr::lng_group_status(tr::now));
+-	} else if (peer()->isChannel()) {
+-		setStatusText(tr::lng_channel_status(tr::now));
++	} else if (const auto channel = peer()->asChannel(); channel->membersCountKnown()) {
++		setStatusText(ktr(
++			channel->isBroadcast() ? "box/peer-list/count/subscribers" : "box/peer-list/count/members",
++			channel->membersCount(),
++			{ "kind", ktr(channel->isMonoforum() ? "box/peer-list/channel-like/monoforum"
++				: channel->isForum() ? "box/peer-list/channel-like/forum"
++				: channel->isMegagroup() ? "box/peer-list/channel-like/supergroup"
++				: channel->isBroadcast() ? "box/peer-list/channel-like/broadcast"
++				: "box/peer-list/channel-like/unknown") },
++			{ "count", QString::number(channel->membersCount()) }
++		));
+ 	}
+ }
+ 
+-- 
+2.53.0
+

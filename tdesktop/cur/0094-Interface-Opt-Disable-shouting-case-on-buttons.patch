@@ -1,0 +1,83 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Thu, 28 May 2026 07:47:11 +0000
+Subject: [PATCH] (Interface)(Opt) Disable shouting-case on buttons
+
+---
+ Telegram/CMakeLists.txt                       |  2 ++
+ .../yukigram/settings/no_shout_buttons.cpp    | 19 +++++++++++++++++++
+ .../yukigram/settings/no_shout_buttons.h      |  5 +++++
+ Telegram/lib_ui/ui/widgets/buttons.cpp        |  5 ++++-
+ 4 files changed, 30 insertions(+), 1 deletion(-)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/no_shout_buttons.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/no_shout_buttons.h
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index a85ecf61ff..92f06168b1 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1984,6 +1984,8 @@ PRIVATE
+     yukigram/settings/mirrored.cpp
+     yukigram/settings/mpris_call_hangup.cpp
+     yukigram/settings/mpris_call_hangup.h
++    yukigram/settings/no_shout_buttons.cpp
++    yukigram/settings/no_shout_buttons.h
+     yukigram/settings/old_style_spoilers.cpp
+     yukigram/settings/old_style_spoilers.h
+     yukigram/settings/right_action_comments.cpp
+diff --git a/Telegram/SourceFiles/yukigram/settings/no_shout_buttons.cpp b/Telegram/SourceFiles/yukigram/settings/no_shout_buttons.cpp
+new file mode 100644
+index 0000000000..243735beb4
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/no_shout_buttons.cpp
+@@ -0,0 +1,19 @@
++#include "yukigram/settings/no_shout_buttons.h"
++#include "yukigram/options.h"
++
++namespace Ui {
++extern bool Yukigram_NoShoutButtons;
++}
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *NoShoutButtons = Yukigram::Options::make(kOptionNoShoutButtons, {
++	.keywords = { u"yukigram"_q, u"shout"_q, u"caps"_q, u"button"_q },
++	.category = "interface",
++}, [](bool value) {
++	Ui::Yukigram_NoShoutButtons = value;
++});
++
++const char kOptionNoShoutButtons[] = "no-shout-buttons";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/no_shout_buttons.h b/Telegram/SourceFiles/yukigram/settings/no_shout_buttons.h
+new file mode 100644
+index 0000000000..d9d0a2842a
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/no_shout_buttons.h
+@@ -0,0 +1,5 @@
++#include "rpl/rpl.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *NoShoutButtons;
++extern const char kOptionNoShoutButtons[];
++}
+diff --git a/Telegram/lib_ui/ui/widgets/buttons.cpp b/Telegram/lib_ui/ui/widgets/buttons.cpp
+index 4637ed5d33..35a789fb77 100644
+--- a/Telegram/lib_ui/ui/widgets/buttons.cpp
++++ b/Telegram/lib_ui/ui/widgets/buttons.cpp
+@@ -409,8 +409,11 @@ void RoundButton::setCornerRadii(
+ 	update();
+ }
+ 
++extern bool Yukigram_NoShoutButtons;
++bool Yukigram_NoShoutButtons = false;
++
+ void RoundButton::resizeToText(const TextWithEntities &text) {
+-	if (_transform == RoundButtonTextTransform::ToUpper) {
++	if (!Yukigram_NoShoutButtons && _transform == RoundButtonTextTransform::ToUpper) {
+ 		_text.setMarkedText(
+ 			_st.style,
+ 			{ text.text.toUpper(), text.entities },
+-- 
+2.53.0
+

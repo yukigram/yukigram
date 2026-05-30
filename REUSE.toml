@@ -10,6 +10,7 @@ path = [
     "tdesktop/cur/*-Yukigram-AppId.patch",
     "tdesktop/cur/*-Yukigram-Keywords.patch",
     "tdesktop/cur/*-Yukigram-Artwork.patch",
+    "tdesktop/cur/*-Translations-English.patch",
     "tdesktop/cur/*-Yukigram-Metadata.patch",
     "tdesktop/cur/*-Yukigram-Branding.patch",
     "tdesktop/cur/*-Yukigram-Version.patch",

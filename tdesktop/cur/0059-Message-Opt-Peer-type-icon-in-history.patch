@@ -1,0 +1,170 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Wed, 15 Apr 2026 22:19:06 +0300
+Subject: [PATCH] (Message)(Opt) Peer type icon in history
+
+This patch is adapted from Kotatogram.
+Original author: RadRussianRus <radrussianrus@gmail.com>
+---
+ Telegram/CMakeLists.txt                       |  2 +
+ .../history/view/history_view_message.cpp     | 39 ++++++++++++++++++-
+ Telegram/SourceFiles/ui/chat/chat.style       | 11 ++++++
+ .../settings/history_peer_type_icons.cpp      | 13 +++++++
+ .../settings/history_peer_type_icons.h        |  5 +++
+ 5 files changed, 69 insertions(+), 1 deletion(-)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index df4eb26343..4e6b991b69 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1955,6 +1955,8 @@ PRIVATE
+     yukigram/settings/disable_animoji.h
+     yukigram/settings/force_mobile_layout.cpp
+     yukigram/settings/force_mobile_layout.h
++    yukigram/settings/history_peer_type_icons.cpp
++    yukigram/settings/history_peer_type_icons.h
+     yukigram/settings/icon_theme_symbolic.cpp
+     yukigram/settings/icon_theme_symbolic.h
+     yukigram/settings/mirrored.cpp
+diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
+index 1323172631..2d7ec53cda 100644
+--- a/Telegram/SourceFiles/history/view/history_view_message.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
+@@ -53,6 +53,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "mainwidget.h"
+ #include "main/main_session.h"
+ #include "settings/sections/settings_premium.h"
++#include "yukigram/settings/history_peer_type_icons.h"
+ #include "ui/text/text_options.h"
+ #include "ui/painter.h"
+ #include "window/themes/window_theme.h" // IsNightMode.
+@@ -141,6 +142,31 @@ void ApplyRevealGradient(
+ 	}
+ }
+ 
++std::optional<style::icon> ChatTypeIcon(HistoryItem *item) {
++	if (!Yukigram::Settings::HistoryPeerTypeIcons->current()) {
++		return {};
++	}
++	if (!item->isPost() && item->displayFrom()) {
++		const auto from = item->displayFrom();
++		if (from->isChat()) {
++			return st::msgNameChatIcon;
++		} else if (from->isForum()) {
++			return st::msgNameForumIcon;
++		} else if (from->isChannel()) {
++			return st::msgNameChannelIcon;
++		} else if (from->isMegagroup()) {
++			return st::msgNameChatIcon;
++		} else if (const auto user = from->asUser()) {
++			if (user->isInaccessible()) {
++				return st::msgNameDeletedIcon;
++			} else if (user->isBot() && !user->isSupport() && !user->isRepliesChat()) {
++				return st::msgNameBotIcon;
++			}
++		}
++	}
++	return {};
++};
++
+ struct SecondRightAction {
+ 	std::unique_ptr<Ui::RippleAnimation> ripple;
+ 	ClickHandlerPtr link;
+@@ -916,6 +942,9 @@ QSize Message::performCountOptimalSize() {
+ 				if (Has<RightBadge>()) {
+ 					namew += st::msgPadding.right() + rightBadgeWidth();
+ 				}
++				if (const auto icon = ChatTypeIcon(item)) {
++					namew += icon->width() + st::dialogsChatTypeSkip;
++				}
+ 				accumulate_max(maxWidth, namew);
+ 				accumulate_max(nonTextMax, namew);
+ 			} else if (via && !displayForwardedFrom()) {
+@@ -1842,6 +1871,12 @@ void Message::paintFromName(
+ 		availableWidth -= st::msgPadding.right() + badgeWidth;
+ 	}
+ 
++	if (const auto icon = ChatTypeIcon(item)) {
++		icon->paint(p, QPoint(availableLeft, trect.top()), availableWidth);
++		availableLeft += icon->width() + st::dialogsChatTypeSkip;
++		availableWidth -= icon->width() + st::dialogsChatTypeSkip;
++	}
++
+ 	const auto stm = context.messageStyle();
+ 	const auto from = item->displayFrom();
+ 	const auto info = from ? nullptr : item->displayHiddenSenderInfo();
+@@ -3323,6 +3358,8 @@ bool Message::getStateFromName(
+ 			availableWidth -= st::msgPadding.right() + badgeWidth;
+ 		}
+ 		const auto item = data();
++		const auto chatIcon = ChatTypeIcon(item);
++		const auto chatIconWidth = chatIcon ? chatIcon->width() + st::dialogsChatTypeSkip : 0;
+ 		const auto from = item->displayFrom();
+ 		const auto nameText = [&]() -> const Ui::Text::String * {
+ 			if (from) {
+@@ -3354,7 +3391,7 @@ bool Message::getStateFromName(
+ 		}
+ 		if (point.x() >= availableLeft
+ 			&& point.x() < availableLeft + availableWidth
+-			&& point.x() < availableLeft + nameText->maxWidth()) {
++			&& point.x() < availableLeft + nameText->maxWidth() + chatIconWidth) {
+ 			outResult->link = fromLink();
+ 			recordLinkRipplePoint(point, trect.topLeft());
+ 			_fromLinkRipplePointSet = 1;
+diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
+index d60d22a68a..73aa4855d6 100644
+--- a/Telegram/SourceFiles/ui/chat/chat.style
++++ b/Telegram/SourceFiles/ui/chat/chat.style
+@@ -755,6 +755,17 @@ historyCommentsOpenInSelected: icon {{ "history_comments_open", msgFileThumbLink
+ historyCommentsOpenOut: icon {{ "history_comments_open", msgFileThumbLinkOutFg }};
+ historyCommentsOpenOutSelected: icon {{ "history_comments_open", msgFileThumbLinkOutFgSelected }};
+ 
++msgNameBotIcon: icon {{ "dialogs/dialogs_bot", historyPeer4NameFg, point(1px, 3px) }};
++msgNameBotIconSelected: icon {{ "dialogs/dialogs_bot", historyPeer4NameFgSelected, point(1px, 3px) }};
++msgNameChatIcon: icon {{ "dialogs/dialogs_chat", historyPeer4NameFg, point(1px, 4px) }};
++msgNameChatIconSelected: icon {{ "dialogs/dialogs_chat", historyPeer4NameFgSelected, point(1px, 4px) }};
++msgNameChannelIcon: icon {{ "dialogs/dialogs_channel", historyPeer4NameFg, point(3px, 4px) }};
++msgNameChannelIconSelected: icon {{ "dialogs/dialogs_channel", historyPeer4NameFgSelected, point(3px, 4px) }};
++msgNameDeletedIcon: icon {{ "dialogs/dialogs_sending", attentionButtonFg, point(4px, 4px) }};
++msgNameDeletedIconSelected: icon {{ "dialogs/dialogs_sending", attentionButtonFgOver, point(4px, 4px) }};
++msgNameForumIcon: icon {{ "dialogs/dialogs_forum", historyPeer4NameFg, point(1px, 4px) }};
++msgNameForumIconSelected: icon {{ "dialogs/dialogs_forum", historyPeer4NameFgSelected, point(1px, 4px) }};
++
+ historyGroupCallUserpics: GroupCallUserpics {
+ 	size: 32px;
+ 	shift: 12px;
+diff --git a/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
+new file mode 100644
+index 0000000000..2cb3a5a069
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
+@@ -0,0 +1,13 @@
++#include "yukigram/settings/history_peer_type_icons.h"
++#include "yukigram/options.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *HistoryPeerTypeIcons = Yukigram::Options::make(kOptionHistoryPeerTypeIcons, {
++	.keywords = { u"yukigram"_q, u"peer"_q, u"user"_q, u"icon"_q, u"bot"_q, u"channel"_q, u"group"_q, u"chat"_q, u"forum"_q },
++	.category = "history",
++});
++
++const char kOptionHistoryPeerTypeIcons[] = "history-peer-type-icons";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h
+new file mode 100644
+index 0000000000..ccee3ad817
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h
+@@ -0,0 +1,5 @@
++#include "rpl/rpl.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *HistoryPeerTypeIcons;
++extern const char kOptionHistoryPeerTypeIcons[];
++}
+-- 
+2.53.0
+

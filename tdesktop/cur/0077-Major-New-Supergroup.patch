@@ -1,0 +1,71 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Fri, 15 May 2026 03:17:31 +0300
+Subject: [PATCH] (Major) New Supergroup
+
+This patch is adapted from 64Gram.
+Original author: c0re100 <corehusky@gmail.com>
+---
+ Telegram/SourceFiles/window/window_main_menu.cpp       | 10 ++++++++++
+ .../SourceFiles/window/window_session_controller.cpp   |  4 ++++
+ .../SourceFiles/window/window_session_controller.h     |  1 +
+ 3 files changed, 15 insertions(+)
+
+diff --git a/Telegram/SourceFiles/window/window_main_menu.cpp b/Telegram/SourceFiles/window/window_main_menu.cpp
+index a26a7cc91a..950f4f83de 100644
+--- a/Telegram/SourceFiles/window/window_main_menu.cpp
++++ b/Telegram/SourceFiles/window/window_main_menu.cpp
+@@ -32,6 +32,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "info/profile/info_profile_icon.h"
+ #include "info/stories/info_stories_widget.h"
+ #include "lang/lang_keys.h"
++#include "yukigram/lang.h"
+ #include "main/main_account.h"
+ #include "main/main_domain.h"
+ #include "main/main_session.h"
+@@ -686,6 +687,15 @@ void MainMenu::setupMenu() {
+ 			}
+ 		});
+ 
++		AddMyChannelsBox(addAction(
++			rktr("drawer/new-supergroup/title"),
++			{ &st::menuIconGroups }
++		), controller, true)->addClickHandler([=](Qt::MouseButton which) {
++			if (which == Qt::LeftButton) {
++				controller->showNewSupergroup();
++			}
++		});
++
+ 		AddMyChannelsBox(addAction(
+ 			tr::lng_create_channel_title(),
+ 			{ &st::menuIconChannel }
+diff --git a/Telegram/SourceFiles/window/window_session_controller.cpp b/Telegram/SourceFiles/window/window_session_controller.cpp
+index c9d1dd479e..bba8f218b3 100644
+--- a/Telegram/SourceFiles/window/window_session_controller.cpp
++++ b/Telegram/SourceFiles/window/window_session_controller.cpp
+@@ -3199,6 +3199,10 @@ void SessionController::showNewGroup() {
+ 	_window->show(Box<GroupInfoBox>(this, GroupInfoBox::Type::Group));
+ }
+ 
++void SessionController::showNewSupergroup() {
++	_window->show(Box<GroupInfoBox>(this, GroupInfoBox::Type::Megagroup));
++}
++
+ void SessionController::showNewChannel() {
+ 	_window->show(Box<GroupInfoBox>(this, GroupInfoBox::Type::Channel));
+ }
+diff --git a/Telegram/SourceFiles/window/window_session_controller.h b/Telegram/SourceFiles/window/window_session_controller.h
+index 2889697f8a..0dfcfa2df3 100644
+--- a/Telegram/SourceFiles/window/window_session_controller.h
++++ b/Telegram/SourceFiles/window/window_session_controller.h
+@@ -581,6 +581,7 @@ public:
+ 
+ 	void showAddContact();
+ 	void showNewGroup();
++	void showNewSupergroup();
+ 	void showNewChannel();
+ 
+ 	void showPassportForm(const Passport::FormRequest &request);
+-- 
+2.53.0
+

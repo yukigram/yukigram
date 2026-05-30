@@ -1,0 +1,343 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Mon, 6 Apr 2026 14:52:44 +0300
+Subject: [PATCH] (Shortcut) Forward/Copy/Steal
+
+---
+ Telegram/SourceFiles/boxes/peer_list_box.h    |  9 +++++
+ .../boxes/peer_list_controllers.cpp           |  2 ++
+ Telegram/SourceFiles/core/shortcuts.cpp       |  7 ++++
+ Telegram/SourceFiles/core/shortcuts.h         |  4 +++
+ .../history/history_inner_widget.cpp          | 35 ++++++++++++++++++
+ .../history/history_inner_widget.h            |  1 +
+ .../SourceFiles/history/history_widget.cpp    |  4 +--
+ Telegram/SourceFiles/history/history_widget.h |  2 +-
+ .../SourceFiles/window/window_peer_menu.cpp   | 36 +++++++++++++++----
+ .../SourceFiles/window/window_peer_menu.h     |  9 +++--
+ 10 files changed, 97 insertions(+), 12 deletions(-)
+
+diff --git a/Telegram/SourceFiles/boxes/peer_list_box.h b/Telegram/SourceFiles/boxes/peer_list_box.h
+index 0e32d2f3d5..d53b3f206a 100644
+--- a/Telegram/SourceFiles/boxes/peer_list_box.h
++++ b/Telegram/SourceFiles/boxes/peer_list_box.h
+@@ -337,6 +337,9 @@ struct PeerListState;
+ 
+ class PeerListDelegate {
+ public:
++	virtual rpl::producer<QString> peerListGetTitle() {
++		Unexpected("PeerListDelegate::peerListGetTitle");
++	}
+ 	virtual void peerListSetTitle(rpl::producer<QString> title) = 0;
+ 	virtual void peerListSetAdditionalTitle(rpl::producer<QString> title) = 0;
+ 	virtual void peerListSetHideEmpty(bool hide) = 0;
+@@ -1138,7 +1141,11 @@ public:
+ 	[[nodiscard]] rpl::producer<int> multiSelectHeightValue() const;
+ 	[[nodiscard]] rpl::producer<> noSearchSubmits() const;
+ 
++	rpl::producer<QString> peerListGetTitle() override {
++		return rpl::duplicate(_title);
++	}
+ 	void peerListSetTitle(rpl::producer<QString> title) override {
++		_title = rpl::duplicate(title);
+ 		setTitle(std::move(title));
+ 	}
+ 	void peerListSetAdditionalTitle(rpl::producer<QString> title) override {
+@@ -1198,6 +1205,8 @@ private:
+ 	void updateScrollSkips();
+ 	void searchQueryChanged(const QString &query);
+ 
++	rpl::producer<QString> _title;
++
+ 	object_ptr<Ui::SlideWrap<Ui::MultiSelect>> _select = { nullptr };
+ 
+ 	const std::shared_ptr<Main::SessionShow> _show;
+diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
+index a83af75867..d74378a9d5 100644
+--- a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
++++ b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
+@@ -889,6 +889,7 @@ void ChooseRecipientBoxController::rowClicked(not_null<PeerListRow*> row) {
+ 			});
+ 		*weak = owned.data();
+ 		delegate()->peerListUiShow()->showBox(std::move(owned));
++		(*weak)->setTitle(delegate()->peerListGetTitle());
+ 		return;
+ 	} else if (const auto monoforum = peer->monoforum()) {
+ 		const auto weak = std::make_shared<base::weak_qptr<Ui::BoxContent>>();
+@@ -928,6 +929,7 @@ void ChooseRecipientBoxController::rowClicked(not_null<PeerListRow*> row) {
+ 			});
+ 		*weak = owned.data();
+ 		delegate()->peerListUiShow()->showBox(std::move(owned));
++		(*weak)->setTitle(delegate()->peerListGetTitle());
+ 		return;
+ 	}
+ 	const auto history = peer->owner().history(peer);
+diff --git a/Telegram/SourceFiles/core/shortcuts.cpp b/Telegram/SourceFiles/core/shortcuts.cpp
+index 4ca872a75e..ed2463c77b 100644
+--- a/Telegram/SourceFiles/core/shortcuts.cpp
++++ b/Telegram/SourceFiles/core/shortcuts.cpp
+@@ -139,6 +139,9 @@ const auto CommandByName = base::flat_map<QString, Command>{
+ 	{ u"record_round"_q                  , Command::RecordRound },
+ 	{ u"show_admin_log"_q                , Command::ShowAdminLog },
+ 	//
++	{ u"fast_forward"_q      , Command::FastForward },
++	{ u"fast_copy"_q         , Command::FastCopy },
++	{ u"fast_steal"_q        , Command::FastSteal },
+ };
+ 
+ const base::flat_map<Command, QString> &CommandNames() {
+@@ -533,6 +536,10 @@ void Manager::fillDefaults() {
+ 
+ 	set(u"ctrl+r"_q, Command::RecordVoice);
+ 
++	set(u"alt+f"_q, Command::FastForward);
++	set(u"alt+c"_q, Command::FastCopy);
++	set(u"alt+shift+c"_q, Command::FastSteal);
++
+ 	_defaults = keysCurrents();
+ }
+ 
+diff --git a/Telegram/SourceFiles/core/shortcuts.h b/Telegram/SourceFiles/core/shortcuts.h
+index 2d6005ee8d..917cfd78fc 100644
+--- a/Telegram/SourceFiles/core/shortcuts.h
++++ b/Telegram/SourceFiles/core/shortcuts.h
+@@ -88,6 +88,10 @@ enum class Command {
+ 	SupportScrollToCurrent,
+ 	SupportHistoryBack,
+ 	SupportHistoryForward,
++
++	FastForward,
++	FastCopy,
++	FastSteal,
+ };
+ 
+ [[maybe_unused]] constexpr auto kShowFolder = {
+diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
+index 400b303373..8581b22c58 100644
+--- a/Telegram/SourceFiles/history/history_inner_widget.cpp
++++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
+@@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "chat_helpers/stickers_emoji_pack.h"
+ #include "core/application.h"
+ #include "core/file_utilities.h"
++#include "core/shortcuts.h"
+ #include "core/click_handler_types.h"
+ #include "core/phone_click_handler.h"
+ #include "data/data_chat_participant_status.h"
+@@ -482,6 +483,8 @@ HistoryInner::HistoryInner(
+ 		update();
+ 	}, lifetime());
+ 
++	setupShortcuts();
++
+ 	HistoryView::Reactions::SetupManagerList(
+ 		_reactionsManager.get(),
+ 		_reactionsItem.value());
+@@ -5971,6 +5974,38 @@ bool CanSendReply(not_null<const HistoryItem*> item) {
+ 	return true;
+ }
+ 
++void HistoryInner::setupShortcuts() {
++	Shortcuts::Requests(
++	) | rpl::filter([=] {
++		return Ui::AppInFocus()
++			   && Ui::InFocusChain(this)
++			   && !_controller->isLayerShown();
++	}) | rpl::on_next([=](not_null<Shortcuts::Request*> request) {
++		using Command = Shortcuts::Command;
++		request->check(Command::FastForward, 1) && request->handle([=] {
++			auto selectedState = getSelectionState();
++			if (selectedState.count > 0 && selectedState.canForwardCount == selectedState.count) {
++				_widget->forwardSelected(0);
++			}
++			return true;
++		});
++		request->check(Command::FastCopy, 1) && request->handle([=] {
++			auto selectedState = getSelectionState();
++			if (selectedState.count > 0 && selectedState.canForwardCount == selectedState.count) {
++				_widget->forwardSelected(1);
++			}
++			return true;
++		});
++		request->check(Command::FastSteal, 1) && request->handle([=] {
++			auto selectedState = getSelectionState();
++			if (selectedState.count > 0 && selectedState.canForwardCount == selectedState.count) {
++				_widget->forwardSelected(2);
++			}
++			return true;
++		});
++	}, lifetime());
++}
++
+ // Accessibility.
+ 
+ std::vector<HistoryView::Element*> HistoryInner::accessibleElements() const {
+diff --git a/Telegram/SourceFiles/history/history_inner_widget.h b/Telegram/SourceFiles/history/history_inner_widget.h
+index 208139327c..03c44cf103 100644
+--- a/Telegram/SourceFiles/history/history_inner_widget.h
++++ b/Telegram/SourceFiles/history/history_inner_widget.h
+@@ -487,6 +487,7 @@ private:
+ 	void blockSenderAsGroup(FullMsgId itemId);
+ 	void copySelectedText();
+ 	void editCaptionUploadLayer(not_null<HistoryItem*> item);
++	void setupShortcuts();
+ 
+ 	[[nodiscard]] auto reactionButtonParameters(
+ 		not_null<const Element*> view,
+diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
+index c88bf656fc..a3ada86c99 100644
+--- a/Telegram/SourceFiles/history/history_widget.cpp
++++ b/Telegram/SourceFiles/history/history_widget.cpp
+@@ -9630,7 +9630,7 @@ bool HistoryWidget::updateCanSendMessage() {
+ 	return true;
+ }
+ 
+-void HistoryWidget::forwardSelected() {
++void HistoryWidget::forwardSelected(int steal) {
+ 	if (!_list) {
+ 		return;
+ 	}
+@@ -9639,7 +9639,7 @@ void HistoryWidget::forwardSelected() {
+ 		if (const auto strong = weak.get()) {
+ 			strong->clearSelected();
+ 		}
+-	});
++	}, steal);
+ }
+ 
+ void HistoryWidget::confirmDeleteSelected() {
+diff --git a/Telegram/SourceFiles/history/history_widget.h b/Telegram/SourceFiles/history/history_widget.h
+index 710878a874..ee49480da8 100644
+--- a/Telegram/SourceFiles/history/history_widget.h
++++ b/Telegram/SourceFiles/history/history_widget.h
+@@ -291,7 +291,7 @@ public:
+ 
+ 	QPixmap grabForShowAnimation(const Window::SectionSlideParams &params);
+ 
+-	void forwardSelected();
++	void forwardSelected(int steal = 0);
+ 	void confirmDeleteSelected();
+ 	void clearSelected();
+ 
+diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
+index bfb204253a..b3f739718c 100644
+--- a/Telegram/SourceFiles/window/window_peer_menu.cpp
++++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
+@@ -2853,7 +2853,8 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(
+ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+ 		std::shared_ptr<ChatHelpers::Show> show,
+ 		Data::ForwardDraft &&draft,
+-		Fn<void()> &&successCallback) {
++		Fn<void()> &&successCallback,
++		int steal) {
+ 	const auto session = &show->session();
+ 	const auto owner = &session->data();
+ 	const auto itemsList = owner->idsToItems(draft.ids);
+@@ -3038,6 +3039,20 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+ 		box->peerListContent()->restoreState(std::move(state));
+ 	};
+ 
++	const auto updateTitle = [&](not_null<ListBox*> box) {
++		const auto flags = box->forwardOptions();
++		const auto getTitle = [&] {
++			if (!flags.dropNames) {
++				return "box/forward/forward";
++			} else if (!flags.dropCaptions) {
++				return "box/forward/copy";
++			} else {
++				return "box/forward/steal";
++			}
++		}();
++		box->peerListSetTitle(rktr(getTitle));
++	};
++
+ 	const auto state = [&] {
+ 		auto controller = std::make_unique<Controller>(session);
+ 		const auto controllerRaw = controller.get();
+@@ -3081,15 +3096,19 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+ 		boxRaw->setForwardOptions({
+ 			.sendersCount = sendersCount,
+ 			.captionsCount = captionsCount,
++			.dropNames = steal > 0,
++			.dropCaptions = steal > 1,
+ 		});
+ 		show->showBox(std::move(box));
++		updateTitle(boxRaw);
+ 		auto state = State{ boxRaw, controllerRaw };
+ 		return boxRaw->lifetime().make_state<State>(std::move(state));
+ 	}();
+ 
+ 	{ // Chosen a single.
+-		auto chosen = [show, draft = std::move(draft)](
++		auto chosen = [show, state, draft = std::move(draft)](
+ 				not_null<Data::Thread*> thread) mutable {
++			draft.options = state->box->forwardOptionsData();
+ 			const auto peer = thread->peer();
+ 			if (peer->isSelf()
+ 				&& !draft.ids.empty()
+@@ -3277,6 +3296,7 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+ 				state->box->forwardOptions(),
+ 				[=](Ui::ForwardOptions o) {
+ 					state->box->setForwardOptions(o);
++					updateTitle(state->box);
+ 				},
+ 				state->menu->lifetime());
+ 
+@@ -3388,21 +3408,25 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+ 		not_null<Window::SessionNavigation*> navigation,
+ 		Data::ForwardDraft &&draft,
+-		Fn<void()> &&successCallback) {
++		Fn<void()> &&successCallback,
++		int steal) {
+ 	return ShowForwardMessagesBox(
+ 		navigation->uiShow(),
+ 		std::move(draft),
+-		std::move(successCallback));
++		std::move(successCallback),
++		steal);
+ }
+ 
+ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+ 		not_null<Window::SessionNavigation*> navigation,
+ 		MessageIdsList &&items,
+-		Fn<void()> &&successCallback) {
++		Fn<void()> &&successCallback,
++		int steal) {
+ 	return ShowForwardMessagesBox(
+ 		navigation,
+ 		Data::ForwardDraft{ .ids = std::move(items) },
+-		std::move(successCallback));
++		std::move(successCallback),
++		steal);
+ }
+ 
+ base::weak_qptr<Ui::BoxContent> ShowShareGameBox(
+diff --git a/Telegram/SourceFiles/window/window_peer_menu.h b/Telegram/SourceFiles/window/window_peer_menu.h
+index 8664c91dbb..35fc31db43 100644
+--- a/Telegram/SourceFiles/window/window_peer_menu.h
++++ b/Telegram/SourceFiles/window/window_peer_menu.h
+@@ -206,15 +206,18 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(
+ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+ 	std::shared_ptr<ChatHelpers::Show> show,
+ 	Data::ForwardDraft &&draft,
+-	Fn<void()> &&successCallback = nullptr);
++	Fn<void()> &&successCallback = nullptr,
++	int steal = 0);
+ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+ 	not_null<Window::SessionNavigation*> navigation,
+ 	Data::ForwardDraft &&draft,
+-	Fn<void()> &&successCallback = nullptr);
++	Fn<void()> &&successCallback = nullptr,
++	int steal = 0);
+ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+ 	not_null<Window::SessionNavigation*> navigation,
+ 	MessageIdsList &&items,
+-	Fn<void()> &&successCallback = nullptr);
++	Fn<void()> &&successCallback = nullptr,
++	int steal = 0);
+ base::weak_qptr<Ui::BoxContent> ShowShareUrlBox(
+ 	not_null<Window::SessionNavigation*> navigation,
+ 	const QString &url,
+-- 
+2.53.0
+

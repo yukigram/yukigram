@@ -1,0 +1,109 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Wed, 13 May 2026 21:51:40 +0300
+Subject: [PATCH] (Info) Show more session info
+
+---
+ .../SourceFiles/api/api_authorizations.cpp    |  2 ++
+ Telegram/SourceFiles/api/api_authorizations.h |  2 ++
+ .../sections/settings_active_sessions.cpp     | 26 ++++++++++++++-----
+ 3 files changed, 23 insertions(+), 7 deletions(-)
+
+diff --git a/Telegram/SourceFiles/api/api_authorizations.cpp b/Telegram/SourceFiles/api/api_authorizations.cpp
+index 9652e7fedd..86d93f377c 100644
+--- a/Telegram/SourceFiles/api/api_authorizations.cpp
++++ b/Telegram/SourceFiles/api/api_authorizations.cpp
+@@ -30,6 +30,7 @@ Authorizations::Entry ParseEntry(const MTPDauthorization &data) {
+ 	result.hash = data.is_current() ? 0 : data.vhash().v;
+ 	result.incomplete = data.is_password_pending();
+ 	result.callsDisabled = data.is_call_requests_disabled();
++	result.officialApp = data.is_official_app();
+ 
+ 	const auto apiId = result.apiId = data.vapi_id().v;
+ 	const auto isTest = (apiId == TestApiId);
+@@ -71,6 +72,7 @@ Authorizations::Entry ParseEntry(const MTPDauthorization &data) {
+ 	result.activeTime = data.vdate_active().v
+ 		? data.vdate_active().v
+ 		: data.vdate_created().v;
++	result.createdTime = data.vdate_created().v;
+ 	result.info = QString("%1%2").arg(
+ 		appName,
+ 		appVer.isEmpty() ? QString() : (' ' + appVer));
+diff --git a/Telegram/SourceFiles/api/api_authorizations.h b/Telegram/SourceFiles/api/api_authorizations.h
+index 25c97f3945..8663c2ac23 100644
+--- a/Telegram/SourceFiles/api/api_authorizations.h
++++ b/Telegram/SourceFiles/api/api_authorizations.h
+@@ -23,8 +23,10 @@ public:
+ 
+ 		bool incomplete = false;
+ 		bool callsDisabled = false;
++		bool officialApp = false;
+ 		int apiId = 0;
+ 		TimeId activeTime = 0;
++		TimeId createdTime = 0;
+ 		QString name, active, info, ip, location, system, platform;
+ 	};
+ 	using List = std::vector<Entry>;
+diff --git a/Telegram/SourceFiles/settings/sections/settings_active_sessions.cpp b/Telegram/SourceFiles/settings/sections/settings_active_sessions.cpp
+index bab18dca01..874b3fe02a 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_active_sessions.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_active_sessions.cpp
+@@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "core/application.h"
+ #include "core/core_settings.h"
+ #include "lang/lang_keys.h"
++#include "yukigram/lang.h"
+ #include "lottie/lottie_icon.h"
+ #include "main/main_session.h"
+ #include "settings/sections/settings_privacy_security.h"
+@@ -455,11 +456,23 @@ void SessionInfoBox(
+ 		tr::lng_sessions_application(),
+ 		data.info,
+ 		st::menuIconDevices);
++	AddSessionInfoRow(
++		container,
++		rktr("settings/privacy/sessions/client-api-id"),
++		u"%1 (%2)"_q.arg(data.apiId).arg(data.officialApp
++			? ktr("settings/privacy/sessions/client/official")
++			: ktr("settings/privacy/sessions/client/unofficial")),
++		st::menuIconInfo);
+ 	AddSessionInfoRow(
+ 		container,
+ 		tr::lng_sessions_system(),
+ 		data.system,
+ 		st::menuIconInfo);
++	AddSessionInfoRow(
++		container,
++		rktr("settings/privacy/sessions/created-time"),
++		langDateTimeFull(base::unixtime::parse(data.createdTime)),
++		st::menuIconSchedule);
+ 	AddSessionInfoRow(
+ 		container,
+ 		tr::lng_sessions_ip(),
+@@ -490,17 +503,16 @@ void SessionInfoBox(
+ 
+ Row::Row(not_null<RowDelegate*> delegate, const EntryData &data)
+ : PeerListRow(data.hash)
+-, _delegate(delegate)
+-, _location(st::defaultTextStyle, LocationAndDate(data))
+-, _type(TypeFromEntry(data))
+-, _data(data)
+-, _userpic(GenerateUserpic(_type)) {
+-	setCustomStatus(_data.info);
++, _delegate(delegate) {
++	update(data);
+ }
+ 
+ void Row::update(const EntryData &data) {
+ 	_data = data;
+-	setCustomStatus(_data.info);
++	setCustomStatus(ktr(_data.officialApp
++		? "settings/privacy/sessions/name/official"
++		: "settings/privacy/sessions/name/unofficial",
++		{ "session", _data.info }));
+ 	refreshName(st::sessionListItem);
+ 	_location.setText(st::defaultTextStyle, LocationAndDate(_data));
+ 	_type = TypeFromEntry(_data);
+-- 
+2.53.0
+

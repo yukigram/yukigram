@@ -211,6 +211,7 @@ These are placed under `(Reactions)` category.
 These are placed under `(Compose)` category.
 
 ## Translations
+- English
 - Russian
 
 These are placed under `(Translations)` category.

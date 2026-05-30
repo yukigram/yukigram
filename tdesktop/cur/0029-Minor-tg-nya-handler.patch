@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <yuki.utk8g@gmail.com>
+Date: Fri, 3 Apr 2026 02:59:31 +0300
+Subject: [PATCH] (Minor) tg://nya handler
+
+---
+ Telegram/SourceFiles/core/local_url_handlers.cpp | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/Telegram/SourceFiles/core/local_url_handlers.cpp b/Telegram/SourceFiles/core/local_url_handlers.cpp
+index c20a05b74f..d5fb0e0db8 100644
+--- a/Telegram/SourceFiles/core/local_url_handlers.cpp
++++ b/Telegram/SourceFiles/core/local_url_handlers.cpp
+@@ -24,6 +24,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "ui/boxes/confirm_box.h"
+ #include "ui/boxes/edit_birthday_box.h"
+ #include "ui/integration.h"
++#include "yukigram/lang.h"
+ #include "payments/payments_non_panel_process.h"
+ #include "boxes/peers/edit_peer_info_box.h"
+ #include "boxes/share_box.h"
+@@ -1673,6 +1674,14 @@ bool ResolveOAuth(
+ 	return true;
+ }
+ 
++bool ShowNya(
++		Window::SessionController *controller,
++		const Match &match,
++		const QVariant &context) {
++	Ui::Toast::Show(ktr("nya"));
++	return true;
++}
++
+ } // namespace
+ 
+ bool TryRouterForLocalUrl(
+@@ -1683,6 +1692,10 @@ bool TryRouterForLocalUrl(
+ 
+ const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
+ 	static auto Result = std::vector<LocalUrlHandler>{
++		{
++			u"^nya$"_q,
++			ShowNya
++		},
+ 		{
+ 			u"^join/?\\?invite=([a-zA-Z0-9\\.\\_\\-]+)(&|$)"_q,
+ 			JoinGroupByHash
+-- 
+2.53.0
+
