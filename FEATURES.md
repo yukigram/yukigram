@@ -81,7 +81,7 @@ This is what I mean by "minus the bullshit"
 These are placed under `(Annoyances)` category.
 
 ## Minor
-- tg://nya link support
+- tg://nya and tg://woof link support
 - Allow more than 3/6 accounts
 - :zap: Additional emoji aliases
     (`:docker:` -> :whale:,

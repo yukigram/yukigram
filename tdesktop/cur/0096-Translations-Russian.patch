@@ -4,17 +4,17 @@ Date: Thu, 28 May 2026 22:20:22 +0000
 Subject: [PATCH] (Translations) Russian
 
 ---
- Telegram/Resources/langs/yukigram/ru.json    | 150 +++++++++++++++++++
+ Telegram/Resources/langs/yukigram/ru.json    | 151 +++++++++++++++++++
  Telegram/Resources/qrc/telegram/yukigram.qrc |   1 +
- 2 files changed, 151 insertions(+)
+ 2 files changed, 152 insertions(+)
  create mode 100644 Telegram/Resources/langs/yukigram/ru.json
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..29f75ab172
+index 0000000000..89df30094c
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
-@@ -0,0 +1,150 @@
+@@ -0,0 +1,151 @@
 +{
 +    "about/1/text": "Неофициальный форк {tdesktop_link},\nкоторый добавляет фичи и убирает мусор.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -163,6 +163,7 @@ index 0000000000..29f75ab172
 +    "settings/yukigram/title": "Настройки Yukigram",
 +    "unsupported-message/text": "Это сообщение не поддерживается в вашей версии Yukigram. Пожалуйста, обновитесь до последней версии. Если вы уже на самой последней версии, возможно, это сообщение требует версию Telegram Desktop новее, чем существует в природе, или Yukigram запаздывает с обновлением.",
 +    "unsupported-message/button/text": "Открыть канал Yukigram",
++    "woof": "Гав гав!",
 +    "_to_keep_the_diffs_nice": "Please make sure this string is kept at the bottom"
 +}
 \ No newline at end of file

@@ -4,14 +4,14 @@ Date: Sat, 30 May 2026 20:56:58 +0000
 Subject: [PATCH] (Translations) English
 
 ---
- Telegram/Resources/langs/yukigram/en.json | 141 ++++++++++++++++++++++
- 1 file changed, 141 insertions(+)
+ Telegram/Resources/langs/yukigram/en.json | 142 ++++++++++++++++++++++
+ 1 file changed, 142 insertions(+)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index a54f5182fa..435966b8dd 100644
+index a54f5182fa..28ecdfab5c 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -1,3 +1,144 @@
+@@ -1,3 +1,145 @@
  {
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -154,6 +154,7 @@ index a54f5182fa..435966b8dd 100644
 +    "settings/yukigram/title": "Yukigram settings",
 +    "unsupported-message/text": "This message is not supported by your version of Yukigram. Please update to the latest version. If you are already using the latest version, this message might depend on a feature that is not yet implemented in Telegram Desktop, or Yukigram is lagging behind upstream.",
 +    "unsupported-message/button/text": "View Yukigram channel",
++    "woof": "Arf arf!",
      "_to_keep_the_diffs_nice": "Please make sure this string is kept at the bottom"
  }
 \ No newline at end of file
