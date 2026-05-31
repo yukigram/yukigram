@@ -8,11 +8,11 @@ Subject: [PATCH] (Yukigram) Changelog
  1 file changed, 277 insertions(+)
 
 diff --git a/changelog.txt b/changelog.txt
-index 46242d956c..ceafae44ef 100644
+index 46242d956c..54b25b1a69 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,3 +1,37 @@
-+9999 wip (01.01.99)
++6.8.4.2 beta (31.05.26)
 +
 +- Fix translations
 +- Set correct title for Forward box
