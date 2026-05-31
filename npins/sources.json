@@ -9,9 +9,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "06603385dcccaa95ee2a07e80c7680f08ba8bed0",
-      "url": "https://github.com/sylfn/nixpak/archive/06603385dcccaa95ee2a07e80c7680f08ba8bed0.tar.gz",
-      "hash": "sha256-btG/9PklR7OS25uXNEWERy0amlFPlqtpNbkpvEuUSac="
+      "revision": "ccd8621405fbc5e98724b47994a9d14346fb3b0f",
+      "url": "https://github.com/sylfn/nixpak/archive/ccd8621405fbc5e98724b47994a9d14346fb3b0f.tar.gz",
+      "hash": "sha256-UEJGxhOC7x+jzZqdp0uXep17f/67vTBAGDFctvjLkOs="
     },
     "nixpkgs": {
       "type": "Channel",
