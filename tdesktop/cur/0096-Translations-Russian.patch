@@ -4,17 +4,17 @@ Date: Thu, 28 May 2026 22:20:22 +0000
 Subject: [PATCH] (Translations) Russian
 
 ---
- Telegram/Resources/langs/yukigram/ru.json    | 151 +++++++++++++++++++
+ Telegram/Resources/langs/yukigram/ru.json    | 150 +++++++++++++++++++
  Telegram/Resources/qrc/telegram/yukigram.qrc |   1 +
- 2 files changed, 152 insertions(+)
+ 2 files changed, 151 insertions(+)
  create mode 100644 Telegram/Resources/langs/yukigram/ru.json
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..89df30094c
+index 0000000000..ccb2fcc824
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
-@@ -0,0 +1,151 @@
+@@ -0,0 +1,150 @@
 +{
 +    "about/1/text": "Неофициальный форк {tdesktop_link},\nкоторый добавляет фичи и убирает мусор.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -54,7 +54,6 @@ index 0000000000..89df30094c
 +    "box/peer-list/count/subscribers#other": "{kind}, {count} подписчиков",
 +    "box/sticker-set/owner/title": "Владелец",
 +    "drawer/new-supergroup/title": "Создать супергруппу",
-+    "history/media/spoiler": "Медиа под спойлером",
 +    "history/tooltip/message-id": "ID сообщения: {id}",
 +    "history/tooltip/message-id-hex": "ID сообщения (hex): {id}",
 +    "info/peer-dc/inferred": "Предполагаемый дата-центр",

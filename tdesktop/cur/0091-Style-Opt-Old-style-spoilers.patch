@@ -5,13 +5,13 @@ Subject: [PATCH] (Style)(Opt) Old-style spoilers
 
 ---
  Telegram/CMakeLists.txt                       |  2 ++
- .../history/view/media/history_view_media.cpp | 20 +++++++++++++++++++
+ .../history/view/media/history_view_media.cpp | 11 ++++++++++
  .../yukigram/settings/old_style_spoilers.cpp  | 19 ++++++++++++++++++
  .../yukigram/settings/old_style_spoilers.h    |  5 +++++
  Telegram/lib_ui/ui/effects/spoiler_mess.cpp   | 20 +++++++++++++++++++
  Telegram/lib_ui/ui/text/text_renderer.cpp     |  6 +++++-
  .../ui/widgets/fields/custom_field_object.cpp |  4 +++-
- 7 files changed, 74 insertions(+), 2 deletions(-)
+ 7 files changed, 65 insertions(+), 2 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/old_style_spoilers.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/old_style_spoilers.h
 
@@ -29,7 +29,7 @@ index 7cb6d565c5..a85ecf61ff 100644
      yukigram/settings/right_action_comments.h
      yukigram/settings/show_message_id.cpp
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_media.cpp b/Telegram/SourceFiles/history/view/media/history_view_media.cpp
-index 8159b021f1..7fed86b834 100644
+index 8159b021f1..f1254bd508 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_media.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_media.cpp
 @@ -21,6 +21,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -48,27 +48,18 @@ index 8159b021f1..7fed86b834 100644
  #include "core/ui_integration.h"
  #include "styles/style_chat.h"
  #include "styles/style_chat_helpers.h"
-@@ -361,6 +363,24 @@ void Media::fillImageSpoiler(
+@@ -361,6 +363,15 @@ void Media::fillImageSpoiler(
  		Ui::DefaultImageSpoiler().frame(
  			spoiler->animation->index(context.now, pausedSpoiler)),
  		spoiler->cornerCache);
 +if (Yukigram::Settings::OldStyleSpoilers->current()) {
-+	const auto text = ktr("history/media/spoiler");
-+	const auto font = st::defaultTextStyle.font;
-+	const auto margin = 5;
-+	const auto height = font->height;
-+	const auto bottom = rect.bottom() - margin;
-+	const auto top = bottom - height;
-+	const auto left = rect.left() + margin;
-+	const auto width = font->width(text);
-+	const auto bgRect = QRect(left, top, width + 2 * margin, height);
-+	const auto fgRect = QRect(left + margin, top, width + margin, height);
-+	auto path = QPainterPath();
-+	path.addRoundedRect(bgRect, 2, 2);
-+	p.fillPath(path, Qt::black);
-+	p.setPen(Qt::white);
-+	p.setFont(font);
-+	p.drawText(fgRect, text);
++	p.setPen(Qt::NoPen);
++	p.setBrush(st::msgDateImgBg->c);
++	{
++		auto hq = PainterHighQualityEnabler(p);
++		p.drawEllipse(rect.center() + QPoint(1, 1), 20, 20);
++	}
++	st::menuIconSpoiler.paintInCenter(p, rect);
 +}
  }
  

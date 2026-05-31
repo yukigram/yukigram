@@ -4,14 +4,14 @@ Date: Sat, 30 May 2026 20:56:58 +0000
 Subject: [PATCH] (Translations) English
 
 ---
- Telegram/Resources/langs/yukigram/en.json | 142 ++++++++++++++++++++++
- 1 file changed, 142 insertions(+)
+ Telegram/Resources/langs/yukigram/en.json | 141 ++++++++++++++++++++++
+ 1 file changed, 141 insertions(+)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index a54f5182fa..28ecdfab5c 100644
+index a54f5182fa..8a547a7f17 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -1,3 +1,145 @@
+@@ -1,3 +1,144 @@
  {
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -45,7 +45,6 @@ index a54f5182fa..28ecdfab5c 100644
 +    "box/peer-list/count/subscribers#other": "{kind}, {count} subscribers",
 +    "box/sticker-set/owner/title": "Owner",
 +    "drawer/new-supergroup/title": "New supergroup",
-+    "history/media/spoiler": "Spoilered media",
 +    "history/tooltip/message-id": "Message ID: {id}",
 +    "history/tooltip/message-id-hex": "Message ID (hex): {id}",
 +    "info/peer-dc/inferred": "Inferred DC",
