@@ -7,8 +7,8 @@ Subject: [PATCH] (Yukigram) Build support
  Telegram/build/docker/centos_env/install.sh |  5 +++++
  build.sh                                    |  6 ++++++
  install.sh                                  |  3 +++
- run-in-docker.sh                            | 12 ++++++++++++
- 4 files changed, 26 insertions(+)
+ run-in-docker.sh                            | 16 ++++++++++++++++
+ 4 files changed, 30 insertions(+)
  create mode 100755 Telegram/build/docker/centos_env/install.sh
  create mode 100755 build.sh
  create mode 100755 install.sh
@@ -48,18 +48,22 @@ index 0000000000..441c32a088
 +./run-in-docker.sh env DESTDIR="${DESTDIR:-.}" /usr/src/tdesktop/Telegram/build/docker/centos_env/install.sh "$@"
 diff --git a/run-in-docker.sh b/run-in-docker.sh
 new file mode 100755
-index 0000000000..fd227c5526
+index 0000000000..7b39b11e78
 --- /dev/null
 +++ b/run-in-docker.sh
-@@ -0,0 +1,12 @@
+@@ -0,0 +1,16 @@
 +#!/usr/bin/env bash
 +set -exuo pipefail
 +TTYFLAGS=
 +if tty -s; then
 +    TTYFLAGS=-it
 +fi
++USERFLAGS=0:0
++if ! docker info -f "{{println .SecurityOptions}}" | grep rootless; then
++    USERFLAGS=$(id -u):$(id -g)
++fi
 +docker run --rm $TTYFLAGS \
-+    -u $(id -u) \
++    -u $USERFLAGS \
 +    -v "$PWD:/usr/src/tdesktop" \
 +    -e CONFIG=${CONFIG:-Release} \
 +    ghcr.io/telegramdesktop/tdesktop/centos_env@sha256:60bcd37bc6381eabf9a577bcbdbb1afcc2c6df5ad1444b61a7bb27db0670ffa9 \
