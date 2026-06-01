@@ -13,7 +13,7 @@ Subject: [PATCH] (Interface)(Opt) Disable shouting-case on buttons
  create mode 100644 Telegram/SourceFiles/yukigram/settings/no_shout_buttons.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index a85ecf61ff..92f06168b1 100644
+index af57008788..26214c6732 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1984,6 +1984,8 @@ PRIVATE
@@ -24,7 +24,7 @@ index a85ecf61ff..92f06168b1 100644
 +    yukigram/settings/no_shout_buttons.h
      yukigram/settings/old_style_spoilers.cpp
      yukigram/settings/old_style_spoilers.h
-     yukigram/settings/right_action_comments.cpp
+     yukigram/settings/quick_admin_list.cpp
 diff --git a/Telegram/SourceFiles/yukigram/settings/no_shout_buttons.cpp b/Telegram/SourceFiles/yukigram/settings/no_shout_buttons.cpp
 new file mode 100644
 index 0000000000..243735beb4

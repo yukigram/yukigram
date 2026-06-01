@@ -16,7 +16,7 @@ Subject: [PATCH] (Style)(Opt) Old-style spoilers
  create mode 100644 Telegram/SourceFiles/yukigram/settings/old_style_spoilers.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 7cb6d565c5..a85ecf61ff 100644
+index c8dc83bf9c..af57008788 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1984,6 +1984,8 @@ PRIVATE
@@ -25,9 +25,9 @@ index 7cb6d565c5..a85ecf61ff 100644
      yukigram/settings/mpris_call_hangup.h
 +    yukigram/settings/old_style_spoilers.cpp
 +    yukigram/settings/old_style_spoilers.h
-     yukigram/settings/right_action_comments.cpp
-     yukigram/settings/right_action_comments.h
-     yukigram/settings/show_message_id.cpp
+     yukigram/settings/quick_admin_list.cpp
+     yukigram/settings/quick_admin_list.h
+     yukigram/settings/quick_recent_actions.cpp
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_media.cpp b/Telegram/SourceFiles/history/view/media/history_view_media.cpp
 index 8159b021f1..0111f780ff 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_media.cpp

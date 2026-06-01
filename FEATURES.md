@@ -161,8 +161,8 @@ These are placed under `(Interface)` category.
 ## Chat
 - "Search messages from" button in more context menus
 - Show time on service messages
-- Quick recent actions button
-- Quick admin list button
+- :gear: Quick recent actions button
+- :gear: Quick admin list button
 - :zap: Channel statistics button in kebab menu
     near quick Recent Actions button
 - Go to first message button

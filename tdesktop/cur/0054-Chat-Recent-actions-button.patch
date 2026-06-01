@@ -6,13 +6,31 @@ Subject: [PATCH] (Chat) Recent actions button
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 ---
- .../info/edit/group_manage_actions_topbar.svg | 13 +++++++++
- .../view/history_view_top_bar_widget.cpp      | 28 +++++++++++++++++++
+ Telegram/CMakeLists.txt                       |  2 ++
+ .../info/edit/group_manage_actions_topbar.svg | 13 ++++++++
+ .../view/history_view_top_bar_widget.cpp      | 32 +++++++++++++++++++
  .../view/history_view_top_bar_widget.h        |  1 +
  Telegram/SourceFiles/info/info.style          |  4 +++
- 4 files changed, 46 insertions(+)
+ .../settings/quick_recent_actions.cpp         | 13 ++++++++
+ .../yukigram/settings/quick_recent_actions.h  |  5 +++
+ 7 files changed, 70 insertions(+)
  create mode 100644 Telegram/Resources/icons/info/edit/group_manage_actions_topbar.svg
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/quick_recent_actions.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/quick_recent_actions.h
 
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index 7539507d83..28f517d0c1 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -1960,6 +1960,8 @@ PRIVATE
+     yukigram/settings/mirrored.cpp
+     yukigram/settings/mpris_call_hangup.cpp
+     yukigram/settings/mpris_call_hangup.h
++    yukigram/settings/quick_recent_actions.cpp
++    yukigram/settings/quick_recent_actions.h
+     yukigram/settings/right_action_comments.cpp
+     yukigram/settings/right_action_comments.h
+     yukigram/settings/time_with_seconds.cpp
 diff --git a/Telegram/Resources/icons/info/edit/group_manage_actions_topbar.svg b/Telegram/Resources/icons/info/edit/group_manage_actions_topbar.svg
 new file mode 100644
 index 0000000000..220814e44b
@@ -33,7 +51,7 @@ index 0000000000..220814e44b
 +    " stroke="#fff" fill="#0000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
 +</svg>
 diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
-index 70e8d5f757..bc0a8ba9ac 100644
+index 70e8d5f757..d48ee0f1f4 100644
 --- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 @@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -44,7 +62,15 @@ index 70e8d5f757..bc0a8ba9ac 100644
  #include "history/view/history_view_send_action.h"
  #include "boxes/add_contact_box.h"
  #include "ui/boxes/confirm_box.h"
-@@ -126,6 +127,7 @@ TopBarWidget::TopBarWidget(
+@@ -59,6 +60,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "data/data_send_action.h"
+ #include "dialogs/dialogs_main_list.h"
+ #include "chat_helpers/emoji_interactions.h"
++#include "yukigram/settings/quick_recent_actions.h"
+ #include "base/call_delayed.h"
+ #include "base/unixtime.h"
+ #include "support/support_helper.h"
+@@ -126,6 +128,7 @@ TopBarWidget::TopBarWidget(
  , _call(this, st::topBarCall)
  , _groupCall(this, st::topBarGroupCall)
  , _search(this, st::topBarSearch)
@@ -52,7 +78,7 @@ index 70e8d5f757..bc0a8ba9ac 100644
  , _infoToggle(this, st::topBarInfo)
  , _menuToggle(this, st::topBarMenuToggle)
  , _titlePeerText(st::windowMinWidth / 3)
-@@ -159,6 +161,10 @@ TopBarWidget::TopBarWidget(
+@@ -159,6 +162,10 @@ TopBarWidget::TopBarWidget(
  	_groupCall->setClickedCallback([=] { groupCall(); });
  	_menuToggle->addClickHandler([=](auto) { showPeerMenu(); });
  	_menuToggle->setAcceptBoth(true, true);
@@ -63,7 +89,7 @@ index 70e8d5f757..bc0a8ba9ac 100644
  	_infoToggle->setClickedCallback([=] { toggleInfoSection(); });
  	_back->setAcceptBoth();
  	_back->addClickHandler([=](Qt::MouseButton) {
-@@ -1190,6 +1196,10 @@ void TopBarWidget::updateControlsGeometry() {
+@@ -1190,6 +1197,10 @@ void TopBarWidget::updateControlsGeometry() {
  		_infoToggle->moveToRight(_rightTaken, otherButtonsTop);
  		_rightTaken += _infoToggle->width();
  	}
@@ -74,11 +100,14 @@ index 70e8d5f757..bc0a8ba9ac 100644
  	if (!_call->isHidden() || !_groupCall->isHidden()) {
  		_call->moveToRight(_rightTaken, otherButtonsTop);
  		_groupCall->moveToRight(_rightTaken, otherButtonsTop);
-@@ -1315,6 +1325,24 @@ void TopBarWidget::updateControlsVisibility() {
+@@ -1315,6 +1326,27 @@ void TopBarWidget::updateControlsVisibility() {
  		&& !isOneColumn
  		&& _controller->canShowThirdSection()
  		&& !_chooseForReportReason);
 +	const auto isAdmin = [&] {
++		if (!Yukigram::Settings::QuickRecentActions->current()) {
++			return false;
++		}
 +		if (_activeChat.section == Section::ChatsList) {
 +			return false;
 +		}
@@ -126,6 +155,36 @@ index 0a7b4b191c..699ca43798 100644
  topBarInfoActive: icon {{ "top_bar_profile", windowActiveTextFg }};
  topBarActionSkip: 10px;
  topBarActionButtonLargeRadius: 8px;
+diff --git a/Telegram/SourceFiles/yukigram/settings/quick_recent_actions.cpp b/Telegram/SourceFiles/yukigram/settings/quick_recent_actions.cpp
+new file mode 100644
+index 0000000000..8df1d98603
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/quick_recent_actions.cpp
+@@ -0,0 +1,13 @@
++#include "yukigram/settings/quick_recent_actions.h"
++#include "yukigram/options.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *QuickRecentActions = Yukigram::Options::make(kOptionQuickRecentActions, {
++	.keywords = { u"yukigram"_q, u"recent"_q, u"actions"_q },
++	.category = "chat",
++});
++
++const char kOptionQuickRecentActions[] = "quick-recent-actions";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/quick_recent_actions.h b/Telegram/SourceFiles/yukigram/settings/quick_recent_actions.h
+new file mode 100644
+index 0000000000..e014323bf2
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/quick_recent_actions.h
+@@ -0,0 +1,5 @@
++#include "rpl/rpl.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *QuickRecentActions;
++extern const char kOptionQuickRecentActions[];
++}
 -- 
 2.53.0
 

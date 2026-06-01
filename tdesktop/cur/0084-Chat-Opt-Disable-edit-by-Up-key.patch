@@ -16,7 +16,7 @@ Original author: RadRussianRus <radrussianrus@gmail.com>
  create mode 100644 Telegram/SourceFiles/yukigram/settings/disable_up_edit.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index a218ff173b..97a7a78eea 100644
+index a17f5755a1..e4d9515e9b 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1955,6 +1955,8 @@ PRIVATE
