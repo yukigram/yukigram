@@ -177,7 +177,6 @@ These are placed under `(Chat)` category.
 ## Style
 - :gear: Wide messages
 - Increase maxSignatureSize to accomodate time with seconds and message id
-- Larger stickers and round video messages
 - :star: :gear: Hide per-chat wallpaper and use wallpaper from theme instead
 - :zap: :gear: Hide reply backround emoji
 - :gear: Hide message bubble tail
@@ -192,6 +191,7 @@ These are placed under `(Chat)` category.
 - Constrain round messages width
     (don't push "Forwarded from" outside the screen on small screen widths)
 - :star: :gear: Square round messages
+- Larger stickers and round video messages
 
 These are placed under `(Style)` category.
 

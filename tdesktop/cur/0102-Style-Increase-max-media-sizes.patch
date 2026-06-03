@@ -8,7 +8,7 @@ Subject: [PATCH] (Style) Increase max media sizes
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index d24fec2c48..6b8400e59d 100644
+index d3871abcbc..44f6249606 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
 @@ -213,10 +213,10 @@ mediaInPaletteSelected: TextPalette(defaultTextPalette) {

@@ -114,7 +114,7 @@ index 1323172631..2d7ec53cda 100644
  			recordLinkRipplePoint(point, trect.topLeft());
  			_fromLinkRipplePointSet = 1;
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index 6b8400e59d..0274661522 100644
+index d24fec2c48..6b8084e46a 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
 @@ -755,6 +755,17 @@ historyCommentsOpenInSelected: icon {{ "history_comments_open", msgFileThumbLink
