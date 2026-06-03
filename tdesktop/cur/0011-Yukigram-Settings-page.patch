@@ -8,9 +8,9 @@ Co-Authored-By: Lunya <241520024+lunya-miaou@users.noreply.github.com>
  Telegram/CMakeLists.txt                       |   2 +
  Telegram/Resources/langs/lang.strings         |   1 +
  .../settings/sections/settings_main.cpp       |   8 +
- .../settings/sections/settings_yukigram.cpp   | 171 ++++++++++++++++++
+ .../settings/sections/settings_yukigram.cpp   | 208 ++++++++++++++++++
  .../settings/sections/settings_yukigram.h     |   9 +
- 5 files changed, 191 insertions(+)
+ 5 files changed, 228 insertions(+)
  create mode 100644 Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
  create mode 100644 Telegram/SourceFiles/settings/sections/settings_yukigram.h
 
@@ -67,10 +67,10 @@ index 3d4eda91da..59ce88648c 100644
  		.title = tr::lng_settings_language(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 new file mode 100644
-index 0000000000..75cdad98b1
+index 0000000000..634be65d5a
 --- /dev/null
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-@@ -0,0 +1,171 @@
+@@ -0,0 +1,208 @@
 +#include "settings/sections/settings_yukigram.h"
 +#include "yukigram/options_database.h"
 +
@@ -103,28 +103,41 @@ index 0000000000..75cdad98b1
 +	return QString::fromStdString(std::string(v));
 +};
 +
-+void BuildToggle(
++template<typename T>
++Ui::SettingsButton *BuildButton(
 +	SectionBuilder &builder,
 +	std::string_view key,
-+	const Yukigram::Options::Description<bool> &d,
-+	std::shared_ptr<rpl::variable<bool>> v
++	const Yukigram::Options::Description<T> &d,
++	std::shared_ptr<rpl::variable<T>> v
 +) {
 +	const auto icon = d.mirrorExperimental ? &st::menuIconExperimental : nullptr;
 +
-+	const auto button = builder.addButton({
++	SectionBuilder::ButtonArgs args = {
 +		.id = QString("yukigram/%1").arg(key),
 +		.title = rktr(u"opt/%1/name"_q.arg(key)),
 +		.st = icon ? nullptr : &st::settingsButtonNoIcon,
 +		.icon = { icon },
-+		.toggled = rpl::single(v->current()),
 +		.keywords = std::move(d.keywords),
-+	});
++	};
 +
-+	const auto controller = builder.controller();
-+	if (!controller) {
-+		return;
++	if constexpr (std::is_same_v<T, bool>) {
++		args.toggled = rpl::single(v->current());
++	} else if constexpr (std::is_same_v<T, int>) {
++		args.label = rpl::single(QString::number(v->current()));
++	} else if constexpr (std::is_same_v<T, QString>) {
++		args.label = rpl::single(v->current());
 +	}
 +
++	return builder.addButton(std::move(args));
++}
++
++void BuildToggle(
++	Ui::SettingsButton *button,
++	Window::SessionController *controller,
++	std::string_view key,
++	const Yukigram::Options::Description<bool> &d,
++	std::shared_ptr<rpl::variable<bool>> v
++) {
 +	button->toggledValue(
 +	) | rpl::filter([=](bool toggled) {
 +		return toggled != v->current();
@@ -139,13 +152,39 @@ index 0000000000..75cdad98b1
 +			}));
 +		}
 +	}, button->lifetime());
++}
 +
++void BuildDescription(SectionBuilder &builder, std::string_view key) {
 +	const auto descKey = u"opt/%1/desc"_q.arg(key);
 +	if (!ktr(descKey).isEmpty()) {
 +		builder.addSkip(st::settingsCheckboxesSkip);
 +		builder.addDividerText(rktr(descKey));
 +		builder.addSkip(st::settingsCheckboxesSkip);
 +	}
++}
++
++template<typename T>
++void BuildYukigramSettingsRow(
++	SectionBuilder &builder,
++	std::string_view key,
++	const Yukigram::Options::Description<T> &d,
++	std::shared_ptr<rpl::variable<T>> v
++) {
++	auto button = BuildButton(builder, key, d, v);
++	const auto controller = builder.controller();
++	if (!controller) {
++		return;
++	}
++
++	if constexpr (std::is_same_v<T, bool>) {
++		BuildToggle(button, controller, key, d, v);
++	} else if constexpr (std::is_same_v<T, int>) {
++		// BuildInt(button, controller, key, d, v);
++	} else if constexpr (std::is_same_v<T, QString>) {
++		// BuildString(button, controller, key, d, v);
++	}
++
++	BuildDescription(builder, key);
 +}
 +
 +const std::string_view Categories[] = {
@@ -182,13 +221,11 @@ index 0000000000..75cdad98b1
 +		}
 +		for (const auto &key : options) {
 +			v::match(Yukigram::Options::Options()[key], [&](Yukigram::Options::Option<bool> &o) {
-+				BuildToggle(builder, key, o.d, o.v);
++				BuildYukigramSettingsRow(builder, key, o.d, o.v);
 +			}, [&](Yukigram::Options::Option<int> &o) {
-+				printf("Integer option %s!\n", std::string(key).c_str());
-+				fflush(stdout);
++				BuildYukigramSettingsRow(builder, key, o.d, o.v);
 +			}, [&](Yukigram::Options::Option<QString> &o) {
-+				printf("String option %s!\n", std::string(key).c_str());
-+				fflush(stdout);
++				BuildYukigramSettingsRow(builder, key, o.d, o.v);
 +			});
 +		}
 +	}
