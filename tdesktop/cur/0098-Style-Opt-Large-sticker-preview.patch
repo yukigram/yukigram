@@ -49,7 +49,7 @@ index e81ece340a..8775e353e8 100644
  			}
 diff --git a/Telegram/SourceFiles/yukigram/settings/large_sticker_preview.cpp b/Telegram/SourceFiles/yukigram/settings/large_sticker_preview.cpp
 new file mode 100644
-index 0000000000..a0858bc2b2
+index 0000000000..c185ccfe05
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/large_sticker_preview.cpp
 @@ -0,0 +1,13 @@
@@ -58,7 +58,7 @@ index 0000000000..a0858bc2b2
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *LargeStickerPreview = Yukigram::Options::make(kOptionLargeStickerPreview, {
++rpl::variable<bool> *LargeStickerPreview = Yukigram::Options::make<bool>(kOptionLargeStickerPreview, {
 +	.keywords = { u"yukigram"_q, u"sticker"_q, u"preview"_q },
 +	.category = "style",
 +});

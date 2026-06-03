@@ -4,17 +4,17 @@ Date: Thu, 28 May 2026 22:20:22 +0000
 Subject: [PATCH] (Translations) Russian
 
 ---
- Telegram/Resources/langs/yukigram/ru.json    | 161 +++++++++++++++++++
+ Telegram/Resources/langs/yukigram/ru.json    | 163 +++++++++++++++++++
  Telegram/Resources/qrc/telegram/yukigram.qrc |   1 +
- 2 files changed, 162 insertions(+)
+ 2 files changed, 164 insertions(+)
  create mode 100644 Telegram/Resources/langs/yukigram/ru.json
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..45a92066c6
+index 0000000000..515450fb63
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
-@@ -0,0 +1,161 @@
+@@ -0,0 +1,163 @@
 +{
 +    "about/1/text": "Неофициальный форк {tdesktop_link},\nкоторый добавляет фичи и убирает мусор.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -68,6 +68,8 @@ index 0000000000..45a92066c6
 +    "info/peer-id/user": "ID пользователя",
 +    "info/peer-id/unknown": "ID пира",
 +    "info/profile/top-bar/join/apply": "Податься",
++    "input/bounded/lower": "{value} меньше {lower}",
++    "input/bounded/upper": "{value} больше {upper}",
 +    "intro/about": "Добро пожаловать в Yukigram, неофициальный форк Telegram Desktop, основанный на .patch-файлах.",
 +    "media/poll/revotes/allowed": "{inner}",
 +    "media/poll/revotes/forbidden": "{inner}, нельзя менять голос",

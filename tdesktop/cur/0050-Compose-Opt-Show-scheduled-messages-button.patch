@@ -48,7 +48,7 @@ index 1e85946d3b..c50db344c2 100644
  	if (!_scheduled && has) {
 diff --git a/Telegram/SourceFiles/yukigram/settings/always_show_scheduled.cpp b/Telegram/SourceFiles/yukigram/settings/always_show_scheduled.cpp
 new file mode 100644
-index 0000000000..579bbc8829
+index 0000000000..6962836dd6
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/always_show_scheduled.cpp
 @@ -0,0 +1,13 @@
@@ -57,7 +57,7 @@ index 0000000000..579bbc8829
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *AlwaysShowScheduled = Yukigram::Options::make(kOptionAlwaysShowScheduled, {
++rpl::variable<bool> *AlwaysShowScheduled = Yukigram::Options::make<bool>(kOptionAlwaysShowScheduled, {
 +	.keywords = { u"yukigram"_q, u"scheduled"_q, u"delay"_q },
 +	.category = "compose",
 +});

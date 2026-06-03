@@ -100,7 +100,7 @@ index d38631679f..80bfc1d48c 100644
  void Tray::createIcon() {
 diff --git a/Telegram/SourceFiles/yukigram/settings/icon_theme_symbolic.cpp b/Telegram/SourceFiles/yukigram/settings/icon_theme_symbolic.cpp
 new file mode 100644
-index 0000000000..271d6197dd
+index 0000000000..a5b51af849
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/icon_theme_symbolic.cpp
 @@ -0,0 +1,13 @@
@@ -109,7 +109,7 @@ index 0000000000..271d6197dd
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *IconThemeSymbolic = Yukigram::Options::make(kOptionIconThemeSymbolic, {
++rpl::variable<bool> *IconThemeSymbolic = Yukigram::Options::make<bool>(kOptionIconThemeSymbolic, {
 +	.keywords = { u"yukigram"_q, u"tray"_q, u"icon"_q, u"monochrome"_q, u"symbolic"_q },
 +	.category = "system",
 +});

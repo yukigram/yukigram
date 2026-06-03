@@ -137,7 +137,7 @@ index d24fec2c48..6b8084e46a 100644
  	shift: 12px;
 diff --git a/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
 new file mode 100644
-index 0000000000..aab66c8ec3
+index 0000000000..f7eb80a0b8
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
 @@ -0,0 +1,13 @@
@@ -146,7 +146,7 @@ index 0000000000..aab66c8ec3
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *HistoryPeerTypeIcons = Yukigram::Options::make(kOptionHistoryPeerTypeIcons, {
++rpl::variable<bool> *HistoryPeerTypeIcons = Yukigram::Options::make<bool>(kOptionHistoryPeerTypeIcons, {
 +	.keywords = { u"yukigram"_q, u"peer"_q, u"user"_q, u"icon"_q, u"bot"_q, u"channel"_q, u"group"_q, u"chat"_q, u"forum"_q },
 +	.category = "messages",
 +});

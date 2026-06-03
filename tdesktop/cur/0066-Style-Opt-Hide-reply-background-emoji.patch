@@ -49,7 +49,7 @@ index 6ddb53ad9d..9fbe455fc5 100644
  	const auto &frames = cache.frames;
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.cpp b/Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.cpp
 new file mode 100644
-index 0000000000..d1202134df
+index 0000000000..174283e549
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.cpp
 @@ -0,0 +1,13 @@
@@ -58,7 +58,7 @@ index 0000000000..d1202134df
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *HideReplyBackgroundEmoji = Yukigram::Options::make(kOptionHideReplyBackgroundEmoji, {
++rpl::variable<bool> *HideReplyBackgroundEmoji = Yukigram::Options::make<bool>(kOptionHideReplyBackgroundEmoji, {
 +	.keywords = { u"yukigram"_q, u"reply"_q, u"emoji"_q, u"background"_q },
 +	.category = "style",
 +});

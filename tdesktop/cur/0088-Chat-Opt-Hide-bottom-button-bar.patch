@@ -109,7 +109,7 @@ index 02330c2c67..85c2c505a9 100644
  				this,
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp b/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp
 new file mode 100644
-index 0000000000..48832be086
+index 0000000000..a48a380230
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp
 @@ -0,0 +1,13 @@
@@ -118,7 +118,7 @@ index 0000000000..48832be086
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *HideBottomBar = Yukigram::Options::make(kOptionHideBottomBar, {
++rpl::variable<bool> *HideBottomBar = Yukigram::Options::make<bool>(kOptionHideBottomBar, {
 +	.keywords = { u"yukigram"_q, u"bottom"_q, u"bar"_q, u"join"_q, u"mute"_q, u"unmute"_q, u"gift"_q, u"direct"_q },
 +	.category = "chat",
 +});

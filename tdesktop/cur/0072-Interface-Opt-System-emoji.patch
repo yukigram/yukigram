@@ -4,11 +4,11 @@ Date: Tue, 12 May 2026 12:19:58 +0300
 Subject: [PATCH] (Interface)(Opt) System emoji
 
 ---
- Telegram/CMakeLists.txt                       |  2 ++
- .../yukigram/settings/system_emoji.cpp        | 19 +++++++++++++++++++
- .../yukigram/settings/system_emoji.h          |  5 +++++
- Telegram/lib_ui/ui/emoji_config.cpp           | 12 ++++++++++++
- 4 files changed, 38 insertions(+)
+ Telegram/CMakeLists.txt                        |  2 ++
+ .../yukigram/settings/system_emoji.cpp         | 18 ++++++++++++++++++
+ .../yukigram/settings/system_emoji.h           |  5 +++++
+ Telegram/lib_ui/ui/emoji_config.cpp            | 12 ++++++++++++
+ 4 files changed, 37 insertions(+)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/system_emoji.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/system_emoji.h
 
@@ -27,10 +27,10 @@ index 0f3dc9b698..c22aa6a1cb 100644
      yukigram/settings/wide_messages.cpp
 diff --git a/Telegram/SourceFiles/yukigram/settings/system_emoji.cpp b/Telegram/SourceFiles/yukigram/settings/system_emoji.cpp
 new file mode 100644
-index 0000000000..60c952140a
+index 0000000000..289cd65f5f
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/system_emoji.cpp
-@@ -0,0 +1,19 @@
+@@ -0,0 +1,18 @@
 +#include "yukigram/settings/system_emoji.h"
 +#include "yukigram/options.h"
 +
@@ -40,11 +40,10 @@ index 0000000000..60c952140a
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *SystemEmoji = Yukigram::Options::make(kOptionSystemEmoji, {
++rpl::variable<bool> *SystemEmoji = Yukigram::Options::make<bool>(kOptionSystemEmoji, {
 +	.keywords = { u"yukigram"_q, u"system"_q, u"emoji"_q, u"font"_q },
 +	.category = "interface",
-+}, [](bool value) {
-+	Ui::Emoji::Yukigram_UseSystemEmojiFont = value;
++	.link = [](bool value) { Ui::Emoji::Yukigram_UseSystemEmojiFont = value; },
 +});
 +
 +const char kOptionSystemEmoji[] = "system-emoji";

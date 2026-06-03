@@ -322,7 +322,7 @@ index 7b70065e1f..14d23593d9 100644
  	} else {
 diff --git a/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
 new file mode 100644
-index 0000000000..7a62a10fda
+index 0000000000..fcc0f3d9bd
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
 @@ -0,0 +1,14 @@
@@ -331,7 +331,7 @@ index 0000000000..7a62a10fda
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *TimeWithSeconds = Yukigram::Options::make(kOptionTimeWithSeconds, {
++rpl::variable<bool> *TimeWithSeconds = Yukigram::Options::make<bool>(kOptionTimeWithSeconds, {
 +	.keywords = { u"yukigram"_q, u"time"_q, u"seconds"_q },
 +	.category = "interface",
 +	.restartRequired = true,

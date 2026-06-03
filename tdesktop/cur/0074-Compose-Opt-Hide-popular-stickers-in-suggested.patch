@@ -50,7 +50,7 @@ index c3654bc80b..9497d87bf3 100644
  			sticker,
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_popular_sticker_suggest.cpp b/Telegram/SourceFiles/yukigram/settings/hide_popular_sticker_suggest.cpp
 new file mode 100644
-index 0000000000..8e13e0ea79
+index 0000000000..645b2e076d
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/hide_popular_sticker_suggest.cpp
 @@ -0,0 +1,13 @@
@@ -59,7 +59,7 @@ index 0000000000..8e13e0ea79
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *HidePopularStickerSuggest = Yukigram::Options::make(kOptionHidePopularStickerSuggest, {
++rpl::variable<bool> *HidePopularStickerSuggest = Yukigram::Options::make<bool>(kOptionHidePopularStickerSuggest, {
 +	.keywords = { u"yukigram"_q, u"stickers"_q, u"suggested"_q, u"pack"_q, u"popular"_q },
 +	.category = "compose",
 +});

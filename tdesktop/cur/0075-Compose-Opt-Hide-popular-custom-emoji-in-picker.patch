@@ -49,7 +49,7 @@ index dea062d1e5..dbc12debb3 100644
  			: setId;
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_popular_emoji_picker.cpp b/Telegram/SourceFiles/yukigram/settings/hide_popular_emoji_picker.cpp
 new file mode 100644
-index 0000000000..967136ad8f
+index 0000000000..a461bf2d00
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/hide_popular_emoji_picker.cpp
 @@ -0,0 +1,13 @@
@@ -58,7 +58,7 @@ index 0000000000..967136ad8f
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *HidePopularEmojiPicker = Yukigram::Options::make(kOptionHidePopularEmojiPicker, {
++rpl::variable<bool> *HidePopularEmojiPicker = Yukigram::Options::make<bool>(kOptionHidePopularEmojiPicker, {
 +	.keywords = { u"yukigram"_q, u"emoji"_q, u"animoji"_q, u"picker"_q, u"popular"_q },
 +	.category = "picker",
 +});

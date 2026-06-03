@@ -86,7 +86,7 @@ index af61dc2c0a..9788d4ff76 100644
  	raw->toggleOn(tracker.atLeastOneShownValue());
 diff --git a/Telegram/SourceFiles/yukigram/settings/inferred_peer_dc.cpp b/Telegram/SourceFiles/yukigram/settings/inferred_peer_dc.cpp
 new file mode 100644
-index 0000000000..a81d5b5a2b
+index 0000000000..6b129749d5
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/inferred_peer_dc.cpp
 @@ -0,0 +1,13 @@
@@ -95,7 +95,7 @@ index 0000000000..a81d5b5a2b
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *InferredPeerDc = Yukigram::Options::make(kOptionInferredPeerDc, {
++rpl::variable<bool> *InferredPeerDc = Yukigram::Options::make<bool>(kOptionInferredPeerDc, {
 +	.keywords = { u"yukigram"_q, u"inferred"_q, u"peer"_q, u"dc"_q, u"datacenter"_q },
 +	.category = "info",
 +});

@@ -171,7 +171,7 @@ index 4742827c69..5b3fba6167 100644
  } // namespace Calls
 diff --git a/Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.cpp b/Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.cpp
 new file mode 100644
-index 0000000000..af1b12d46d
+index 0000000000..1c3eaa2005
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.cpp
 @@ -0,0 +1,14 @@
@@ -180,7 +180,7 @@ index 0000000000..af1b12d46d
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *MprisCallHangup = Yukigram::Options::make(kOptionMprisCallHangup, {
++rpl::variable<bool> *MprisCallHangup = Yukigram::Options::make<bool>(kOptionMprisCallHangup, {
 +	.keywords = { u"yukigram"_q, u"mpris"_q, u"hangup"_q, u"call"_q },
 +	.category = "system",
 +	.restartRequired = true,

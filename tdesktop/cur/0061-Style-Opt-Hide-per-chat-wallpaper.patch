@@ -70,7 +70,7 @@ index 2a5c93abdb..c6e45b0827 100644
  			update.is_wallpaper_overridden());
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_wall_paper.cpp b/Telegram/SourceFiles/yukigram/settings/hide_wall_paper.cpp
 new file mode 100644
-index 0000000000..470827f566
+index 0000000000..d6acf4fbcd
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/hide_wall_paper.cpp
 @@ -0,0 +1,13 @@
@@ -79,7 +79,7 @@ index 0000000000..470827f566
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *HideWallPaper = Yukigram::Options::make(kOptionHideWallPaper, {
++rpl::variable<bool> *HideWallPaper = Yukigram::Options::make<bool>(kOptionHideWallPaper, {
 +	.keywords = { u"yukigram"_q, u"wallpaper"_q },
 +	.category = "style",
 +});

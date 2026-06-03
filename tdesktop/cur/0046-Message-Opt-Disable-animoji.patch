@@ -48,7 +48,7 @@ index 391b73370e..72679cafad 100644
  				sticker.document,
 diff --git a/Telegram/SourceFiles/yukigram/settings/disable_animoji.cpp b/Telegram/SourceFiles/yukigram/settings/disable_animoji.cpp
 new file mode 100644
-index 0000000000..660c0fb386
+index 0000000000..8f63c901e0
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/disable_animoji.cpp
 @@ -0,0 +1,14 @@
@@ -57,7 +57,7 @@ index 0000000000..660c0fb386
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *DisableAnimoji = Yukigram::Options::make(kOptionDisableAnimoji, {
++rpl::variable<bool> *DisableAnimoji = Yukigram::Options::make<bool>(kOptionDisableAnimoji, {
 +	.keywords = { u"yukigram"_q, u"animoji"_q, u"emoji"_q },
 +	.category = "messages",
 +	.restartRequired = true,

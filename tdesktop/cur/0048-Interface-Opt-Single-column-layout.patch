@@ -90,7 +90,7 @@ index 7a283f5723..c9d1dd479e 100644
  		if (_hasDialogs && bodyWidth < minimalNormal) {
 diff --git a/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.cpp b/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.cpp
 new file mode 100644
-index 0000000000..8eee710601
+index 0000000000..c9f2bb2243
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/force_mobile_layout.cpp
 @@ -0,0 +1,13 @@
@@ -99,7 +99,7 @@ index 0000000000..8eee710601
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *ForceMobileLayout = Yukigram::Options::make(kOptionForceMobileLayout, {
++rpl::variable<bool> *ForceMobileLayout = Yukigram::Options::make<bool>(kOptionForceMobileLayout, {
 +	.keywords = { u"yukigram"_q, u"layout"_q, u"small"_q, u"phone"_q, u"mobile"_q },
 +	.category = "interface",
 +});

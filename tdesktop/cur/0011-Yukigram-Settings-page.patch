@@ -8,9 +8,9 @@ Co-Authored-By: Lunya <241520024+lunya-miaou@users.noreply.github.com>
  Telegram/CMakeLists.txt                       |   2 +
  Telegram/Resources/langs/lang.strings         |   1 +
  .../settings/sections/settings_main.cpp       |   8 +
- .../settings/sections/settings_yukigram.cpp   | 165 ++++++++++++++++++
+ .../settings/sections/settings_yukigram.cpp   | 172 ++++++++++++++++++
  .../settings/sections/settings_yukigram.h     |   9 +
- 5 files changed, 185 insertions(+)
+ 5 files changed, 192 insertions(+)
  create mode 100644 Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
  create mode 100644 Telegram/SourceFiles/settings/sections/settings_yukigram.h
 
@@ -67,10 +67,10 @@ index 3d4eda91da..59ce88648c 100644
  		.title = tr::lng_settings_language(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 new file mode 100644
-index 0000000000..0eb915b499
+index 0000000000..945676badc
 --- /dev/null
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-@@ -0,0 +1,165 @@
+@@ -0,0 +1,172 @@
 +#include "settings/sections/settings_yukigram.h"
 +#include "yukigram/options_database.h"
 +
@@ -106,7 +106,7 @@ index 0000000000..0eb915b499
 +void BuildToggle(
 +	SectionBuilder &builder,
 +	std::string_view key,
-+	const Yukigram::Options::Description &d,
++	const Yukigram::Options::Description<bool> &d,
 +	std::shared_ptr<rpl::variable<bool>> v
 +) {
 +	const auto icon = d.mirrorExperimental ? &st::menuIconExperimental : nullptr;
@@ -164,10 +164,10 @@ index 0000000000..0eb915b499
 +
 +void BuildYukigramSectionContent(SectionBuilder &builder) {
 +	bool isFirstNamedSection = true;
-+	auto &byCategory = Yukigram::Options::TogglesByCategory();
++	auto &byCategory = Yukigram::Options::ByCategory();
 +	for (const auto &category : Categories) {
-+		const auto &toggles = byCategory[category];
-+		if (!category.empty() && !toggles.empty()) {
++		const auto &options = byCategory[category];
++		if (!category.empty() && !options.empty()) {
 +			builder.addSkip();
 +			if (isFirstNamedSection) {
 +				isFirstNamedSection = false;
@@ -181,9 +181,16 @@ index 0000000000..0eb915b499
 +				.keywords = { u"yukigram"_q, qs_sv(category) },
 +			});
 +		}
-+		for (const auto &key : toggles) {
-+			auto &toggle = Yukigram::Options::Toggles()[key];
-+			BuildToggle(builder, key, toggle.d, toggle.v);
++		for (const auto &key : options) {
++			v::match(Yukigram::Options::Options()[key], [&](Yukigram::Options::Option<bool> &o) {
++				BuildToggle(builder, key, o.d, o.v);
++			}, [&](Yukigram::Options::Option<int> &o) {
++				printf("Integer option %s!\n", std::string(key).c_str());
++				fflush(stdout);
++			}, [&](Yukigram::Options::Option<QString> &o) {
++				printf("String option %s!\n", std::string(key).c_str());
++				fflush(stdout);
++			});
 +		}
 +	}
 +}

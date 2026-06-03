@@ -71,7 +71,7 @@ index b7da4b70d0..ba8f8a6e80 100644
  				return;
 diff --git a/Telegram/SourceFiles/yukigram/settings/disable_up_edit.cpp b/Telegram/SourceFiles/yukigram/settings/disable_up_edit.cpp
 new file mode 100644
-index 0000000000..62f589adb2
+index 0000000000..f59f4a8e62
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/disable_up_edit.cpp
 @@ -0,0 +1,13 @@
@@ -80,7 +80,7 @@ index 0000000000..62f589adb2
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *DisableUpEdit = Yukigram::Options::make(kOptionDisableUpEdit, {
++rpl::variable<bool> *DisableUpEdit = Yukigram::Options::make<bool>(kOptionDisableUpEdit, {
 +	.keywords = { u"yukigram"_q, u"edit"_q, u"up"_q },
 +	.category = "chat",
 +});

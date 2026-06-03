@@ -49,7 +49,7 @@ index 3f1948e60b..60180e0d82 100644
  		}
 diff --git a/Telegram/SourceFiles/yukigram/settings/star_hide_always.cpp b/Telegram/SourceFiles/yukigram/settings/star_hide_always.cpp
 new file mode 100644
-index 0000000000..1f26a56e99
+index 0000000000..23b13c6e80
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/star_hide_always.cpp
 @@ -0,0 +1,14 @@
@@ -58,7 +58,7 @@ index 0000000000..1f26a56e99
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *StarHideAlways = Yukigram::Options::make(kOptionStarHideAlways, {
++rpl::variable<bool> *StarHideAlways = Yukigram::Options::make<bool>(kOptionStarHideAlways, {
 +	.keywords = { u"yukigram"_q, u"star"_q, u"reaction"_q },
 +	.category = "reactions",
 +	.restartRequired = true,

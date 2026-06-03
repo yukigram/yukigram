@@ -53,7 +53,7 @@ index 86113c3885..8f05412ba4 100644
  		if (parsed.size() > 1) {
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.cpp b/Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.cpp
 new file mode 100644
-index 0000000000..95342944a3
+index 0000000000..6c547924a6
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/hide_send_as_premium.cpp
 @@ -0,0 +1,14 @@
@@ -62,7 +62,7 @@ index 0000000000..95342944a3
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *HideSendAsPremium = Yukigram::Options::make(kOptionHideSendAsPremium, {
++rpl::variable<bool> *HideSendAsPremium = Yukigram::Options::make<bool>(kOptionHideSendAsPremium, {
 +	.keywords = { u"yukigram"_q, u"send"_q, u"channels"_q, u"premium"_q },
 +	.category = "compose",
 +	.restartRequired = true,

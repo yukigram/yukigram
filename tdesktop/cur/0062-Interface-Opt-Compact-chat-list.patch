@@ -263,7 +263,7 @@ index e8e88862b0..c097f3f309 100644
  		nullptr,
 diff --git a/Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp b/Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp
 new file mode 100644
-index 0000000000..e8eedf12c0
+index 0000000000..680cd23aaa
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/compact_chat_list.cpp
 @@ -0,0 +1,13 @@
@@ -272,7 +272,7 @@ index 0000000000..e8eedf12c0
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *CompactChatList = Yukigram::Options::make(kOptionCompactChatList, {
++rpl::variable<bool> *CompactChatList = Yukigram::Options::make<bool>(kOptionCompactChatList, {
 +	.keywords = { u"yukigram"_q, u"compact"_q, u"chat"_q },
 +	.category = "dialogs",
 +});

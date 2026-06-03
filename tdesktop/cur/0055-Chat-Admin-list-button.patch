@@ -156,7 +156,7 @@ index 699ca43798..0491e8a6b0 100644
  topBarActionButtonLargeRadius: 8px;
 diff --git a/Telegram/SourceFiles/yukigram/settings/quick_admin_list.cpp b/Telegram/SourceFiles/yukigram/settings/quick_admin_list.cpp
 new file mode 100644
-index 0000000000..7d1ac9ae3c
+index 0000000000..997f60e88a
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/quick_admin_list.cpp
 @@ -0,0 +1,13 @@
@@ -165,7 +165,7 @@ index 0000000000..7d1ac9ae3c
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *QuickAdminList = Yukigram::Options::make(kOptionQuickAdminList, {
++rpl::variable<bool> *QuickAdminList = Yukigram::Options::make<bool>(kOptionQuickAdminList, {
 +	.keywords = { u"yukigram"_q, u"admin"_q, u"list"_q },
 +	.category = "chat",
 +});

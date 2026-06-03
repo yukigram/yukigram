@@ -404,7 +404,7 @@ index 0130e318a0..90dc18226d 100644
  	auto textHeight = bubble.text.countHeight(textWidth);
 diff --git a/Telegram/SourceFiles/yukigram/settings/wide_messages.cpp b/Telegram/SourceFiles/yukigram/settings/wide_messages.cpp
 new file mode 100644
-index 0000000000..0e27ecdd56
+index 0000000000..64bada36d3
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/wide_messages.cpp
 @@ -0,0 +1,13 @@
@@ -413,7 +413,7 @@ index 0000000000..0e27ecdd56
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *WideMessages = Yukigram::Options::make(kOptionWideMessages, {
++rpl::variable<bool> *WideMessages = Yukigram::Options::make<bool>(kOptionWideMessages, {
 +	.keywords = { u"yukigram"_q, u"layout"_q, u"messages"_q, u"wide"_q },
 +	.category = "style",
 +});

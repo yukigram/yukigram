@@ -4,14 +4,14 @@ Date: Sun, 26 Apr 2026 22:07:47 +0300
 Subject: [PATCH] (Yukigram) Options framework
 
 ---
- Telegram/CMakeLists.txt                       |  4 ++
- Telegram/SourceFiles/core/launcher.cpp        |  3 +
- .../settings/settings_experimental.cpp        |  2 +
- Telegram/SourceFiles/yukigram/options.cpp     | 67 +++++++++++++++++++
- Telegram/SourceFiles/yukigram/options.h       | 24 +++++++
- .../SourceFiles/yukigram/options_database.h   | 25 +++++++
- .../SourceFiles/yukigram/options_runtime.h    | 10 +++
- 7 files changed, 135 insertions(+)
+ Telegram/CMakeLists.txt                       |   4 +
+ Telegram/SourceFiles/core/launcher.cpp        |   3 +
+ .../settings/settings_experimental.cpp        |   2 +
+ Telegram/SourceFiles/yukigram/options.cpp     | 112 ++++++++++++++++++
+ Telegram/SourceFiles/yukigram/options.h       |  43 +++++++
+ .../SourceFiles/yukigram/options_database.h   |  45 +++++++
+ .../SourceFiles/yukigram/options_runtime.h    |  10 ++
+ 7 files changed, 219 insertions(+)
  create mode 100644 Telegram/SourceFiles/yukigram/options.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/options.h
  create mode 100644 Telegram/SourceFiles/yukigram/options_database.h
@@ -82,83 +82,128 @@ index 5a521869d4..051cb50089 100644
  		}
 diff --git a/Telegram/SourceFiles/yukigram/options.cpp b/Telegram/SourceFiles/yukigram/options.cpp
 new file mode 100644
-index 0000000000..f89aee8e9e
+index 0000000000..36935034e4
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.cpp
-@@ -0,0 +1,67 @@
+@@ -0,0 +1,112 @@
 +#include "yukigram/options.h"
 +#include "yukigram/options_database.h"
 +#include "yukigram/options_runtime.h"
++#include "base/variant.h"
++#include "yukigram/lang.h"
 +
 +namespace Yukigram::Options {
 +
-+std::map<std::string_view, Toggle> &Toggles() {
-+	static std::map<std::string_view, Toggle> m;
++std::map<std::string_view, std::variant<Option<bool>, Option<int>, Option<QString>>> &Options() {
++	static std::map<std::string_view, std::variant<Option<bool>, Option<int>, Option<QString>>> m;
 +	return m;
 +}
 +
-+std::map<std::string_view, std::vector<std::string_view>> &TogglesByCategory() {
++std::map<std::string_view, std::vector<std::string_view>> &ByCategory() {
 +	static std::map<std::string_view, std::vector<std::string_view>> m;
 +	return m;
 +}
 +
-+rpl::variable<bool> *make(const char *key, Description &&d, std::function<void(bool)> link, bool defaultValue) {
-+	const auto v = std::make_shared<rpl::variable<bool>>(defaultValue);
++template<typename T> rpl::variable<T> *make_impl(const char *key, Description<T> &&d) {
++	const auto rv = std::make_shared<rpl::variable<T>>(d.defaultValue);
 +
 +	const auto base = d.mirrorExperimental ? std::nullopt : std::optional(
 +		std::make_shared<
-+			base::options::toggle,
-+			base::options::descriptor<bool>
++			base::options::option<T>,
++			base::options::descriptor<T>
 +		>({
 +			.id = key,
-+			.defaultValue = defaultValue,
++			.defaultValue = d.defaultValue,
 +			.restartRequired = d.restartRequired,
 +		})
 +	);
 +	rpl::lifetime lifetime;
 +
 +	const auto key_v = std::string_view(key);
-+	TogglesByCategory()[d.category].push_back(key_v);
-+	Toggles()[key_v] = {
++	ByCategory()[d.category].push_back(key_v);
++	Options()[key_v] = Option<T>{
++		.key = key_v,
 +		.d = std::move(d),
-+		.v = v,
++		.v = rv,
 +		._base = base,
-+		._lifetime = std::move(lifetime),
-+		.link = std::move(link),
++		._lifetime = std::move(lifetime)
 +	};
 +
-+	return v.get();
++	return rv.get();
++}
++
++rpl::variable<bool> *make_bool(const char *key, Description<bool> &&d) {
++	return make_impl<bool>(key, std::move(d));
++}
++
++rpl::variable<int> *make_int(const char *key, Description<int> &&d) {
++	return make_impl<int>(key, std::move(d));
++}
++
++rpl::variable<QString> *make_qs(const char *key, Description<QString> &&d) {
++	return make_impl<QString>(key, std::move(d));
 +}
 +
 +void update_value(const char *key, bool value) {
-+	if (auto it = Toggles().find(std::string_view(key)); it != Toggles().end()) {
-+		*it->second.v = value;
++	if (auto it = Options().find(std::string_view(key)); it != Options().end()) {
++		if (const auto *o = std::get_if<Option<bool>>(&it->second)) {
++			*o->v = value;
++		} else {
++			Unexpected("non-bool type in Yukigram::Options::update_value");
++		}
 +	}
 +}
 +
 +void init() {
-+	for (auto &[key, toggle] : Toggles()) {
-+		*toggle.v = base::options::lookup<bool>(std::string(key).c_str()).value();
++	for (auto &[key, option] : Options()) {
++		v::match(option, [](Option<bool> &o) {
++			o.init();
++		}, [](Option<int> &o) {
++			o.init();
++		}, [](Option<QString> &o) {
++			o.init();
++		});
 +	}
 +}
 +
 +void link() {
-+	for (auto &[key, toggle] : Toggles()) {
-+		toggle.v->value() | rpl::on_next([=, link = std::move(toggle.link)](bool value) {
-+			base::options::lookup<bool>(std::string(key).c_str()).set(value);
-+			link(value);
-+		}, toggle._lifetime);
++	for (auto &[key, option] : Options()) {
++		v::match(option, [](Option<bool> &o) {
++			o.link();
++		}, [](Option<int> &o) {
++			o.link();
++		}, [](Option<QString> &o) {
++			o.link();
++		});
 +	}
 +}
 +
 +
++namespace Valid {
++
++QString BoundedImpl(int lower, int upper, int value) {
++	if (value < lower) {
++		return ktr("input/bounded/lower", { "value", QString::number(value) }, { "lower", QString::number(lower) });
++	} else if (value > upper) {
++		return ktr("input/bounded/upper", { "value", QString::number(value) }, { "upper", QString::number(upper) });
++	}
++	return {};
 +}
++
++CheckValid<int> Bounded(int lower, int upper) {
++	return std::bind_front(BoundedImpl, lower, upper);
++}
++
++} // namespace Valid
++
++
++} // namespace Yukigram::Options
 diff --git a/Telegram/SourceFiles/yukigram/options.h b/Telegram/SourceFiles/yukigram/options.h
 new file mode 100644
-index 0000000000..7df06d1e89
+index 0000000000..1092a5438a
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.h
-@@ -0,0 +1,24 @@
+@@ -0,0 +1,43 @@
 +#pragma once
 +
 +#include "rpl/rpl.h"
@@ -168,27 +213,46 @@ index 0000000000..7df06d1e89
 +
 +namespace Yukigram::Options {
 +
-+struct Description {
-+	QStringList keywords = {};
++template<typename T> using CheckValid = std::function<QString(T)>;
++
++namespace Valid {
++template<typename T> QString Always(T) {
++	return {};
++}
++CheckValid<int> Bounded(int lower, int upper);
++} // namespace Valid
++
++template<typename T> struct Description {
++	QStringList keywords;
 +	std::string_view category;
 +	bool restartRequired = false;
 +	bool mirrorExperimental = false;
++	T defaultValue;
++	std::function<void(T)> link = [](T) {};
++	CheckValid<T> checkValid = Valid::Always<T>;
++	rpl::producer<QString> valid = rpl::single(u""_q);
 +};
 +
-+rpl::variable<bool> *make(
-+	const char *key,
-+	Description &&d,
-+	std::function<void(bool)> link = [](bool) {},
-+	bool defaultValue = false
-+);
-+
++template<typename T> rpl::variable<T> *make(const char *key, Description<T> &&d) {
++	if constexpr (std::is_same_v<T, bool>) {
++		return make_bool(key, std::move(d));
++	} else if constexpr (std::is_same_v<T, int>) {
++		return make_int(key, std::move(d));
++	} else if constexpr (std::is_same_v<T, QString>) {
++		return make_qs(key, std::move(d));
++	}
 +}
++rpl::variable<bool> *make_bool(const char *key, Description<bool> &&d);
++rpl::variable<int> *make_int(const char *key, Description<int> &&d);
++rpl::variable<QString> *make_qs(const char *key, Description<QString> &&d);
++
++} // namepace Yukigram::Options
 diff --git a/Telegram/SourceFiles/yukigram/options_database.h b/Telegram/SourceFiles/yukigram/options_database.h
 new file mode 100644
-index 0000000000..898da57fcb
+index 0000000000..df53fcb22d
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options_database.h
-@@ -0,0 +1,25 @@
+@@ -0,0 +1,45 @@
 +#pragma once
 +
 +#include "yukigram/options.h"
@@ -202,16 +266,36 @@ index 0000000000..898da57fcb
 +
 +namespace Yukigram::Options {
 +
-+struct Toggle {
-+	Description d;
-+	std::shared_ptr<rpl::variable<bool>> v;
-+	std::optional<std::shared_ptr<base::options::toggle>> _base;
++template<typename T> struct Option {
++	std::string_view key;
++	Description<T> d;
++	std::shared_ptr<rpl::variable<T>> v;
++	std::optional<std::shared_ptr<base::options::option<T>>> _base;
 +	rpl::lifetime _lifetime;
-+	std::function<void(bool)> link;
++
++	void init() {
++		auto &inner = base::options::lookup<T>(std::string(key).c_str());
++		const auto value = inner.value();
++		if (const auto reason = d.checkValid(value); !reason.isEmpty()) {
++			LOG(("Yukigram::Options::Option: option %1: value %2: %3. Resetting to default %4"
++				).arg(key).arg(value).arg(reason).arg(d.defaultValue));
++			*v = d.defaultValue;
++		} else {
++			*v = value;
++		}
++	}
++	void link() {
++		auto &inner = base::options::lookup<T>(std::string(key).c_str());
++		inner.set(v->current());
++		v->value() | rpl::on_next([=, &inner, link = std::move(d.link)](T value) {
++			inner.set(value);
++			link(value);
++		}, _lifetime);
++	}
 +};
 +
-+std::map<std::string_view, Toggle> &Toggles();
-+std::map<std::string_view, std::vector<std::string_view>> &TogglesByCategory();
++std::map<std::string_view, std::variant<Option<bool>, Option<int>, Option<QString>>> &Options();
++std::map<std::string_view, std::vector<std::string_view>> &ByCategory();
 +
 +}
 diff --git a/Telegram/SourceFiles/yukigram/options_runtime.h b/Telegram/SourceFiles/yukigram/options_runtime.h

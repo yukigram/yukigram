@@ -6,12 +6,12 @@ Subject: [PATCH] (Style)(Opt) Old-style spoilers
 ---
  Telegram/CMakeLists.txt                       |  2 ++
  .../history/view/media/history_view_media.cpp | 14 +++++++++++++
- .../yukigram/settings/old_style_spoilers.cpp  | 19 ++++++++++++++++++
+ .../yukigram/settings/old_style_spoilers.cpp  | 18 +++++++++++++++++
  .../yukigram/settings/old_style_spoilers.h    |  5 +++++
  Telegram/lib_ui/ui/effects/spoiler_mess.cpp   | 20 +++++++++++++++++++
  Telegram/lib_ui/ui/text/text_renderer.cpp     |  6 +++++-
  .../ui/widgets/fields/custom_field_object.cpp |  4 +++-
- 7 files changed, 68 insertions(+), 2 deletions(-)
+ 7 files changed, 67 insertions(+), 2 deletions(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/old_style_spoilers.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/old_style_spoilers.h
 
@@ -69,10 +69,10 @@ index 8159b021f1..0111f780ff 100644
  void Media::drawSpoilerTag(
 diff --git a/Telegram/SourceFiles/yukigram/settings/old_style_spoilers.cpp b/Telegram/SourceFiles/yukigram/settings/old_style_spoilers.cpp
 new file mode 100644
-index 0000000000..206c4b240f
+index 0000000000..cb47e524e7
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/old_style_spoilers.cpp
-@@ -0,0 +1,19 @@
+@@ -0,0 +1,18 @@
 +#include "yukigram/settings/old_style_spoilers.h"
 +#include "yukigram/options.h"
 +
@@ -82,11 +82,10 @@ index 0000000000..206c4b240f
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *OldStyleSpoilers = Yukigram::Options::make(kOptionOldStyleSpoilers, {
++rpl::variable<bool> *OldStyleSpoilers = Yukigram::Options::make<bool>(kOptionOldStyleSpoilers, {
 +	.keywords = { u"yukigram"_q, u"spoilers"_q, u"mess"_q },
 +	.category = "style",
-+}, [](bool value) {
-+	Ui::Yukigram_OldStyleSpoilers = value;
++	.link = [](bool value) { Ui::Yukigram_OldStyleSpoilers = value; },
 +});
 +
 +const char kOptionOldStyleSpoilers[] = "old-style-spoilers";

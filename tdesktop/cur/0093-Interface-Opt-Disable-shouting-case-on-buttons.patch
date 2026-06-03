@@ -4,11 +4,11 @@ Date: Thu, 28 May 2026 07:47:11 +0000
 Subject: [PATCH] (Interface)(Opt) Disable shouting-case on buttons
 
 ---
- Telegram/CMakeLists.txt                       |  2 ++
- .../yukigram/settings/no_shout_buttons.cpp    | 19 +++++++++++++++++++
- .../yukigram/settings/no_shout_buttons.h      |  5 +++++
- Telegram/lib_ui/ui/widgets/buttons.cpp        |  5 ++++-
- 4 files changed, 30 insertions(+), 1 deletion(-)
+ Telegram/CMakeLists.txt                        |  2 ++
+ .../yukigram/settings/no_shout_buttons.cpp     | 18 ++++++++++++++++++
+ .../yukigram/settings/no_shout_buttons.h       |  5 +++++
+ Telegram/lib_ui/ui/widgets/buttons.cpp         |  5 ++++-
+ 4 files changed, 29 insertions(+), 1 deletion(-)
  create mode 100644 Telegram/SourceFiles/yukigram/settings/no_shout_buttons.cpp
  create mode 100644 Telegram/SourceFiles/yukigram/settings/no_shout_buttons.h
 
@@ -27,10 +27,10 @@ index af57008788..26214c6732 100644
      yukigram/settings/quick_admin_list.cpp
 diff --git a/Telegram/SourceFiles/yukigram/settings/no_shout_buttons.cpp b/Telegram/SourceFiles/yukigram/settings/no_shout_buttons.cpp
 new file mode 100644
-index 0000000000..243735beb4
+index 0000000000..c7e1b9e843
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/no_shout_buttons.cpp
-@@ -0,0 +1,19 @@
+@@ -0,0 +1,18 @@
 +#include "yukigram/settings/no_shout_buttons.h"
 +#include "yukigram/options.h"
 +
@@ -40,11 +40,10 @@ index 0000000000..243735beb4
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *NoShoutButtons = Yukigram::Options::make(kOptionNoShoutButtons, {
++rpl::variable<bool> *NoShoutButtons = Yukigram::Options::make<bool>(kOptionNoShoutButtons, {
 +	.keywords = { u"yukigram"_q, u"shout"_q, u"caps"_q, u"button"_q },
 +	.category = "interface",
-+}, [](bool value) {
-+	Ui::Yukigram_NoShoutButtons = value;
++	.link = [](bool value) { Ui::Yukigram_NoShoutButtons = value; },
 +});
 +
 +const char kOptionNoShoutButtons[] = "no-shout-buttons";

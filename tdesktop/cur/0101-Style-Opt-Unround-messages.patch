@@ -111,7 +111,7 @@ index 2fa095e364..cb534f839e 100644
  }
 diff --git a/Telegram/SourceFiles/yukigram/settings/unround_messages.cpp b/Telegram/SourceFiles/yukigram/settings/unround_messages.cpp
 new file mode 100644
-index 0000000000..3e39e47562
+index 0000000000..8d5acd8862
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/unround_messages.cpp
 @@ -0,0 +1,13 @@
@@ -120,7 +120,7 @@ index 0000000000..3e39e47562
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *UnroundMessages = Yukigram::Options::make(kOptionUnroundMessages, {
++rpl::variable<bool> *UnroundMessages = Yukigram::Options::make<bool>(kOptionUnroundMessages, {
 +	.keywords = { u"yukigram"_q, u"round"_q, u"messages"_q, u"square"_q },
 +	.category = "style",
 +});

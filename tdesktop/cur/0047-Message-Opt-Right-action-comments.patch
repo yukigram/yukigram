@@ -106,7 +106,7 @@ index 22321dd539..ef6fe69e90 100644
  			_comments = nullptr;
 diff --git a/Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp b/Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp
 new file mode 100644
-index 0000000000..c74326c80f
+index 0000000000..82f4ddd422
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/right_action_comments.cpp
 @@ -0,0 +1,13 @@
@@ -115,7 +115,7 @@ index 0000000000..c74326c80f
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *RightActionComments = Yukigram::Options::make(kOptionRightActionComments, {
++rpl::variable<bool> *RightActionComments = Yukigram::Options::make<bool>(kOptionRightActionComments, {
 +	.keywords = { u"yukigram"_q, u"comments"_q, u"right"_q, u"compact"_q },
 +	.category = "messages",
 +});

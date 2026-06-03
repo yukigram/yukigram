@@ -157,7 +157,7 @@ index 0a7b4b191c..699ca43798 100644
  topBarActionButtonLargeRadius: 8px;
 diff --git a/Telegram/SourceFiles/yukigram/settings/quick_recent_actions.cpp b/Telegram/SourceFiles/yukigram/settings/quick_recent_actions.cpp
 new file mode 100644
-index 0000000000..8df1d98603
+index 0000000000..d375b035a0
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/quick_recent_actions.cpp
 @@ -0,0 +1,13 @@
@@ -166,7 +166,7 @@ index 0000000000..8df1d98603
 +
 +namespace Yukigram::Settings {
 +
-+rpl::variable<bool> *QuickRecentActions = Yukigram::Options::make(kOptionQuickRecentActions, {
++rpl::variable<bool> *QuickRecentActions = Yukigram::Options::make<bool>(kOptionQuickRecentActions, {
 +	.keywords = { u"yukigram"_q, u"recent"_q, u"actions"_q },
 +	.category = "chat",
 +});
