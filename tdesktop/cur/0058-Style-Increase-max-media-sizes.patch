@@ -8,7 +8,7 @@ Subject: [PATCH] (Style) Increase max media sizes
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index d24fec2c48..d60d22a68a 100644
+index d24fec2c48..6b8400e59d 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
 @@ -213,10 +213,10 @@ mediaInPaletteSelected: TextPalette(defaultTextPalette) {
@@ -21,7 +21,7 @@ index d24fec2c48..d60d22a68a 100644
 +maxAnimatedEmojiSize: 128px;
  maxGifSize: 320px;
 -maxVideoMessageSize: 240px;
-+maxVideoMessageSize: 320px;
++maxVideoMessageSize: 384px;
  maxSignatureSize: 216px;
  maxWallPaperWidth: 160px;
  maxWallPaperHeight: 240px;
