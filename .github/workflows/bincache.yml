@@ -268,10 +268,10 @@ jobs:
             pkgrel=0
           else
             # git version
-            date=$(git show --pretty='%cs')
+            date=$(git show --pretty='%cs' --no-patch)
             date=${date//-/}
             tag=$(git describe --abbrev=0 HEAD)
-            pkgver=${tag}_git${date}
+            pkgver=${tag/-*/}_git${date} # replace semver suffixes
             pkgrel=$(git rev-list --count $tag..)
           fi
           pkgver=${pkgver/v/} # strip tag prefix (v6.8.2.2 -> 6.8.2.2)
