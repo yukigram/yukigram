@@ -1,0 +1,90 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Thu, 4 Jun 2026 01:31:03 +0000
+Subject: [PATCH] (Style)(Opt) Sticker size
+
+---
+ Telegram/CMakeLists.txt                         |  2 ++
+ .../history/view/media/history_view_sticker.cpp |  1 +
+ Telegram/SourceFiles/ui/chat/chat.style         |  2 +-
+ .../yukigram/settings/sticker_size.cpp          | 17 +++++++++++++++++
+ .../yukigram/settings/sticker_size.h            |  5 +++++
+ 5 files changed, 26 insertions(+), 1 deletion(-)
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/sticker_size.cpp
+ create mode 100644 Telegram/SourceFiles/yukigram/settings/sticker_size.h
+
+diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
+index e5eebe8d0a..267d77837d 100644
+--- a/Telegram/CMakeLists.txt
++++ b/Telegram/CMakeLists.txt
+@@ -2002,6 +2002,8 @@ PRIVATE
+     yukigram/settings/star_hide_always.h
+     yukigram/settings/star_hide_empty.cpp
+     yukigram/settings/star_hide_empty.h
++    yukigram/settings/sticker_size.cpp
++    yukigram/settings/sticker_size.h
+     yukigram/settings/system_emoji.cpp
+     yukigram/settings/system_emoji.h
+     yukigram/settings/time_with_seconds.cpp
+diff --git a/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp b/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp
+index 4ef4cc7be1..67c31f4874 100644
+--- a/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp
++++ b/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp
+@@ -50,6 +50,7 @@ constexpr auto kMessageEffectMultiplier = 2;
+ base::options::option<int> OptionStickerSize({
+ 	.id = "sticker-size",
+ 	.name = "Sticker size",
++	.defaultValue = 224,
+ });
+ 
+ [[nodiscard]] QImage CacheDiceImage(
+diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
+index d3871abcbc..d3d9d59b22 100644
+--- a/Telegram/SourceFiles/ui/chat/chat.style
++++ b/Telegram/SourceFiles/ui/chat/chat.style
+@@ -213,7 +213,7 @@ mediaInPaletteSelected: TextPalette(defaultTextPalette) {
+ 
+ minPhotoSize: 100px;
+ maxMediaSize: 430px;
+-maxStickerSize: 224px;
++maxStickerSize: 512px;
+ maxAnimatedEmojiSize: 112px;
+ maxGifSize: 320px;
+ maxVideoMessageSize: 240px;
+diff --git a/Telegram/SourceFiles/yukigram/settings/sticker_size.cpp b/Telegram/SourceFiles/yukigram/settings/sticker_size.cpp
+new file mode 100644
+index 0000000000..82c6463771
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/sticker_size.cpp
+@@ -0,0 +1,17 @@
++#include "yukigram/settings/sticker_size.h"
++#include "yukigram/options.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<int> *StickerSize = Yukigram::Options::make<int>(kOptionStickerSize, {
++	.keywords = { u"yukigram"_q, u"sticker"_q, u"size"_q },
++	.category = "style",
++	.restartRequired = true,
++	.mirrorExperimental = true,
++	.checkValid = Yukigram::Options::Valid::Bounded(50, 512),
++	.validHint = Yukigram::Options::Valid::BoundedHint(50, 512),
++});
++
++const char kOptionStickerSize[] = "sticker-size";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/sticker_size.h b/Telegram/SourceFiles/yukigram/settings/sticker_size.h
+new file mode 100644
+index 0000000000..ff1c13369d
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/sticker_size.h
+@@ -0,0 +1,5 @@
++#include "rpl/rpl.h"
++namespace Yukigram::Settings {
++extern rpl::variable<int> *StickerSize;
++extern const char kOptionStickerSize[];
++}
+-- 
+2.53.0
+

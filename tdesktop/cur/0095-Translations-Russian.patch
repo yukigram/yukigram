@@ -4,17 +4,17 @@ Date: Thu, 28 May 2026 22:20:22 +0000
 Subject: [PATCH] (Translations) Russian
 
 ---
- Telegram/Resources/langs/yukigram/ru.json    | 166 +++++++++++++++++++
+ Telegram/Resources/langs/yukigram/ru.json    | 168 +++++++++++++++++++
  Telegram/Resources/qrc/telegram/yukigram.qrc |   1 +
- 2 files changed, 167 insertions(+)
+ 2 files changed, 169 insertions(+)
  create mode 100644 Telegram/Resources/langs/yukigram/ru.json
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..6dcb30d912
+index 0000000000..bcbcdfd618
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
-@@ -0,0 +1,166 @@
+@@ -0,0 +1,168 @@
 +{
 +    "about/1/text": "Неофициальный форк {tdesktop_link},\nкоторый добавляет фичи и убирает мусор.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -151,6 +151,8 @@ index 0000000000..6dcb30d912
 +    "opt/star-hide-always/desc": "",
 +    "opt/star-hide-empty/name": "Скрывать пустое количество звёзд",
 +    "opt/star-hide-empty/desc": "",
++    "opt/sticker-size/name": "Размер стикеров",
++    "opt/sticker-size/desc": "224 — по умолчанию\n256 — прошлые версии Yukigram\n512 — pixel perfect\nЗначения больше 300 могут приводить к артефактам в узких окнах",
 +    "opt/system-emoji/name": "Использовать системный эмодзи-шрифт",
 +    "opt/system-emoji/desc": "",
 +    "opt/tabbed-panel-show-on-click/name": "Открывать палитру по клику",

@@ -86,6 +86,7 @@ path = [
     "tdesktop/cur/*-Shortcut-Mention-by-name-with-right-click.patch",
     "tdesktop/cur/*-Style-Constrain-round-messages-width.patch",
     "tdesktop/cur/*-Style-Opt-Unround-messages.patch",
+    "tdesktop/cur/*-Style-Opt-Sticker-size.patch",
     "tdesktop/cur/*-Style-Increase-max-media-sizes.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"

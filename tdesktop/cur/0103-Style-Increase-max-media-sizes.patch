@@ -4,20 +4,18 @@ Date: Mon, 6 Apr 2026 02:29:13 +0300
 Subject: [PATCH] (Style) Increase max media sizes
 
 ---
- Telegram/SourceFiles/ui/chat/chat.style | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Telegram/SourceFiles/ui/chat/chat.style | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index d3871abcbc..44f6249606 100644
+index d3d9d59b22..43bcd8e1a1 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
-@@ -213,10 +213,10 @@ mediaInPaletteSelected: TextPalette(defaultTextPalette) {
- 
+@@ -214,9 +214,9 @@ mediaInPaletteSelected: TextPalette(defaultTextPalette) {
  minPhotoSize: 100px;
  maxMediaSize: 430px;
--maxStickerSize: 224px;
+ maxStickerSize: 512px;
 -maxAnimatedEmojiSize: 112px;
-+maxStickerSize: 256px;
 +maxAnimatedEmojiSize: 128px;
  maxGifSize: 320px;
 -maxVideoMessageSize: 240px;

@@ -191,6 +191,8 @@ These are placed under `(Chat)` category.
 - Constrain round messages width
     (don't push "Forwarded from" outside the screen on small screen widths)
 - :star: :gear: Square round messages
+- :gear: Change sticker size
+    (:star: up to full size)
 - Larger stickers and round video messages
 
 These are placed under `(Style)` category.

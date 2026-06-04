@@ -4,14 +4,14 @@ Date: Sat, 30 May 2026 20:56:58 +0000
 Subject: [PATCH] (Translations) English
 
 ---
- Telegram/Resources/langs/yukigram/en.json | 157 ++++++++++++++++++++++
- 1 file changed, 157 insertions(+)
+ Telegram/Resources/langs/yukigram/en.json | 159 ++++++++++++++++++++++
+ 1 file changed, 159 insertions(+)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index a54f5182fa..c03087bea9 100644
+index a54f5182fa..8dfae7a73b 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -1,3 +1,160 @@
+@@ -1,3 +1,162 @@
  {
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -142,6 +142,8 @@ index a54f5182fa..c03087bea9 100644
 +    "opt/star-hide-always/desc": "",
 +    "opt/star-hide-empty/name": "Hide empty stars count",
 +    "opt/star-hide-empty/desc": "",
++    "opt/sticker-size/name": "Sticker size",
++    "opt/sticker-size/desc": "224: default\n256: previous Yukigram default\n512: pixel perfect\nValues larger than 300 may break in thin windows",
 +    "opt/system-emoji/name": "Use system emoji font",
 +    "opt/system-emoji/desc": "",
 +    "opt/tabbed-panel-show-on-click/name": "Click to show emoji picker",
