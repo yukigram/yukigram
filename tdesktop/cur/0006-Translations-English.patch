@@ -8,7 +8,7 @@ Subject: [PATCH] (Translations) English
  1 file changed, 163 insertions(+)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index a54f5182fa..4db011fbbc 100644
+index a54f5182fa..b1f5124f18 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
 @@ -1,3 +1,166 @@
@@ -147,7 +147,7 @@ index a54f5182fa..4db011fbbc 100644
 +    "opt/star-hide-empty/name": "Hide empty stars count",
 +    "opt/star-hide-empty/desc": "",
 +    "opt/sticker-size/name": "Sticker size",
-+    "opt/sticker-size/desc": "224: default\n256: previous Yukigram default\n512: pixel perfect\nValues larger than 300 may break in thin windows",
++    "opt/sticker-size/desc": "224: default\n256: previous Yukigram default\n512: pixel perfect\nValues larger than 300\nmay break in thin windows",
 +    "opt/system-emoji/name": "Use system emoji font",
 +    "opt/system-emoji/desc": "",
 +    "opt/tabbed-panel-show-on-click/name": "Click to show emoji picker",
