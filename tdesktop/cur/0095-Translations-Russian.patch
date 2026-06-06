@@ -11,7 +11,7 @@ Subject: [PATCH] (Translations) Russian
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..56a2f5bacf
+index 0000000000..25726bb8f9
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
 @@ -0,0 +1,172 @@
@@ -134,7 +134,7 @@ index 0000000000..56a2f5bacf
 +    "opt/large-sticker-preview/name": "Полноразмерный предпросмотр стикеров",
 +    "opt/large-sticker-preview/desc": "",
 +    "opt/mpris-call-hangup/name": "Управлять звонками с помощью MPRIS",
-+    "opt/mpris-call-hangup/desc": "Прош/След/Стоп — положить трубку.\nПроигр/Пауза/ПроигрПауза — снять трубку.\nЭта настркойка конфликтует со встроенным медиапроигрывателем",
++    "opt/mpris-call-hangup/desc": "Прош/След/Стоп — положить трубку.\nПроигр/Пауза/ПроигрПауза — снять трубку.\nЭта настройка конфликтует со встроенным медиапроигрывателем",
 +    "opt/no-shout-buttons/name": "Перестать ОРАТЬ на кнопках",
 +    "opt/no-shout-buttons/desc": "",
 +    "opt/old-style-spoilers/name": "Спойлеры как раньше (без частиц)",
