@@ -13,10 +13,10 @@ Subject: [PATCH] (Message)(Opt) Right action comments
  create mode 100644 Telegram/SourceFiles/yukigram/settings/right_action_comments.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index a885c7bdcd..05bf67f505 100644
+index ed5b400f59..57127ea890 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1960,6 +1960,8 @@ PRIVATE
+@@ -1967,6 +1967,8 @@ PRIVATE
      yukigram/settings/mirrored.cpp
      yukigram/settings/mpris_call_hangup.cpp
      yukigram/settings/mpris_call_hangup.h
@@ -26,10 +26,10 @@ index a885c7bdcd..05bf67f505 100644
      apiwrap.h
      config.h
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 22321dd539..ef6fe69e90 100644
+index 55cf86432d..c5b5e0aa44 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
-@@ -32,6 +32,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -35,6 +35,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "boxes/premium_preview_box.h"
  #include "boxes/share_box.h"
  #include "boxes/peers/tag_info_box.h"
@@ -37,7 +37,7 @@ index 22321dd539..ef6fe69e90 100644
  #include "ui/effects/reaction_fly_animation.h"
  #include "ui/effects/ripple_animation.h"
  #include "ui/text/text_utilities.h"
-@@ -583,7 +584,7 @@ void Message::animateReaction(Ui::ReactionFlyAnimationArgs &&args) {
+@@ -1146,7 +1147,7 @@ void Message::animateReaction(Ui::ReactionFlyAnimationArgs &&args) {
  	if (bubble) {
  		// Entry page is always a bubble bottom.
  		auto inner = g;
@@ -46,7 +46,7 @@ index 22321dd539..ef6fe69e90 100644
  			inner.setHeight(inner.height() - st::historyCommentsButtonHeight);
  		}
  		auto trect = inner.marginsRemoved(st::msgPadding);
-@@ -1165,7 +1166,7 @@ void Message::draw(Painter &p, const PaintContext &context) const {
+@@ -1734,7 +1735,7 @@ void Message::draw(Painter &p, const PaintContext &context) const {
  	const auto customHighlight = mediaDisplayed && media->customHighlight();
  	if (!mediaSelectionIntervals.empty() || customHighlight) {
  		auto localMediaBottom = gForIntervals.top() + gForIntervals.height();
@@ -55,7 +55,7 @@ index 22321dd539..ef6fe69e90 100644
  			localMediaBottom -= st::historyCommentsButtonHeight;
  		}
  		if (_viewButton) {
-@@ -1704,6 +1705,9 @@ void Message::paintCommentsButton(
+@@ -2273,6 +2274,9 @@ void Message::paintCommentsButton(
  	if (!data()->repliesAreComments() && !data()->externalReply()) {
  		return;
  	}
@@ -65,7 +65,7 @@ index 22321dd539..ef6fe69e90 100644
  	if (!_comments) {
  		_comments = std::make_unique<CommentsButton>();
  		history()->owner().registerHeavyViewPart(const_cast<Message*>(this));
-@@ -2420,7 +2424,7 @@ PointState Message::pointState(QPoint point) const {
+@@ -3095,7 +3099,7 @@ PointState Message::pointState(QPoint point) const {
  			auto mediaOnBottom = (mediaDisplayed && media->isBubbleBottom()) || check || (entry/* && entry->isBubbleBottom()*/);
  			auto mediaOnTop = (mediaDisplayed && media->isBubbleTop()) || (entry && entry->isBubbleTop());
  
@@ -74,7 +74,7 @@ index 22321dd539..ef6fe69e90 100644
  				g.setHeight(g.height() - st::historyCommentsButtonHeight);
  			}
  
-@@ -2757,7 +2761,7 @@ BottomRippleMask Message::bottomRippleMask(int buttonHeight) const {
+@@ -3460,7 +3464,7 @@ BottomRippleMask Message::bottomRippleMask(int buttonHeight) const {
  }
  
  void Message::createCommentsButtonRipple() {
@@ -83,7 +83,7 @@ index 22321dd539..ef6fe69e90 100644
  	_comments->ripple = std::make_unique<Ui::RippleAnimation>(
  		st::defaultRippleAnimation,
  		std::move(mask.image),
-@@ -4595,9 +4599,10 @@ bool Message::displayRightActionComments() const {
+@@ -5639,9 +5643,10 @@ bool Message::displayRightActionComments() const {
  	return !isPinnedContext()
  		&& (context() != Context::SavedSublist)
  		&& data()->repliesAreComments()
@@ -95,7 +95,7 @@ index 22321dd539..ef6fe69e90 100644
  }
  
  std::optional<QSize> Message::rightActionSize() const {
-@@ -5430,7 +5435,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -6474,7 +6479,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  			newHeight += (bottomInfoHeight - st::msgDateFont->height);
  		}
  

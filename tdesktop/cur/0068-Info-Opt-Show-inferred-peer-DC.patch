@@ -13,10 +13,10 @@ Subject: [PATCH] (Info)(Opt) Show inferred peer DC
  create mode 100644 Telegram/SourceFiles/yukigram/settings/inferred_peer_dc.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 3891035e1c..3cbdb951fc 100644
+index 9b830ce660..06dd608af3 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1971,6 +1971,8 @@ PRIVATE
+@@ -1978,6 +1978,8 @@ PRIVATE
      yukigram/settings/hide_wall_paper.h
      yukigram/settings/history_peer_type_icons.cpp
      yukigram/settings/history_peer_type_icons.h
@@ -26,7 +26,7 @@ index 3891035e1c..3cbdb951fc 100644
      yukigram/settings/icon_theme_symbolic.h
      yukigram/settings/mirrored.cpp
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-index 8e26ba30b6..e60fe33c30 100644
+index cd9a7144e6..f8d45a949e 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 @@ -41,6 +41,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -37,7 +37,7 @@ index 8e26ba30b6..e60fe33c30 100644
  #include "data/data_saved_sublist.h"
  #include "data/data_session.h"
  #include "data/data_user.h"
-@@ -101,6 +102,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -102,6 +103,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "window/window_peer_menu.h"
  #include "window/window_separate_id.h"
  #include "window/window_session_controller.h"
@@ -45,7 +45,7 @@ index 8e26ba30b6..e60fe33c30 100644
  #include "styles/style_boxes.h"
  #include "styles/style_channel_earn.h" // st::channelEarnCurrencyCommonMargins
  #include "styles/style_info.h"
-@@ -1581,6 +1583,22 @@ Section DetailsFiller::makeInfo() {
+@@ -1588,6 +1590,22 @@ Section DetailsFiller::makeInfo() {
  			);
  		}
  	};
@@ -68,7 +68,7 @@ index 8e26ba30b6..e60fe33c30 100644
  	const auto setupJoinDate = [&] {
  		if (ShowChannelJoinedBelowAbout.value()) {
  			if (const auto channel = _peer->asChannel()) {
-@@ -1684,6 +1702,7 @@ Section DetailsFiller::makeInfo() {
+@@ -1693,6 +1711,7 @@ Section DetailsFiller::makeInfo() {
  		});
  
  		setupPeerId();
@@ -76,7 +76,7 @@ index 8e26ba30b6..e60fe33c30 100644
  
  		if (!user->isBot()) {
  			tracker.track(result->add(
-@@ -1805,6 +1824,7 @@ Section DetailsFiller::makeInfo() {
+@@ -1814,6 +1833,7 @@ Section DetailsFiller::makeInfo() {
  		}
  
  		setupPeerId();

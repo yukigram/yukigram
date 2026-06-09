@@ -14,10 +14,10 @@ Subject: [PATCH] (Style)(Opt) Hide per-chat wallpaper
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_wall_paper.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index a69423ba31..ea9e3b761e 100644
+index 70ede54afc..47cf59ec7d 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1959,6 +1959,8 @@ PRIVATE
+@@ -1966,6 +1966,8 @@ PRIVATE
      yukigram/settings/disable_animoji.h
      yukigram/settings/force_mobile_layout.cpp
      yukigram/settings/force_mobile_layout.h
@@ -27,7 +27,7 @@ index a69423ba31..ea9e3b761e 100644
      yukigram/settings/history_peer_type_icons.h
      yukigram/settings/icon_theme_symbolic.cpp
 diff --git a/Telegram/SourceFiles/data/data_channel.cpp b/Telegram/SourceFiles/data/data_channel.cpp
-index 4aee47b812..649804d1c4 100644
+index 8687dadc9f..05646f4af9 100644
 --- a/Telegram/SourceFiles/data/data_channel.cpp
 +++ b/Telegram/SourceFiles/data/data_channel.cpp
 @@ -29,6 +29,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -38,7 +38,7 @@ index 4aee47b812..649804d1c4 100644
  #include "base/unixtime.h"
  #include "core/application.h"
  #include "history/history.h"
-@@ -1470,7 +1471,7 @@ void ApplyChannelUpdate(
+@@ -1481,7 +1482,7 @@ void ApplyChannelUpdate(
  		session->sendAsPeers().setChosen(channel, PeerId());
  	}
  

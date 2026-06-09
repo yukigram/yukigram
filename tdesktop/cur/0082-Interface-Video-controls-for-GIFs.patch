@@ -10,10 +10,10 @@ Original author: RadRussianRus <radrussianrus@gmail.com>
  1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-index e15ebae373..cfd3595ec8 100644
+index 8b26d655f4..e823a196ff 100644
 --- a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 +++ b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-@@ -1256,9 +1256,7 @@ QSize OverlayWidget::videoSize() const {
+@@ -1299,9 +1299,7 @@ QSize OverlayWidget::videoSize() const {
  }
  
  bool OverlayWidget::streamingRequiresControls() const {

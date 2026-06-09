@@ -17,10 +17,10 @@ Subject: [PATCH] (Interface)(Opt) Compact chat list
  create mode 100644 Telegram/SourceFiles/yukigram/settings/compact_chat_list.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index ea9e3b761e..742ae166f7 100644
+index 47cf59ec7d..1be3c5d748 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1955,6 +1955,8 @@ PRIVATE
+@@ -1962,6 +1962,8 @@ PRIVATE
      yukigram/options.h
      yukigram/settings/always_show_scheduled.cpp
      yukigram/settings/always_show_scheduled.h
@@ -30,7 +30,7 @@ index ea9e3b761e..742ae166f7 100644
      yukigram/settings/disable_animoji.h
      yukigram/settings/force_mobile_layout.cpp
 diff --git a/Telegram/SourceFiles/dialogs/dialogs.style b/Telegram/SourceFiles/dialogs/dialogs.style
-index 58f39e74ba..11eb8ca12c 100644
+index 267f132f30..1775c46477 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs.style
 +++ b/Telegram/SourceFiles/dialogs/dialogs.style
 @@ -100,6 +100,11 @@ defaultDialogRow: DialogRow {

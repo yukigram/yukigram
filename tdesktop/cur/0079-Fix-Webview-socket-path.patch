@@ -8,7 +8,7 @@ Subject: [PATCH] (Fix) Webview socket path
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/platform/linux/specific_linux.cpp b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-index d37adfa7b0..2e0d5fd315 100644
+index 0e8c317294..82f70152c1 100644
 --- a/Telegram/SourceFiles/platform/linux/specific_linux.cpp
 +++ b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
 @@ -30,6 +30,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -19,7 +19,7 @@ index d37adfa7b0..2e0d5fd315 100644
  #include <QtCore/QStandardPaths>
  #include <QtCore/QProcess>
  
-@@ -766,9 +767,10 @@ void start() {
+@@ -769,9 +770,10 @@ void start() {
  	GLib::set_prgname(cExeName().toStdString());
  	GLib::set_application_name(AppName.data());
  

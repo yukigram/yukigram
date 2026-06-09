@@ -17,10 +17,10 @@ Original author: c0re100 <corehusky@gmail.com>
  create mode 100644 Telegram/SourceFiles/yukigram/settings/show_message_id.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index fc9325722d..1cb63305fb 100644
+index 934f5f6ad6..118d7b2144 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1970,6 +1970,8 @@ PRIVATE
+@@ -1977,6 +1977,8 @@ PRIVATE
      yukigram/settings/quick_recent_actions.h
      yukigram/settings/right_action_comments.cpp
      yukigram/settings/right_action_comments.h
@@ -74,26 +74,26 @@ index 91a1d434b2..da83efc973 100644
  		int64 tonStake = 0;
  		int stars = 0;
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 1df49af56d..70434f99e0 100644
+index f56f6c131e..6fe980024f 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
-@@ -29,6 +29,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "history/history.h"
- #include "history/history_item_components.h"
- #include "history/history_item_helpers.h"
+@@ -32,6 +32,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "data/data_channel.h"
+ #include "data/data_session.h"
+ #include "iv/iv_cached_media.h"
 +#include "yukigram/settings/show_message_id.h"
  #include "base/unixtime.h"
  #include "boxes/premium_preview_box.h"
  #include "core/application.h"
-@@ -62,6 +63,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -64,6 +65,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "data/data_message_reactions.h"
  #include "data/data_user.h"
  #include "lang/lang_keys.h"
 +#include "yukigram/lang.h"
  #include "styles/style_chat.h"
  #include "styles/style_dialogs.h"
- 
-@@ -698,6 +700,10 @@ QString DateTooltipText(not_null<Element*> view) {
+ #include "styles/style_iv.h"
+@@ -726,6 +728,10 @@ QString DateTooltipText(not_null<Element*> view) {
  	if (const auto stars = item->out() ? item->starsPaid() : 0) {
  		dateText += '\n' + tr::lng_you_paid_stars(tr::now, lt_count, stars);
  	}

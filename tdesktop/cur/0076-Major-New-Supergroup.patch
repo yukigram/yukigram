@@ -40,10 +40,10 @@ index a26a7cc91a..950f4f83de 100644
  			tr::lng_create_channel_title(),
  			{ &st::menuIconChannel }
 diff --git a/Telegram/SourceFiles/window/window_session_controller.cpp b/Telegram/SourceFiles/window/window_session_controller.cpp
-index c9d1dd479e..bba8f218b3 100644
+index e91e3c8b14..6ae1038ead 100644
 --- a/Telegram/SourceFiles/window/window_session_controller.cpp
 +++ b/Telegram/SourceFiles/window/window_session_controller.cpp
-@@ -3199,6 +3199,10 @@ void SessionController::showNewGroup() {
+@@ -3207,6 +3207,10 @@ void SessionController::showNewGroup() {
  	_window->show(Box<GroupInfoBox>(this, GroupInfoBox::Type::Group));
  }
  
@@ -55,10 +55,10 @@ index c9d1dd479e..bba8f218b3 100644
  	_window->show(Box<GroupInfoBox>(this, GroupInfoBox::Type::Channel));
  }
 diff --git a/Telegram/SourceFiles/window/window_session_controller.h b/Telegram/SourceFiles/window/window_session_controller.h
-index 2889697f8a..0dfcfa2df3 100644
+index 738171972e..32f8d31f73 100644
 --- a/Telegram/SourceFiles/window/window_session_controller.h
 +++ b/Telegram/SourceFiles/window/window_session_controller.h
-@@ -581,6 +581,7 @@ public:
+@@ -584,6 +584,7 @@ public:
  
  	void showAddContact();
  	void showNewGroup();

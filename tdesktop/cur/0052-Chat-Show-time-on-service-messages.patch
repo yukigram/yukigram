@@ -10,10 +10,10 @@ Original author: c0re100 <corehusky@gmail.com>
  1 file changed, 8 insertions(+)
 
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
-index 0c66e30079..b552c5e648 100644
+index 3287451671..20f1a60c05 100644
 --- a/Telegram/SourceFiles/history/history_item.cpp
 +++ b/Telegram/SourceFiles/history/history_item.cpp
-@@ -1347,11 +1347,19 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
+@@ -1406,11 +1406,19 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
  	}
  }
  

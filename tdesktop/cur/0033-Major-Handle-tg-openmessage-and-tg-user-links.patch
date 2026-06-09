@@ -10,7 +10,7 @@ Original author: c0re100 <corehusky@gmail.com>
  1 file changed, 61 insertions(+)
 
 diff --git a/Telegram/SourceFiles/core/local_url_handlers.cpp b/Telegram/SourceFiles/core/local_url_handlers.cpp
-index 98b7ee879b..75153db3ea 100644
+index b7bafecd50..ce5597aecc 100644
 --- a/Telegram/SourceFiles/core/local_url_handlers.cpp
 +++ b/Telegram/SourceFiles/core/local_url_handlers.cpp
 @@ -61,6 +61,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -21,7 +21,7 @@ index 98b7ee879b..75153db3ea 100644
  #include "storage/storage_account.h"
  #include "mainwidget.h"
  #include "main/main_account.h"
-@@ -1690,6 +1691,58 @@ bool ShowWoof(
+@@ -1691,6 +1692,58 @@ bool ShowWoof(
  	return true;
  }
  
@@ -80,7 +80,7 @@ index 98b7ee879b..75153db3ea 100644
  } // namespace
  
  bool TryRouterForLocalUrl(
-@@ -1708,6 +1761,14 @@ const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
+@@ -1709,6 +1762,14 @@ const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
  			u"^woof$"_q,
  			ShowWoof
  		},

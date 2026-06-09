@@ -16,10 +16,10 @@ Subject: [PATCH] (Style)(Opt) Old-style spoilers
  create mode 100644 Telegram/SourceFiles/yukigram/settings/old_style_spoilers.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 4e1c2cbd20..befe873ac3 100644
+index 4059e69a16..d120f1ef9c 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1988,6 +1988,8 @@ PRIVATE
+@@ -1995,6 +1995,8 @@ PRIVATE
      yukigram/settings/mirrored.cpp
      yukigram/settings/mpris_call_hangup.cpp
      yukigram/settings/mpris_call_hangup.h
@@ -149,7 +149,7 @@ index d4413de547..5e834a11c4 100644
  	const auto source = frame.source;
  	const auto ratio = style::DevicePixelRatio();
 diff --git a/Telegram/lib_ui/ui/text/text_renderer.cpp b/Telegram/lib_ui/ui/text/text_renderer.cpp
-index d866f14758..ee9d1541cb 100644
+index 043cf2aa2b..4df1bba8f7 100644
 --- a/Telegram/lib_ui/ui/text/text_renderer.cpp
 +++ b/Telegram/lib_ui/ui/text/text_renderer.cpp
 @@ -18,6 +18,10 @@
@@ -163,7 +163,7 @@ index d866f14758..ee9d1541cb 100644
  namespace Ui::Text {
  namespace {
  
-@@ -1616,7 +1620,7 @@ void Renderer::paintSpoilerRects(
+@@ -1620,7 +1624,7 @@ void Renderer::paintSpoilerRects(
  	const auto frame = _spoilerCache->lookup(color->c)->frame(index);
  	if (_spoilerCache) {
  		for (const auto &rect : rects) {

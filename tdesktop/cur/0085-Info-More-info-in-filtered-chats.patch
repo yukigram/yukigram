@@ -149,10 +149,10 @@ index c4806e1b06..766147a1c6 100644
  windowArchiveToast: Toast(defaultToast) {
  	minWidth: boxWideWidth;
 diff --git a/Telegram/lib_ui/ui/widgets/widgets.style b/Telegram/lib_ui/ui/widgets/widgets.style
-index 0266e4fa84..514e6c5bb9 100644
+index d17f4abc42..0d12802059 100644
 --- a/Telegram/lib_ui/ui/widgets/widgets.style
 +++ b/Telegram/lib_ui/ui/widgets/widgets.style
-@@ -1380,6 +1380,8 @@ PeerListItem {
+@@ -1382,6 +1382,8 @@ PeerListItem {
  	height: pixels;
  	photoPosition: point;
  	namePosition: point;

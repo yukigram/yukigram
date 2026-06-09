@@ -19,10 +19,10 @@ Original author: c0re100 <corehusky@gmail.com>
  create mode 100644 Telegram/SourceFiles/yukigram/settings/quick_admin_list.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index d280198000..fc9325722d 100644
+index b56c67f88c..934f5f6ad6 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1964,6 +1964,8 @@ PRIVATE
+@@ -1971,6 +1971,8 @@ PRIVATE
      yukigram/settings/mirrored.cpp
      yukigram/settings/mpris_call_hangup.cpp
      yukigram/settings/mpris_call_hangup.h
@@ -140,10 +140,10 @@ index ca334d876b..d87ee29cb1 100644
  	object_ptr<Ui::IconButton> _menuToggle;
  	base::unique_qptr<Ui::PopupMenu> _menu;
 diff --git a/Telegram/SourceFiles/info/info.style b/Telegram/SourceFiles/info/info.style
-index c00325a4aa..c167925714 100644
+index e65b3d12be..90a6daa60a 100644
 --- a/Telegram/SourceFiles/info/info.style
 +++ b/Telegram/SourceFiles/info/info.style
-@@ -1042,6 +1042,10 @@ topBarRecentActions: IconButton(topBarSearch) {
+@@ -1041,6 +1041,10 @@ topBarRecentActions: IconButton(topBarSearch) {
  	icon: icon {{ "info/edit/group_manage_actions_topbar", menuIconFg }};
  	iconOver: icon {{ "info/edit/group_manage_actions_topbar", menuIconFgOver }};
  }

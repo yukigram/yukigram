@@ -9,7 +9,7 @@ Subject: [PATCH] (Info) Show mutual contacts
  2 files changed, 57 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
-index d74378a9d5..9a658e6801 100644
+index 161f644fd7..0bf27cff07 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 +++ b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 @@ -63,6 +63,42 @@ constexpr auto kSearchPerPage = 50;
@@ -55,7 +55,7 @@ index d74378a9d5..9a658e6801 100644
  object_ptr<Ui::BoxContent> PrepareContactsBox(
  		not_null<Window::SessionController*> window) {
  	using Mode = ContactsBoxController::SortMode;
-@@ -786,7 +822,7 @@ bool ContactsBoxController::appendRow(not_null<UserData*> user) {
+@@ -787,7 +823,7 @@ bool ContactsBoxController::appendRow(not_null<UserData*> user) {
  
  std::unique_ptr<PeerListRow> ContactsBoxController::createRow(
  		not_null<UserData*> user) {

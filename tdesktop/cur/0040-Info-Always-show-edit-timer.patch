@@ -10,10 +10,10 @@ Original author: RadRussianRus <radrussianrus@gmail.com>
  1 file changed, 3 insertions(+), 7 deletions(-)
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 52dbe62662..1e85946d3b 100644
+index 70727534fc..b457796297 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -10179,10 +10179,6 @@ void HistoryWidget::paintEditHeader(
+@@ -10199,10 +10199,6 @@ void HistoryWidget::paintEditHeader(
  		- timeSinceMessage;
  	if (editTimeLeft < 2) {
  		editTimeLeftText = u"0:00"_q;
@@ -24,7 +24,7 @@ index 52dbe62662..1e85946d3b 100644
  	} else {
  		updateIn = static_cast<int>(editTimeLeft % 1000);
  		if (!updateIn) {
-@@ -10191,9 +10187,9 @@ void HistoryWidget::paintEditHeader(
+@@ -10211,9 +10207,9 @@ void HistoryWidget::paintEditHeader(
  		++updateIn;
  
  		editTimeLeft = (editTimeLeft - 1) / 1000; // seconds

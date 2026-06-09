@@ -10,7 +10,7 @@ Original author: c0re100 <corehusky@gmail.com>
  1 file changed, 24 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/chat_helpers/message_field.cpp b/Telegram/SourceFiles/chat_helpers/message_field.cpp
-index cc6d45745a..f9e2adea65 100644
+index fa34ee3e96..1332d49d6d 100644
 --- a/Telegram/SourceFiles/chat_helpers/message_field.cpp
 +++ b/Telegram/SourceFiles/chat_helpers/message_field.cpp
 @@ -197,7 +197,30 @@ void EditLinkBox(

@@ -14,10 +14,10 @@ Subject: [PATCH] (Style)(Opt) Sticker size
  create mode 100644 Telegram/SourceFiles/yukigram/settings/sticker_size.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index fa0da4baa7..374c7647fa 100644
+index 253c9b881d..437891bd31 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -2006,6 +2006,8 @@ PRIVATE
+@@ -2013,6 +2013,8 @@ PRIVATE
      yukigram/settings/star_hide_always.h
      yukigram/settings/star_hide_empty.cpp
      yukigram/settings/star_hide_empty.h

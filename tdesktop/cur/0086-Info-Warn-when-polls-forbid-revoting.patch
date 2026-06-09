@@ -8,7 +8,7 @@ Subject: [PATCH] (Info) Warn when polls forbid revoting
  1 file changed, 35 insertions(+), 8 deletions(-)
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_poll.cpp b/Telegram/SourceFiles/history/view/media/history_view_poll.cpp
-index fe195ab1cc..430a6b4ac8 100644
+index 5ac8d8b9b3..f0afa8dd2d 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_poll.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_poll.cpp
 @@ -12,6 +12,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -27,7 +27,7 @@ index fe195ab1cc..430a6b4ac8 100644
  #include "ui/widgets/dropdown_menu.h"
  #include "ui/widgets/menu/menu_action.h"
  #include "ui/chat/message_bubble.h"
-@@ -2170,8 +2172,11 @@ void Poll::updateTexts() {
+@@ -2485,8 +2487,11 @@ void Poll::updateTexts() {
  	if (_flags != _poll->flags() || _headerPart->_subtitle.isEmpty()) {
  		using Flag = PollData::Flag;
  		_flags = _poll->flags();
@@ -41,7 +41,7 @@ index fe195ab1cc..430a6b4ac8 100644
  			((_flags & Flag::Closed)
  				? tr::lng_polls_closed(tr::now)
  				: (_flags & Flag::Quiz)
-@@ -2180,7 +2185,7 @@ void Poll::updateTexts() {
+@@ -2495,7 +2500,7 @@ void Poll::updateTexts() {
  					: tr::lng_polls_anonymous_quiz(tr::now))
  				: ((_flags & Flag::PublicVotes)
  					? tr::lng_polls_public(tr::now)
@@ -50,7 +50,7 @@ index fe195ab1cc..430a6b4ac8 100644
  	}
  	if (_footerPart->_adminBackVoteLabel.isEmpty()) {
  		_footerPart->_adminBackVoteLabel.setMarkedText(
-@@ -2799,17 +2804,39 @@ ClickHandlerPtr Poll::Options::createAnswerClickHandler(
+@@ -3115,17 +3120,39 @@ ClickHandlerPtr Poll::Options::createAnswerClickHandler(
  			}
  		}));
  	} else {

@@ -8,7 +8,7 @@ Subject: [PATCH] (Minor) More accounts
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Telegram/SourceFiles/main/main_domain.h b/Telegram/SourceFiles/main/main_domain.h
-index 2e69222b9a..5936f7a3f2 100644
+index 99e2c9d5b3..436c6581d0 100644
 --- a/Telegram/SourceFiles/main/main_domain.h
 +++ b/Telegram/SourceFiles/main/main_domain.h
 @@ -31,8 +31,8 @@ public:

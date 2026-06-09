@@ -13,10 +13,10 @@ Subject: [PATCH] (Interface)(Opt) Disable shouting-case on buttons
  create mode 100644 Telegram/SourceFiles/yukigram/settings/no_shout_buttons.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index befe873ac3..7cc92e3970 100644
+index d120f1ef9c..f965c649ab 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1988,6 +1988,8 @@ PRIVATE
+@@ -1995,6 +1995,8 @@ PRIVATE
      yukigram/settings/mirrored.cpp
      yukigram/settings/mpris_call_hangup.cpp
      yukigram/settings/mpris_call_hangup.h

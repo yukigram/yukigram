@@ -27,10 +27,10 @@ Subject: [PATCH] (Yukigram) AppId
  delete mode 100644 lib/xdg/org.telegram.desktop.service
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 070e0f74b8..af06425f91 100644
+index d434cf17ac..530b08723e 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1944,6 +1944,7 @@ PRIVATE
+@@ -1951,6 +1951,7 @@ PRIVATE
      window/themes/window_themes_embedded.h
      window/themes/window_themes_generate_name.cpp
      window/themes/window_themes_generate_name.h
@@ -38,7 +38,7 @@ index 070e0f74b8..af06425f91 100644
      apiwrap.cpp
      apiwrap.h
      config.h
-@@ -1962,6 +1963,21 @@ PRIVATE
+@@ -1969,6 +1970,21 @@ PRIVATE
      tray.h
  )
  
@@ -60,7 +60,7 @@ index 070e0f74b8..af06425f91 100644
  if (APPLE)
      nice_target_sources(Telegram ${src_loc}
      PRIVATE
-@@ -2164,7 +2180,7 @@ else()
+@@ -2171,7 +2187,7 @@ else()
          set(bundle_identifier "com.tdesktop.Telegram")
      endif()
      set(bundle_entitlements "Telegram.entitlements")
@@ -69,7 +69,7 @@ index 070e0f74b8..af06425f91 100644
  endif()
  
  if (CMAKE_GENERATOR STREQUAL Xcode)
-@@ -2210,7 +2226,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+@@ -2217,7 +2233,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
  if (APPLE
      OR is_multi_config
      OR NOT CMAKE_EXECUTABLE_SUFFIX STREQUAL ""
@@ -78,7 +78,7 @@ index 070e0f74b8..af06425f91 100644
      set(output_folder ${CMAKE_BINARY_DIR})
  else()
      set(output_folder ${CMAKE_BINARY_DIR}/bin)
-@@ -2382,30 +2398,37 @@ elseif (build_winstore)
+@@ -2390,30 +2406,37 @@ elseif (build_winstore)
      )
  endif()
  
@@ -183,7 +183,7 @@ index 5a4865b11d..39ad62968d 100644
  #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
  	// fallback session management is useless for tdesktop since it doesn't have
 diff --git a/Telegram/SourceFiles/platform/linux/specific_linux.cpp b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-index abe2197966..cf1ee0913c 100644
+index b970da0b01..11287c7d92 100644
 --- a/Telegram/SourceFiles/platform/linux/specific_linux.cpp
 +++ b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
 @@ -19,6 +19,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -230,7 +230,7 @@ index abe2197966..cf1ee0913c 100644
  			targetPath,
  			md5Hash));
  	}
-@@ -738,11 +739,11 @@ void start() {
+@@ -741,11 +742,11 @@ void start() {
  		}
  
  		if (!Core::UpdaterDisabled()) {

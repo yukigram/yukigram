@@ -15,10 +15,10 @@ Subject: [PATCH] (Interface)(Opt) Single-column layout
  create mode 100644 Telegram/SourceFiles/yukigram/settings/force_mobile_layout.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 05bf67f505..c51a5022f3 100644
+index 57127ea890..a9aa6b991b 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1955,6 +1955,8 @@ PRIVATE
+@@ -1962,6 +1962,8 @@ PRIVATE
      yukigram/options.h
      yukigram/settings/disable_animoji.cpp
      yukigram/settings/disable_animoji.h
@@ -28,7 +28,7 @@ index 05bf67f505..c51a5022f3 100644
      yukigram/settings/icon_theme_symbolic.h
      yukigram/settings/mirrored.cpp
 diff --git a/Telegram/SourceFiles/mainwidget.cpp b/Telegram/SourceFiles/mainwidget.cpp
-index 36f856249a..452b07ea7c 100644
+index af5e899b62..27cc858199 100644
 --- a/Telegram/SourceFiles/mainwidget.cpp
 +++ b/Telegram/SourceFiles/mainwidget.cpp
 @@ -36,6 +36,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -39,7 +39,7 @@ index 36f856249a..452b07ea7c 100644
  #include "window/window_connecting_widget.h"
  #include "window/window_top_bar_wrap.h"
  #include "window/notifications_manager.h"
-@@ -335,6 +336,7 @@ MainWidget::MainWidget(
+@@ -337,6 +338,7 @@ MainWidget::MainWidget(
  		});
  	};
  	rpl::merge(
@@ -47,7 +47,7 @@ index 36f856249a..452b07ea7c 100644
  		Core::App().settings().dialogsWithChatWidthRatioChanges(
  		) | filter(true) | rpl::to_empty,
  		Core::App().settings().dialogsNoChatWidthRatioChanges(
-@@ -2877,7 +2879,7 @@ void MainWidget::updateWindowAdaptiveLayout() {
+@@ -2888,7 +2890,7 @@ void MainWidget::updateWindowAdaptiveLayout() {
  
  	// Check if we are in a single-column layout in a wide enough window
  	// for the normal layout. If so, switch to the normal layout.
@@ -69,7 +69,7 @@ index 784164db99..198efb8f88 100644
  #include "data/data_session.h"
  #include "core/application.h"
 diff --git a/Telegram/SourceFiles/window/window_session_controller.cpp b/Telegram/SourceFiles/window/window_session_controller.cpp
-index 7a283f5723..c9d1dd479e 100644
+index 674a73be0d..e91e3c8b14 100644
 --- a/Telegram/SourceFiles/window/window_session_controller.cpp
 +++ b/Telegram/SourceFiles/window/window_session_controller.cpp
 @@ -88,6 +88,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -80,7 +80,7 @@ index 7a283f5723..c9d1dd479e 100644
  #include "calls/calls_instance.h" // Core::App().calls().inCall().
  #include "calls/group/calls_group_call.h"
  #include "calls/group/calls_group_common.h"
-@@ -2502,6 +2503,7 @@ auto SessionController::computeColumnLayout() const -> ColumnLayout {
+@@ -2506,6 +2507,7 @@ auto SessionController::computeColumnLayout() const -> ColumnLayout {
  	auto dialogsWidth = 0, chatWidth = 0, thirdWidth = 0;
  
  	auto useOneColumnLayout = [&] {

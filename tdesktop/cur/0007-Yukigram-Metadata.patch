@@ -28,7 +28,7 @@ index 738ad20837..3a488ae04c 100644
  }
  
 diff --git a/Telegram/SourceFiles/core/version.h b/Telegram/SourceFiles/core/version.h
-index 5db8fd6ee5..7fa6653fd2 100644
+index 5c869de2a4..fab8bd190e 100644
 --- a/Telegram/SourceFiles/core/version.h
 +++ b/Telegram/SourceFiles/core/version.h
 @@ -20,8 +20,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -39,9 +39,9 @@ index 5db8fd6ee5..7fa6653fd2 100644
 -constexpr auto AppFile = "Telegram"_cs;
 +constexpr auto AppName = "Yukigram"_cs;
 +constexpr auto AppFile = "yukigram"_cs;
- constexpr auto AppVersion = 6008005;
- constexpr auto AppVersionStr = "6.8.5";
- constexpr auto AppBetaVersion = true;
+ constexpr auto AppVersion = 6009000;
+ constexpr auto AppVersionStr = "6.9";
+ constexpr auto AppBetaVersion = false;
 diff --git a/Telegram/SourceFiles/intro/intro_start.cpp b/Telegram/SourceFiles/intro/intro_start.cpp
 index d1b835a09a..a871886d76 100644
 --- a/Telegram/SourceFiles/intro/intro_start.cpp

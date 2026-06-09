@@ -49,10 +49,10 @@ index 3a488ae04c..cb3f6da6c3 100644
  
  } // namespace
 diff --git a/Telegram/SourceFiles/history/history_item_helpers.cpp b/Telegram/SourceFiles/history/history_item_helpers.cpp
-index 11dd7b40dd..d0020544ad 100644
+index 1af7166acc..3ee4f879f1 100644
 --- a/Telegram/SourceFiles/history/history_item_helpers.cpp
 +++ b/Telegram/SourceFiles/history/history_item_helpers.cpp
-@@ -51,6 +51,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -52,6 +52,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "ui/widgets/checkbox.h"
  #include "ui/item_text_options.h"
  #include "lang/lang_keys.h"
@@ -60,7 +60,7 @@ index 11dd7b40dd..d0020544ad 100644
  
  namespace {
  
-@@ -1310,10 +1311,7 @@ void CheckPollVoteNotificationSchedule(
+@@ -1317,10 +1318,7 @@ void CheckPollVoteNotificationSchedule(
  }
  
  [[nodiscard]] TextWithEntities UnsupportedMessageText() {
@@ -72,7 +72,7 @@ index 11dd7b40dd..d0020544ad 100644
  	TextUtilities::ParseEntities(result, Ui::ItemTextNoMonoOptions().flags);
  	result.entities.push_front(
  		EntityInText(EntityType::Italic, 0, result.text.size()));
-@@ -1327,9 +1325,9 @@ HistoryMessageMarkupData UnsupportedMessageMarkup() {
+@@ -1334,9 +1332,9 @@ HistoryMessageMarkupData UnsupportedMessageMarkup() {
  	auto row = std::vector<Button>();
  	row.emplace_back(
  		Button::Type::Url,

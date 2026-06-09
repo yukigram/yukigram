@@ -8,7 +8,7 @@ Subject: [PATCH] (Minor) Peer info apply join button
  1 file changed, 2 insertions(+)
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
-index 21fcb519ad..4e7f848536 100644
+index 617f5c820f..6e8b0bd948 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
 @@ -60,6 +60,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

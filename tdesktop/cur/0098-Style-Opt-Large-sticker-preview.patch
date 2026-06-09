@@ -13,10 +13,10 @@ Subject: [PATCH] (Style)(Opt) Large sticker preview
  create mode 100644 Telegram/SourceFiles/yukigram/settings/large_sticker_preview.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 7cc92e3970..31975d6a6e 100644
+index f965c649ab..92f4a10b78 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1985,6 +1985,8 @@ PRIVATE
+@@ -1992,6 +1992,8 @@ PRIVATE
      yukigram/settings/inferred_peer_dc.h
      yukigram/settings/icon_theme_symbolic.cpp
      yukigram/settings/icon_theme_symbolic.h

@@ -15,10 +15,10 @@ Co-Authored-By: Lunya <241520024+lunya-miaou@users.noreply.github.com>
  create mode 100644 Telegram/SourceFiles/settings/sections/settings_yukigram.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index ddae275b6f..49138c9d26 100644
+index 8338084c27..bdc84b9555 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1743,6 +1743,8 @@ PRIVATE
+@@ -1748,6 +1748,8 @@ PRIVATE
      settings/sections/settings_shortcuts.h
      settings/sections/settings_websites.cpp
      settings/sections/settings_websites.h
@@ -28,10 +28,10 @@ index ddae275b6f..49138c9d26 100644
      storage/details/storage_file_utilities.h
      storage/details/storage_settings_scheme.cpp
 diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
-index 83f36712ae..4956106bbf 100644
+index 966d63a71a..43880463db 100644
 --- a/Telegram/Resources/langs/lang.strings
 +++ b/Telegram/Resources/langs/lang.strings
-@@ -849,6 +849,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -852,6 +852,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  "lng_settings_add_account_about" = "You can add up to four accounts with different phone numbers.";
  "lng_settings_peer_to_peer_about" = "Disabling peer-to-peer will relay all calls through Telegram servers to avoid revealing your IP address, but may decrease audio and video quality.";
  "lng_settings_advanced" = "Advanced";
@@ -40,10 +40,10 @@ index 83f36712ae..4956106bbf 100644
  "lng_settings_messages" = "Messages";
  "lng_settings_themes" = "Themes";
 diff --git a/Telegram/SourceFiles/settings/sections/settings_main.cpp b/Telegram/SourceFiles/settings/sections/settings_main.cpp
-index 3d4eda91da..59ce88648c 100644
+index 5f41410a18..d4d9229279 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_main.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_main.cpp
-@@ -58,6 +58,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -59,6 +59,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "settings/sections/settings_premium.h"
  #include "settings/sections/settings_privacy_security.h"
  #include "settings/settings_scale_preview.h"
@@ -51,7 +51,7 @@ index 3d4eda91da..59ce88648c 100644
  #include "storage/localstorage.h"
  #include "ui/basic_click_handlers.h"
  #include "ui/boxes/confirm_box.h"
-@@ -453,6 +454,13 @@ void BuildSectionButtons(SectionBuilder &builder) {
+@@ -445,6 +446,13 @@ void BuildSectionButtons(SectionBuilder &builder) {
  		.keywords = { u"battery"_q, u"animations"_q, u"power"_q, u"saving"_q },
  	});
  

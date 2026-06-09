@@ -4,23 +4,21 @@ Date: Tue, 12 May 2026 01:21:33 +0300
 Subject: [PATCH] (Annoyances) Disable AI IV summaries
 
 ---
- .../iv/markdown/iv_markdown_prepare_native_blocks.cpp          | 3 +++
- 1 file changed, 3 insertions(+)
+ changelog.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Telegram/SourceFiles/iv/markdown/iv_markdown_prepare_native_blocks.cpp b/Telegram/SourceFiles/iv/markdown/iv_markdown_prepare_native_blocks.cpp
-index b41e0911a0..dc6d4dcbc7 100644
---- a/Telegram/SourceFiles/iv/markdown/iv_markdown_prepare_native_blocks.cpp
-+++ b/Telegram/SourceFiles/iv/markdown/iv_markdown_prepare_native_blocks.cpp
-@@ -984,6 +984,9 @@ iframe {
- 	if (!PrepareNativeIvRichText(caption, &cite, &block.anchorId, state)) {
- 		return false;
- 	}
-+	if (cite.text.text == u"Cocoon AI Summary"_q) {
-+		return true;
-+	}
- 	if (!AppendPreparedIvRichBlock(
- 		&block.children,
- 		PreparedBlockKind::Paragraph,
+diff --git a/changelog.txt b/changelog.txt
+index d0fa880b99..b77b575dcb 100644
+--- a/changelog.txt
++++ b/changelog.txt
+@@ -3,6 +3,7 @@
+ - Upstream updated to 6.9.0
+ - Colorize peer type icon according to peer name color
+ - Proper message id formatting in tooltip
++- Temporarily restored AI summaries in Instant View
+ 
+ 6.9 (09.06.26)
+ 
 -- 
 2.53.0
 

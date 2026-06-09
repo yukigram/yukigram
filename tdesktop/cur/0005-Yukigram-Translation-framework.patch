@@ -19,10 +19,10 @@ Original author: RadRussianRus <radrussianrus@gmail.com>
  create mode 100644 Telegram/SourceFiles/yukigram/lang.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 893c1a4f54..b8b0379e68 100644
+index 4467290ab8..3a3378f273 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1945,6 +1945,8 @@ PRIVATE
+@@ -1952,6 +1952,8 @@ PRIVATE
      window/themes/window_themes_generate_name.cpp
      window/themes/window_themes_generate_name.h
      yukigram/appid.h

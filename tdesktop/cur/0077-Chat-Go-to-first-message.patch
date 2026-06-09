@@ -10,7 +10,7 @@ Original author: c0re100 <corehusky@gmail.com>
  1 file changed, 17 insertions(+)
 
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index 851c629f2f..eebd432b12 100644
+index f329556103..8291fb629c 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
 @@ -22,6 +22,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -21,7 +21,7 @@ index 851c629f2f..eebd432b12 100644
  #include "lottie/lottie_icon.h"
  #include "ui/boxes/confirm_box.h"
  #include "base/random.h"
-@@ -313,6 +314,7 @@ private:
+@@ -315,6 +316,7 @@ private:
  	void addToggleNoForwards();
  	void addBlockUser();
  	void addViewDiscussion();
@@ -29,7 +29,7 @@ index 851c629f2f..eebd432b12 100644
  	void addDirectMessages();
  	void addToggleTopicClosed();
  	void addExportChat();
-@@ -917,6 +919,20 @@ void Filler::addViewDiscussion() {
+@@ -920,6 +922,20 @@ void Filler::addViewDiscussion() {
  	}, &st::menuIconDiscussion);
  }
  
@@ -50,7 +50,7 @@ index 851c629f2f..eebd432b12 100644
  void Filler::addDirectMessages() {
  	const auto channel = _peer->asBroadcast();
  	if (!channel) {
-@@ -1762,6 +1778,7 @@ void Filler::fillHistoryActions() {
+@@ -1772,6 +1788,7 @@ void Filler::fillHistoryActions() {
  	addViewAsTopics();
  	addManageChat();
  	addViewStatistics();

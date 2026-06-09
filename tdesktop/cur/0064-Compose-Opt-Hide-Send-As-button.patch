@@ -13,10 +13,10 @@ Subject: [PATCH] (Compose)(Opt) Hide Send As button
  create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_send_as.h
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index b29ad19c30..3a0e8f8f2e 100644
+index 4f8ae4d816..5c2be12ff8 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1963,6 +1963,8 @@ PRIVATE
+@@ -1970,6 +1970,8 @@ PRIVATE
      yukigram/settings/force_mobile_layout.h
      yukigram/settings/hide_send_as_premium.cpp
      yukigram/settings/hide_send_as_premium.h
@@ -26,7 +26,7 @@ index b29ad19c30..3a0e8f8f2e 100644
      yukigram/settings/hide_wall_paper.h
      yukigram/settings/history_peer_type_icons.cpp
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index c50db344c2..97bb66c869 100644
+index b55006ce95..fc3aa0dc68 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -62,6 +62,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -37,7 +37,7 @@ index c50db344c2..97bb66c869 100644
  #include "inline_bots/inline_bot_result.h"
  #include "base/event_filter.h"
  #include "base/qt_signal_producer.h"
-@@ -3471,6 +3472,14 @@ void HistoryWidget::refreshSuggestPostToggle() {
+@@ -3483,6 +3484,14 @@ void HistoryWidget::refreshSuggestPostToggle() {
  }
  
  void HistoryWidget::setupSendAsToggle() {
@@ -52,7 +52,7 @@ index c50db344c2..97bb66c869 100644
  	session().sendAsPeers().updated(
  	) | rpl::filter([=](Main::SendAsKey key) {
  		return (key.peer == _peer)
-@@ -3487,7 +3496,7 @@ void HistoryWidget::refreshSendAsToggle() {
+@@ -3499,7 +3508,7 @@ void HistoryWidget::refreshSendAsToggle() {
  	Expects(_peer != nullptr);
  
  	const auto key = Main::SendAsKey{ _peer, Main::SendAsType::Message };

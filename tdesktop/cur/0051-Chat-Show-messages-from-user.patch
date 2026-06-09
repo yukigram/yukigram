@@ -13,10 +13,10 @@ Original author: c0re100 <corehusky@gmail.com>
  4 files changed, 47 insertions(+)
 
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
-index 20e35cada0..fefc936816 100644
+index c46947f28c..e0ef6eb9a1 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
-@@ -1927,6 +1927,9 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
+@@ -2019,6 +2019,9 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
  			(participant->isUser()
  				? &st::menuIconProfile
  				: &st::menuIconInfo));
@@ -27,10 +27,10 @@ index 20e35cada0..fefc936816 100644
  	if (user && !_peer->isBroadcast()) {
  		const auto isSelf = user->isSelf();
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index e242ef5144..4ec359c432 100644
+index 6591dca57c..48da311c8b 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -2828,6 +2828,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+@@ -2933,6 +2933,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
  				std::move(callback),
  				&st::menuIconStats);
  		}
@@ -49,10 +49,10 @@ index e242ef5144..4ec359c432 100644
  	const auto addPhotoActions = [&](not_null<PhotoData*> photo, HistoryItem *item) {
  		const auto media = photo->activeMediaView();
 diff --git a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
-index 5e6b57675b..04f897e7f8 100644
+index 7fb4cb8290..d2ce809ab8 100644
 --- a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
-@@ -446,6 +446,27 @@ void AddForwardAction(
+@@ -445,6 +445,27 @@ void AddForwardAction(
  	AddForwardMessageAction(menu, request, list);
  }
  
@@ -80,7 +80,7 @@ index 5e6b57675b..04f897e7f8 100644
  bool AddSendNowSelectedAction(
  		not_null<Ui::PopupMenu*> menu,
  		const ContextMenuRequest &request,
-@@ -1062,6 +1083,7 @@ void AddMessageActions(
+@@ -1061,6 +1082,7 @@ void AddMessageActions(
  		not_null<ListWidget*> list) {
  	AddPostLinkAction(menu, request);
  	AddForwardAction(menu, request, list);
@@ -89,7 +89,7 @@ index 5e6b57675b..04f897e7f8 100644
  	AddDeleteAction(menu, request, list);
  	AddDownloadFilesAction(menu, request, list);
 diff --git a/Telegram/SourceFiles/window/window_session_controller.h b/Telegram/SourceFiles/window/window_session_controller.h
-index 9ff7406eb2..2889697f8a 100644
+index b11ed93434..738171972e 100644
 --- a/Telegram/SourceFiles/window/window_session_controller.h
 +++ b/Telegram/SourceFiles/window/window_session_controller.h
 @@ -10,6 +10,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -101,7 +101,7 @@ index 9ff7406eb2..2889697f8a 100644
  #include "data/data_report.h"
  #include "dialogs/dialogs_key.h"
  #include "mtproto/sender.h"
-@@ -308,6 +310,15 @@ public:
+@@ -309,6 +311,15 @@ public:
  		Dialogs::Key inChat,
  		PeerData *searchFrom = nullptr);
  
