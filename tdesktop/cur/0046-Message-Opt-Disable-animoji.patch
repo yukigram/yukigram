@@ -26,7 +26,7 @@ index 00dcc9b1dc..ed5b400f59 100644
      yukigram/settings/icon_theme_symbolic.h
      yukigram/settings/mirrored.cpp
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index a2a41af440..0dd4e73611 100644
+index 50e9e45c58..c99328526b 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -44,6 +44,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -37,7 +37,7 @@ index a2a41af440..0dd4e73611 100644
  #include "ui/chat/chat_style.h"
  #include "ui/effects/glare.h"
  #include "ui/effects/path_shift_gradient.h"
-@@ -1570,7 +1571,7 @@ void Element::refreshMedia(Element *replacing) {
+@@ -1573,7 +1574,7 @@ void Element::refreshMedia(Element *replacing) {
  		const auto emoji = isolatedEmoji();
  		const auto emojiStickers = &history()->session().emojiStickersPack();
  		const auto skipPremiumEffect = false;

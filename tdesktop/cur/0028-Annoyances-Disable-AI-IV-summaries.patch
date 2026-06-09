@@ -8,16 +8,16 @@ Subject: [PATCH] (Annoyances) Disable AI IV summaries
  1 file changed, 1 insertion(+)
 
 diff --git a/changelog.txt b/changelog.txt
-index d0fa880b99..b77b575dcb 100644
+index 25ddabac92..4a1251ea6c 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -3,6 +3,7 @@
- - Upstream updated to 6.9.0
+ - Upstream updated to 6.9.1
  - Colorize peer type icon according to peer name color
  - Proper message id formatting in tooltip
 +- Temporarily restored AI summaries in Instant View
  
- 6.9 (09.06.26)
+ 6.9.1 (09.06.26)
  
 -- 
 2.53.0

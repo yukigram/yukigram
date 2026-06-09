@@ -69,8 +69,8 @@ index 0000000000..5e670380dc
 +    ghcr.io/telegramdesktop/tdesktop/centos_env@sha256:6335f0789a3fced0e245fdf88838336cc369e332528b3f629f250f8b10efe9b3 \
 +    "$@"
 
-base-commit: 72697fcc3c6aceb472655f4febdeaaf48b44fc57
-prerequisite-patch-id: ad6399ae5709787c5b23c637f71cd53a993e0a89
+base-commit: 1380c62819c18e8c458d517f1a526adb35d453d3
+prerequisite-patch-id: 00a948dbe0d5302b6fa1a354dbb254fca04e9ac5
 -- 
 2.53.0
 
