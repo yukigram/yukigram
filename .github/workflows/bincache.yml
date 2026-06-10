@@ -294,12 +294,16 @@ jobs:
           additional_sha512sums=$(sha512sum tdesktop/cur/*.patch)
           cp -r tdesktop pmaports/temp/yukigram/
 
+          # Remvove minizip patch
+          sed -i '/tdesktop-fix-minizip-includes.patch/d' pmaports/temp/yukigram/APKBUILD
+
           cat >> pmaports/temp/yukigram/APKBUILD << EOF
 
           pkgname=yukigram
           builddir="\${builddir/\$pkgver/__pkgver__}"
           pkgver=6.9.1 # Upstream version
           pkgdesc="Yukigram (Telegram Desktop fork) messaging app"
+          makedepends="\$makedepends minizip-dev zlib-dev"
           source="\${source/https:*-full.tar.gz/https://github.com/telegramdesktop/tdesktop/releases/download/v\$pkgver/tdesktop-\$pkgver-full.tar.gz}"
           builddir="\${builddir/__pkgver__/\$pkgver}"
           pkgver=$pkgver # Yukigram version
