@@ -4,21 +4,24 @@ Date: Tue, 12 May 2026 01:21:33 +0300
 Subject: [PATCH] (Annoyances) Disable AI IV summaries
 
 ---
- changelog.txt | 1 +
- 1 file changed, 1 insertion(+)
+ Telegram/SourceFiles/iv/iv_rich_page.cpp | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/changelog.txt b/changelog.txt
-index 25ddabac92..4a1251ea6c 100644
---- a/changelog.txt
-+++ b/changelog.txt
-@@ -3,6 +3,7 @@
- - Upstream updated to 6.9.1
- - Colorize peer type icon according to peer name color
- - Proper message id formatting in tooltip
-+- Temporarily restored AI summaries in Instant View
- 
- 6.9.1 (09.06.26)
- 
+diff --git a/Telegram/SourceFiles/iv/iv_rich_page.cpp b/Telegram/SourceFiles/iv/iv_rich_page.cpp
+index afaff04733..b7708d9061 100644
+--- a/Telegram/SourceFiles/iv/iv_rich_page.cpp
++++ b/Telegram/SourceFiles/iv/iv_rich_page.cpp
+@@ -1102,7 +1102,9 @@ void AppendBlock(
+ 		AdoptAnchor(&parsed.anchorId, &parsed.text);
+ 		parsed.caption = ParseRichText(data.vcaption(), context);
+ 		AdoptAnchor(&parsed.anchorId, &parsed.caption);
+-		result->push_back(std::move(parsed));
++		if (parsed.caption.text != TextWithEntities{"Cocoon AI Summary"}) {
++			result->push_back(std::move(parsed));
++		}
+ 	}, [&](const MTPDpageBlockBlockquoteBlocks &data) {
+ 		auto parsed = MakeBlock(BlockKind::Quote);
+ 		AppendBlocks(data.vblocks().v, &parsed.blocks, context);
 -- 
 2.53.0
 
