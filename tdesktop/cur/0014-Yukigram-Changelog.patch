@@ -8,11 +8,11 @@ Subject: [PATCH] (Yukigram) Changelog
  1 file changed, 301 insertions(+)
 
 diff --git a/changelog.txt b/changelog.txt
-index f3f5e1d399..25ddabac92 100644
+index f3f5e1d399..4159cb7b65 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,3 +1,9 @@
-+9999 wip (01.01.99)
++6.9.1.0 rc.1 (10.06.26)
 +
 +- Upstream updated to 6.9.1
 +- Colorize peer type icon according to peer name color
