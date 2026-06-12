@@ -3,16 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Wed, 20 May 2026 17:57:10 +0300
 Subject: [PATCH] (Yukigram) Metadata
 
----
- Telegram/SourceFiles/boxes/about_box.cpp      |  2 +-
- Telegram/SourceFiles/core/version.h           |  4 +--
- Telegram/SourceFiles/intro/intro_start.cpp    |  2 +-
- .../sections/settings_notifications.cpp       |  2 +-
- Telegram/SourceFiles/window/main_window.cpp   |  2 +-
- .../SourceFiles/window/window_main_menu.cpp   |  4 +--
- lib/xdg/io.github.yukigram.desktop            |  4 +--
- lib/xdg/io.github.yukigram.metainfo.xml       | 30 ++++++-------------
- 8 files changed, 19 insertions(+), 31 deletions(-)
 
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
 index 738ad20837..3a488ae04c 100644

@@ -3,18 +3,6 @@ From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Mon, 6 Apr 2026 14:52:44 +0300
 Subject: [PATCH] (Shortcut) Forward/Copy/Steal
 
----
- Telegram/SourceFiles/boxes/peer_list_box.h    |  9 +++++
- .../boxes/peer_list_controllers.cpp           |  2 +
- Telegram/SourceFiles/core/shortcuts.cpp       |  7 ++++
- Telegram/SourceFiles/core/shortcuts.h         |  4 ++
- .../history/history_inner_widget.cpp          | 35 +++++++++++++++++
- .../history/history_inner_widget.h            |  1 +
- .../SourceFiles/history/history_widget.cpp    |  4 +-
- Telegram/SourceFiles/history/history_widget.h |  2 +-
- .../SourceFiles/window/window_peer_menu.cpp   | 39 ++++++++++++++++---
- .../SourceFiles/window/window_peer_menu.h     |  9 +++--
- 10 files changed, 100 insertions(+), 12 deletions(-)
 
 diff --git a/Telegram/SourceFiles/boxes/peer_list_box.h b/Telegram/SourceFiles/boxes/peer_list_box.h
 index 0e32d2f3d5..d53b3f206a 100644

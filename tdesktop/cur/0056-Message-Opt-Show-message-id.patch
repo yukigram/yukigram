@@ -5,15 +5,6 @@ Subject: [PATCH] (Message)(Opt) Show message id
 
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
----
- .../history/view/history_view_bottom_info.cpp |  7 ++++-
- .../history/view/history_view_bottom_info.h   |  1 +
- .../history/view/history_view_element.cpp     |  6 ++++
- .../yukigram/settings/show_message_id.cpp     | 31 +++++++++++++++++++
- .../yukigram/settings/show_message_id.h       |  8 +++++
- 5 files changed, 52 insertions(+), 1 deletion(-)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/show_message_id.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/show_message_id.h
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 index be52733bad..951da676f8 100644

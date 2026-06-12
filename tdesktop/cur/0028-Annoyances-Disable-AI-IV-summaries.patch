@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Tue, 12 May 2026 01:21:33 +0300
 Subject: [PATCH] (Annoyances) Disable AI IV summaries
 
----
- Telegram/SourceFiles/iv/iv_rich_page.cpp | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/iv/iv_rich_page.cpp b/Telegram/SourceFiles/iv/iv_rich_page.cpp
 index a8355d3c3e..b19db96714 100644

@@ -3,14 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Thu, 4 Jun 2026 01:31:03 +0000
 Subject: [PATCH] (Style)(Opt) Sticker size
 
----
- .../history/view/media/history_view_sticker.cpp |  1 +
- Telegram/SourceFiles/ui/chat/chat.style         |  2 +-
- .../yukigram/settings/sticker_size.cpp          | 17 +++++++++++++++++
- .../yukigram/settings/sticker_size.h            |  5 +++++
- 4 files changed, 24 insertions(+), 1 deletion(-)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/sticker_size.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/sticker_size.h
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp b/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp
 index 4ef4cc7be1..67c31f4874 100644

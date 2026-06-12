@@ -3,14 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Wed, 3 Jun 2026 16:56:56 +0000
 Subject: [PATCH] (Style)(Opt) Unround messages
 
----
- .../history/view/media/history_view_gif.cpp         | 11 +++++++++++
- .../SourceFiles/media/player/media_player_float.cpp |  7 +++++++
- .../yukigram/settings/unround_messages.cpp          | 13 +++++++++++++
- .../yukigram/settings/unround_messages.h            |  5 +++++
- 4 files changed, 36 insertions(+)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/unround_messages.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/unround_messages.h
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 index 039041c51b..d1b8efbb3a 100644

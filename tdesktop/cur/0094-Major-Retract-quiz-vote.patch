@@ -3,10 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Thu, 28 May 2026 08:41:15 +0000
 Subject: [PATCH] (Major) Retract quiz vote
 
----
- .../SourceFiles/history/view/history_view_context_menu.cpp     | 1 -
- .../history/view/media/menu/history_view_poll_menu.cpp         | 3 +--
- 2 files changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
 index d2ce809ab8..8f5a6f889c 100644

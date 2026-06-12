@@ -3,10 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Sun, 24 May 2026 15:47:08 +0300
 Subject: [PATCH] (Fix) Appstream changelog
 
----
- Telegram/build/changelog2appstream.py             | 2 +-
- Telegram/cmake/generate_appstream_changelog.cmake | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Telegram/build/changelog2appstream.py b/Telegram/build/changelog2appstream.py
 index edf349aba6..0da91c7915 100755

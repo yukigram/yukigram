@@ -4,13 +4,6 @@ Date: Mon, 6 Apr 2026 02:29:13 +0300
 Subject: [PATCH] (Style)(Opt) Custom emoji size
 
 WIP
----
- .../history/view/media/history_view_sticker.cpp |  3 ++-
- .../yukigram/settings/custom_emoji_size.cpp     | 17 +++++++++++++++++
- .../yukigram/settings/custom_emoji_size.h       |  5 +++++
- 3 files changed, 24 insertions(+), 1 deletion(-)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/custom_emoji_size.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/custom_emoji_size.h
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp b/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp
 index 67c31f4874..7075a61cfa 100644

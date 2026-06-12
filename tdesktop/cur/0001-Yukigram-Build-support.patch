@@ -3,17 +3,6 @@ From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Thu, 16 Apr 2026 20:50:31 +0300
 Subject: [PATCH] (Yukigram) Build support
 
----
- Telegram/CMakeLists.txt                     |  3 +++
- Telegram/build/docker/centos_env/install.sh |  5 +++++
- build.sh                                    |  6 ++++++
- install.sh                                  |  3 +++
- run-in-docker.sh                            | 16 ++++++++++++++++
- 5 files changed, 33 insertions(+)
- create mode 100755 Telegram/build/docker/centos_env/install.sh
- create mode 100755 build.sh
- create mode 100755 install.sh
- create mode 100755 run-in-docker.sh
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
 index 01291b190c..0465b39914 100644

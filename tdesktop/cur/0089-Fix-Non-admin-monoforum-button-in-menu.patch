@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Wed, 27 May 2026 20:18:10 +0000
 Subject: [PATCH] (Fix) Non-admin monoforum button in menu
 
----
- Telegram/SourceFiles/window/window_peer_menu.cpp | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
 index 8291fb629c..efeb06e983 100644

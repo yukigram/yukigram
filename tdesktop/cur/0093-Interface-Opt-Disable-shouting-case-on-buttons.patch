@@ -3,13 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Thu, 28 May 2026 07:47:11 +0000
 Subject: [PATCH] (Interface)(Opt) Disable shouting-case on buttons
 
----
- .../yukigram/settings/no_shout_buttons.cpp     | 18 ++++++++++++++++++
- .../yukigram/settings/no_shout_buttons.h       |  5 +++++
- Telegram/lib_ui/ui/widgets/buttons.cpp         |  5 ++++-
- 3 files changed, 27 insertions(+), 1 deletion(-)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/no_shout_buttons.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/no_shout_buttons.h
 
 diff --git a/Telegram/SourceFiles/yukigram/settings/no_shout_buttons.cpp b/Telegram/SourceFiles/yukigram/settings/no_shout_buttons.cpp
 new file mode 100644

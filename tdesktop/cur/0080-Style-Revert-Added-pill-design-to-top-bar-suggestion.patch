@@ -4,9 +4,6 @@ Date: Thu, 21 May 2026 19:53:27 +0300
 Subject: [PATCH] (Style) Revert "Added pill design to top bar suggestion."
 
 This reverts commit 5a7621eef9c201b84f8c7a178d17a59e645f426a.
----
- .../ui/dialogs_top_bar_suggestion_content.cpp | 122 ++++--------------
- 1 file changed, 28 insertions(+), 94 deletions(-)
 
 diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_top_bar_suggestion_content.cpp b/Telegram/SourceFiles/dialogs/ui/dialogs_top_bar_suggestion_content.cpp
 index 4513752cb0..6e7021ab28 100644

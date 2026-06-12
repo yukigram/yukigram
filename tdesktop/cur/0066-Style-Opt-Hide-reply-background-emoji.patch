@@ -3,13 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Tue, 28 Apr 2026 12:57:40 +0300
 Subject: [PATCH] (Style)(Opt) Hide reply background emoji
 
----
- .../SourceFiles/history/view/history_view_reply.cpp |  4 ++++
- .../settings/hide_reply_background_emoji.cpp        | 13 +++++++++++++
- .../yukigram/settings/hide_reply_background_emoji.h |  5 +++++
- 3 files changed, 22 insertions(+)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_reply_background_emoji.h
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_reply.cpp b/Telegram/SourceFiles/history/view/history_view_reply.cpp
 index 6ddb53ad9d..9fbe455fc5 100644

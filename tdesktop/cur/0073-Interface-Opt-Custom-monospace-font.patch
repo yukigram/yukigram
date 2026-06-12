@@ -3,13 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Wed, 13 May 2026 13:14:44 +0300
 Subject: [PATCH] (Interface)(Opt) Custom monospace font
 
----
- Telegram/SourceFiles/core/launcher.cpp        |  5 ++
- .../settings/sections/settings_chat.cpp       | 75 ++++++++++++++++++-
- .../SourceFiles/ui/boxes/choose_font_box.cpp  | 11 ++-
- .../SourceFiles/ui/boxes/choose_font_box.h    |  3 +-
- Telegram/lib_ui/ui/style/style_core_font.cpp  | 18 ++++-
- 5 files changed, 107 insertions(+), 5 deletions(-)
 
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
 index 1267f6f7b3..670ba47ed6 100644

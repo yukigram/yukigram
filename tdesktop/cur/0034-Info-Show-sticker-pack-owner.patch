@@ -5,9 +5,6 @@ Subject: [PATCH] (Info) Show sticker pack owner
 
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
----
- .../SourceFiles/boxes/sticker_set_box.cpp     | 22 +++++++++++++++++++
- 1 file changed, 22 insertions(+)
 
 diff --git a/Telegram/SourceFiles/boxes/sticker_set_box.cpp b/Telegram/SourceFiles/boxes/sticker_set_box.cpp
 index 7200f6431b..8934340ec1 100644

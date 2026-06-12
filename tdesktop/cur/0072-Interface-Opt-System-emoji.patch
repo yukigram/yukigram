@@ -3,13 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Tue, 12 May 2026 12:19:58 +0300
 Subject: [PATCH] (Interface)(Opt) System emoji
 
----
- .../yukigram/settings/system_emoji.cpp         | 18 ++++++++++++++++++
- .../yukigram/settings/system_emoji.h           |  5 +++++
- Telegram/lib_ui/ui/emoji_config.cpp            | 12 ++++++++++++
- 3 files changed, 35 insertions(+)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/system_emoji.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/system_emoji.h
 
 diff --git a/Telegram/SourceFiles/yukigram/settings/system_emoji.cpp b/Telegram/SourceFiles/yukigram/settings/system_emoji.cpp
 new file mode 100644

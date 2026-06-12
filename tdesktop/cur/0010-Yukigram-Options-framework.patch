@@ -3,18 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Sun, 26 Apr 2026 22:07:47 +0300
 Subject: [PATCH] (Yukigram) Options framework
 
----
- Telegram/SourceFiles/core/launcher.cpp        |   3 +
- .../settings/settings_experimental.cpp        |   2 +
- Telegram/SourceFiles/yukigram/options.cpp     | 118 ++++++++++++++++++
- Telegram/SourceFiles/yukigram/options.h       |  44 +++++++
- .../SourceFiles/yukigram/options_database.h   |  45 +++++++
- .../SourceFiles/yukigram/options_runtime.h    |  10 ++
- 6 files changed, 222 insertions(+)
- create mode 100644 Telegram/SourceFiles/yukigram/options.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/options.h
- create mode 100644 Telegram/SourceFiles/yukigram/options_database.h
- create mode 100644 Telegram/SourceFiles/yukigram/options_runtime.h
 
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
 index 39ad62968d..1267f6f7b3 100644

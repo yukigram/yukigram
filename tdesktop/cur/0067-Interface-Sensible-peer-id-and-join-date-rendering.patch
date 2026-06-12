@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Wed, 29 Apr 2026 10:01:56 +0300
 Subject: [PATCH] (Interface) Sensible peer id and join date rendering
 
----
- .../info/profile/info_profile_actions.cpp     | 121 ++++++++----------
- 1 file changed, 52 insertions(+), 69 deletions(-)
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 index f172f6c067..cd9a7144e6 100644

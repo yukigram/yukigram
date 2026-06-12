@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Thu, 28 May 2026 07:49:00 +0000
 Subject: [PATCH] (Style) Fix button rounding in history top bar
 
----
- .../SourceFiles/history/view/history_view_top_bar_widget.cpp    | 2 ++
- 1 file changed, 2 insertions(+)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 index c4cac74921..532665e177 100644

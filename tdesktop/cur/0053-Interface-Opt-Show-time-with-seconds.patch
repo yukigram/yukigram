@@ -5,24 +5,6 @@ Subject: [PATCH] (Interface)(Opt) Show time with seconds
 
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
----
- Telegram/SourceFiles/api/api_who_reacted.cpp  | 19 ++++--------
- .../SourceFiles/data/data_peer_values.cpp     | 10 +++----
- .../history/history_inner_widget.cpp          |  2 +-
- Telegram/SourceFiles/history/history_item.cpp |  4 +--
- .../history/view/history_view_bottom_info.cpp |  2 +-
- .../history/view/history_view_list_widget.cpp |  2 +-
- .../history/view/media/history_view_call.cpp  |  2 +-
- .../polls/info_polls_results_inner_widget.cpp |  2 +-
- Telegram/SourceFiles/lang/lang_keys.cpp       | 29 +++++++++++++++++--
- Telegram/SourceFiles/lang/lang_keys.h         |  3 ++
- .../controls/who_reacted_context_action.cpp   |  2 +-
- .../SourceFiles/ui/text/format_values.cpp     | 21 ++++----------
- .../yukigram/settings/time_with_seconds.cpp   | 14 +++++++++
- .../yukigram/settings/time_with_seconds.h     |  5 ++++
- 14 files changed, 73 insertions(+), 44 deletions(-)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/time_with_seconds.h
 
 diff --git a/Telegram/SourceFiles/api/api_who_reacted.cpp b/Telegram/SourceFiles/api/api_who_reacted.cpp
 index 5cc833ec41..020c95b5e9 100644

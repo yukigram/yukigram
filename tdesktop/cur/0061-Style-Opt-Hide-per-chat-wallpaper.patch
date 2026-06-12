@@ -3,14 +3,6 @@ From: Yuki Sireneva <yuki.utk8g@gmail.com>
 Date: Fri, 17 Apr 2026 03:21:22 +0300
 Subject: [PATCH] (Style)(Opt) Hide per-chat wallpaper
 
----
- Telegram/SourceFiles/data/data_channel.cpp          |  3 ++-
- Telegram/SourceFiles/data/data_user.cpp             |  3 ++-
- .../yukigram/settings/hide_wall_paper.cpp           | 13 +++++++++++++
- .../SourceFiles/yukigram/settings/hide_wall_paper.h |  5 +++++
- 4 files changed, 22 insertions(+), 2 deletions(-)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_wall_paper.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_wall_paper.h
 
 diff --git a/Telegram/SourceFiles/data/data_channel.cpp b/Telegram/SourceFiles/data/data_channel.cpp
 index 8687dadc9f..05646f4af9 100644

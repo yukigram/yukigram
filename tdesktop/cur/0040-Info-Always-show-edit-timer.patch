@@ -5,9 +5,6 @@ Subject: [PATCH] (Info) Always show edit timer
 
 This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
----
- Telegram/SourceFiles/history/history_widget.cpp | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
 index 34bbee7322..e8b9b0135d 100644

@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Thu, 14 May 2026 23:49:06 +0300
 Subject: [PATCH] (Minor) Additional emoji aliases
 
----
- .../lib_ui/emoji_suggestions/emoji_autocomplete.json   | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/Telegram/lib_ui/emoji_suggestions/emoji_autocomplete.json b/Telegram/lib_ui/emoji_suggestions/emoji_autocomplete.json
 index 40efc5f713..b44d468f4f 100644

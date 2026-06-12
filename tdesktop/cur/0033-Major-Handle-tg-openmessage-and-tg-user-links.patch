@@ -5,9 +5,6 @@ Subject: [PATCH] (Major) Handle tg://openmessage and tg://user links
 
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
----
- .../SourceFiles/core/local_url_handlers.cpp   | 61 +++++++++++++++++++
- 1 file changed, 61 insertions(+)
 
 diff --git a/Telegram/SourceFiles/core/local_url_handlers.cpp b/Telegram/SourceFiles/core/local_url_handlers.cpp
 index b7bafecd50..ce5597aecc 100644

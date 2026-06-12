@@ -5,11 +5,6 @@ Subject: [PATCH] (Info) More info in filtered chats
 
 This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
----
- .../filters/edit_filter_chats_preview.cpp     | 73 +++++++++++++++++--
- Telegram/SourceFiles/window/window.style      |  5 ++
- Telegram/lib_ui/ui/widgets/widgets.style      |  2 +
- 3 files changed, 74 insertions(+), 6 deletions(-)
 
 diff --git a/Telegram/SourceFiles/boxes/filters/edit_filter_chats_preview.cpp b/Telegram/SourceFiles/boxes/filters/edit_filter_chats_preview.cpp
 index 193866516a..f88c72dc6c 100644

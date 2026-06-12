@@ -3,11 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Thu, 28 May 2026 22:20:22 +0000
 Subject: [PATCH] (Translations) Russian
 
----
- Telegram/Resources/langs/yukigram/ru.json    | 171 +++++++++++++++++++
- Telegram/Resources/qrc/telegram/yukigram.qrc |   1 +
- 2 files changed, 172 insertions(+)
- create mode 100644 Telegram/Resources/langs/yukigram/ru.json
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644

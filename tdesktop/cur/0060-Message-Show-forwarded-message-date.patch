@@ -5,9 +5,6 @@ Subject: [PATCH] (Message) Show forwarded message date
 
 This patch is adapted from Forkgram.
 Original author: 23rd <23rd@vivaldi.net>
----
- Telegram/SourceFiles/history/history_item_components.cpp | 4 ++++
- 1 file changed, 4 insertions(+)
 
 diff --git a/Telegram/SourceFiles/history/history_item_components.cpp b/Telegram/SourceFiles/history/history_item_components.cpp
 index d1100d7ee4..c412f571ab 100644

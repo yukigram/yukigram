@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Thu, 28 May 2026 08:03:30 +0000
 Subject: [PATCH] (Style) Fix button rounding in bot keyboard
 
----
- Telegram/SourceFiles/chat_helpers/bot_keyboard.cpp | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/Telegram/SourceFiles/chat_helpers/bot_keyboard.cpp b/Telegram/SourceFiles/chat_helpers/bot_keyboard.cpp
 index ff8ac3ce0e..ba6f7db0b2 100644

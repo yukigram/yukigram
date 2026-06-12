@@ -5,17 +5,6 @@ Subject: [PATCH] (Chat) Admin list button
 
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
----
- .../info/edit/group_manage_admins_topbar.svg  |  7 ++++
- .../view/history_view_top_bar_widget.cpp      | 37 +++++++++++++++++++
- .../view/history_view_top_bar_widget.h        |  1 +
- Telegram/SourceFiles/info/info.style          |  4 ++
- .../yukigram/settings/quick_admin_list.cpp    | 13 +++++++
- .../yukigram/settings/quick_admin_list.h      |  5 +++
- 6 files changed, 67 insertions(+)
- create mode 100644 Telegram/Resources/icons/info/edit/group_manage_admins_topbar.svg
- create mode 100644 Telegram/SourceFiles/yukigram/settings/quick_admin_list.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/quick_admin_list.h
 
 diff --git a/Telegram/Resources/icons/info/edit/group_manage_admins_topbar.svg b/Telegram/Resources/icons/info/edit/group_manage_admins_topbar.svg
 new file mode 100644

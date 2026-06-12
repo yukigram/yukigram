@@ -3,14 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Wed, 27 May 2026 19:11:30 +0000
 Subject: [PATCH] (Chat)(Opt) Hide bottom button bar
 
----
- Telegram/SourceFiles/history/history_widget.cpp   | 15 +++++++++++++++
- .../history/view/history_view_chat_section.cpp    |  5 +++++
- .../yukigram/settings/hide_bottom_bar.cpp         | 13 +++++++++++++
- .../yukigram/settings/hide_bottom_bar.h           |  5 +++++
- 4 files changed, 38 insertions(+)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.h
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
 index 9ce14018ba..e71c6ac9ee 100644

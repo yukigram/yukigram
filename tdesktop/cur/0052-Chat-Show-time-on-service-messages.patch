@@ -5,9 +5,6 @@ Subject: [PATCH] (Chat) Show time on service messages
 
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
----
- Telegram/SourceFiles/history/history_item.cpp | 8 ++++++++
- 1 file changed, 8 insertions(+)
 
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
 index 1dd1fa68b4..15c2ee4bf8 100644

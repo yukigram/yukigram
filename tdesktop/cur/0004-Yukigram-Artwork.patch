@@ -3,14 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Wed, 20 May 2026 17:57:39 +0300
 Subject: [PATCH] (Yukigram) Artwork
 
----
- Telegram/CMakeLists.txt                           | 15 +--------------
- Telegram/Resources/art/yukigram.svg               |  6 ++++++
- Telegram/Resources/qrc/telegram/telegram.qrc      |  2 +-
- .../SourceFiles/platform/linux/specific_linux.cpp |  2 +-
- Telegram/SourceFiles/window/main_window.cpp       |  2 +-
- 5 files changed, 10 insertions(+), 17 deletions(-)
- create mode 100644 Telegram/Resources/art/yukigram.svg
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
 index 898820b6f9..992356b642 100644

@@ -4,9 +4,6 @@ Date: Wed, 3 Jun 2026 04:15:34 +0000
 Subject: [PATCH] (Shortcut) Mention by name with right-click
 
 Vanilla way (Ctrl + Left click) still works
----
- Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp b/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp
 index 9497d87bf3..494b93a7d5 100644

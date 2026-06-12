@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Wed, 20 May 2026 17:58:33 +0300
 Subject: [PATCH] (Yukigram) Keywords
 
----
- lib/xdg/io.github.yukigram.desktop | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/xdg/io.github.yukigram.desktop b/lib/xdg/io.github.yukigram.desktop
 index 7e77a820fa..b9926b14b8 100644

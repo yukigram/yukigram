@@ -5,9 +5,6 @@ Subject: [PATCH] (Major) Mention users by id
 
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
----
- .../chat_helpers/message_field.cpp            | 25 ++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/chat_helpers/message_field.cpp b/Telegram/SourceFiles/chat_helpers/message_field.cpp
 index fa34ee3e96..1332d49d6d 100644

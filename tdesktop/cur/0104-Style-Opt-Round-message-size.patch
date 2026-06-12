@@ -3,13 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Thu, 4 Jun 2026 03:00:06 +0000
 Subject: [PATCH] (Style)(Opt) Round message size
 
----
- .../history/view/media/history_view_gif.cpp     |  3 ++-
- .../yukigram/settings/round_size.cpp            | 17 +++++++++++++++++
- .../SourceFiles/yukigram/settings/round_size.h  |  5 +++++
- 3 files changed, 24 insertions(+), 1 deletion(-)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/round_size.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/round_size.h
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 index d1b8efbb3a..9ad62b54f9 100644

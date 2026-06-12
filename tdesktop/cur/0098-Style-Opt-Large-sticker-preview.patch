@@ -3,13 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Mon, 1 Jun 2026 15:17:22 +0000
 Subject: [PATCH] (Style)(Opt) Large sticker preview
 
----
- .../SourceFiles/window/window_media_preview.cpp     |  4 ++++
- .../yukigram/settings/large_sticker_preview.cpp     | 13 +++++++++++++
- .../yukigram/settings/large_sticker_preview.h       |  5 +++++
- 3 files changed, 22 insertions(+)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/large_sticker_preview.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/large_sticker_preview.h
 
 diff --git a/Telegram/SourceFiles/window/window_media_preview.cpp b/Telegram/SourceFiles/window/window_media_preview.cpp
 index e81ece340a..8775e353e8 100644

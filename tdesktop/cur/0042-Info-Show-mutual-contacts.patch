@@ -3,10 +3,6 @@ From: Lunya <241520024+lunya-miaou@users.noreply.github.com>
 Date: Sun, 3 May 2026 12:59:23 +0000
 Subject: [PATCH] (Info) Show mutual contacts
 
----
- .../boxes/peer_list_controllers.cpp           | 38 ++++++++++++++++++-
- .../SourceFiles/boxes/peer_list_controllers.h | 20 ++++++++++
- 2 files changed, 57 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 index 161f644fd7..0bf27cff07 100644

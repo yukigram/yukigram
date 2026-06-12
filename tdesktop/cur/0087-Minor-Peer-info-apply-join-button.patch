@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Wed, 27 May 2026 19:21:28 +0000
 Subject: [PATCH] (Minor) Peer info apply join button
 
----
- Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp | 2 ++
- 1 file changed, 2 insertions(+)
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
 index 617f5c820f..6e8b0bd948 100644

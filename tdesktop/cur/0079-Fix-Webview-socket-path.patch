@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Thu, 21 May 2026 05:40:28 +0300
 Subject: [PATCH] (Fix) Webview socket path
 
----
- Telegram/SourceFiles/platform/linux/specific_linux.cpp | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/platform/linux/specific_linux.cpp b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
 index 0e8c317294..82f70152c1 100644

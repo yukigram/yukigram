@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Sat, 30 May 2026 20:56:58 +0000
 Subject: [PATCH] (Translations) English
 
----
- Telegram/Resources/langs/yukigram/en.json | 162 ++++++++++++++++++++++
- 1 file changed, 162 insertions(+)
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 index a54f5182fa..cfc5343c43 100644

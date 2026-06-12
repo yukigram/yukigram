@@ -5,12 +5,6 @@ Subject: [PATCH] (Chat) Show messages from user
 
 This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
----
- .../boxes/peers/edit_participants_box.cpp     |  3 +++
- .../history/history_inner_widget.cpp          | 11 ++++++++++
- .../view/history_view_context_menu.cpp        | 22 +++++++++++++++++++
- .../window/window_session_controller.h        | 11 ++++++++++
- 4 files changed, 47 insertions(+)
 
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
 index c46947f28c..e0ef6eb9a1 100644

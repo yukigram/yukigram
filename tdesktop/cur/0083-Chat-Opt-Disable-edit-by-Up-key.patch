@@ -5,14 +5,6 @@ Subject: [PATCH] (Chat)(Opt) Disable edit by Up key
 
 This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
----
- Telegram/SourceFiles/history/history_widget.cpp     |  2 ++
- .../view/controls/history_view_compose_controls.cpp |  3 ++-
- .../yukigram/settings/disable_up_edit.cpp           | 13 +++++++++++++
- .../SourceFiles/yukigram/settings/disable_up_edit.h |  5 +++++
- 4 files changed, 22 insertions(+), 1 deletion(-)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/disable_up_edit.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/disable_up_edit.h
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
 index 32625856eb..9ce14018ba 100644

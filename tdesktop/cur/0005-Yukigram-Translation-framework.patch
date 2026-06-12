@@ -5,17 +5,6 @@ Subject: [PATCH] (Yukigram) Translation framework
 
 This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
----
- Telegram/Resources/langs/yukigram/en.json    |   3 +
- Telegram/Resources/qrc/telegram/yukigram.qrc |   3 +
- Telegram/SourceFiles/core/application.cpp    |   2 +
- Telegram/SourceFiles/lang/lang_instance.cpp  |   3 +
- Telegram/SourceFiles/yukigram/lang.cpp       | 168 +++++++++++++++++++
- Telegram/SourceFiles/yukigram/lang.h         | 118 +++++++++++++
- 6 files changed, 297 insertions(+)
- create mode 100644 Telegram/Resources/langs/yukigram/en.json
- create mode 100644 Telegram/SourceFiles/yukigram/lang.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/lang.h
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 new file mode 100644

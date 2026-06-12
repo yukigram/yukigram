@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Mon, 1 Jun 2026 14:14:56 +0000
 Subject: [PATCH] (Info) Deleted reply ID
 
----
- Telegram/SourceFiles/history/view/history_view_reply.cpp | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_reply.cpp b/Telegram/SourceFiles/history/view/history_view_reply.cpp
 index 9fbe455fc5..abc4371b78 100644

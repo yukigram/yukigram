@@ -3,16 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Wed, 27 May 2026 21:29:45 +0000
 Subject: [PATCH] (Style)(Opt) Old-style spoilers
 
----
- .../history/view/media/history_view_media.cpp | 14 +++++++++++++
- .../yukigram/settings/old_style_spoilers.cpp  | 18 +++++++++++++++++
- .../yukigram/settings/old_style_spoilers.h    |  5 +++++
- Telegram/lib_ui/ui/effects/spoiler_mess.cpp   | 20 +++++++++++++++++++
- Telegram/lib_ui/ui/text/text_renderer.cpp     |  6 +++++-
- .../ui/widgets/fields/custom_field_object.cpp |  4 +++-
- 6 files changed, 65 insertions(+), 2 deletions(-)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/old_style_spoilers.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/old_style_spoilers.h
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_media.cpp b/Telegram/SourceFiles/history/view/media/history_view_media.cpp
 index a116d6ac20..63f2eb2d37 100644

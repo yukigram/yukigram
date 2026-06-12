@@ -5,9 +5,6 @@ Subject: [PATCH] (Style) Increase maxSignatureSize
 
 This patch is adapted from 64Gram.
 Original author: Js0n <29531167+JasonKhew96@users.noreply.github.com>
----
- Telegram/SourceFiles/ui/chat/chat.style | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
 index 915603db74..a6849c6da3 100644

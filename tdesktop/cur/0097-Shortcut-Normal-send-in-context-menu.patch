@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Mon, 1 Jun 2026 15:07:23 +0000
 Subject: [PATCH] (Shortcut) Normal send in context menu
 
----
- Telegram/SourceFiles/menu/menu_send.cpp | 1 +
- 1 file changed, 1 insertion(+)
 
 diff --git a/Telegram/SourceFiles/menu/menu_send.cpp b/Telegram/SourceFiles/menu/menu_send.cpp
 index 1e2bb9c495..f5f80464e8 100644

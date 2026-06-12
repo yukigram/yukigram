@@ -3,15 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Sun, 24 May 2026 16:33:21 +0300
 Subject: [PATCH] (Major) Split Stickers and GIFs chat permission toggle
 
----
- Telegram/Resources/langs/lang.strings         |  4 +++
- .../boxes/peers/edit_peer_permissions_box.cpp | 29 ++++---------------
- .../admin_log/history_admin_log_item.cpp      |  8 ++---
- .../SourceFiles/history/history_widget.cpp    |  2 +-
- .../view/history_view_chat_section.cpp        |  3 +-
- .../view/history_view_scheduled_section.cpp   |  2 +-
- .../media/stories/media_stories_reply.cpp     |  2 +-
- 7 files changed, 18 insertions(+), 32 deletions(-)
 
 diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
 index b82be2bac1..9da2157633 100644

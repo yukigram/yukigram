@@ -3,11 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Thu, 28 May 2026 22:02:57 +0000
 Subject: [PATCH] (Yukigram) Branding
 
----
- Telegram/SourceFiles/boxes/about_box.cpp           | 14 ++++++--------
- .../SourceFiles/history/history_item_helpers.cpp   | 10 ++++------
- Telegram/SourceFiles/intro/intro_start.cpp         |  3 ++-
- 3 files changed, 12 insertions(+), 15 deletions(-)
 
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
 index 3a488ae04c..cb3f6da6c3 100644

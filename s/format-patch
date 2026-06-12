@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -x
-git format-patch --zero-commit --no-signature --no-numbered -o ../yukigram/tdesktop/cur --base HEAD^{/#flatten}{^,}
+git format-patch --zero-commit --no-signature --no-numbered --no-stat -o ../yukigram/tdesktop/cur --base HEAD^{/#flatten}{^,}
 # `--zero-commit` is needed
 # to make first line of `.patch` files
 # (the `From ... Mon Sep 17 00:00:00 2001` line)
@@ -13,6 +13,9 @@ git format-patch --zero-commit --no-signature --no-numbered -o ../yukigram/tdesk
 # become `[PATCH]`,
 # which allows patches to be
 # more stable across reorders and patch additions.
+#
+# `--no-stat` suppresses diffstat
+# with total line changes and per-file change breakdown
 #
 # `--base HEAD^{/#flatten}{^,}` sets
 # - base commit to `HEAD^{/#flatten}^`,

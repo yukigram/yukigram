@@ -13,14 +13,6 @@ State mapping:
 * everything else -> Paused
 
 Co-Authored-By: Sonya Sireneva <sleirsgoevy@gmail.com>
----
- Telegram/SourceFiles/calls/calls_instance.cpp | 90 ++++++++++++++++++-
- Telegram/SourceFiles/calls/calls_instance.h   |  7 ++
- .../yukigram/settings/mpris_call_hangup.cpp   | 14 +++
- .../yukigram/settings/mpris_call_hangup.h     |  5 ++
- 4 files changed, 115 insertions(+), 1 deletion(-)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/mpris_call_hangup.h
 
 diff --git a/Telegram/SourceFiles/calls/calls_instance.cpp b/Telegram/SourceFiles/calls/calls_instance.cpp
 index 42c7806086..915464608f 100644

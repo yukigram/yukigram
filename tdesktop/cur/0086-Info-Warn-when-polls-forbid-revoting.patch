@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Wed, 27 May 2026 16:15:06 +0000
 Subject: [PATCH] (Info) Warn when polls forbid revoting
 
----
- .../history/view/media/history_view_poll.cpp  | 43 +++++++++++++++----
- 1 file changed, 35 insertions(+), 8 deletions(-)
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_poll.cpp b/Telegram/SourceFiles/history/view/media/history_view_poll.cpp
 index 5ac8d8b9b3..f0afa8dd2d 100644

@@ -5,14 +5,6 @@ Subject: [PATCH] (Message)(Opt) Peer type icon in history
 
 This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
----
- .../history/view/history_view_message.cpp     | 49 ++++++++++++++++++-
- Telegram/SourceFiles/ui/chat/chat.style       | 11 +++++
- .../settings/history_peer_type_icons.cpp      | 13 +++++
- .../settings/history_peer_type_icons.h        |  5 ++
- 4 files changed, 77 insertions(+), 1 deletion(-)
- create mode 100644 Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.cpp
- create mode 100644 Telegram/SourceFiles/yukigram/settings/history_peer_type_icons.h
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
 index b0f93559dc..3270cde4cb 100644

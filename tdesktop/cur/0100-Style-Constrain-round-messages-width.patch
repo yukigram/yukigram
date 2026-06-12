@@ -3,9 +3,6 @@ From: Yuki Sireneva <sylfn@disroot.org>
 Date: Wed, 3 Jun 2026 18:36:45 +0000
 Subject: [PATCH] (Style) Constrain round messages width
 
----
- .../SourceFiles/history/view/media/history_view_gif.cpp     | 6 ++++++
- 1 file changed, 6 insertions(+)
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 index 00529180dc..039041c51b 100644
