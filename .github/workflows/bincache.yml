@@ -297,6 +297,9 @@ jobs:
           # Remvove minizip patch
           sed -i '/tdesktop-fix-minizip-includes.patch/d' pmaports/temp/yukigram/APKBUILD
 
+          # Remove libdispatch (replaced with in-tree TooManyCooks)
+          sed -i '/libdispatch-dev/d' pmaports/temp/yukigram/APKBUILD
+
           cat >> pmaports/temp/yukigram/APKBUILD << EOF
 
           pkgname=yukigram

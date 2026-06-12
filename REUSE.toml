@@ -89,6 +89,7 @@ path = [
     "tdesktop/cur/*-Style-Opt-Sticker-size.patch",
     "tdesktop/cur/*-Style-Opt-Custom-emoji-size.patch",
     "tdesktop/cur/*-Style-Opt-Round-message-size.patch",
+    "tdesktop/cur/*-Fix-Always-use-bundled-TooManyCooks.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors <https://github.com/yukigram/yukigram>"

@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Fri, 12 Jun 2026 09:58:27 +0000
+Subject: [PATCH] (Fix) Always use bundled TooManyCooks
+
+
+diff --git a/cmake/external/tmc/CMakeLists.txt b/cmake/external/tmc/CMakeLists.txt
+index 45b310ad28..b70d0f8ac3 100644
+--- a/cmake/external/tmc/CMakeLists.txt
++++ b/cmake/external/tmc/CMakeLists.txt
+@@ -12,14 +12,6 @@ INTERFACE
+     TMC_WORK_ITEM=FUNCORO
+ )
+ 
+-if (DESKTOP_APP_USE_PACKAGED)
+-    find_package(TooManyCooks QUIET)
+-    if (TooManyCooks_FOUND)
+-        target_link_libraries(external_tmc INTERFACE TooManyCooks::TooManyCooks)
+-        return()
+-    endif()
+-endif()
+-
+ target_include_directories(external_tmc SYSTEM
+ INTERFACE
+     ${third_party_loc}/TooManyCooks/include

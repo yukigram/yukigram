@@ -55,6 +55,10 @@ These are placed under `(Yukigram)` category.
     and not per-invocation)
 - Allow opening channel direct messages from kebab menus
     even if user is not an admin
+- Always use bundled TooManyCooks
+    (same situation as with libada,
+    no distro packages it yet,
+    and breaking bulids is not fun)
 
 These are placed under `(Fix)` category.
 
