@@ -12,8 +12,8 @@ telegram-desktop.overrideAttrs (final: prev: {
     pname = "yukigram-unwrapped";
     version = "6.9.2.0+wip";
     src = prev.src.overrideAttrs {
-      rev = "v6.9.2";
-      hash = "sha256-VBIo9cKuRxKOiPmlI2pf2zNtwNbMKERrx1l1D4KVol8=";
+      rev = "v6.9.3";
+      hash = "sha256-QCGtESg+38lHWCFcsevHdc0kQ7LKJQmJjUJWszphah8=";
     };
     cmakeFlags = prev.cmakeFlags ++ [
       (lib.cmakeBool "DEVEL" true)
