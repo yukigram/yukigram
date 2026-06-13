@@ -52,7 +52,7 @@ index 0000000000..441c32a088
 +./run-in-docker.sh env DESTDIR="${DESTDIR:-.}" /usr/src/tdesktop/Telegram/build/docker/centos_env/install.sh "$@"
 diff --git a/run-in-docker.sh b/run-in-docker.sh
 new file mode 100755
-index 0000000000..4fb2fe85ab
+index 0000000000..a3afc6b680
 --- /dev/null
 +++ b/run-in-docker.sh
 @@ -0,0 +1,16 @@
@@ -70,8 +70,8 @@ index 0000000000..4fb2fe85ab
 +    -u $USERFLAGS \
 +    -v "$PWD:/usr/src/tdesktop" \
 +    -e CONFIG=${CONFIG:-Release} \
-+    ghcr.io/telegramdesktop/tdesktop/centos_env@sha256:33fb5167695624960b4113e8ddf3fa0580d8cc5fb29e7e87285031063644654c \
++    ghcr.io/telegramdesktop/tdesktop/centos_env@sha256:b582224ed1f9ced75e5a7b3cb4d9f2fd40397e0a476ddec925929d2558348ccc \
 +    "$@"
 
-base-commit: f5e93bedbd20bd3e282b7e4c920d96589d082f77
-prerequisite-patch-id: 474c58b01bbdf6d5703d40f3280e1fbf583cff36
+base-commit: 3887c78b035b47f179ef366e3a8a56c08c44ad0b
+prerequisite-patch-id: 47cca3fa975177b41a6043a70589258076dd650b
