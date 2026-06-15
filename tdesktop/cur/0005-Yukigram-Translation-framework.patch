@@ -20,14 +20,15 @@ diff --git a/Telegram/Resources/qrc/telegram/yukigram.qrc b/Telegram/Resources/q
 index 9efde8c043..769124b26c 100644
 --- a/Telegram/Resources/qrc/telegram/yukigram.qrc
 +++ b/Telegram/Resources/qrc/telegram/yukigram.qrc
-@@ -1,4 +1,7 @@
+@@ -1,5 +1,8 @@
  <RCC>
 +  <qresource prefix="/yukigram_lang">
 +    <file alias="en.json">../../Telegram/Resources/langs/yukigram/en.json</file>
 +  </qresource>
    <qresource prefix="/misc">
-     <file alias="io.github.yukigram.desktop">@CMAKE_CURRENT_BINARY_DIR@/@YUKIGRAM_APP_ID@.desktop</file>
+ @YUKIGRAM_DESKTOP_QRC@
    </qresource>
+ </RCC>
 diff --git a/Telegram/SourceFiles/core/application.cpp b/Telegram/SourceFiles/core/application.cpp
 index 34d67906f5..79b9335067 100644
 --- a/Telegram/SourceFiles/core/application.cpp

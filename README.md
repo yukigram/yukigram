@@ -155,6 +155,32 @@ let
 in yukigram.packages.default;
 ```
 
+## Windows smoke builds
+
+Windows remains unsupported for end users,
+but this repository contains a manual GitHub Actions smoke build
+for checking whether the current patchset still builds on Windows.
+The workflow intentionally builds Telegram Desktop from source,
+applies `tdesktop/cur/*.patch`, records upstream/patchset hashes,
+and uploads a portable artifact.
+
+To run it from a checkout with GitHub CLI access:
+
+```shell
+gh workflow run windows-smoke.yml \
+  -f upstream_ref=v6.8.4 \
+  -f architecture=x64 \
+  -f configuration=Release \
+  -f devel=true \
+  -f use_dependency_cache=false
+```
+
+The default toolchain check expects the upstream-documented
+Windows SDK `10.0.26100.0` and MSVC toolset `14.44`.
+If the hosted runner does not provide them,
+the workflow should fail early before preparing dependencies.
+Set `strict_toolchain=false` only for exploratory non-reproducible checks.
+
 ### on PostmarketOS
 
 #### repository installation

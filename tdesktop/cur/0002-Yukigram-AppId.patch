@@ -8,7 +8,7 @@ diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
 index 0465b39914..898820b6f9 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1974,6 +1974,21 @@ PRIVATE
+@@ -1974,6 +1974,26 @@ PRIVATE
  file(GLOB_RECURSE yuki_src CONFIGURE_DEPENDS "${src_loc}/yukigram/*.cpp" "${src_loc}/yukigram/*.h")
  target_sources(Telegram PRIVATE ${yuki_src})
  
@@ -18,6 +18,11 @@ index 0465b39914..898820b6f9 100644
 +else()
 +    set(YUKIGRAM_APP_ID "io.github.yukigram.devel")
 +    set(YUKIGRAM_DEVEL "true")
++endif()
++if (LINUX AND DESKTOP_APP_USE_PACKAGED)
++    set(YUKIGRAM_DESKTOP_QRC "    <file alias=\"io.github.yukigram.desktop\">${CMAKE_CURRENT_BINARY_DIR}/${YUKIGRAM_APP_ID}.desktop</file>")
++else()
++    set(YUKIGRAM_DESKTOP_QRC "")
 +endif()
 +configure_file("${src_loc}/yukigram/appid.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/yukigram-appid.cpp" @ONLY)
 +configure_file("${res_loc}/qrc/telegram/yukigram.qrc" "${CMAKE_CURRENT_BINARY_DIR}/yukigram.qrc" @ONLY)
@@ -128,7 +133,7 @@ index 0000000000..9efde8c043
 @@ -0,0 +1,5 @@
 +<RCC>
 +  <qresource prefix="/misc">
-+    <file alias="io.github.yukigram.desktop">@CMAKE_CURRENT_BINARY_DIR@/@YUKIGRAM_APP_ID@.desktop</file>
++@YUKIGRAM_DESKTOP_QRC@
 +  </qresource>
 +</RCC>
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
