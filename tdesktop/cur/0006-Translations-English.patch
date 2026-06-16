@@ -1,15 +1,16 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yuki Sireneva <sylfn@disroot.org>
-Date: Sat, 30 May 2026 20:56:58 +0000
+Date: Thu, 28 May 2026 18:14:43 +0000
 Subject: [PATCH] (Translations) English
 
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index a54f5182fa..e8fb262960 100644
---- a/Telegram/Resources/langs/yukigram/en.json
+new file mode 100644
+index 0000000000..e8fb262960
+--- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -1,3 +1,167 @@
- {
+@@ -0,0 +1,167 @@
++{
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
 +    "about/3/text": "Visit {channel_link} or {faq_link} for more info.",
@@ -174,6 +175,18 @@ index a54f5182fa..e8fb262960 100644
 +    "unsupported-message/text": "This message is not supported by your version of Yukigram. Please update to the latest version. If you are already using the latest version, this message might depend on a feature that is not yet implemented in Telegram Desktop, or Yukigram is lagging behind upstream.",
 +    "unsupported-message/button/text": "View Yukigram channel",
 +    "woof": "Arf arf!",
-     "_to_keep_the_diffs_nice": "Please make sure this string is kept at the bottom"
- }
++    "_to_keep_the_diffs_nice": "Please make sure this string is kept at the bottom"
++}
 \ No newline at end of file
+diff --git a/Telegram/Resources/qrc/telegram/yukigram.qrc b/Telegram/Resources/qrc/telegram/yukigram.qrc
+index 9efde8c043..769124b26c 100644
+--- a/Telegram/Resources/qrc/telegram/yukigram.qrc
++++ b/Telegram/Resources/qrc/telegram/yukigram.qrc
+@@ -1,4 +1,7 @@
+ <RCC>
++  <qresource prefix="/yukigram_lang">
++    <file alias="en.json">../../Telegram/Resources/langs/yukigram/en.json</file>
++  </qresource>
+   <qresource prefix="/misc">
+     <file alias="io.github.yukigram.desktop">@CMAKE_CURRENT_BINARY_DIR@/@YUKIGRAM_APP_ID@.desktop</file>
+   </qresource>

@@ -6,28 +6,6 @@ Subject: [PATCH] (Yukigram) Translation framework
 This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
 
-diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-new file mode 100644
-index 0000000000..a54f5182fa
---- /dev/null
-+++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -0,0 +1,3 @@
-+{
-+    "_to_keep_the_diffs_nice": "Please make sure this string is kept at the bottom"
-+}
-\ No newline at end of file
-diff --git a/Telegram/Resources/qrc/telegram/yukigram.qrc b/Telegram/Resources/qrc/telegram/yukigram.qrc
-index 9efde8c043..769124b26c 100644
---- a/Telegram/Resources/qrc/telegram/yukigram.qrc
-+++ b/Telegram/Resources/qrc/telegram/yukigram.qrc
-@@ -1,4 +1,7 @@
- <RCC>
-+  <qresource prefix="/yukigram_lang">
-+    <file alias="en.json">../../Telegram/Resources/langs/yukigram/en.json</file>
-+  </qresource>
-   <qresource prefix="/misc">
-     <file alias="io.github.yukigram.desktop">@CMAKE_CURRENT_BINARY_DIR@/@YUKIGRAM_APP_ID@.desktop</file>
-   </qresource>
 diff --git a/Telegram/SourceFiles/core/application.cpp b/Telegram/SourceFiles/core/application.cpp
 index 34d67906f5..79b9335067 100644
 --- a/Telegram/SourceFiles/core/application.cpp
