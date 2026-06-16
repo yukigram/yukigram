@@ -50,3 +50,37 @@ index 3f065568bb..053599b53b 100644
  	router.add(u"settings"_q, {
  		.path = u"themes"_q,
  		.action = AliasTo{ u"settings"_q, u"appearance/themes"_q },
+diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+index ce887337f1..c6ae778018 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+@@ -14,6 +14,7 @@
+ #include "ui/toast/toast.h"
+ #include "ui/widgets/buttons.h"
+ #include "ui/widgets/fields/input_field.h"
++#include "ui/widgets/popup_menu.h"
+ #include "ui/wrap/vertical_layout.h"
+ #include "window/section_widget.h"
+ #include "window/window_session_controller.h"
+@@ -189,6 +190,21 @@ void BuildRow(SectionBuilder &builder, Yukigram::Options::Option<T> &o) {
+ 		return;
+ 	}
+ 
++	const auto link = u"tg://settings/yukigram/%1"_q.arg(o.key);
++	const auto menu = button->lifetime().template make_state<base::unique_qptr<Ui::PopupMenu>>();
++	button->events(
++	) | rpl::filter([](not_null<QEvent*> e) {
++		return e->type() == QEvent::ContextMenu;
++	}) | rpl::on_next([=](not_null<QEvent*> e) {
++		*menu = base::make_unique_q<Ui::PopupMenu>(button, st::popupMenuWithIcons);
++		(*menu)->addAction(ktr("settings/yukigram/deep-link/copy"), [=] {
++			TextUtilities::SetClipboardText({ link });
++			controller->showToast(ktr("settings/yukigram/deep-link/copy/done"));
++		}, &st::menuIconCopy);
++		(*menu)->popup(QCursor::pos());
++		e->accept();
++	}, button->lifetime());
++
+ 	if constexpr (std::is_same_v<T, bool>) {
+ 		auto v = o.v;
+ 		button->toggledValue(

@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) Russian
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..4a0b7fd2d3
+index 0000000000..7ca092a19d
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
-@@ -0,0 +1,171 @@
+@@ -0,0 +1,173 @@
 +{
 +    "about/1/text": "Неофициальный форк {tdesktop_link},\nкоторый добавляет фичи и убирает мусор.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -175,6 +175,8 @@ index 0000000000..4a0b7fd2d3
 +    "settings/privacy/sessions/created-time": "Сессия начата в",
 +    "settings/privacy/sessions/name/official": "{session}",
 +    "settings/privacy/sessions/name/unofficial": "{session} (сторонний)",
++    "settings/yukigram/deep-link/copy": "Скопировать ссылку",
++    "settings/yukigram/deep-link/copy/done": "Ссылка на настройку скопирована в буфер обмена",
 +    "settings/yukigram/title": "Настройки Yukigram",
 +    "unsupported-message/text": "Это сообщение не поддерживается в вашей версии Yukigram. Пожалуйста, обновитесь до последней версии. Если вы уже на самой последней версии, возможно, это сообщение требует версию Telegram Desktop новее, чем существует в природе, или Yukigram запаздывает с обновлением.",
 +    "unsupported-message/button/text": "Открыть канал Yukigram",

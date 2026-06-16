@@ -5,10 +5,10 @@ Subject: [PATCH] (Translations) English
 
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
-index a54f5182fa..cfc5343c43 100644
+index a54f5182fa..e8fb262960 100644
 --- a/Telegram/Resources/langs/yukigram/en.json
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -1,3 +1,165 @@
+@@ -1,3 +1,167 @@
  {
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -168,6 +168,8 @@ index a54f5182fa..cfc5343c43 100644
 +    "settings/privacy/sessions/created-time": "First login at",
 +    "settings/privacy/sessions/name/official": "{session}",
 +    "settings/privacy/sessions/name/unofficial": "{session} (Unofficial)",
++    "settings/yukigram/deep-link/copy": "Copy deep link",
++    "settings/yukigram/deep-link/copy/done": "Deep link copied to clipboard",
 +    "settings/yukigram/title": "Yukigram settings",
 +    "unsupported-message/text": "This message is not supported by your version of Yukigram. Please update to the latest version. If you are already using the latest version, this message might depend on a feature that is not yet implemented in Telegram Desktop, or Yukigram is lagging behind upstream.",
 +    "unsupported-message/button/text": "View Yukigram channel",

@@ -5,13 +5,13 @@ Subject: [PATCH] (Yukigram) Changelog
 
 
 diff --git a/changelog.txt b/changelog.txt
-index 6608e5f513..53d8dd2f3a 100644
+index 6608e5f513..481e853e52 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,9 +1,29 @@
 +9999 wip (01.01.99)
 +
-+- No changes
++- Copy deep links to Yukigram settings from context menu
 +
 +6.9.3.0 (14.06.26)
 +
