@@ -4,8 +4,6 @@ This is mostly a collection of notes and other tips.
 
 ## Fuck off with your LLMs
 
-TL;DR: No.
-
 Yukigram has a **strict No LLM / No AI policy**,
 adapted from [Pallene](https://github.com/pallene-lang/pallene#contributing):
 
