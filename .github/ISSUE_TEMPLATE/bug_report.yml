@@ -31,25 +31,18 @@ body:
   - type: textarea
     attributes:
       label: Steps to reproduce
+      description: >
+        Step-by-step guide to reproducing the issue.
+
+        On steps which result in wrong behavior,
+        state what exactly went wrong
+        and what should have happened instead.
+        Attach screenshots, if relevant.
+        Make sure to redact any private information.
       placeholder: |
         1.
         2.
         3.
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: Describe the bug
-      description: >
-        What exactly went wrong?
-        Attach screenshots, if relevant.
-        Make sure to redact any private information.
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: Expected behaviour
-      description: What should have happened instead?
     validations:
       required: true
   - type: textarea
@@ -59,9 +52,7 @@ body:
     attributes:
       label: Environment
       description: >
-        Your operating system name and version,
-        desktop environment name and version,
-        and other relevant information.
+        Your operating system, desktop environment, and other relevant information.
 
         "NixOS 26.11pre1011622.a799d3e3886d, x86_64, GNOME 50.1 Wayland"
         and "PostmarketOS edge, armv7, phosh 0.54.0 Wayland"
@@ -80,12 +71,10 @@ body:
     attributes:
       label: I assert that this issue is relevant for Yukigram
       options:
-        - label: I assert that this issue is introduced in Yukigram and not in Telegram Desktop.
+        - label: This issue is introduced in Yukigram and not in Telegram Desktop.
           required: true
-        - label: I assert that this is a bug and not a support request.
-          required: true
-        - label: I assert that this is not a duplicate of an existing issue.
+        - label: This is not a duplicate of an existing issue.
           required: true
         - label: |
-            I assert that I have read the [No AI policy](https://github.com/yukigram/yukigram/blob/main/CONTRIBUTING.md#fuck-off-with-your-llms) and that this issue report complies with it.
+            This issue report complies with the [No AI policy](https://github.com/yukigram/yukigram/blob/main/CONTRIBUTING.md#fuck-off-with-your-llms).
           required: true
