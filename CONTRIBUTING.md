@@ -2,6 +2,44 @@
 
 This is mostly a collection of notes and other tips.
 
+## Fuck off with your LLMs
+
+TL;DR: No.
+
+Yukigram has a **strict No LLM / No AI policy**,
+adapted from [Pallene](https://github.com/pallene-lang/pallene#contributing):
+
+- No LLMs for issues.
+- No LLMs for patches / pull requests.
+- No LLMs for comments on the bug tracker, including translation.
+- English is encouraged, but not required.
+    You are welcome to post in your native language
+    and rely on others to have
+    their own translation tools of choice to interpret your words.
+
+The sole exception for LLM-assisted contributions
+is granted to upstream code
+and patches based explicitly on it
+*without* additional LLM usage.
+This is needed to keep the fork up-to-date,
+as maintaining a pre-LLM version
+and porting new features is nearly impossible,
+and it risks being left behind,
+i.e. not allowing new sessions to be created.
+
+Yukigram has no intention of completely ripping out
+AI code from Telegram Desktop sources,
+or has no intention of diverging codebases
+purely for pragmatic reasons.
+
+Initial Yukigram patches are believed to be slop-free,
+as they were developed either by me
+or long before the so-called vibe coding became popular.
+
+**This project is proudly made by real humans.**
+
+Thank you for not wasting my time.
+
 ## Setup
 
 The following assumes the following directory structure:
