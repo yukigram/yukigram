@@ -59,14 +59,14 @@ body:
         are good examples of system information.
     validations:
       required: true
-  - type: textarea
+  - type: upload
     attributes:
       label: Logs
       description: >
         You can find log.txt using the `viewlogs`
         [cheat code](https://github.com/telegramdesktop/tdesktop/wiki/Cheat-Codes).
-      placeholder: Insert log.txt here (if necessary)
-      render: shell
+    validations:
+      accept: .txt
   - type: checkboxes
     attributes:
       label: I assert that this issue is relevant for Yukigram
