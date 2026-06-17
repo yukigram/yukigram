@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Platform-wide issue
+    url: https://bugs.telegram.org
+    about: Any bug report or feature request affecting more than only Telegram Desktop.
+  - name: Upstream (Telegram Desktop) issue
+    url: https://github.com/telegramdesktop/tdesktop
+    about: Issues affecting both Yukigram and Telegram Desktop.
+  - name: Issue of other official client
+    url: https://bugs.telegram.org
+    about: Any bug report or feature request not about Telegram Desktop.
+  - name: Question
+    url: https://t.me/yukigram
+    about: Ask a question.

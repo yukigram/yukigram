@@ -1,0 +1,91 @@
+name: Bug report
+description: Errors, crashes, weird behaviors
+labels: [bug]
+body:
+  - type: input
+    attributes:
+      label: Yukigram version
+      description: >
+        As shown in the About box (Open drawer, press "About" at the bottom, read the title).
+        If Yukigram crashes before, use the version from package manager.
+        If the version contains `+wip`, then provide the exact git commit this happens on.
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Installation method
+      multiple: false
+      options:
+        - Manual build from source
+        - Binary package from releases
+        - Flatpak repository
+        - Nixpak package
+        - Nonisolated Nix package
+        - postmarketOS repository
+        - .apk files from releases
+        - AUR package yukigram-bin
+        - AUR package yukigram-desktop
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe the bug
+      description: >
+        What exactly went wrong?
+        Attach screenshots, if relevant.
+        Make sure to redact any private information.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected behaviour
+      description: What should have happened instead?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional context
+  - type: textarea
+    attributes:
+      label: Environment
+      description: >
+        Your operating system name and version,
+        desktop environment name and version,
+        and other relevant information.
+
+        "NixOS 26.11pre1011622.a799d3e3886d, x86_64, GNOME 50.1 Wayland"
+        and "PostmarketOS edge, armv7, phosh 0.54.0 Wayland"
+        are good examples of system information.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Logs
+      description: >
+        You can find log.txt using the `viewlogs`
+        [cheat code](https://github.com/telegramdesktop/tdesktop/wiki/Cheat-Codes).
+      placeholder: Insert log.txt here (if necessary)
+      render: shell
+  - type: checkboxes
+    attributes:
+      label: I assert that this issue is relevant for Yukigram
+      options:
+        - label: I assert that this issue is introduced in Yukigram and not in Telegram Desktop.
+          required: true
+        - label: I assert that this is a bug and not a support request.
+          required: true
+        - label: I assert that this is not a duplicate of an existing issue.
+          required: true
+        - label: |
+            I assert that I have read the [No AI policy](https://github.com/yukigram/yukigram/blob/main/CONTRIBUTING.md#fuck-off-with-your-llms) and that this issue report complies with it.
+          required: true
