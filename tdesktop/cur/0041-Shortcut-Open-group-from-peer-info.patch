@@ -5,7 +5,7 @@ Subject: [PATCH] (Shortcut) Open group from peer info
 
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
-index 1dc78f8412..617f5c820f 100644
+index 1dc78f8412..396fd362b7 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
 @@ -775,7 +775,12 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
@@ -32,11 +32,12 @@ index 1dc78f8412..617f5c820f 100644
  	}
  	const auto canJoin = (!sublist && !topic && channel && !channel->amIn());
  	if (canJoin) {
-@@ -986,6 +994,13 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
+@@ -986,6 +994,14 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
  	if (chechMax()) {
  		return;
  	}
-+	if (_peer->id != controller->activeChatCurrent().peer()->id
++	if (const auto current = controller->activeChatCurrent().peer();
++		(current && _peer->id != current->id)
 +		|| controller->dialogsEntryStateCurrent().section == Dialogs::EntryState::Section::Replies) {
 +		addShowHistory();
 +	}
