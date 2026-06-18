@@ -99,7 +99,7 @@ index 46f951ff64..a04fbc592c 100644
  	const auto updateRect = QRect(
  		_st->photoSize - skip.x() - size,
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_row.cpp b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
-index 3b01b6e83f..919bb87a35 100644
+index 3b01b6e83f..6c8faed4ef 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -129,6 +129,24 @@ index 3b01b6e83f..919bb87a35 100644
  		: st::dialogsCallBadgeSkip;
  	const auto shrink = (size / 2) * (1. - topLayerProgress);
  
+@@ -595,7 +599,8 @@ void Row::paintUserpic(
+ 	const auto limit = Ui::kOutlineSegmentsMax;
+ 	const auto storiesCount = std::min(storiesCountReal, limit);
+ 	const auto storiesUnreadCount = std::min(storiesUnreadCountReal, limit);
+-	if (_cornerBadgeUserpic->frame.size() != frameSize) {
++	const auto frameSizeChanged = _cornerBadgeUserpic->frame.size() != frameSize;
++	if (frameSizeChanged) {
+ 		_cornerBadgeUserpic->frame = QImage(
+ 			frameSize,
+ 			QImage::Format_ARGB32_Premultiplied);
+@@ -615,6 +620,7 @@ void Row::paintUserpic(
+ 	const auto subscribed = Data::ChannelHasSubscriptionUntilDate(
+ 		peer ? peer->asChannel() : nullptr);
+ 	if (keyChanged
++		|| frameSizeChanged
+ 		|| !_cornerBadgeUserpic->layersManager.isFinished()
+ 		|| _cornerBadgeUserpic->active != active
+ 		|| _cornerBadgeUserpic->frameIndex != frameIndex
 diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 index e8e88862b0..c097f3f309 100644
 --- a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
