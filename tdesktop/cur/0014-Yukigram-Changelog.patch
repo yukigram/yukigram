@@ -5,14 +5,14 @@ Subject: [PATCH] (Yukigram) Changelog
 
 
 diff --git a/changelog.txt b/changelog.txt
-index 6608e5f513..b497169b25 100644
+index 6608e5f513..0b6b0f6d35 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,9 +1,31 @@
 +9999 wip (01.01.99)
 +
 +- Copy deep links to Yukigram settings from context menu
-+- Fix crash in "View group info" in forums when no topic is opened
++- Fix crash in "View group info" when no chat is opened
 +- Fix broken userpic on compact chat list toggle
 +
 +6.9.3.0 (14.06.26)
