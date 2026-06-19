@@ -5,11 +5,11 @@ Subject: [PATCH] (Yukigram) Changelog
 
 
 diff --git a/changelog.txt b/changelog.txt
-index 6608e5f513..0b6b0f6d35 100644
+index 6608e5f513..35f5b51aef 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,9 +1,31 @@
-+9999 wip (01.01.99)
++6.9.3.1 rc.1 (19.06.26)
 +
 +- Copy deep links to Yukigram settings from context menu
 +- Fix crash in "View group info" when no chat is opened
