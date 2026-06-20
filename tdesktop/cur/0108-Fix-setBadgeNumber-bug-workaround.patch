@@ -1,0 +1,45 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Sat, 20 Jun 2026 10:35:38 +0000
+Subject: [PATCH] (Fix) setBadgeNumber bug workaround
+
+Qt uses `applicationName` in object path unconditionally without
+escaping it, creating object paths like
+
+	/com/canonical/unity/launcherentry/com.example.MyCoolApp
+
+that are invalid according to both Qt and D-Bus spec as they contain
+unallowed characters (dots).
+
+Previous code (for qt < 6.6, even though it should have been 6.5)
+talked to D-Bus manually and used hashes instead of full name.
+
+I'm unsure whether it is really a Qt bug or I'm just unlucky to have hit
+this corner case, because I set applicationName to application id...
+
+diff --git a/Telegram/SourceFiles/platform/linux/main_window_linux.cpp b/Telegram/SourceFiles/platform/linux/main_window_linux.cpp
+index 3bee37bf73..5cdabcb01e 100644
+--- a/Telegram/SourceFiles/platform/linux/main_window_linux.cpp
++++ b/Telegram/SourceFiles/platform/linux/main_window_linux.cpp
+@@ -161,9 +161,9 @@ void MainWindow::updateWindowIcon() {
+ }
+ 
+ void MainWindow::updateUnityCounter() {
+-#if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
+-	qApp->setBadgeNumber(Core::App().unreadBadge());
+-#else // Qt >= 6.6.0
++// #if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
++// 	qApp->setBadgeNumber(Core::App().unreadBadge());
++// #else // Qt >= 6.6.0
+ 	using namespace gi::repository;
+ 
+ 	static const auto djbStringHash = [](const std::string &string) {
+@@ -204,7 +204,7 @@ void MainWindow::updateUnityCounter() {
+ 						GLib::Variant::new_boolean(counterSlice))),
+ 			}),
+ 		}));
+-#endif // Qt < 6.6.0
++// #endif // Qt < 6.6.0
+ }
+ 
+ void MainWindow::createGlobalMenu() {

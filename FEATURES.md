@@ -61,6 +61,10 @@ These are placed under `(Yukigram)` category.
     and breaking bulids is not fun)
 - Disable TooManyCooks on ARMv7
 - Scale sticker/GIF preview to fit the window
+- Workaround for `QGuiApplication::setBadgeNumber`
+    (it uses `QCoreApplication::applicationName` without escaping
+    and makes resulting D-Bus object path invalid
+    if application name contains forbidden characters, e.g. dots)
 
 These are placed under `(Fix)` category.
 
