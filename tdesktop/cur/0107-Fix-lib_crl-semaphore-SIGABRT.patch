@@ -1,0 +1,226 @@
+From 28b523dae25214bf56a00140ad8a60ca115ebeba Mon Sep 17 00:00:00 2001
+From: John Preston <johnprestonmail@gmail.com>
+Date: Tue, 16 Jun 2026 22:01:31 +0400
+Subject: [PATCH] Use wait on std::atomic for semaphore (non-macOS).
+
+---
+ CMakeLists.txt                      |  2 --
+ crl/common/crl_common_semaphore.h   | 31 ++++++++++++++++---
+ crl/crl_semaphore.h                 | 18 ++++++++---
+ crl/winapi/crl_winapi_list.h        |  2 ++
+ crl/winapi/crl_winapi_semaphore.cpp | 39 ------------------------
+ crl/winapi/crl_winapi_semaphore.h   | 47 -----------------------------
+ 6 files changed, 43 insertions(+), 96 deletions(-)
+ delete mode 100644 crl/winapi/crl_winapi_semaphore.cpp
+ delete mode 100644 crl/winapi/crl_winapi_semaphore.h
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 87ead0d..78a42a2 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -45,8 +45,6 @@ PRIVATE
+     crl/winapi/crl_winapi_fp_exceptions.cpp
+     crl/winapi/crl_winapi_list.cpp
+     crl/winapi/crl_winapi_list.h
+-    crl/winapi/crl_winapi_semaphore.cpp
+-    crl/winapi/crl_winapi_semaphore.h
+     crl/winapi/crl_winapi_time.cpp
+     crl/winapi/crl_winapi_windows_h.h
+     crl/crl.h
+diff --git a/crl/common/crl_common_semaphore.h b/crl/common/crl_common_semaphore.h
+index 28c9bb9..b3da55a 100644
+--- a/crl/common/crl_common_semaphore.h
++++ b/crl/common/crl_common_semaphore.h
+@@ -8,10 +8,29 @@
+ 
+ #include <crl/common/crl_common_config.h>
+ 
+-#include <semaphore>
++#include <atomic>
+ 
+ namespace crl {
+ 
++// A lightweight wake/notify primitive: a saturating, auto-reset event with
++// a single waiter. release() raises the signal and is coalescing - repeated
++// release() calls before the waiter consumes the signal collapse into one,
++// they never accumulate and never overflow. acquire() waits for the signal
++// and consumes it.
++//
++// This intentionally is not a counting semaphore. Every use in the codebase
++// is either a one-shot "block until the async task finished" handshake or a
++// "wake the worker thread so it re-checks its state" notification, and the
++// latter must tolerate redundant wakes coming from several sources at once.
++//
++// Backed by std::atomic<bool>::wait/notify, which lowers to the lightest
++// wait primitive the OS provides (WaitOnAddress on Windows 8+, futex on
++// Linux): no kernel handle, no allocation, userspace fast path. On Windows 7
++// the MSVC runtime falls back to a wait table - still correct, just heavier.
++//
++// Not used on Apple: std::atomic<>::wait is availability-gated to macOS 11.0
++// in libc++, while we target 10.13+, so crl_semaphore.h selects a
++// dispatch_semaphore backend there instead.
+ class semaphore {
+ public:
+ 	semaphore() = default;
+@@ -21,14 +40,18 @@ class semaphore {
+ 	semaphore &operator=(semaphore &&other) = delete;
+ 
+ 	void acquire() {
+-		_impl.acquire();
++		while (!_signaled.exchange(false, std::memory_order_acquire)) {
++			_signaled.wait(false, std::memory_order_relaxed);
++		}
+ 	}
+ 	void release() {
+-		_impl.release();
++		if (!_signaled.exchange(true, std::memory_order_release)) {
++			_signaled.notify_one();
++		}
+ 	}
+ 
+ private:
+-	std::binary_semaphore _impl{0};
++	std::atomic<bool> _signaled = false;
+ 
+ };
+ 
+diff --git a/crl/crl_semaphore.h b/crl/crl_semaphore.h
+index 9e217a7..d86f2d5 100644
+--- a/crl/crl_semaphore.h
++++ b/crl/crl_semaphore.h
+@@ -8,10 +8,20 @@
+ 
+ #include <crl/common/crl_common_config.h>
+ 
+-#if defined CRL_USE_WINAPI
+-#include <crl/winapi/crl_winapi_semaphore.h>
+-#elif defined CRL_USE_DISPATCH // CRL_USE_WINAPI
++// crl::semaphore is a lightweight wake/notify primitive.
++//
++// Everywhere except Apple it is a single std::atomic-based saturating event
++// (see crl_common_semaphore.h), which lowers to the lightest OS wait
++// primitive available: WaitOnAddress on Windows 8+, futex on Linux. On older
++// Windows (7) the MSVC runtime transparently falls back to a wait table - it
++// still compiles and runs.
++//
++// On Apple we keep a dispatch_semaphore backend: std::atomic<>::wait and
++// std::counting_semaphore are availability-gated to macOS 11.0 in libc++
++// (the wait/notify machinery lives in the dylib), while we still target
++// macOS 10.13+. dispatch_semaphore is available since macOS 10.6.
++#if defined CRL_USE_DISPATCH
+ #include <crl/dispatch/crl_dispatch_semaphore.h>
+ #else // CRL_USE_DISPATCH
+ #include <crl/common/crl_common_semaphore.h>
+-#endif // !CRL_USE_WINAPI && !CRL_USE_DISPATCH
++#endif // !CRL_USE_DISPATCH
+diff --git a/crl/winapi/crl_winapi_list.h b/crl/winapi/crl_winapi_list.h
+index d405e6d..ada6066 100644
+--- a/crl/winapi/crl_winapi_list.h
++++ b/crl/winapi/crl_winapi_list.h
+@@ -13,6 +13,8 @@
+ #include <crl/common/crl_common_utils.h>
+ #include <crl/crl_semaphore.h>
+ 
++#include <memory>
++
+ #ifndef CRL_USE_WINAPI
+ #error "This file should not be included by client-code directly."
+ #endif // CRL_USE_WINAPI
+diff --git a/crl/winapi/crl_winapi_semaphore.cpp b/crl/winapi/crl_winapi_semaphore.cpp
+deleted file mode 100644
+index 2e98880..0000000
+--- a/crl/winapi/crl_winapi_semaphore.cpp
++++ /dev/null
+@@ -1,39 +0,0 @@
+-// This file is part of Desktop App Toolkit,
+-// a set of libraries for developing nice desktop applications.
+-//
+-// For license and copyright information please follow this link:
+-// https://github.com/desktop-app/legal/blob/master/LEGAL
+-//
+-#include <crl/winapi/crl_winapi_semaphore.h>
+-
+-#ifdef CRL_USE_WINAPI
+-
+-#include <crl/winapi/crl_winapi_windows_h.h>
+-
+-namespace crl {
+-
+-auto semaphore::implementation::create() -> pointer {
+-	auto result = CreateSemaphore(nullptr, 0, 1, nullptr);
+-	if (!result) {
+-		std::terminate();
+-	}
+-	return result;
+-}
+-
+-void semaphore::implementation::operator()(pointer value) {
+-	if (value) {
+-		CloseHandle(value);
+-	}
+-};
+-
+-void semaphore::acquire() {
+-	WaitForSingleObject(_handle.get(), INFINITE);
+-}
+-
+-void semaphore::release() {
+-	ReleaseSemaphore(_handle.get(), 1, nullptr);
+-}
+-
+-} // namespace crl
+-
+-#endif // CRL_USE_WINAPI
+diff --git a/crl/winapi/crl_winapi_semaphore.h b/crl/winapi/crl_winapi_semaphore.h
+deleted file mode 100644
+index 234c8de..0000000
+--- a/crl/winapi/crl_winapi_semaphore.h
++++ /dev/null
+@@ -1,47 +0,0 @@
+-// This file is part of Desktop App Toolkit,
+-// a set of libraries for developing nice desktop applications.
+-//
+-// For license and copyright information please follow this link:
+-// https://github.com/desktop-app/legal/blob/master/LEGAL
+-//
+-#pragma once
+-
+-#include <crl/common/crl_common_config.h>
+-
+-#ifdef CRL_USE_WINAPI
+-
+-#include <memory>
+-
+-namespace crl {
+-
+-class semaphore {
+-public:
+-	semaphore() : _handle(implementation::create()) {
+-	}
+-	semaphore(const semaphore &other) = delete;
+-	semaphore &operator=(const semaphore &other) = delete;
+-	semaphore(semaphore &&other) noexcept
+-	: _handle(std::move(other._handle)) {
+-	}
+-	semaphore &operator=(semaphore &&other) noexcept {
+-		_handle = std::move(other._handle);
+-		return *this;
+-	}
+-
+-	void acquire();
+-	void release();
+-
+-private:
+-	// Hide WinAPI HANDLE
+-	struct implementation {
+-		using pointer = void*;
+-		static pointer create();
+-		void operator()(pointer value);
+-	};
+-	std::unique_ptr<implementation::pointer, implementation> _handle;
+-
+-};
+-
+-} // namespace crl
+-
+-#endif // CRL_USE_WINAPI
