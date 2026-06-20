@@ -29,6 +29,33 @@ index 5b1997e30d..438ebeb660 100644
  maxAnimatedEmojiSize: 112px;
  maxGifSize: 320px;
  maxVideoMessageSize: 240px;
+diff --git a/Telegram/SourceFiles/window/window_media_preview.cpp b/Telegram/SourceFiles/window/window_media_preview.cpp
+index 8775e353e8..cecb57568e 100644
+--- a/Telegram/SourceFiles/window/window_media_preview.cpp
++++ b/Telegram/SourceFiles/window/window_media_preview.cpp
+@@ -364,16 +364,18 @@ QSize MediaPreviewWidget::currentDimensions() const {
+ 				result = QSize(gif->width(), gif->height());
+ 			}
+ 		}
++		const auto maxStickerSize = 224;
+ 		if (_document->sticker()) {
++		if (Yukigram::Settings::LargeStickerPreview->current()) {
+ 			box = QSize(st::maxStickerSize, st::maxStickerSize);
+-			if (Yukigram::Settings::LargeStickerPreview->current()) {
+-				box *= 2;
+-			}
++		} else {
++			box = QSize(maxStickerSize, maxStickerSize);
++		}
+ 			if (_document->isPremiumSticker()) {
+ 				result = (box /= kPremiumDownscale);
+ 			}
+ 		} else {
+-			box = QSize(2 * st::maxStickerSize, 2 * st::maxStickerSize);
++			box = QSize(2 * maxStickerSize, 2 * maxStickerSize);
+ 		}
+ 	}
+ 	result = QSize(
 diff --git a/Telegram/SourceFiles/yukigram/settings/sticker_size.cpp b/Telegram/SourceFiles/yukigram/settings/sticker_size.cpp
 new file mode 100644
 index 0000000000..82c6463771
