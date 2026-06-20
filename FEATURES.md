@@ -60,6 +60,7 @@ These are placed under `(Yukigram)` category.
     no distro packages it yet,
     and breaking bulids is not fun)
 - Disable TooManyCooks on ARMv7
+- Scale sticker/GIF preview to fit the window
 
 These are placed under `(Fix)` category.
 
