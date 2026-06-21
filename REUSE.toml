@@ -95,7 +95,6 @@ path = [
     "tdesktop/cur/*-Fix-setBadgeNumber-bug-workaround.patch",
     "tdesktop/cur/*-Fix-lib_crl-semaphore-SIGABRT.patch",
     "tdesktop/cur/*-Interface-Show-custom-title-in-group-call-bar.patch",
-
 ]
 SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors <https://github.com/yukigram/yukigram>"
