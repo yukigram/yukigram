@@ -4,33 +4,34 @@ Date: Tue, 16 Jun 2026 22:01:31 +0400
 Subject: [PATCH] Use wait on std::atomic for semaphore (non-macOS).
 
 ---
- CMakeLists.txt                      |  2 --
- crl/common/crl_common_semaphore.h   | 31 ++++++++++++++++---
- crl/crl_semaphore.h                 | 18 ++++++++---
- crl/winapi/crl_winapi_list.h        |  2 ++
- crl/winapi/crl_winapi_semaphore.cpp | 39 ------------------------
- crl/winapi/crl_winapi_semaphore.h   | 47 -----------------------------
- 6 files changed, 43 insertions(+), 96 deletions(-)
- delete mode 100644 crl/winapi/crl_winapi_semaphore.cpp
- delete mode 100644 crl/winapi/crl_winapi_semaphore.h
+ Telegram/lib_crl/CMakeLists.txt               |   2 --
+ Telegram/lib_crl/crl/common/crl_common_semaphore.h |  31 ++++++++++++++++
+ Telegram/lib_crl/crl/crl_semaphore.h               |  18 ++++++++--
+ Telegram/lib_crl/crl/winapi/crl_winapi_list.h      |   2 ++
+ Telegram/lib_crl/crl/winapi/crl_winapi_semaphore.cpp |  39 --------------------
+ Telegram/lib_crl/crl/winapi/crl_winapi_semaphore.h   |  47 ------------------------
+ 6 files changed, 48 insertions(+), 91 deletions(-)
+ delete mode 100644 Telegram/lib_crl/crl/winapi/crl_winapi_semaphore.cpp
+ delete mode 100644 Telegram/lib_crl/crl/winapi/crl_winapi_semaphore.h
 
-diff --git a/CMakeLists.txt b/CMakeLists.txt
+diff --git a/Telegram/lib_crl/CMakeLists.txt b/Telegram/lib_crl/CMakeLists.txt
 index 87ead0d..78a42a2 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
+--- a/Telegram/lib_crl/CMakeLists.txt
++++ b/Telegram/lib_crl/CMakeLists.txt
 @@ -45,8 +45,6 @@ PRIVATE
-     crl/winapi/crl_winapi_fp_exceptions.cpp
-     crl/winapi/crl_winapi_list.cpp
-     crl/winapi/crl_winapi_list.h
--    crl/winapi/crl_winapi_semaphore.cpp
--    crl/winapi/crl_winapi_semaphore.h
-     crl/winapi/crl_winapi_time.cpp
-     crl/winapi/crl_winapi_windows_h.h
-     crl/crl.h
-diff --git a/crl/common/crl_common_semaphore.h b/crl/common/crl_common_semaphore.h
+ 
+ 	crl/winapi/crl_winapi_fp_exceptions.cpp
+ 	crl/winapi/crl_winapi_list.cpp
+-	crl/winapi/crl_winapi_list.h
+-	crl/winapi/crl_winapi_semaphore.cpp
+-	crl/winapi/crl_winapi_semaphore.h
+ 	crl/winapi/crl_winapi_time.cpp
+ 
+ 	crl/winapi/crl_winapi_windows_h.h
+diff --git a/Telegram/lib_crl/crl/common/crl_common_semaphore.h b/Telegram/lib_crl/crl/common/crl_common_semaphore.h
 index 28c9bb9..b3da55a 100644
---- a/crl/common/crl_common_semaphore.h
-+++ b/crl/common/crl_common_semaphore.h
+--- a/Telegram/lib_crl/crl/common/crl_common_semaphore.h
++++ b/Telegram/lib_crl/crl/common/crl_common_semaphore.h
 @@ -8,10 +8,29 @@
  
  #include <crl/common/crl_common_config.h>
@@ -62,7 +63,7 @@ index 28c9bb9..b3da55a 100644
  class semaphore {
  public:
  	semaphore() = default;
-@@ -21,14 +40,18 @@ class semaphore {
+@@ -20,13 +39,17 @@ public:
  	semaphore &operator=(semaphore &&other) = delete;
  
  	void acquire() {
@@ -79,15 +80,14 @@ index 28c9bb9..b3da55a 100644
  	}
  
  private:
--	std::binary_semaphore _impl{0};
+-	std::binary_semaphore _impl{ 0 };
 +	std::atomic<bool> _signaled = false;
  
  };
- 
-diff --git a/crl/crl_semaphore.h b/crl/crl_semaphore.h
+diff --git a/Telegram/lib_crl/crl/crl_semaphore.h b/Telegram/lib_crl/crl/crl_semaphore.h
 index 9e217a7..d86f2d5 100644
---- a/crl/crl_semaphore.h
-+++ b/crl/crl_semaphore.h
+--- a/Telegram/lib_crl/crl/crl_semaphore.h
++++ b/Telegram/lib_crl/crl/crl_semaphore.h
 @@ -8,10 +8,20 @@
  
  #include <crl/common/crl_common_config.h>
@@ -109,14 +109,14 @@ index 9e217a7..d86f2d5 100644
 +// macOS 10.13+. dispatch_semaphore is available since macOS 10.6.
 +#if defined CRL_USE_DISPATCH
  #include <crl/dispatch/crl_dispatch_semaphore.h>
- #else // CRL_USE_DISPATCH
+-#else // CRL_USE_WINAPI && !CRL_USE_DISPATCH
++#else // CRL_USE_DISPATCH
  #include <crl/common/crl_common_semaphore.h>
--#endif // !CRL_USE_WINAPI && !CRL_USE_DISPATCH
-+#endif // !CRL_USE_DISPATCH
-diff --git a/crl/winapi/crl_winapi_list.h b/crl/winapi/crl_winapi_list.h
+-#endif // CRL_USE_WINAPI && !CRL_USE_DISPATCH
+diff --git a/Telegram/lib_crl/crl/winapi/crl_winapi_list.h b/Telegram/lib_crl/crl/winapi/crl_winapi_list.h
 index d405e6d..ada6066 100644
---- a/crl/winapi/crl_winapi_list.h
-+++ b/crl/winapi/crl_winapi_list.h
+--- a/Telegram/lib_crl/crl/winapi/crl_winapi_list.h
++++ b/Telegram/lib_crl/crl/winapi/crl_winapi_list.h
 @@ -13,6 +13,8 @@
  #include <crl/common/crl_common_utils.h>
  #include <crl/crl_semaphore.h>
@@ -126,10 +126,10 @@ index d405e6d..ada6066 100644
  #ifndef CRL_USE_WINAPI
  #error "This file should not be included by client-code directly."
  #endif // CRL_USE_WINAPI
-diff --git a/crl/winapi/crl_winapi_semaphore.cpp b/crl/winapi/crl_winapi_semaphore.cpp
+diff --git a/Telegram/lib_crl/crl/winapi/crl_winapi_semaphore.cpp b/Telegram/lib_crl/crl/winapi/crl_winapi_semaphore.cpp
 deleted file mode 100644
 index 2e98880..0000000
---- a/crl/winapi/crl_winapi_semaphore.cpp
+--- a/Telegram/lib_crl/crl/winapi/crl_winapi_semaphore.cpp
 +++ /dev/null
 @@ -1,39 +0,0 @@
 -// This file is part of Desktop App Toolkit,
@@ -158,7 +158,7 @@ index 2e98880..0000000
 -	if (value) {
 -		CloseHandle(value);
 -	}
--};
+-}
 -
 -void semaphore::acquire() {
 -	WaitForSingleObject(_handle.get(), INFINITE);
@@ -171,10 +171,10 @@ index 2e98880..0000000
 -} // namespace crl
 -
 -#endif // CRL_USE_WINAPI
-diff --git a/crl/winapi/crl_winapi_semaphore.h b/crl/winapi/crl_winapi_semaphore.h
+diff --git a/Telegram/lib_crl/crl/winapi/crl_winapi_semaphore.h b/Telegram/lib_crl/crl/winapi/crl_winapi_semaphore.h
 deleted file mode 100644
 index 234c8de..0000000
---- a/crl/winapi/crl_winapi_semaphore.h
+--- a/Telegram/lib_crl/crl/winapi/crl_winapi_semaphore.h
 +++ /dev/null
 @@ -1,47 +0,0 @@
 -// This file is part of Desktop App Toolkit,
@@ -195,8 +195,10 @@ index 234c8de..0000000
 -
 -class semaphore {
 -public:
--	semaphore() : _handle(implementation::create()) {
+-	semaphore()
+-	: _handle(implementation::create()) {
 -	}
+-
 -	semaphore(const semaphore &other) = delete;
 -	semaphore &operator=(const semaphore &other) = delete;
 -	semaphore(semaphore &&other) noexcept
