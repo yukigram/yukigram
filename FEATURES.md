@@ -171,6 +171,7 @@ These are placed under `(Major)` category.
 - :gear: Custom monospace font
 - Video controls for GIFs
 - :zap: :gear: Disable SHOUTING CASE on buttons
+- Show custom title in group call bar
 
 These are placed under `(Interface)` category.
 
