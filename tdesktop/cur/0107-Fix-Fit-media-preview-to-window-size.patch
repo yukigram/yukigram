@@ -1,0 +1,18 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Sat, 20 Jun 2026 08:37:52 +0000
+Subject: [PATCH] (Fix) Fit media preview to window size
+
+
+diff --git a/Telegram/SourceFiles/window/window_media_preview.cpp b/Telegram/SourceFiles/window/window_media_preview.cpp
+index cecb57568e..d243bb571e 100644
+--- a/Telegram/SourceFiles/window/window_media_preview.cpp
++++ b/Telegram/SourceFiles/window/window_media_preview.cpp
+@@ -377,6 +377,7 @@ QSize MediaPreviewWidget::currentDimensions() const {
+ 		} else {
+ 			box = QSize(2 * maxStickerSize, 2 * maxStickerSize);
+ 		}
++		box = QSize(std::min(box.width(), width() - 30), std::min(box.height(), height() - 50));
+ 	}
+ 	result = QSize(
+ 		std::max(style::ConvertScale(result.width()), 1),

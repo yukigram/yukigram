@@ -91,6 +91,8 @@ path = [
     "tdesktop/cur/*-Style-Opt-Round-message-size.patch",
     "tdesktop/cur/*-Fix-Always-use-bundled-TooManyCooks.patch",
     "tdesktop/cur/*-Fix-Disable-TooManyCooks-on-ARMv7.patch",
+    "tdesktop/cur/*-Fix-Fit-media-preview-to-window-size.patch",
+    "tdesktop/cur/*-Fix-setBadgeNumber-bug-workaround.patch",
     "tdesktop/cur/*-Fix-lib_crl-semaphore-SIGABRT.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"
