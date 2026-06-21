@@ -65,6 +65,10 @@ These are placed under `(Yukigram)` category.
     (it uses `QCoreApplication::applicationName` without escaping
     and makes resulting D-Bus object path invalid
     if application name contains forbidden characters, e.g. dots)
+- Backported fix for [tdesktop#30840]
+    (semaphore over-release in lib_crl)
+
+[tdesktop#30840]: https://github.com/telegramdesktop/tdesktop/issues/30840
 
 These are placed under `(Fix)` category.
 
