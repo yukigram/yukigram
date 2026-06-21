@@ -5,11 +5,11 @@ Subject: [PATCH] (Yukigram) Changelog
 
 
 diff --git a/changelog.txt b/changelog.txt
-index 6608e5f513..ab08045ef7 100644
+index 6608e5f513..58393be768 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,9 +1,44 @@
-+9999 wip (01.01.99)
++6.9.3.2 rc.1 (21.06.26)
 +
 +- Restore correct sticker preview size
 +- Make sticker preview fit to window
