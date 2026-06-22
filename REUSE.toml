@@ -141,6 +141,7 @@ SPDX-FileCopyrightText = "Yukigram contributors, Forkgram contributors <https://
 [[annotations]]
 path = [
     ".gitignore",
+    ".editorconfig",
     ".mailmap",
     "npins/sources.json",
     "*.md",
