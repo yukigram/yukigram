@@ -6,6 +6,21 @@ Subject: [PATCH] (Yukigram) Translation framework
 This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
 
+diff --git a/Telegram/Resources/langs/yukigram/.editorconfig b/Telegram/Resources/langs/yukigram/.editorconfig
+new file mode 100644
+index 0000000000..9d9591e164
+--- /dev/null
++++ b/Telegram/Resources/langs/yukigram/.editorconfig
+@@ -0,0 +1,9 @@
++root = true
++
++[*]
++end_of_line = lf
++insert_final_newline = false
++
++[*.json]
++indent_style = space
++indent_size = 4
 diff --git a/Telegram/SourceFiles/core/application.cpp b/Telegram/SourceFiles/core/application.cpp
 index 34d67906f5..79b9335067 100644
 --- a/Telegram/SourceFiles/core/application.cpp
