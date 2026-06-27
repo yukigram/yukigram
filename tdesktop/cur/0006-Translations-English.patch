@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) English
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 new file mode 100644
-index 0000000000..e8fb262960
+index 0000000000..2e5a09e0ad
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -0,0 +1,167 @@
+@@ -0,0 +1,170 @@
 +{
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -41,6 +41,7 @@ index 0000000000..e8fb262960
 +    "box/peer-list/count/subscribers#zero": "{kind}",
 +    "box/peer-list/count/subscribers#one": "{kind}, {count} subscriber",
 +    "box/peer-list/count/subscribers#other": "{kind}, {count} subscribers",
++    "box/prevent-delete/text": "Yukigram is set to prevent deleting chat history and leaving groups",
 +    "box/sticker-set/owner/title": "Owner",
 +    "drawer/new-supergroup/title": "New supergroup",
 +    "history/deleted/message": "Deleted message {id}",
@@ -127,6 +128,8 @@ index 0000000000..e8fb262960
 +    "opt/no-shout-buttons/desc": "",
 +    "opt/old-style-spoilers/name": "Old-style spoilers (without mess)",
 +    "opt/old-style-spoilers/desc": "",
++    "opt/prevent-delete/name": "Prevent history delete",
++    "opt/prevent-delete/desc": "",
 +    "opt/quick-admin-list/name": "Admin list button",
 +    "opt/quick-admin-list/desc": "",
 +    "opt/quick-recent-actions/name": "Recent actions button",

@@ -1,0 +1,147 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Sat, 27 Jun 2026 13:35:07 +0000
+Subject: [PATCH] (Interface)(Opt) Prevent delete history
+
+
+diff --git a/Telegram/SourceFiles/boxes/moderate_messages_box.cpp b/Telegram/SourceFiles/boxes/moderate_messages_box.cpp
+index e301b29bef..1c129ef5c6 100644
+--- a/Telegram/SourceFiles/boxes/moderate_messages_box.cpp
++++ b/Telegram/SourceFiles/boxes/moderate_messages_box.cpp
+@@ -32,6 +32,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "history/history.h"
+ #include "history/history_item.h"
+ #include "lang/lang_keys.h"
++#include "yukigram/lang.h"
+ #include "lottie/lottie_icon.h"
+ #include "main/main_session.h"
+ #include "ui/boxes/confirm_box.h"
+@@ -45,6 +46,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "ui/text/text_lottie_custom_emoji.h"
+ #include "ui/text/text_utilities.h"
+ #include "ui/vertical_list.h"
++#include "yukigram/settings/prevent_delete.h"
+ #include "ui/widgets/buttons.h"
+ #include "ui/widgets/checkbox.h"
+ #include "ui/widgets/expandable_peer_list.h"
+@@ -1501,6 +1503,11 @@ void SafeSubmitOnEnter(not_null<Ui::GenericBox*> box) {
+ }
+ 
+ void DeleteChatBox(not_null<Ui::GenericBox*> box, not_null<PeerData*> peer) {
++	if (Yukigram::Settings::PreventDelete->current()) {
++		Ui::InformBox(box, { .text = ktr("box/prevent-delete/text") });
++		return;
++	}
++
+ 	const auto container = box->verticalLayout();
+ 
+ 	const auto userpicPeer = peer->userpicPaintingPeer();
+@@ -1677,6 +1684,11 @@ void DeleteChatBox(not_null<Ui::GenericBox*> box, not_null<PeerData*> peer) {
+ void DeleteSublistBox(
+ 		not_null<Ui::GenericBox*> box,
+ 		not_null<Data::SavedSublist*> sublist) {
++	if (Yukigram::Settings::PreventDelete->current()) {
++		Ui::InformBox(box, { .text = ktr("box/prevent-delete/text") });
++		return;
++	}
++
+ 	const auto container = box->verticalLayout();
+ 
+ 	const auto weak = base::make_weak(sublist.get());
+diff --git a/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
+index 95a2a2c5ca..56081cfa9c 100644
+--- a/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
++++ b/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
+@@ -58,6 +58,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "info/profile/info_profile_values.h"
+ #include "info/info_memento.h"
+ #include "lang/lang_keys.h"
++#include "yukigram/lang.h"
+ #include "mtproto/sender.h"
+ #include "main/main_app_config.h"
+ #include "settings/settings_common.h"
+@@ -77,6 +78,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "ui/widgets/labels.h"
+ #include "ui/wrap/padding_wrap.h"
+ #include "ui/wrap/slide_wrap.h"
++#include "yukigram/settings/prevent_delete.h"
+ #include "ui/wrap/vertical_layout.h"
+ #include "ui/ui_utility.h"
+ #include "window/window_session_controller.h"
+@@ -2858,6 +2860,11 @@ void Controller::deleteWithConfirmation() {
+ 	const auto channel = _peer->asChannel();
+ 	Assert(channel != nullptr);
+ 
++	if (Yukigram::Settings::PreventDelete->current()) {
++		_navigation->parentController()->show(Ui::MakeInformBox({ .text = ktr("box/prevent-delete/text") }));
++		return;
++	}
++
+ 	const auto text = (_isGroup
+ 		? tr::lng_sure_delete_group
+ 		: tr::lng_sure_delete_channel)(tr::now);
+@@ -2876,6 +2883,10 @@ void Controller::deleteWithConfirmation() {
+ void Controller::deleteChannel() {
+ 	Expects(_peer->isChannel());
+ 
++	if (Yukigram::Settings::PreventDelete->current()) {
++		return;
++	}
++
+ 	const auto channel = _peer->asChannel();
+ 	const auto chat = channel->migrateFrom();
+ 
+diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
+index efeb06e983..da9a8a28a5 100644
+--- a/Telegram/SourceFiles/window/window_peer_menu.cpp
++++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
+@@ -46,6 +46,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "boxes/peers/edit_contact_box.h"
+ #include "boxes/peers/prepare_short_info_box.h"
+ #include "calls/calls_instance.h"
++#include "yukigram/settings/prevent_delete.h"
+ #include "inline_bots/bot_attach_web_view.h" // InlineBots::PeerType.
+ #include "ui/toast/toast.h"
+ #include "ui/text/format_values.h"
+@@ -3934,6 +3935,10 @@ Fn<void()> ClearHistoryHandler(
+ 		not_null<PeerData*> peer) {
+ 	return [=] {
+ 		if (!controller->showFrozenError()) {
++			if (Yukigram::Settings::PreventDelete->current()) {
++				controller->show(Ui::MakeInformBox({ .text = ktr("box/prevent-delete/text") }));
++				return;
++			}
+ 			controller->show(Box<DeleteMessagesBox>(peer, true));
+ 		}
+ 	};
+diff --git a/Telegram/SourceFiles/yukigram/settings/prevent_delete.cpp b/Telegram/SourceFiles/yukigram/settings/prevent_delete.cpp
+new file mode 100644
+index 0000000000..f9ca3d4133
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/prevent_delete.cpp
+@@ -0,0 +1,14 @@
++#include "yukigram/settings/prevent_delete.h"
++#include "yukigram/options.h"
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *PreventDelete = Yukigram::Options::make<bool>(kOptionPreventDelete, {
++	.keywords = { u"yukigram"_q, u"delete"_q, u"history"_q, u"chat"_q, u"prevent"_q },
++	.category = "interface",
++	.restartRequired = true,
++});
++
++const char kOptionPreventDelete[] = "prevent-delete";
++
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/prevent_delete.h b/Telegram/SourceFiles/yukigram/settings/prevent_delete.h
+new file mode 100644
+index 0000000000..a800411434
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/prevent_delete.h
+@@ -0,0 +1,5 @@
++#include "rpl/rpl.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *PreventDelete;
++extern const char kOptionPreventDelete[];
++}

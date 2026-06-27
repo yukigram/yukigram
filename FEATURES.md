@@ -172,6 +172,7 @@ These are placed under `(Major)` category.
 - Video controls for GIFs
 - :zap: :gear: Disable SHOUTING CASE on buttons
 - Show custom title in group call bar
+- :zap: :gear: Prevent chat history deletion
 
 These are placed under `(Interface)` category.
 
