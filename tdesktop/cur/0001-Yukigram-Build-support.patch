@@ -4,6 +4,19 @@ Date: Thu, 16 Apr 2026 20:50:31 +0300
 Subject: [PATCH] (Yukigram) Build support
 
 
+diff --git a/.gram/settings.jsonc b/.gram/settings.jsonc
+new file mode 100644
+index 0000000000..a57e7ca362
+--- /dev/null
++++ b/.gram/settings.jsonc
+@@ -0,0 +1,7 @@
++{
++  "languages": {
++    "C++": {
++      "hard_tabs": true
++    }
++  }
++}
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
 index 01291b190c..0465b39914 100644
 --- a/Telegram/CMakeLists.txt
@@ -18,6 +31,21 @@ index 01291b190c..0465b39914 100644
  if (APPLE)
      nice_target_sources(Telegram ${src_loc}
      PRIVATE
+diff --git a/Telegram/SourceFiles/.editorconfig b/Telegram/SourceFiles/.editorconfig
+new file mode 100644
+index 0000000000..e3ff5f4630
+--- /dev/null
++++ b/Telegram/SourceFiles/.editorconfig
+@@ -0,0 +1,9 @@
++root = true
++
++[*]
++end_of_line = lf
++insert_final_newline = true
++
++[*.{cpp,h}]
++indent_style = tab
++tab_width = 4
 diff --git a/Telegram/build/docker/centos_env/install.sh b/Telegram/build/docker/centos_env/install.sh
 new file mode 100755
 index 0000000000..d0f38c58ef
