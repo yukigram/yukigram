@@ -5,11 +5,11 @@ Subject: [PATCH] (Yukigram) Changelog
 
 
 diff --git a/changelog.txt b/changelog.txt
-index 6608e5f513..498e2c866d 100644
+index 6608e5f513..0a885bda3d 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,9 +1,36 @@
-+9999 wip (01.01.99)
++6.9.3.3 rc.1 (27.06.26)
 +
 +- Make emoji list in sticker preview fit to window
 +- Show custom title in group call bar
