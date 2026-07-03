@@ -184,6 +184,7 @@ These are placed under `(Interface)` category.
 - :gear: Disable edit by Up key
 - :star: :gear: Hide bottom button bar
     (Join channel, mute/unmute, etc)
+- :star: :gear: Disable swipe to next channel gesture
 
 These are placed under `(Chat)` category.
 

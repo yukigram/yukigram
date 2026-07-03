@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) English
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 new file mode 100644
-index 0000000000..2e5a09e0ad
+index 0000000000..fee0b0d651
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -0,0 +1,170 @@
+@@ -0,0 +1,172 @@
 +{
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -90,6 +90,8 @@ index 0000000000..2e5a09e0ad
 +    "opt/custom-emoji-size/desc": "112: default\n128: previous Yukigram default\n256: pixel perfect",
 +    "opt/disable-animoji/name": "Disable animated big emoji",
 +    "opt/disable-animoji/desc": "",
++    "opt/disable-swipe-next/name": "Disable swipe to next channel",
++    "opt/disable-swipe-next/desc": "",
 +    "opt/disable-up-edit/name": "Disable edit by Up key",
 +    "opt/disable-up-edit/desc": "",
 +    "opt/force-compose-search-one-column/name": "Embedded search in single-column",

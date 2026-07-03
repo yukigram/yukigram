@@ -5,13 +5,13 @@ Subject: [PATCH] (Yukigram) Changelog
 
 
 diff --git a/changelog.txt b/changelog.txt
-index dbaf0e8e7e..a6633c3e9c 100644
+index dbaf0e8e7e..a1c735518a 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,3 +1,11 @@
 +9999 wip (01.01.99)
 +
-+- No changes
++- Option to disable swipe to next channel gesture (tg://settings/yukigram/disable-swipe-next)
 +
 +6.9.4.0 beta (03.07.26)
 +

@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) Russian
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..7762a57682
+index 0000000000..b30f87580d
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
-@@ -0,0 +1,176 @@
+@@ -0,0 +1,178 @@
 +{
 +    "about/1/text": "Неофициальный форк {tdesktop_link},\nкоторый добавляет фичи и убирает мусор.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -96,6 +96,8 @@ index 0000000000..7762a57682
 +    "opt/custom-emoji-size/desc": "112 — по умолчанию\n128 — прошлые версии Yukigram\n256 — pixel perfect",
 +    "opt/disable-animoji/name": "Отключить анимодзи",
 +    "opt/disable-animoji/desc": "",
++    "opt/disable-swipe-next/name": "Не переключать каналы свайпом",
++    "opt/disable-swipe-next/desc": "",
 +    "opt/disable-up-edit/name": "Отключить редактирование по Up",
 +    "opt/disable-up-edit/desc": "",
 +    "opt/force-compose-search-one-column/name": "Встроенный поиск в телеф. режиме",
