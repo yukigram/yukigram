@@ -6,10 +6,10 @@ Subject: [PATCH] (Yukigram) Settings page
 Co-Authored-By: Lunya <241520024+lunya-miaou@users.noreply.github.com>
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 992356b642..d03c535c2c 100644
+index 822edb59d7..e0079c5583 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1750,6 +1750,8 @@ PRIVATE
+@@ -1766,6 +1766,8 @@ PRIVATE
      settings/sections/settings_shortcuts.h
      settings/sections/settings_websites.cpp
      settings/sections/settings_websites.h
@@ -19,10 +19,10 @@ index 992356b642..d03c535c2c 100644
      storage/details/storage_file_utilities.h
      storage/details/storage_settings_scheme.cpp
 diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
-index f1d4e37ba4..b82be2bac1 100644
+index b52dc8de9b..c4d9a3e5f8 100644
 --- a/Telegram/Resources/langs/lang.strings
 +++ b/Telegram/Resources/langs/lang.strings
-@@ -853,6 +853,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -856,6 +856,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  "lng_settings_add_account_about" = "You can add up to four accounts with different phone numbers.";
  "lng_settings_peer_to_peer_about" = "Disabling peer-to-peer will relay all calls through Telegram servers to avoid revealing your IP address, but may decrease audio and video quality.";
  "lng_settings_advanced" = "Advanced";
@@ -31,7 +31,7 @@ index f1d4e37ba4..b82be2bac1 100644
  "lng_settings_messages" = "Messages";
  "lng_settings_themes" = "Themes";
 diff --git a/Telegram/SourceFiles/settings/sections/settings_main.cpp b/Telegram/SourceFiles/settings/sections/settings_main.cpp
-index 5f41410a18..d4d9229279 100644
+index ea0e360fcb..51f7fd0eb7 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_main.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_main.cpp
 @@ -59,6 +59,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -42,7 +42,7 @@ index 5f41410a18..d4d9229279 100644
  #include "storage/localstorage.h"
  #include "ui/basic_click_handlers.h"
  #include "ui/boxes/confirm_box.h"
-@@ -445,6 +446,13 @@ void BuildSectionButtons(SectionBuilder &builder) {
+@@ -451,6 +452,13 @@ void BuildSectionButtons(SectionBuilder &builder) {
  		.keywords = { u"battery"_q, u"animations"_q, u"power"_q, u"saving"_q },
  	});
  

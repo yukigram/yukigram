@@ -5,10 +5,10 @@ Subject: [PATCH] (Info) More info in PeerListBox
 
 
 diff --git a/Telegram/SourceFiles/boxes/peer_list_box.cpp b/Telegram/SourceFiles/boxes/peer_list_box.cpp
-index c54e1d2199..4535cf881d 100644
+index 4ff26186d1..92416ec2c2 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peer_list_box.cpp
-@@ -25,8 +25,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -27,8 +27,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "ui/painter.h"
  #include "ui/ui_utility.h"
  #include "lang/lang_keys.h"
@@ -19,7 +19,7 @@ index c54e1d2199..4535cf881d 100644
  #include "data/data_chat.h"
  #include "data/data_session.h"
  #include "data/data_changes.h"
-@@ -645,18 +647,23 @@ void PeerListRow::refreshStatus() {
+@@ -722,18 +724,23 @@ void PeerListRow::refreshStatus() {
  			_statusValidTill = crl::now()
  				+ Data::OnlineChangeTimeout(user, time);
  		}
@@ -31,12 +31,13 @@ index c54e1d2199..4535cf881d 100644
 -			setStatusText(tr::lng_chat_status_members(tr::now, lt_count_decimal, chat->count));
  		} else {
 -			setStatusText(tr::lng_group_status(tr::now));
-+			setStatusText(ktr("box/peer-list/count/members", chat->count, { "kind", ktr("box/peer-list/group") }, { "count", QString::number(chat->count) }));
- 		}
+-		}
 -	} else if (peer()->isMegagroup()) {
 -		setStatusText(tr::lng_group_status(tr::now));
 -	} else if (peer()->isChannel()) {
 -		setStatusText(tr::lng_channel_status(tr::now));
++			setStatusText(ktr("box/peer-list/count/members", chat->count, { "kind", ktr("box/peer-list/group") }, { "count", QString::number(chat->count) }));
++		}
 +	} else if (const auto channel = peer()->asChannel(); channel->membersCountKnown()) {
 +		setStatusText(ktr(
 +			channel->isBroadcast() ? "box/peer-list/count/subscribers" : "box/peer-list/count/members",

@@ -5,10 +5,10 @@ Subject: [PATCH] (Style) Constrain round messages width
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
-index 00529180dc..039041c51b 100644
+index 0f2da2682b..dc833e832b 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
-@@ -392,11 +392,17 @@ QSize Gif::countCurrentSize(int newWidth) {
+@@ -406,11 +406,17 @@ QSize Gif::countCurrentSize(int newWidth) {
  		auto reply = _parent->Get<Reply>();
  		auto forwarded = item->Get<HistoryMessageForwarded>();
  		if (via || reply || forwarded) {

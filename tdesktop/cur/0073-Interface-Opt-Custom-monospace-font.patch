@@ -5,10 +5,10 @@ Subject: [PATCH] (Interface)(Opt) Custom monospace font
 
 
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
-index 1267f6f7b3..670ba47ed6 100644
+index 8df07cb3d5..c1e759cef2 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
 +++ b/Telegram/SourceFiles/core/launcher.cpp
-@@ -25,6 +25,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -26,6 +26,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include <QtCore/QStandardPaths>
  #include <QtCore/QLibraryInfo>
  
@@ -19,7 +19,7 @@ index 1267f6f7b3..670ba47ed6 100644
  namespace Core {
  namespace {
  
-@@ -390,6 +394,7 @@ int Launcher::exec() {
+@@ -391,6 +395,7 @@ int Launcher::exec() {
  	Logs::start();
  	base::options::init(cWorkingDir() + "tdata/experimental_options.json");
  	Yukigram::Options::init();

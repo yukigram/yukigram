@@ -5,7 +5,7 @@ Subject: [PATCH] (Info) Show mutual contacts
 
 
 diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
-index 161f644fd7..0bf27cff07 100644
+index 40590df472..b434329713 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 +++ b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 @@ -63,6 +63,42 @@ constexpr auto kSearchPerPage = 50;
@@ -51,7 +51,7 @@ index 161f644fd7..0bf27cff07 100644
  object_ptr<Ui::BoxContent> PrepareContactsBox(
  		not_null<Window::SessionController*> window) {
  	using Mode = ContactsBoxController::SortMode;
-@@ -787,7 +823,7 @@ bool ContactsBoxController::appendRow(not_null<UserData*> user) {
+@@ -814,7 +850,7 @@ bool ContactsBoxController::appendRow(not_null<UserData*> user) {
  
  std::unique_ptr<PeerListRow> ContactsBoxController::createRow(
  		not_null<UserData*> user) {
@@ -61,7 +61,7 @@ index 161f644fd7..0bf27cff07 100644
  
  RecipientMoneyRestrictionError WriteMoneyRestrictionError(
 diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.h b/Telegram/SourceFiles/boxes/peer_list_controllers.h
-index 6eb90a0009..a829db20d5 100644
+index c110499c48..33a581c328 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_controllers.h
 +++ b/Telegram/SourceFiles/boxes/peer_list_controllers.h
 @@ -39,6 +39,26 @@ namespace Window {

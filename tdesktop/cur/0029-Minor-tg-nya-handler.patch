@@ -5,7 +5,7 @@ Subject: [PATCH] (Minor) tg://nya handler
 
 
 diff --git a/Telegram/SourceFiles/core/local_url_handlers.cpp b/Telegram/SourceFiles/core/local_url_handlers.cpp
-index 61857485c0..b7bafecd50 100644
+index 5b13c00f1c..595c2c20bd 100644
 --- a/Telegram/SourceFiles/core/local_url_handlers.cpp
 +++ b/Telegram/SourceFiles/core/local_url_handlers.cpp
 @@ -24,6 +24,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 61857485c0..b7bafecd50 100644
  #include "payments/payments_non_panel_process.h"
  #include "boxes/peers/edit_peer_info_box.h"
  #include "boxes/share_box.h"
-@@ -1674,6 +1675,22 @@ bool ResolveOAuth(
+@@ -1700,6 +1701,22 @@ bool ResolveOAuth(
  	return true;
  }
  
@@ -39,7 +39,7 @@ index 61857485c0..b7bafecd50 100644
  } // namespace
  
  bool TryRouterForLocalUrl(
-@@ -1684,6 +1701,14 @@ bool TryRouterForLocalUrl(
+@@ -1710,6 +1727,14 @@ bool TryRouterForLocalUrl(
  
  const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
  	static auto Result = std::vector<LocalUrlHandler>{

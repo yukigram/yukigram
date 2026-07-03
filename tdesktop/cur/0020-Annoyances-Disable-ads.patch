@@ -5,7 +5,7 @@ Subject: [PATCH] (Annoyances) Disable ads
 
 
 diff --git a/Telegram/SourceFiles/data/components/sponsored_messages.cpp b/Telegram/SourceFiles/data/components/sponsored_messages.cpp
-index 4e68421fff..a6f59ccc0c 100644
+index 40c00c4bb4..d9f005df85 100644
 --- a/Telegram/SourceFiles/data/components/sponsored_messages.cpp
 +++ b/Telegram/SourceFiles/data/components/sponsored_messages.cpp
 @@ -239,25 +239,14 @@ void SponsoredMessages::inject(
@@ -36,10 +36,10 @@ index 4e68421fff..a6f59ccc0c 100644
  }
  
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-index 943361e05a..46f951ff64 100644
+index 0c9a1fa181..7bd0b72cf6 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-@@ -4135,6 +4135,7 @@ void InnerWidget::peerSearchReceived(Api::PeerSearchResult result) {
+@@ -4376,6 +4376,7 @@ void InnerWidget::peerSearchReceived(Api::PeerSearchResult result) {
  		if (inlist(peer) || _sponsoredRemoved.contains(peer)) {
  			continue;
  		}

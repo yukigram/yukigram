@@ -22,10 +22,10 @@ index 0000000000..9d9591e164
 +indent_style = space
 +indent_size = 4
 diff --git a/Telegram/SourceFiles/core/application.cpp b/Telegram/SourceFiles/core/application.cpp
-index 34d67906f5..79b9335067 100644
+index aeb5a6008c..cbf0bd815d 100644
 --- a/Telegram/SourceFiles/core/application.cpp
 +++ b/Telegram/SourceFiles/core/application.cpp
-@@ -49,6 +49,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -51,6 +51,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "lang/lang_cloud_manager.h"
  #include "lang/lang_hardcoded.h"
  #include "lang/lang_instance.h"
@@ -33,7 +33,7 @@ index 34d67906f5..79b9335067 100644
  #include "inline_bots/bot_attach_web_view.h"
  #include "mainwidget.h"
  #include "tray.h"
-@@ -271,6 +272,7 @@ void Application::run() {
+@@ -273,6 +274,7 @@ void Application::run() {
  	style::internal::StartFonts();
  
  	ValidateScale();

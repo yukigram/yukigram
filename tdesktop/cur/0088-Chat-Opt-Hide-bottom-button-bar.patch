@@ -5,10 +5,10 @@ Subject: [PATCH] (Chat)(Opt) Hide bottom button bar
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 9ce14018ba..e71c6ac9ee 100644
+index cabf62d54a..41039e3829 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -101,6 +101,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -102,6 +102,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "data/data_premium_limits.h" // Data::PremiumLimits.
  #include "data/stickers/data_stickers.h"
  #include "data/stickers/data_custom_emoji.h"
@@ -16,7 +16,7 @@ index 9ce14018ba..e71c6ac9ee 100644
  #include "history/history.h"
  #include "history/history_item.h"
  #include "history/history_item_helpers.h" // GetErrorForSending.
-@@ -503,6 +504,12 @@ HistoryWidget::HistoryWidget(
+@@ -537,6 +538,12 @@ HistoryWidget::HistoryWidget(
  		updateControlsGeometry();
  	}, lifetime());
  
@@ -29,7 +29,7 @@ index 9ce14018ba..e71c6ac9ee 100644
  	_fieldChatStyle = InitMessageField(controller, _field, [=](
  			not_null<DocumentData*> document) {
  		if (_peer && Data::AllowEmojiWithoutPremium(_peer, document)) {
-@@ -5914,6 +5921,7 @@ bool HistoryWidget::isBotStart() const {
+@@ -6423,6 +6430,7 @@ bool HistoryWidget::isBotStart() const {
  	const auto user = _peer ? _peer->asUser() : nullptr;
  	if (!user
  		|| !user->isBot()
@@ -37,7 +37,7 @@ index 9ce14018ba..e71c6ac9ee 100644
  		|| !_canSendMessages) {
  		return false;
  	} else if (!user->botInfo->startToken.isEmpty()) {
-@@ -5929,10 +5937,16 @@ bool HistoryWidget::isReportMessages() const {
+@@ -6438,10 +6446,16 @@ bool HistoryWidget::isReportMessages() const {
  }
  
  bool HistoryWidget::isBlocked() const {
@@ -54,7 +54,7 @@ index 9ce14018ba..e71c6ac9ee 100644
  	if (const auto channel = _peer ? _peer->asChannel() : nullptr) {
  		return !channel->amIn() && !channel->isMonoforum() && !_canSendMessages;
  	}
-@@ -5945,6 +5959,7 @@ bool HistoryWidget::isChoosingTheme() const {
+@@ -6454,6 +6468,7 @@ bool HistoryWidget::isChoosingTheme() const {
  
  bool HistoryWidget::isMuteUnmute() const {
  	return _peer
@@ -63,18 +63,18 @@ index 9ce14018ba..e71c6ac9ee 100644
  			|| (_peer->isGigagroup() && !Data::CanSendAnything(_peer))
  			|| _peer->isRepliesChat()
 diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-index 819707fdb2..1d213c82a1 100644
+index c23b8d49bd..371d9e6b48 100644
 --- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-@@ -28,6 +28,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "history/history_drag_area.h"
- #include "history/history_item_components.h"
+@@ -30,6 +30,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "history/history_item_helpers.h" // GetErrorForSending.
+ #include "iv/iv_rich_message_serializer.h"
+ #include "iv/iv_rich_page.h"
 +#include "yukigram/settings/hide_bottom_bar.h"
  #include "ui/chat/pinned_bar.h"
  #include "ui/chat/chat_style.h"
  #include "ui/controls/swipe_handler.h"
-@@ -1722,6 +1723,10 @@ void ChatWidget::refreshJoinGroupButton() {
+@@ -1852,6 +1853,10 @@ void ChatWidget::refreshJoinGroupButton() {
  		set(nullptr);
  	} else {
  		_canSendTexts = false;

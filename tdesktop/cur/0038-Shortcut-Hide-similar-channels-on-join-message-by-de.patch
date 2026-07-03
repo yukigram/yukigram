@@ -5,10 +5,10 @@ Subject: [PATCH] (Shortcut) Hide similar channels on join message by default
 
 
 diff --git a/Telegram/SourceFiles/apiwrap.cpp b/Telegram/SourceFiles/apiwrap.cpp
-index 528577e93b..08c4440f64 100644
+index 857f8643c9..0f4a5f6d71 100644
 --- a/Telegram/SourceFiles/apiwrap.cpp
 +++ b/Telegram/SourceFiles/apiwrap.cpp
-@@ -1876,7 +1876,6 @@ void ApiWrap::joinChannel(not_null<ChannelData*> channel) {
+@@ -1894,7 +1894,6 @@ void ApiWrap::joinChannel(not_null<ChannelData*> channel) {
  
  		using Flag = ChannelDataFlag;
  		chatParticipants().loadSimilarPeers(channel);

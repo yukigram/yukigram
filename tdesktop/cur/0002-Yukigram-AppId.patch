@@ -5,10 +5,10 @@ Subject: [PATCH] (Yukigram) AppId
 
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 0465b39914..898820b6f9 100644
+index 4061ee3b14..c4a2fe0ef8 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1974,6 +1974,21 @@ PRIVATE
+@@ -1992,6 +1992,21 @@ PRIVATE
  file(GLOB_RECURSE yuki_src CONFIGURE_DEPENDS "${src_loc}/yukigram/*.cpp" "${src_loc}/yukigram/*.h")
  target_sources(Telegram PRIVATE ${yuki_src})
  
@@ -30,7 +30,7 @@ index 0465b39914..898820b6f9 100644
  if (APPLE)
      nice_target_sources(Telegram ${src_loc}
      PRIVATE
-@@ -2176,7 +2191,7 @@ else()
+@@ -2187,7 +2202,7 @@ else()
          set(bundle_identifier "com.tdesktop.Telegram")
      endif()
      set(bundle_entitlements "Telegram.entitlements")
@@ -39,7 +39,7 @@ index 0465b39914..898820b6f9 100644
  endif()
  
  if (CMAKE_GENERATOR STREQUAL Xcode)
-@@ -2222,7 +2237,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+@@ -2233,7 +2248,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
  if (APPLE
      OR is_multi_config
      OR NOT CMAKE_EXECUTABLE_SUFFIX STREQUAL ""
@@ -48,7 +48,7 @@ index 0465b39914..898820b6f9 100644
      set(output_folder ${CMAKE_BINARY_DIR})
  else()
      set(output_folder ${CMAKE_BINARY_DIR}/bin)
-@@ -2395,30 +2410,37 @@ elseif (build_winstore)
+@@ -2406,30 +2421,37 @@ elseif (build_winstore)
      )
  endif()
  
@@ -132,18 +132,18 @@ index 0000000000..9efde8c043
 +  </qresource>
 +</RCC>
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
-index 5a4865b11d..39ad62968d 100644
+index 8223996d21..deaf4ab31f 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
 +++ b/Telegram/SourceFiles/core/launcher.cpp
-@@ -18,6 +18,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "core/sandbox.h"
+@@ -19,6 +19,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "core/version.h"
  #include "base/concurrent_timer.h"
  #include "base/options.h"
 +#include "yukigram/appid.h"
  
  #include <QtCore/QLoggingCategory>
  #include <QtCore/QStandardPaths>
-@@ -335,7 +336,7 @@ void Launcher::init() {
+@@ -336,7 +337,7 @@ void Launcher::init() {
  	prepareSettings();
  	initQtMessageLogging();
  
@@ -153,18 +153,18 @@ index 5a4865b11d..39ad62968d 100644
  #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
  	// fallback session management is useless for tdesktop since it doesn't have
 diff --git a/Telegram/SourceFiles/platform/linux/specific_linux.cpp b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-index b970da0b01..11287c7d92 100644
+index a5249ff47a..b758fa94a0 100644
 --- a/Telegram/SourceFiles/platform/linux/specific_linux.cpp
 +++ b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-@@ -19,6 +19,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "core/application.h"
+@@ -21,6 +21,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "core/update_checker.h"
+ #include "core/version.h"
  #include "data/data_location.h"
 +#include "yukigram/appid.h"
  #include "window/window_controller.h"
  #include "webview/platform/linux/webview_linux_webkitgtk.h"
  
-@@ -234,7 +235,7 @@ bool GenerateDesktopFile(
+@@ -232,7 +233,7 @@ bool GenerateDesktopFile(
  	DEBUG_LOG(("App Info: placing .desktop file to %1").arg(targetPath));
  	if (!QDir(targetPath).exists()) QDir().mkpath(targetPath);
  
@@ -173,7 +173,7 @@ index b970da0b01..11287c7d92 100644
  	const auto targetFile = targetPath
  		+ QGuiApplication::desktopFileName()
  		+ u".desktop"_q;
-@@ -373,7 +374,7 @@ bool GenerateDesktopFile(
+@@ -371,7 +372,7 @@ bool GenerateDesktopFile(
  		hashMd5Hex(d.constData(), d.size(), md5Hash);
  
  		if (!Core::Launcher::Instance().customWorkingDir()) {
@@ -182,7 +182,7 @@ index b970da0b01..11287c7d92 100644
  				targetPath,
  				md5Hash));
  
-@@ -382,7 +383,7 @@ bool GenerateDesktopFile(
+@@ -380,7 +381,7 @@ bool GenerateDesktopFile(
  			hashMd5Hex(exePath.constData(), exePath.size(), md5Hash);
  		}
  
@@ -191,7 +191,7 @@ index b970da0b01..11287c7d92 100644
  			targetPath,
  			md5Hash));
  	}
-@@ -441,7 +442,7 @@ bool GenerateServiceFile(bool silent = false) {
+@@ -439,7 +440,7 @@ bool GenerateServiceFile(bool silent = false) {
  		const auto d = QFile::encodeName(QDir(cWorkingDir()).absolutePath());
  		hashMd5Hex(d.constData(), d.size(), md5Hash);
  
@@ -200,7 +200,7 @@ index b970da0b01..11287c7d92 100644
  			targetPath,
  			md5Hash));
  	}
-@@ -741,11 +742,11 @@ void start() {
+@@ -737,11 +738,11 @@ void start() {
  		}
  
  		if (!Core::UpdaterDisabled()) {

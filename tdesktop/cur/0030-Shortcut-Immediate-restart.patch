@@ -5,7 +5,7 @@ Subject: [PATCH] (Shortcut) Immediate restart
 
 
 diff --git a/Telegram/SourceFiles/settings/sections/settings_main.cpp b/Telegram/SourceFiles/settings/sections/settings_main.cpp
-index d4d9229279..1ca6465eda 100644
+index 51f7fd0eb7..21f6608c0b 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_main.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_main.cpp
 @@ -36,6 +36,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index d4d9229279..1ca6465eda 100644
  #include "lottie/lottie_icon.h"
  #include "menu/menu_checked_action.h"
  #include "main/main_account.h"
-@@ -669,6 +670,13 @@ void Main::fillTopBarMenu(const Ui::Menu::MenuCallback &addAction) {
+@@ -676,6 +677,13 @@ void Main::fillTopBarMenu(const Ui::Menu::MenuCallback &addAction) {
  			&st::menuIconEdit);
  	}
  	const auto window = &controller()->window();

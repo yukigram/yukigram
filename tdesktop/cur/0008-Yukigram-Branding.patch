@@ -5,18 +5,18 @@ Subject: [PATCH] (Yukigram) Branding
 
 
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
-index 3a488ae04c..cb3f6da6c3 100644
+index 11d1abe174..8d9a25a9e3 100644
 --- a/Telegram/SourceFiles/boxes/about_box.cpp
 +++ b/Telegram/SourceFiles/boxes/about_box.cpp
-@@ -12,6 +12,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "core/file_utilities.h"
+@@ -13,6 +13,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "core/update_checker.h"
+ #include "core/version.h"
  #include "lang/lang_keys.h"
 +#include "yukigram/lang.h"
  #include "ui/boxes/confirm_box.h"
  #include "ui/painter.h"
  #include "ui/rect.h"
-@@ -34,10 +35,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -35,10 +36,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  namespace {
  
  rpl::producer<TextWithEntities> Text1() {
@@ -29,7 +29,7 @@ index 3a488ae04c..cb3f6da6c3 100644
  }
  
  rpl::producer<TextWithEntities> Text2() {
-@@ -54,10 +53,9 @@ rpl::producer<TextWithEntities> Text2() {
+@@ -55,10 +54,9 @@ rpl::producer<TextWithEntities> Text2() {
  }
  
  rpl::producer<TextWithEntities> Text3() {
@@ -44,7 +44,7 @@ index 3a488ae04c..cb3f6da6c3 100644
  
  } // namespace
 diff --git a/Telegram/SourceFiles/history/history_item_helpers.cpp b/Telegram/SourceFiles/history/history_item_helpers.cpp
-index 1af7166acc..3ee4f879f1 100644
+index e31c3a82f0..4f9bb0601a 100644
 --- a/Telegram/SourceFiles/history/history_item_helpers.cpp
 +++ b/Telegram/SourceFiles/history/history_item_helpers.cpp
 @@ -52,6 +52,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -55,7 +55,7 @@ index 1af7166acc..3ee4f879f1 100644
  
  namespace {
  
-@@ -1317,10 +1318,7 @@ void CheckPollVoteNotificationSchedule(
+@@ -1320,10 +1321,7 @@ void CheckPollVoteNotificationSchedule(
  }
  
  [[nodiscard]] TextWithEntities UnsupportedMessageText() {
@@ -67,7 +67,7 @@ index 1af7166acc..3ee4f879f1 100644
  	TextUtilities::ParseEntities(result, Ui::ItemTextNoMonoOptions().flags);
  	result.entities.push_front(
  		EntityInText(EntityType::Italic, 0, result.text.size()));
-@@ -1334,9 +1332,9 @@ HistoryMessageMarkupData UnsupportedMessageMarkup() {
+@@ -1337,9 +1335,9 @@ HistoryMessageMarkupData UnsupportedMessageMarkup() {
  	auto row = std::vector<Button>();
  	row.emplace_back(
  		Button::Type::Url,

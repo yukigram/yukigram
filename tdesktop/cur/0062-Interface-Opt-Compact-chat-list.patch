@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface)(Opt) Compact chat list
 
 
 diff --git a/Telegram/SourceFiles/dialogs/dialogs.style b/Telegram/SourceFiles/dialogs/dialogs.style
-index 267f132f30..1775c46477 100644
+index 64d66da238..a2f9ad0bad 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs.style
 +++ b/Telegram/SourceFiles/dialogs/dialogs.style
 @@ -100,6 +100,11 @@ defaultDialogRow: DialogRow {
@@ -21,18 +21,18 @@ index 267f132f30..1775c46477 100644
  	height: 72px;
  	textTop: 30px;
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_entry.cpp b/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
-index 5a6ab2d037..60026a5ec3 100644
+index 2796d3a2c1..36f3450c00 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
-@@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- 
+@@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "dialogs/dialogs_key.h"
  #include "dialogs/dialogs_indexed_list.h"
+ #include "base/options.h"
 +#include "dialogs/ui/dialogs_layout.h"
  #include "base/unixtime.h"
  #include "data/data_changes.h"
  #include "data/data_session.h"
-@@ -21,6 +22,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -22,6 +23,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "mainwidget.h"
  #include "main/main_session.h"
  #include "main/main_session_settings.h"
@@ -40,7 +40,7 @@ index 5a6ab2d037..60026a5ec3 100644
  #include "ui/text/format_values.h"
  #include "ui/text/text_options.h"
  #include "ui/ui_utility.h"
-@@ -490,6 +492,9 @@ void Entry::updateChatListEntryHeight() {
+@@ -523,6 +525,9 @@ void Entry::updateChatListEntryHeight() {
  }
  
  bool Entry::hasChatsFilterTags(FilterId exclude) const {
@@ -51,10 +51,10 @@ index 5a6ab2d037..60026a5ec3 100644
  		return false;
  	}
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-index 46f951ff64..a04fbc592c 100644
+index 7bd0b72cf6..f6028a7272 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-@@ -36,6 +36,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -37,6 +37,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "ui/rect.h"
  #include "ui/screen_reader_mode.h"
  #include "ui/ui_utility.h"
@@ -62,7 +62,7 @@ index 46f951ff64..a04fbc592c 100644
  #include "data/components/sponsored_messages.h"
  #include "data/data_drafts.h"
  #include "data/data_folder.h"
-@@ -379,6 +380,7 @@ InnerWidget::InnerWidget(
+@@ -385,6 +386,7 @@ InnerWidget::InnerWidget(
  	Ui::ScheduleThanosEffectWarmUp(&session(), lifetime());
  
  	rpl::merge(
@@ -70,7 +70,7 @@ index 46f951ff64..a04fbc592c 100644
  		session().settings().archiveCollapsedChanges() | rpl::map_to(false),
  		session().data().chatsFilters().changed() | rpl::map_to(true),
  		session().data().chatsFilters().tagsEnabledChanges(
-@@ -906,7 +908,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
+@@ -915,7 +917,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
  			}
  		}
  
@@ -78,9 +78,9 @@ index 46f951ff64..a04fbc592c 100644
  		context.st = (forum || monoforum) ? &st::forumDialogRow : _st.get();
 +	}
  
- 		auto chatsFilterTags = std::vector<QImage*>();
- 		if (context.narrow) {
-@@ -1770,7 +1774,7 @@ void InnerWidget::performDrag() {
+ 		const auto videoUserpic = validateVideoUserpic(row);
+ 		const auto cacheRatio = style::DevicePixelRatio();
+@@ -1849,7 +1853,7 @@ void InnerWidget::performDrag() {
  			('@' + u).toUtf8());
  	}
  
@@ -89,7 +89,7 @@ index 46f951ff64..a04fbc592c 100644
  	auto pixmap = QPixmap(Size(st.height * style::DevicePixelRatio()));
  	pixmap.setDevicePixelRatio(style::DevicePixelRatio());
  	pixmap.fill(Qt::transparent);
-@@ -5354,7 +5358,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
+@@ -5602,7 +5606,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
  		: st::dialogsCallBadgeSize;
  	const auto stroke = st::dialogsOnlineBadgeStroke;
  	const auto skip = user
@@ -148,7 +148,7 @@ index 3b01b6e83f..6c8faed4ef 100644
  		|| _cornerBadgeUserpic->active != active
  		|| _cornerBadgeUserpic->frameIndex != frameIndex
 diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
-index e8e88862b0..c097f3f309 100644
+index b94497266b..5a9386629e 100644
 --- a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 +++ b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -209,7 +209,7 @@ index e8e88862b0..c097f3f309 100644
  	auto texttop = context.st->textTop;
  	if (const auto folder = entry->asFolder()) {
  		const auto availableWidth = PaintWideCounter(
-@@ -754,6 +769,10 @@ void PaintRow(
+@@ -756,6 +771,10 @@ void PaintRow(
  			texttop,
  			context.width);
  	}
@@ -220,7 +220,7 @@ index e8e88862b0..c097f3f309 100644
  	const auto sendStateIcon = [&]() -> const style::icon* {
  		if (!thread) {
  			return nullptr;
-@@ -1169,6 +1188,7 @@ void RowPainter::Paint(
+@@ -1171,6 +1190,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,
@@ -228,7 +228,7 @@ index e8e88862b0..c097f3f309 100644
  		QRect(0, 0, context.width, row->height()),
  		entry,
  		videoUserpic,
-@@ -1281,6 +1301,7 @@ void RowPainter::Paint(
+@@ -1283,6 +1303,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,

@@ -74,24 +74,11 @@ index 2e8ee8c52d..4a11612dad 100644
  	return tr::lng_status_lastseen_date_time(tr::now, lt_date, date, lt_time, time);
  }
  
-diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 2cb8aa7eee..6c47e9fae6 100644
---- a/Telegram/SourceFiles/history/history_inner_widget.cpp
-+++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3933,7 +3933,7 @@ TextForMimeData HistoryInner::getSelectedText() const {
- 		const auto i = texts.emplace(item->position(), Part{
- 			.name = item->author()->name(),
- 			.time = QString("[%1] ").arg(
--				QLocale().toString(ItemDateTime(item), QLocale::ShortFormat)),
-+				QLocale().toString(ItemDateTime(item), Lang::DateTimeFormat())),
- 			.unwrapped = std::move(unwrapped),
- 		}).first;
- 		fullSize += i->second.time.size()
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
-index 15c2ee4bf8..b66db0af7a 100644
+index 3b49e9c007..2cee977b2c 100644
 --- a/Telegram/SourceFiles/history/history_item.cpp
 +++ b/Telegram/SourceFiles/history/history_item.cpp
-@@ -1408,7 +1408,7 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
+@@ -1410,7 +1410,7 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
  
  QString GenerateServiceTime(TimeId date) {
  	if (date > 0) {
@@ -100,7 +87,7 @@ index 15c2ee4bf8..b66db0af7a 100644
  	}
  	return QString();
  }
-@@ -8016,7 +8016,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
+@@ -8030,7 +8030,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
  	};
  	const auto time = QLocale().toString(
  		scheduled.time(),
@@ -109,32 +96,32 @@ index 15c2ee4bf8..b66db0af7a 100644
  	const auto prepareGeneric = [&] {
  		prepareWithDate(tr::lng_group_call_starts_date(
  			tr::now,
+diff --git a/Telegram/SourceFiles/history/history_item_text.cpp b/Telegram/SourceFiles/history/history_item_text.cpp
+index be6b59aa6a..a1c8e9d244 100644
+--- a/Telegram/SourceFiles/history/history_item_text.cpp
++++ b/Telegram/SourceFiles/history/history_item_text.cpp
+@@ -351,7 +351,7 @@ TextForMimeData HistorySelectedItemPlainWrappedText(
+ 		TextForMimeData &&body) {
+ 	auto result = TextForMimeData();
+ 	const auto time = u"[%1] "_q.arg(
+-		QLocale().toString(ItemDateTime(item), QLocale::ShortFormat));
++		QLocale().toString(ItemDateTime(item), Lang::DateTimeFormat()));
+ 	const auto author = item->author()->name();
+ 	const auto size = time.size() + author.size() + 2 + body.expanded.size();
+ 	result.reserve(size);
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-index fe1996d6bb..be52733bad 100644
+index 12101bf4c8..bc1d16f23a 100644
 --- a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-@@ -469,7 +469,7 @@ void BottomInfo::layoutDateText() {
- 	const auto prefix = !author.isEmpty() ? u", "_q : QString();
- 	const auto date = edited + ((_data.flags & Data::Flag::ForwardedDate)
+@@ -489,7 +489,7 @@ void BottomInfo::layoutDateText() {
+ 		? FormatEditedDate(_data.date, _data.editedDate)
+ 		: edited + ((_data.flags & Data::Flag::ForwardedDate)
  		? Ui::FormatDateTimeSavedFrom(_data.date)
 -		: QLocale().toString(_data.date.time(), QLocale::ShortFormat));
 +		: QLocale().toString(_data.date.time(), Lang::TimeFormat()));
  	const auto afterAuthor = prefix + date;
  	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
  	const auto authorWidth = st::msgDateFont->width(author);
-diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index e3a5c2a972..ace2719be5 100644
---- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-+++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-@@ -2827,7 +2827,7 @@ TextForMimeData ListWidget::getSelectedText() const {
- 			not_null<HistoryItem*> item,
- 			TextForMimeData &&unwrapped) {
- 		auto time = QString("[%1] ").arg(
--			QLocale().toString(ItemDateTime(item), QLocale::ShortFormat));
-+			QLocale().toString(ItemDateTime(item), Lang::DateTimeFormat()));
- 		auto part = TextForMimeData();
- 		auto size = time.size()
- 			+ item->author()->name().size()
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_call.cpp b/Telegram/SourceFiles/history/view/media/history_view_call.cpp
 index 0e58229f31..df1d4da4d4 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_call.cpp

@@ -18,10 +18,10 @@ index 0000000000..a57e7ca362
 +  }
 +}
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 01291b190c..0465b39914 100644
+index ef6d3ed803..4061ee3b14 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1971,6 +1971,9 @@ PRIVATE
+@@ -1989,6 +1989,9 @@ PRIVATE
      tray.h
  )
  
@@ -80,7 +80,7 @@ index 0000000000..441c32a088
 +./run-in-docker.sh env DESTDIR="${DESTDIR:-.}" /usr/src/tdesktop/Telegram/build/docker/centos_env/install.sh "$@"
 diff --git a/run-in-docker.sh b/run-in-docker.sh
 new file mode 100755
-index 0000000000..a3afc6b680
+index 0000000000..77a5544298
 --- /dev/null
 +++ b/run-in-docker.sh
 @@ -0,0 +1,16 @@
@@ -98,8 +98,8 @@ index 0000000000..a3afc6b680
 +    -u $USERFLAGS \
 +    -v "$PWD:/usr/src/tdesktop" \
 +    -e CONFIG=${CONFIG:-Release} \
-+    ghcr.io/telegramdesktop/tdesktop/centos_env@sha256:b582224ed1f9ced75e5a7b3cb4d9f2fd40397e0a476ddec925929d2558348ccc \
++    ghcr.io/telegramdesktop/tdesktop/centos_env@sha256:103d3a27ee82569dd8d67d5c963aa000139f1978224ff80308642a26739fdc18 \
 +    "$@"
 
-base-commit: 3887c78b035b47f179ef366e3a8a56c08c44ad0b
-prerequisite-patch-id: 47cca3fa975177b41a6043a70589258076dd650b
+base-commit: 8a22f2c106dd3c601e11d124b8d1894613d596fd
+prerequisite-patch-id: 39bf26685bf7471beddedd6ebea16adfdc7d2ed5

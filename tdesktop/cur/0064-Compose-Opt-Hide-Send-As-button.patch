@@ -5,10 +5,10 @@ Subject: [PATCH] (Compose)(Opt) Hide Send As button
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 4e565652b0..c72fde743f 100644
+index cfbb1a9ff4..27de73dc48 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -62,6 +62,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -63,6 +63,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "ui/controls/send_as_button.h"
  #include "ui/controls/silent_toggle.h"
  #include "ui/ui_utility.h"
@@ -16,7 +16,7 @@ index 4e565652b0..c72fde743f 100644
  #include "inline_bots/inline_bot_result.h"
  #include "base/event_filter.h"
  #include "base/options.h"
-@@ -3496,6 +3497,14 @@ void HistoryWidget::refreshSuggestPostToggle() {
+@@ -3807,6 +3808,14 @@ void HistoryWidget::refreshSuggestPostToggle() {
  }
  
  void HistoryWidget::setupSendAsToggle() {
@@ -31,7 +31,7 @@ index 4e565652b0..c72fde743f 100644
  	session().sendAsPeers().updated(
  	) | rpl::filter([=](Main::SendAsKey key) {
  		return (key.peer == _peer)
-@@ -3512,7 +3521,7 @@ void HistoryWidget::refreshSendAsToggle() {
+@@ -3823,7 +3832,7 @@ void HistoryWidget::refreshSendAsToggle() {
  	Expects(_peer != nullptr);
  
  	const auto key = Main::SendAsKey{ _peer, Main::SendAsType::Message };

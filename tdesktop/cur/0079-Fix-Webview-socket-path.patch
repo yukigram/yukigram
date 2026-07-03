@@ -5,10 +5,10 @@ Subject: [PATCH] (Fix) Webview socket path
 
 
 diff --git a/Telegram/SourceFiles/platform/linux/specific_linux.cpp b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-index 0e8c317294..82f70152c1 100644
+index edc46e464f..28e0c1d230 100644
 --- a/Telegram/SourceFiles/platform/linux/specific_linux.cpp
 +++ b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-@@ -30,6 +30,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -28,6 +28,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include <QtWidgets/QApplication>
  #include <QtWidgets/QSystemTrayIcon>
  #include <QtGui/QDesktopServices>
@@ -16,7 +16,7 @@ index 0e8c317294..82f70152c1 100644
  #include <QtCore/QStandardPaths>
  #include <QtCore/QProcess>
  
-@@ -769,9 +770,10 @@ void start() {
+@@ -765,9 +766,10 @@ void start() {
  	GLib::set_prgname(cExeName().toStdString());
  	GLib::set_application_name(AppName.data());
  

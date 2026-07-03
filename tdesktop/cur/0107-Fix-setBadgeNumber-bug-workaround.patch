@@ -18,10 +18,10 @@ I'm unsure whether it is really a Qt bug or I'm just unlucky to have hit
 this corner case, because I set applicationName to application id...
 
 diff --git a/Telegram/SourceFiles/platform/linux/main_window_linux.cpp b/Telegram/SourceFiles/platform/linux/main_window_linux.cpp
-index 3bee37bf73..5cdabcb01e 100644
+index 803afb7b59..8d66689711 100644
 --- a/Telegram/SourceFiles/platform/linux/main_window_linux.cpp
 +++ b/Telegram/SourceFiles/platform/linux/main_window_linux.cpp
-@@ -161,9 +161,9 @@ void MainWindow::updateWindowIcon() {
+@@ -155,9 +155,9 @@ void MainWindow::updateWindowIcon() {
  }
  
  void MainWindow::updateUnityCounter() {
@@ -34,7 +34,7 @@ index 3bee37bf73..5cdabcb01e 100644
  	using namespace gi::repository;
  
  	static const auto djbStringHash = [](const std::string &string) {
-@@ -204,7 +204,7 @@ void MainWindow::updateUnityCounter() {
+@@ -198,7 +198,7 @@ void MainWindow::updateUnityCounter() {
  						GLib::Variant::new_boolean(counterSlice))),
  			}),
  		}));

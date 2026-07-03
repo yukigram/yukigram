@@ -26,7 +26,7 @@ index 0000000000..220814e44b
 +    " stroke="#fff" fill="#0000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
 +</svg>
 diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
-index 70e8d5f757..d48ee0f1f4 100644
+index e34d1f2c53..0d9684cd52 100644
 --- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 @@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -64,7 +64,7 @@ index 70e8d5f757..d48ee0f1f4 100644
  	_infoToggle->setClickedCallback([=] { toggleInfoSection(); });
  	_back->setAcceptBoth();
  	_back->addClickHandler([=](Qt::MouseButton) {
-@@ -1190,6 +1197,10 @@ void TopBarWidget::updateControlsGeometry() {
+@@ -1199,6 +1206,10 @@ void TopBarWidget::updateControlsGeometry() {
  		_infoToggle->moveToRight(_rightTaken, otherButtonsTop);
  		_rightTaken += _infoToggle->width();
  	}
@@ -104,10 +104,10 @@ index 70e8d5f757..d48ee0f1f4 100644
  		if (const auto peer = _activeChat.key.peer()) {
  			if (const auto user = peer->asUser()) {
 diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.h b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.h
-index fab04e6309..ca334d876b 100644
+index b25d15ea06..9793406f45 100644
 --- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.h
 +++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.h
-@@ -236,6 +236,7 @@ private:
+@@ -240,6 +240,7 @@ private:
  	object_ptr<Ui::IconButton> _call;
  	object_ptr<Ui::IconButton> _groupCall;
  	object_ptr<Ui::IconButton> _search;
@@ -116,10 +116,10 @@ index fab04e6309..ca334d876b 100644
  	object_ptr<Ui::IconButton> _menuToggle;
  	base::unique_qptr<Ui::PopupMenu> _menu;
 diff --git a/Telegram/SourceFiles/info/info.style b/Telegram/SourceFiles/info/info.style
-index d821794aed..e65b3d12be 100644
+index 35da2772b3..5591311a2e 100644
 --- a/Telegram/SourceFiles/info/info.style
 +++ b/Telegram/SourceFiles/info/info.style
-@@ -1037,6 +1037,10 @@ topBarInfo: IconButton(topBarSearch) {
+@@ -1044,6 +1044,10 @@ topBarInfo: IconButton(topBarSearch) {
  	icon: icon {{ "top_bar_profile", menuIconFg }};
  	iconOver: icon {{ "top_bar_profile", menuIconFgOver }};
  }

@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/boxes/sticker_set_box.cpp b/Telegram/SourceFiles/boxes/sticker_set_box.cpp
-index 7200f6431b..8934340ec1 100644
+index 3172733ca6..c7bc6b4451 100644
 --- a/Telegram/SourceFiles/boxes/sticker_set_box.cpp
 +++ b/Telegram/SourceFiles/boxes/sticker_set_box.cpp
 @@ -29,6 +29,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -26,7 +26,7 @@ index 7200f6431b..8934340ec1 100644
  
  #include <QtWidgets/QApplication>
  #include <QtGui/QClipboard>
-@@ -889,6 +891,24 @@ void StickerSetBox::updateButtons() {
+@@ -903,6 +905,24 @@ void StickerSetBox::updateButtons() {
  				menu->addAction(std::move(item));
  			});
  		}();
@@ -51,7 +51,7 @@ index 7200f6431b..8934340ec1 100644
  		if (_inner->notInstalled()) {
  			if (!_session->premium()
  				&& _session->premiumPossible()
-@@ -940,6 +960,7 @@ void StickerSetBox::updateButtons() {
+@@ -954,6 +974,7 @@ void StickerSetBox::updateButtons() {
  					if (fillSetCreatorFooter) {
  						fillSetCreatorFooter(raw);
  					}
@@ -59,7 +59,7 @@ index 7200f6431b..8934340ec1 100644
  					raw->setForcedOrigin(
  						Ui::PanelAnimation::Origin::TopRight);
  					top->setForceRippled(true);
-@@ -1015,6 +1036,7 @@ void StickerSetBox::updateButtons() {
+@@ -1029,6 +1050,7 @@ void StickerSetBox::updateButtons() {
  							fillSetCreatorFooter(raw);
  						}
  					}

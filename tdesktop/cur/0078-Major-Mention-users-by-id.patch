@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/chat_helpers/message_field.cpp b/Telegram/SourceFiles/chat_helpers/message_field.cpp
-index fa34ee3e96..1332d49d6d 100644
+index 2913630f88..e3ea74c49a 100644
 --- a/Telegram/SourceFiles/chat_helpers/message_field.cpp
 +++ b/Telegram/SourceFiles/chat_helpers/message_field.cpp
 @@ -197,7 +197,30 @@ void EditLinkBox(

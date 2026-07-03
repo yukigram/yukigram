@@ -121,7 +121,7 @@ index 193866516a..f88c72dc6c 100644
  		top += st.height;
  	}
 diff --git a/Telegram/SourceFiles/window/window.style b/Telegram/SourceFiles/window/window.style
-index c4806e1b06..766147a1c6 100644
+index 34b5e9cc3f..d9556b0b7a 100644
 --- a/Telegram/SourceFiles/window/window.style
 +++ b/Telegram/SourceFiles/window/window.style
 @@ -284,6 +284,8 @@ windowFilterSmallItem: PeerListItem(defaultPeerListItem) {

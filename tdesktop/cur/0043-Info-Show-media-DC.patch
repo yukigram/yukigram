@@ -5,10 +5,10 @@ Subject: [PATCH] (Info) Show media DC
 
 
 diff --git a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-index 4074241196..8b26d655f4 100644
+index 1562fb7c00..a861347e70 100644
 --- a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 +++ b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-@@ -1627,6 +1627,17 @@ void OverlayWidget::updateControls() {
+@@ -1667,6 +1667,17 @@ void OverlayWidget::updateControls() {
  		return dNow;
  	}();
  	_dateText = d.isValid() ? Ui::FormatDateTime(d) : QString();

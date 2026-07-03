@@ -5,7 +5,7 @@ Subject: [PATCH] (Annoyances) Disable AI compose button by default
 
 
 diff --git a/Telegram/SourceFiles/ui/controls/compose_ai_button_factory.cpp b/Telegram/SourceFiles/ui/controls/compose_ai_button_factory.cpp
-index 6cea602d92..29c6ebc431 100644
+index a4051002f0..c83283c423 100644
 --- a/Telegram/SourceFiles/ui/controls/compose_ai_button_factory.cpp
 +++ b/Telegram/SourceFiles/ui/controls/compose_ai_button_factory.cpp
 @@ -31,6 +31,7 @@ base::options::toggle HideAiButtonOption({

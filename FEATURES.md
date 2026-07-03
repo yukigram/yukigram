@@ -59,14 +59,11 @@ These are placed under `(Yukigram)` category.
     (same situation as with libada,
     no distro packages it yet,
     and breaking bulids is not fun)
-- Disable TooManyCooks on ARMv7
 - Scale sticker/GIF preview to fit the window
 - Workaround for `QGuiApplication::setBadgeNumber`
     (it uses `QCoreApplication::applicationName` without escaping
     and makes resulting D-Bus object path invalid
     if application name contains forbidden characters, e.g. dots)
-- Backported fix for [tdesktop#30840]
-    (semaphore over-release in lib_crl)
 
 [tdesktop#30840]: https://github.com/telegramdesktop/tdesktop/issues/30840
 

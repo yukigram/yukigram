@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Round message size
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
-index d1b8efbb3a..9ad62b54f9 100644
+index 8ae6f115a4..9d5e9739f2 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 @@ -50,6 +50,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index d1b8efbb3a..9ad62b54f9 100644
  #include "data/data_photo.h"
  #include "data/data_photo_media.h"
  #include "data/data_session.h"
-@@ -289,7 +290,7 @@ QSize Gif::countThumbSize(int &inOutWidthMax) const {
+@@ -295,7 +296,7 @@ QSize Gif::countThumbSize(int &inOutWidthMax) const {
  		} else if (_data->isVideoFile()) {
  			return st::maxMediaSize;
  		} else if (_data->isVideoMessage()) {

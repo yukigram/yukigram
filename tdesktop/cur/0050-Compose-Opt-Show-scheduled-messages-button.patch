@@ -5,18 +5,18 @@ Subject: [PATCH] (Compose)(Opt) Show scheduled messages button
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index e8b9b0135d..4e565652b0 100644
+index 3ac7f24907..cfbb1a9ff4 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -35,6 +35,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "core/file_utilities.h"
+@@ -36,6 +36,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "core/mime_type.h"
  #include "history/view/history_view_draw_to_reply.h"
+ #include "history/view/controls/history_view_rich_draft_preview.h"
 +#include "yukigram/settings/always_show_scheduled.h"
  #include "ui/emoji_config.h"
  #include "ui/chat/attach/attach_prepare.h"
  #include "ui/chat/choose_theme_controller.h"
-@@ -3400,7 +3401,7 @@ void HistoryWidget::setupScheduledToggle() {
+@@ -3707,7 +3708,7 @@ void HistoryWidget::setupScheduledToggle() {
  }
  
  void HistoryWidget::refreshScheduledToggle() {

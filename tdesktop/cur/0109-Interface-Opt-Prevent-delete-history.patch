@@ -49,7 +49,7 @@ index e301b29bef..1c129ef5c6 100644
  
  	const auto weak = base::make_weak(sublist.get());
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
-index 95a2a2c5ca..56081cfa9c 100644
+index 4b2cef806d..9b44039101 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
 @@ -58,6 +58,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -92,7 +92,7 @@ index 95a2a2c5ca..56081cfa9c 100644
  	const auto chat = channel->migrateFrom();
  
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index efeb06e983..da9a8a28a5 100644
+index e9d1160bf6..5fd68eaea0 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
 @@ -46,6 +46,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -103,7 +103,7 @@ index efeb06e983..da9a8a28a5 100644
  #include "inline_bots/bot_attach_web_view.h" // InlineBots::PeerType.
  #include "ui/toast/toast.h"
  #include "ui/text/format_values.h"
-@@ -3934,6 +3935,10 @@ Fn<void()> ClearHistoryHandler(
+@@ -3959,6 +3960,10 @@ Fn<void()> ClearHistoryHandler(
  		not_null<PeerData*> peer) {
  	return [=] {
  		if (!controller->showFrozenError()) {

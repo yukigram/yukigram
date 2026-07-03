@@ -5,19 +5,19 @@ Subject: [PATCH] (Yukigram) Settings deep links
 
 
 diff --git a/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp b/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp
-index 3f065568bb..053599b53b 100644
+index f14ddb4720..f9f64117d9 100644
 --- a/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp
 +++ b/Telegram/SourceFiles/core/deep_links/deep_links_settings.cpp
-@@ -71,6 +71,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "ui/power_saving.h"
+@@ -72,6 +72,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "settings/sections/settings_privacy_security.h"
+ #include "settings/sections/settings_shortcuts.h"
  #include "settings/sections/settings_websites.h"
 +#include "settings/sections/settings_yukigram.h"
 +#include "yukigram/options_database.h"
  #include "boxes/connection_box.h"
  #include "mainwindow.h"
  #include "window/window_controller.h"
-@@ -2094,6 +2096,32 @@ void RegisterSettingsHandlers(Router &router) {
+@@ -2095,6 +2097,32 @@ void RegisterSettingsHandlers(Router &router) {
  		},
  	});
  
