@@ -294,8 +294,8 @@ jobs:
           additional_sha512sums=$(sha512sum tdesktop/cur/*.patch)
           cp -r tdesktop pmaports/temp/yukigram/
 
-          # Remove libdispatch (replaced with in-tree TooManyCooks)
-          sed -i '/libdispatch-dev/d' pmaports/temp/yukigram/APKBUILD
+          # Remove libdispatch fix (6.9.4)
+          sed -i '/fix-dispatch-desktop_app_skip_libs.patch/d' pmaports/temp/yukigram/APKBUILD
 
           cat >> pmaports/temp/yukigram/APKBUILD << EOF
 
