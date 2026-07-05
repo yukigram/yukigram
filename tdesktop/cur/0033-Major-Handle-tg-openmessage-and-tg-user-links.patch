@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/core/local_url_handlers.cpp b/Telegram/SourceFiles/core/local_url_handlers.cpp
-index 595c2c20bd..16bc8e6eb0 100644
+index 595c2c20bd..518eb96453 100644
 --- a/Telegram/SourceFiles/core/local_url_handlers.cpp
 +++ b/Telegram/SourceFiles/core/local_url_handlers.cpp
 @@ -61,6 +61,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -18,7 +18,7 @@ index 595c2c20bd..16bc8e6eb0 100644
  #include "storage/storage_account.h"
  #include "mainwidget.h"
  #include "main/main_account.h"
-@@ -1717,6 +1718,58 @@ bool ShowWoof(
+@@ -1717,6 +1718,55 @@ bool ShowWoof(
  	return true;
  }
  
@@ -32,17 +32,14 @@ index 595c2c20bd..16bc8e6eb0 100644
 +	const auto params = url_parse_params(
 +		match->captured(1),
 +		qthelp::UrlParamNameTransform::ToLower);
-+	const auto userId = params.value(qsl("user_id")).toLongLong();
-+	const auto msgId = params.value(qsl("message_id")).toInt();
++	const auto userId = params.value(u"user_id"_q).toLongLong();
++	const auto msgId = params.value(u"message_id"_q).toInt();
 +	if (!userId) {
 +		return false;
 +	}
 +	const auto peer = controller->session().data().peerLoaded(static_cast<PeerId>(userId));
 +	if (peer != nullptr) {
-+		controller->showPeerHistory(
-+				peer,
-+				Window::SectionShow::Way::Forward,
-+				msgId);
++		controller->showPeerHistory(peer, Window::SectionShow::Way::Forward, msgId);
 +		return true;
 +	}
 +	Core::App().hideMediaView();
@@ -60,7 +57,7 @@ index 595c2c20bd..16bc8e6eb0 100644
 +	const auto params = url_parse_params(
 +				match->captured(1),
 +		qthelp::UrlParamNameTransform::ToLower);
-+	const auto userId = params.value(qsl("id")).toLongLong();
++	const auto userId = params.value(u"id"_q).toLongLong();
 +	if (!userId) {
 +		return false;
 +	}
@@ -77,7 +74,7 @@ index 595c2c20bd..16bc8e6eb0 100644
  } // namespace
  
  bool TryRouterForLocalUrl(
-@@ -1735,6 +1788,14 @@ const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
+@@ -1735,6 +1785,14 @@ const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
  			u"^woof$"_q,
  			ShowWoof
  		},
