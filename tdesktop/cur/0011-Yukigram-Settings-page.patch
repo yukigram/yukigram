@@ -58,7 +58,7 @@ index ea0e360fcb..51f7fd0eb7 100644
  		.title = tr::lng_settings_language(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 new file mode 100644
-index 0000000000..ce887337f1
+index 0000000000..a8b7547d96
 --- /dev/null
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 @@ -0,0 +1,299 @@
@@ -361,7 +361,6 @@ index 0000000000..ce887337f1
 +}
 +
 +} // namespace Settings
-\ No newline at end of file
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.h b/Telegram/SourceFiles/settings/sections/settings_yukigram.h
 new file mode 100644
 index 0000000000..2ae5460740
