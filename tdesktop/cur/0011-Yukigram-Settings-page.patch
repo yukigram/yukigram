@@ -58,10 +58,10 @@ index ea0e360fcb..51f7fd0eb7 100644
  		.title = tr::lng_settings_language(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 new file mode 100644
-index 0000000000..a8b7547d96
+index 0000000000..fb0ac6cbad
 --- /dev/null
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-@@ -0,0 +1,299 @@
+@@ -0,0 +1,302 @@
 +#include "settings/sections/settings_yukigram.h"
 +#include "yukigram/options_database.h"
 +
@@ -115,6 +115,7 @@ index 0000000000..a8b7547d96
 +	rpl::producer<QString> validHint,
 +	QString current,
 +	std::function<QString(QString)> maybeUpdate,
++	Ui::InputField::Mode mode,
 +	bool restartRequired
 +) {
 +	const auto content = box->verticalLayout();
@@ -125,7 +126,7 @@ index 0000000000..a8b7547d96
 +
 +	const auto placeholder = validHint ? validHint : rktr("input/placeholder");
 +	const auto valueInput = content->add(
-+		object_ptr<Ui::InputField>(content, st::defaultInputField, Ui::InputField::Mode::SingleLine, placeholder, current),
++		object_ptr<Ui::InputField>(content, st::defaultInputField, mode, placeholder, current),
 +		st::markdownLinkFieldPadding);
 +
 +	const auto submit = [=] {
@@ -179,6 +180,7 @@ index 0000000000..a8b7547d96
 +			}
 +			return reason;
 +		},
++		Ui::InputField::Mode::SingleLine,
 +		d.restartRequired
 +	));
 +}
@@ -203,6 +205,7 @@ index 0000000000..a8b7547d96
 +			}
 +			return reason;
 +		},
++		Ui::InputField::Mode::MultiLine,
 +		d.restartRequired
 +	));
 +}
