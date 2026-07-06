@@ -54,10 +54,10 @@ index 13ecca0b42..50eeb2a924 100644
  		}
 diff --git a/Telegram/SourceFiles/yukigram/options.cpp b/Telegram/SourceFiles/yukigram/options.cpp
 new file mode 100644
-index 0000000000..86b4f76b9f
+index 0000000000..4cf4ac9f84
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.cpp
-@@ -0,0 +1,118 @@
+@@ -0,0 +1,122 @@
 +#include "yukigram/options.h"
 +#include "yukigram/options_database.h"
 +#include "yukigram/options_runtime.h"
@@ -90,6 +90,10 @@ index 0000000000..86b4f76b9f
 +		})
 +	);
 +	rpl::lifetime lifetime;
++
++	if (d.mirrorExperimental) {
++		d.defaultValue = base::options::lookup<T>(key).defaultValue();
++	}
 +
 +	const auto key_v = std::string_view(key);
 +	ByCategory()[d.category].push_back(key_v);
