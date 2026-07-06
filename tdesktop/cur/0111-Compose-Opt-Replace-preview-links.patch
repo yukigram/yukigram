@@ -1,0 +1,222 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Sun, 5 Jul 2026 20:43:58 +0000
+Subject: [PATCH] (Compose)(Opt) Replace preview links
+
+
+diff --git a/Telegram/SourceFiles/apiwrap.cpp b/Telegram/SourceFiles/apiwrap.cpp
+index 0f4a5f6d71..cc386502af 100644
+--- a/Telegram/SourceFiles/apiwrap.cpp
++++ b/Telegram/SourceFiles/apiwrap.cpp
+@@ -4584,7 +4584,7 @@ void ApiWrap::sendMessage(
+ 			|| (exactWebPage && !isLast);
+ 		const auto manualWebPage = exactWebPage
+ 			&& !ignoreWebPage
+-			&& (message.webPage.manual || (isLast && !isFirst));
++			&& (message.webPage.manual || message.webPage.linkReplaced || (isLast && !isFirst));
+ 		MTPMessageMedia media = MTP_messageMediaEmpty();
+ 		if (ignoreWebPage) {
+ 			sendFlags |= MTPmessages_SendMessage::Flag::f_no_webpage;
+diff --git a/Telegram/SourceFiles/data/data_drafts.h b/Telegram/SourceFiles/data/data_drafts.h
+index 151a87ee50..918d3d1067 100644
+--- a/Telegram/SourceFiles/data/data_drafts.h
++++ b/Telegram/SourceFiles/data/data_drafts.h
+@@ -48,6 +48,7 @@ struct WebPageDraft {
+ 	bool invert : 1 = false;
+ 	bool manual : 1 = false;
+ 	bool removed : 1 = false;
++	bool linkReplaced : 1 = false;
+ 
+ 	friend inline bool operator==(const WebPageDraft&, const WebPageDraft&)
+ 		= default;
+diff --git a/Telegram/SourceFiles/history/view/controls/history_view_draft_options.cpp b/Telegram/SourceFiles/history/view/controls/history_view_draft_options.cpp
+index 3cdb414094..77331d5f36 100644
+--- a/Telegram/SourceFiles/history/view/controls/history_view_draft_options.cpp
++++ b/Telegram/SourceFiles/history/view/controls/history_view_draft_options.cpp
+@@ -43,6 +43,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "ui/toast/toast.h"
+ #include "ui/vertical_list.h"
+ #include "ui/ui_utility.h"
++#include "yukigram/settings/preview_replace.h"
+ #include "window/themes/window_theme.h"
+ #include "window/section_widget.h"
+ #include "window/window_peer_menu.h"
+@@ -725,8 +726,8 @@ void DraftOptionsBox(
+ 		Ui::SettingsSlider *tabs = nullptr;
+ 		PreviewWrap *wrap = nullptr;
+ 
+-		Fn<void(const QString &link, WebPageData *page)> performSwitch;
+-		Fn<void(const QString &link, bool force)> requestAndSwitch;
++		Fn<void(const QString &link, WebPageData *page, bool fixed)> performSwitch;
++		Fn<void(const QString &link, bool force, bool fixed)> requestAndSwitch;
+ 		rpl::lifetime resolveLifetime;
+ 
+ 		Fn<void()> rebuild;
+@@ -1080,7 +1081,7 @@ void DraftOptionsBox(
+ 	};
+ 
+ 	const auto &resolver = args.resolver;
+-	state->performSwitch = [=](const QString &link, WebPageData *page) {
++	state->performSwitch = [=](const QString &link, WebPageData *page, bool fixed) {
+ 		const auto now = base::unixtime::now();
+ 		if (!page || (page->pendingTill > 0 && page->pendingTill < now)) {
+ 			show->showToast(tr::lng_preview_cant(tr::now));
+@@ -1089,26 +1090,27 @@ void DraftOptionsBox(
+ 			base::timer_once(
+ 				(delay + 1) * crl::time(1000)
+ 			) | rpl::on_next([=] {
+-				state->requestAndSwitch(link, true);
++				state->requestAndSwitch(link, true, fixed);
+ 			}, state->resolveLifetime);
+ 
+ 			page->owner().webPageUpdates(
+ 			) | rpl::on_next([=](not_null<WebPageData*> updated) {
+ 				if (updated == page && !updated->pendingTill) {
+ 					state->resolveLifetime.destroy();
+-					state->performSwitch(link, page);
++					state->performSwitch(link, page, fixed);
+ 				}
+ 			}, state->resolveLifetime);
+ 		} else {
+ 			state->preview = page;
+ 			state->webpage.id = page->id;
+ 			state->webpage.url = page->url;
++			state->webpage.linkReplaced = fixed;
+ 			state->webpage.manual = true;
+ 			state->link = link;
+ 			state->shown.force_assign(Section::Link);
+ 		}
+ 	};
+-	state->requestAndSwitch = [=](const QString &link, bool force) {
++	state->requestAndSwitch = [=](const QString &link, bool force, bool fixed) {
+ 		resolver->request(link, force);
+ 
+ 		state->resolveLifetime = resolver->resolved(
+@@ -1117,17 +1119,19 @@ void DraftOptionsBox(
+ 				state->resolveLifetime.destroy();
+ 				state->performSwitch(
+ 					link,
+-					resolver->lookup(link).value_or(nullptr));
++					resolver->lookup(link).value_or(nullptr), fixed);
+ 			}
+ 		});
+ 	};
+-	const auto switchTo = [=](const QString &link) {
++	const auto switchTo = [=](const QString &input_link) {
++		const auto link = YukigramReplaceLink(input_link);
++		const auto fixed = input_link != link;
+ 		if (link == state->link) {
+ 			return;
+ 		} else if (const auto value = resolver->lookup(link)) {
+-			state->performSwitch(link, *value);
++			state->performSwitch(link, *value, fixed);
+ 		} else {
+-			state->requestAndSwitch(link, false);
++			state->requestAndSwitch(link, false, fixed);
+ 		}
+ 	};
+ 
+diff --git a/Telegram/SourceFiles/history/view/controls/history_view_webpage_processor.cpp b/Telegram/SourceFiles/history/view/controls/history_view_webpage_processor.cpp
+index 644bf21030..e1dbe926e5 100644
+--- a/Telegram/SourceFiles/history/view/controls/history_view_webpage_processor.cpp
++++ b/Telegram/SourceFiles/history/view/controls/history_view_webpage_processor.cpp
+@@ -13,6 +13,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "data/data_session.h"
+ #include "data/data_web_page.h"
+ #include "history/history.h"
++#include "yukigram/settings/preview_replace.h"
+ #include "lang/lang_keys.h"
+ #include "main/main_session.h"
+ 
+@@ -371,13 +372,18 @@ void WebpageProcessor::checkPreview() {
+ 
+ 	auto page = (WebPageData*)nullptr;
+ 	auto chosen = QString();
+-	for (const auto &link : _links) {
++	auto fixed = false;
++	for (const auto &input_link : _links) {
++		const auto link = YukigramReplaceLink(input_link);
++		const auto this_fixed = link != input_link;
+ 		const auto value = _resolver->lookup(link);
+ 		if (!value) {
+ 			chosen = link;
++			fixed = this_fixed;
+ 			break;
+ 		} else if (*value) {
+ 			chosen = link;
++			fixed = this_fixed;
+ 			page = *value;
+ 			break;
+ 		}
+@@ -397,6 +403,7 @@ void WebpageProcessor::checkPreview() {
+ 		_data = nullptr;
+ 		_draft = {};
+ 	}
++	_draft.linkReplaced = fixed;
+ 	updateFromData();
+ }
+ 
+diff --git a/Telegram/SourceFiles/yukigram/settings/preview_replace.cpp b/Telegram/SourceFiles/yukigram/settings/preview_replace.cpp
+new file mode 100644
+index 0000000000..e050c041af
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/preview_replace.cpp
+@@ -0,0 +1,43 @@
++#include "yukigram/settings/preview_replace.h"
++#include "yukigram/options.h"
++
++std::vector<std::tuple<QRegularExpression, QString>> pats;
++
++namespace Yukigram::Settings {
++
++rpl::variable<bool> *PreviewReplace = Yukigram::Options::make<bool>(kOptionPreviewReplace, {
++	.keywords = { u"yukigram"_q, u"web"_q, u"preview"_q, u"replace"_q, u"twitter"_q, u"bluesky"_q, u"bsky"_q },
++	.category = "compose",
++});
++
++const char kOptionPreviewReplace[] = "preview-replace";
++
++rpl::variable<QString> *PreviewReplacePatterns = Yukigram::Options::make<QString>(kOptionPreviewReplacePatterns, {
++	.keywords = { u"yukigram"_q, u"web"_q, u"preview"_q, u"replace"_q, u"twitter"_q, u"bluesky"_q, u"bsky"_q },
++	.category = "compose",
++	.defaultValue =
++		R"((?:twitter|x)\.com/(.*) girlcockx.com/\1)" "\n"
++		R"(bsky.app/(.*) fxbsky.app/\1)" "\n"
++	,
++	.link = [](QString value) {
++		pats.clear();
++		for (const auto &line : value.split(u'\n', Qt::SkipEmptyParts)) {
++			const auto words = line.split(u' ');
++			pats.emplace_back(QRegularExpression("(?<=https?://|^)" + words[0]), words[1]);
++		}
++	},
++});
++
++const char kOptionPreviewReplacePatterns[] = "preview-replace-patterns";
++
++}
++
++QString YukigramReplaceLink(QString link) {
++	if (!Yukigram::Settings::PreviewReplace->current()) {
++		return link;
++	}
++	for (const auto &[pat, repl] : pats) {
++		link.replace(pat, repl);
++	}
++	return link;
++}
+diff --git a/Telegram/SourceFiles/yukigram/settings/preview_replace.h b/Telegram/SourceFiles/yukigram/settings/preview_replace.h
+new file mode 100644
+index 0000000000..715164d9fd
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/preview_replace.h
+@@ -0,0 +1,9 @@
++#include "rpl/rpl.h"
++namespace Yukigram::Settings {
++extern rpl::variable<bool> *PreviewReplace;
++extern const char kOptionPreviewReplace[];
++extern rpl::variable<QString> *PreviewReplacePatterns;
++extern const char kOptionPreviewReplacePatterns[];
++}
++
++QString YukigramReplaceLink(QString link);

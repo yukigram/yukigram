@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) Russian
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..977f188cee
+index 0000000000..4aafeeaab0
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
-@@ -0,0 +1,179 @@
+@@ -0,0 +1,183 @@
 +{
 +    "about/1/text": "Неофициальный форк {tdesktop_link},\nкоторый добавляет фичи и убирает мусор.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -139,6 +139,10 @@ index 0000000000..977f188cee
 +    "opt/old-style-spoilers/desc": "",
 +    "opt/prevent-delete/name": "Не давать удалять историю",
 +    "opt/prevent-delete/desc": "",
++    "opt/preview-replace/name": "Заменять превью сайтов",
++    "opt/preview-replace/desc": "",
++    "opt/preview-replace-patterns/name": "Шаблоны замены превью сайтов",
++    "opt/preview-replace-patterns/desc": "Одно правило на строку.\nПравила состоят из регулярки\nи на что её заменить.\nКуски правила разделены пробелом.\n\\1, \\2, и т.д. для групп.",
 +    "opt/quick-admin-list/name": "Кнопка списка админов",
 +    "opt/quick-admin-list/desc": "",
 +    "opt/quick-recent-actions/name": "Кнопка недавних действий",

@@ -238,6 +238,8 @@ These are placed under `(Reactions)` category.
     (suggest only from installed packs)
 - :gear: Hide popular animated emoji packs from picker
     (show only installed packs in picker)
+- :star: :gear: Replace preview links
+    (e.g. `bsky.app` to `fxbsky.app`)
 
 These are placed under `(Compose)` category.
 
