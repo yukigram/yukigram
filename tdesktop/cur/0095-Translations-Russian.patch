@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) Russian
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..4aafeeaab0
+index 0000000000..d181666cb0
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
-@@ -0,0 +1,183 @@
+@@ -0,0 +1,184 @@
 +{
 +    "about/1/text": "Неофициальный форк {tdesktop_link},\nкоторый добавляет фичи и убирает мусор.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -69,6 +69,7 @@ index 0000000000..4aafeeaab0
 +    "input/bounded/hint": "между {lower} и {upper}",
 +    "input/bounded/lower": "{value} меньше {lower}",
 +    "input/bounded/upper": "{value} больше {upper}",
++    "input/reset": "Сброс",
 +    "intro/about": "Добро пожаловать в Yukigram, неофициальный форк Telegram Desktop, основанный на .patch-файлах.",
 +    "media/poll/revotes/allowed": "{inner}",
 +    "media/poll/revotes/forbidden": "{inner}, нельзя менять голос",

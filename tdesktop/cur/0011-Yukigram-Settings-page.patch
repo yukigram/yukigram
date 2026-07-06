@@ -58,10 +58,10 @@ index ea0e360fcb..51f7fd0eb7 100644
  		.title = tr::lng_settings_language(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 new file mode 100644
-index 0000000000..f486949f2f
+index 0000000000..12eb6e1a85
 --- /dev/null
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-@@ -0,0 +1,302 @@
+@@ -0,0 +1,306 @@
 +#include "settings/sections/settings_yukigram.h"
 +#include "yukigram/options_database.h"
 +
@@ -114,6 +114,7 @@ index 0000000000..f486949f2f
 +	QString description,
 +	rpl::producer<QString> validHint,
 +	QString current,
++	QString defaultValue,
 +	std::function<QString(QString)> maybeUpdate,
 +	Ui::InputField::Mode mode,
 +	bool restartRequired
@@ -145,6 +146,7 @@ index 0000000000..f486949f2f
 +	valueInput->submits() | rpl::on_next([=] { submit(); }, valueInput->lifetime());
 +
 +	box->setTitle(title);
++	box->addLeftButton(rktr("input/reset"), [=] { valueInput->setText(defaultValue); });
 +	box->addButton(tr::lng_settings_apply(), submit);
 +	box->addButton(tr::lng_cancel(), [=] { box->closeBox(); });
 +
@@ -168,6 +170,7 @@ index 0000000000..f486949f2f
 +		ktr(u"opt/%1/desc"_q.arg(key)),
 +		d.validHint(),
 +		QString::number(v->current()),
++		QString::number(d.defaultValue),
 +		[=] (QString s) {
 +			bool ok = false;
 +			int value = s.toInt(&ok);
@@ -198,6 +201,7 @@ index 0000000000..f486949f2f
 +		ktr(u"opt/%1/desc"_q.arg(key)),
 +		d.validHint(),
 +		v->current(),
++		d.defaultValue,
 +		[=] (QString s) {
 +			const auto reason = d.checkValid(s);
 +			if (reason.isEmpty()) {

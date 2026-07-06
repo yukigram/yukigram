@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) English
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 new file mode 100644
-index 0000000000..a0f1f9523b
+index 0000000000..d3bdf0b730
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -0,0 +1,177 @@
+@@ -0,0 +1,178 @@
 +{
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -63,6 +63,7 @@ index 0000000000..a0f1f9523b
 +    "input/bounded/hint": "between {lower} and {upper}",
 +    "input/bounded/lower": "{value} is less than {lower}",
 +    "input/bounded/upper": "{value} is more than {upper}",
++    "input/reset": "Reset",
 +    "intro/about": "Welcome to Yukigram, an unofficial patch-based Telegram Desktop fork.",
 +    "media/poll/revotes/allowed": "{inner}",
 +    "media/poll/revotes/forbidden": "{inner}, no revotes",
