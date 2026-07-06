@@ -6,7 +6,7 @@ Subject: [PATCH] (Translations) English
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 new file mode 100644
-index 0000000000..d3bdf0b730
+index 0000000000..997b3aaafc
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/en.json
 @@ -0,0 +1,178 @@
@@ -137,7 +137,7 @@ index 0000000000..d3bdf0b730
 +    "opt/preview-replace/name": "Replace webpage previews",
 +    "opt/preview-replace/desc": "",
 +    "opt/preview-replace-patterns/name": "Patterns to replace in previews",
-+    "opt/preview-replace-patterns/desc": "One rule per line.\nRule is a pair of regex pattern\nand a replacement.\nThey are separated by space.\nUse \\1, \\2, etc. for captures.",
++    "opt/preview-replace-patterns/desc": "One rule per line.\nRule is a pair of regex pattern\nand what to replace it with.\nRule parts are separated by space.\nUse \\1, \\2, etc. for capture groups.",
 +    "opt/quick-admin-list/name": "Admin list button",
 +    "opt/quick-admin-list/desc": "",
 +    "opt/quick-recent-actions/name": "Recent actions button",

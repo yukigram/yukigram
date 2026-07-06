@@ -6,7 +6,7 @@ Subject: [PATCH] (Translations) Russian
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..d181666cb0
+index 0000000000..6217d6258c
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
 @@ -0,0 +1,184 @@
@@ -143,7 +143,7 @@ index 0000000000..d181666cb0
 +    "opt/preview-replace/name": "Заменять превью сайтов",
 +    "opt/preview-replace/desc": "",
 +    "opt/preview-replace-patterns/name": "Шаблоны замены превью сайтов",
-+    "opt/preview-replace-patterns/desc": "Одно правило на строку.\nПравила состоят из регулярки\nи на что её заменить.\nКуски правила разделены пробелом.\n\\1, \\2, и т.д. для групп.",
++    "opt/preview-replace-patterns/desc": "Одно правило на строку.\nПравила состоят из регулярки\nи на что её заменить.\nКуски правила разделены пробелом.\n\\1, \\2, и т.д. — захваченные группы.",
 +    "opt/quick-admin-list/name": "Кнопка списка админов",
 +    "opt/quick-admin-list/desc": "",
 +    "opt/quick-recent-actions/name": "Кнопка недавних действий",
