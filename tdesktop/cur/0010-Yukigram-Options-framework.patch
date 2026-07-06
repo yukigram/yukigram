@@ -178,10 +178,10 @@ index 0000000000..86b4f76b9f
 +} // namespace Yukigram::Options
 diff --git a/Telegram/SourceFiles/yukigram/options.h b/Telegram/SourceFiles/yukigram/options.h
 new file mode 100644
-index 0000000000..4f7ac13e0e
+index 0000000000..7c0eac9b81
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.h
-@@ -0,0 +1,44 @@
+@@ -0,0 +1,47 @@
 +#pragma once
 +
 +#include "rpl/rpl.h"
@@ -197,6 +197,9 @@ index 0000000000..4f7ac13e0e
 +template<typename T> QString Always(T) {
 +	return {};
 +}
++rpl::producer<QString> AlwaysHint() {
++	return {};
++}
 +CheckValid<int> Bounded(int lower, int upper);
 +std::function<rpl::producer<QString>()> BoundedHint(int lower, int upper);
 +} // namespace Valid
@@ -209,7 +212,7 @@ index 0000000000..4f7ac13e0e
 +	T defaultValue;
 +	std::function<void(T)> link = [](T) {};
 +	CheckValid<T> checkValid = Valid::Always<T>;
-+	std::function<rpl::producer<QString>()> validHint;
++	std::function<rpl::producer<QString>()> validHint = Valid::AlwaysHint;
 +};
 +
 +template<typename T> rpl::variable<T> *make(const char *key, Description<T> &&d) {
