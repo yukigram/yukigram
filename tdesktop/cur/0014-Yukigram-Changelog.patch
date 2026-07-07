@@ -5,11 +5,11 @@ Subject: [PATCH] (Yukigram) Changelog
 
 
 diff --git a/changelog.txt b/changelog.txt
-index dbaf0e8e7e..3438cc6f13 100644
+index dbaf0e8e7e..f6728ef51f 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,3 +1,15 @@
-+9999 wip (01.01.99)
++6.9.4.1 beta (07.07.26)
 +
 +- Option to disable swipe to next channel gesture (tg://settings/yukigram/disable-swipe-next)
 +- Toasts now use current window instead of the main one
