@@ -54,10 +54,10 @@ index 13ecca0b42..50eeb2a924 100644
  		}
 diff --git a/Telegram/SourceFiles/yukigram/options.cpp b/Telegram/SourceFiles/yukigram/options.cpp
 new file mode 100644
-index 0000000000..4cf4ac9f84
+index 0000000000..c5d977873e
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.cpp
-@@ -0,0 +1,122 @@
+@@ -0,0 +1,126 @@
 +#include "yukigram/options.h"
 +#include "yukigram/options_database.h"
 +#include "yukigram/options_runtime.h"
@@ -157,6 +157,10 @@ index 0000000000..4cf4ac9f84
 +
 +namespace Valid {
 +
++rpl::producer<QString> AlwaysHint() {
++	return {};
++}
++
 +QString BoundedImpl(int lower, int upper, int value) {
 +	if (value < lower) {
 +		return ktr("input/bounded/lower", { "value", QString::number(value) }, { "lower", QString::number(lower) });
@@ -182,10 +186,10 @@ index 0000000000..4cf4ac9f84
 +} // namespace Yukigram::Options
 diff --git a/Telegram/SourceFiles/yukigram/options.h b/Telegram/SourceFiles/yukigram/options.h
 new file mode 100644
-index 0000000000..7c0eac9b81
+index 0000000000..a99de07fd8
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.h
-@@ -0,0 +1,47 @@
+@@ -0,0 +1,45 @@
 +#pragma once
 +
 +#include "rpl/rpl.h"
@@ -201,9 +205,7 @@ index 0000000000..7c0eac9b81
 +template<typename T> QString Always(T) {
 +	return {};
 +}
-+rpl::producer<QString> AlwaysHint() {
-+	return {};
-+}
++rpl::producer<QString> AlwaysHint();
 +CheckValid<int> Bounded(int lower, int upper);
 +std::function<rpl::producer<QString>()> BoundedHint(int lower, int upper);
 +} // namespace Valid
