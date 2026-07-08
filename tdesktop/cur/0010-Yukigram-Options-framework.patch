@@ -54,10 +54,10 @@ index 13ecca0b42..50eeb2a924 100644
  		}
 diff --git a/Telegram/SourceFiles/yukigram/options.cpp b/Telegram/SourceFiles/yukigram/options.cpp
 new file mode 100644
-index 0000000000..c5d977873e
+index 0000000000..0906c42cf8
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.cpp
-@@ -0,0 +1,126 @@
+@@ -0,0 +1,122 @@
 +#include "yukigram/options.h"
 +#include "yukigram/options_database.h"
 +#include "yukigram/options_runtime.h"
@@ -90,10 +90,6 @@ index 0000000000..c5d977873e
 +		})
 +	);
 +	rpl::lifetime lifetime;
-+
-+	if (d.mirrorExperimental) {
-+		d.defaultValue = base::options::lookup<T>(key).defaultValue();
-+	}
 +
 +	const auto key_v = std::string_view(key);
 +	ByCategory()[d.category].push_back(key_v);
@@ -237,10 +233,10 @@ index 0000000000..a99de07fd8
 +} // namepace Yukigram::Options
 diff --git a/Telegram/SourceFiles/yukigram/options_database.h b/Telegram/SourceFiles/yukigram/options_database.h
 new file mode 100644
-index 0000000000..df53fcb22d
+index 0000000000..506f879de6
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options_database.h
-@@ -0,0 +1,45 @@
+@@ -0,0 +1,48 @@
 +#pragma once
 +
 +#include "yukigram/options.h"
@@ -263,6 +259,9 @@ index 0000000000..df53fcb22d
 +
 +	void init() {
 +		auto &inner = base::options::lookup<T>(std::string(key).c_str());
++		if (d.mirrorExperimental) {
++			d.defaultValue = inner.defaultValue();
++		}
 +		const auto value = inner.value();
 +		if (const auto reason = d.checkValid(value); !reason.isEmpty()) {
 +			LOG(("Yukigram::Options::Option: option %1: value %2: %3. Resetting to default %4"
