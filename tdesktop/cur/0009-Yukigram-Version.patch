@@ -5,7 +5,7 @@ Subject: [PATCH] (Yukigram) Version
 
 
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
-index 8d9a25a9e3..325eebb114 100644
+index 8d9a25a9e3..5078a8b720 100644
 --- a/Telegram/SourceFiles/boxes/about_box.cpp
 +++ b/Telegram/SourceFiles/boxes/about_box.cpp
 @@ -62,7 +62,8 @@ rpl::producer<TextWithEntities> Text3() {
@@ -14,7 +14,7 @@ index 8d9a25a9e3..325eebb114 100644
  void AboutBox(not_null<Ui::GenericBox*> box) {
 -	box->setTitle(u"Telegram Desktop"_q);
 +	const auto commit_info = "@commit";
-+	box->setTitle(u"Yukigram "_q + (commit_info[0] != '@' ? commit_info : "v6.9.4.2-beta"));
++	box->setTitle(u"Yukigram "_q + (commit_info[0] != '@' ? commit_info : "v6.9.4.2-beta+wip"));
  
  	auto layout = box->verticalLayout();
  
