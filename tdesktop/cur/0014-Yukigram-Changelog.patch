@@ -5,11 +5,11 @@ Subject: [PATCH] (Yukigram) Changelog
 
 
 diff --git a/changelog.txt b/changelog.txt
-index dbaf0e8e7e..a17a73e88b 100644
+index dbaf0e8e7e..86104df0d3 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,3 +1,19 @@
-+9999 wip (01.01.99)
++6.9.4.2 beta (08.07.26)
 +
 +- Fix another from-source build crash during static initialization
 +
