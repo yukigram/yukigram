@@ -360,7 +360,7 @@ jobs:
 
     steps:
       - name: Install Nix
-        uses: nixbuild/nix-quick-install-action@v34
+        uses: samueldr/lix-gha-installer-action@v2026-06-15
 
       - name: Clone
         uses: actions/checkout@v6
@@ -400,7 +400,7 @@ jobs:
         run: |
           set -exuo pipefail
 
-          nix-shell -p nix-serve --run 'NIX_SECRET_KEY_FILE=$PWD/bincache-key.priv nix-serve &'
+          nix-shell -p lixPackageSets.latest.nix-serve-ng --run 'NIX_SECRET_KEY_FILE=$PWD/bincache-key.priv nix-serve &'
           while ! curl http://127.0.0.1:5000/; do sleep 1; done
 
           mkdir -p out/nar
