@@ -1,0 +1,129 @@
+#!/usr/bin/env python3
+import sys
+def warn(*args, **kwargs): return print(*args, **kwargs, file=sys.stderr)
+
+def escape(s):
+    return f'"{s}"' # FIXME
+
+def parse_line(line):
+    # Ignore empty lines, comments, reverse rules and non-url rules
+    if not line or line.startswith("!") or line.startswith("@@") or "##" in line:
+        return
+    pattern, options = line.split('$', 1)
+    if not options:
+        warn('-- malformed line:', line)
+        return
+    if pattern and pattern[0] == pattern[-1] == '/':
+        warn('-- regex pattern:', pattern)
+        return
+
+    pattern_re = ''
+    if pattern == "*":
+        pattern = ""
+    if pattern:
+        add_https = pattern[:2] == "||"
+        add_start = pattern[0] == "|" and not add_https
+        add_end = pattern[-1] == "|"
+
+        if add_end:
+            pattern = pattern[:-1]
+        if add_https:
+            pattern = pattern[2:]
+        elif add_start:
+            pattern = pattern[1:]
+
+        if "|" in pattern:
+            warn('-- stray | in pattern', line)
+            return
+
+        pattern_re = []
+        if add_start:
+            pattern_re.append('^')
+        elif add_https:
+            pattern_re.append('^(https?://)?')
+        for ch in pattern:
+            if ch == "*":
+                pattern_re.append('.*')
+            elif ch == "^":
+                pattern_re.append('([^a-zA-Z0-9_.%-]|$)')
+            elif ch in r".?|\[]{}()$":
+                if ch not in ".?": warn(f'-- weird {ch} in pattern', line)
+                pattern_re.append(rf'\{ch}')
+            else:
+                pattern_re.append(ch)
+        if add_end:
+            pattern_re.append('$')
+        pattern_re = ''.join(pattern_re)
+
+    has_removeparam = False
+    invert_domains = False
+    domains = []
+    remove_all = None
+    remove_exact = None
+    remove_regex = None
+    invert_remove = False
+    for opt in options.split(','):
+        k_v = opt.split('=', 1)
+        key = k_v[0]
+        if key == "removeparam":
+            if has_removeparam:
+                warn('-- double removeparam:', line)
+                return
+            has_removeparam = True
+            if len(k_v) == 1:
+                remove_all = True
+                continue
+            value = k_v[1]
+            if not value:
+                warn('-- removeparam empty:', line)
+                return
+            if value[0] == '~':
+                invert_remove = True
+                value = value[1:]
+            if value[0] == '/' and value[-1] == '/':
+                remove_regex = value[1:-1]
+            else:
+                remove_exact = value
+        elif key == "domain" or key == "to":
+            if len(k_v) == 1:
+                warn('-- domain/to empty:', line)
+                return
+            value = k_v[1]
+            invert_domains = value[0] == '~'
+            domains = [d.removeprefix('~') for d in value.split('|')]
+    if not has_removeparam:
+        warn('-- no removeparam:', line)
+        return
+    if remove_all and invert_remove:
+        warn('-- remove all and invert?', line)
+        return
+
+    if invert_domains:
+        domain_cond = ' && '.join(f'domain != {escape(domain)}' for domain in domains)
+    else:
+        domain_cond = ' || '.join(f'domain == {escape(domain)}' for domain in domains)
+    domain_part = f'if ({domain_cond}) ' if domain_cond else ''
+    pattern_part = f'if (regex_match({escape(pattern_re)}, url)) ' if pattern else ''
+    if remove_all:
+        body = 'return true;'
+    elif remove_exact:
+        if invert_remove:
+            body = f'if (key != {escape(remove_exact)}) return true;'
+        else:
+            body = f'if (key == {escape(remove_exact)}) return true;'
+    elif remove_regex:
+        if invert_remove:
+            body = f'if (!regex_match({escape(remove_regex)}, key + "=")) return true;'
+        else:
+            body = f'if (regex_match({escape(remove_regex)}, key + "=")) return true;'
+    else:
+        1 // 0 # unknown removeparam
+
+    return domain_part + pattern_part + body
+
+for line in sys.stdin.read().split('\n'):
+    res = parse_line(line)
+    if not res:
+        continue
+    print(res)
+print('return false;')
