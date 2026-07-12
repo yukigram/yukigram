@@ -325,8 +325,8 @@ jobs:
         run: |
           set -exuo pipefail
           . bin/activate
-          pmbootstrap checksum yukigram-key
-          pmbootstrap build yukigram-key
+          pmbootstrap --details-to-stdout checksum yukigram-key
+          pmbootstrap --details-to-stdout build --arch=${{ matrix.arch }} yukigram-key
 
       - name: Save APKBUILD files
         run: |
