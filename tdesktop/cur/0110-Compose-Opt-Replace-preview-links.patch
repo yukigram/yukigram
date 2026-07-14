@@ -5,10 +5,10 @@ Subject: [PATCH] (Compose)(Opt) Replace preview links
 
 
 diff --git a/Telegram/SourceFiles/apiwrap.cpp b/Telegram/SourceFiles/apiwrap.cpp
-index 0f4a5f6d71..cc386502af 100644
+index 0295e674b7..af794eecbe 100644
 --- a/Telegram/SourceFiles/apiwrap.cpp
 +++ b/Telegram/SourceFiles/apiwrap.cpp
-@@ -4584,7 +4584,7 @@ void ApiWrap::sendMessage(
+@@ -4649,7 +4649,7 @@ void ApiWrap::sendMessage(
  			|| (exactWebPage && !isLast);
  		const auto manualWebPage = exactWebPage
  			&& !ignoreWebPage
@@ -30,10 +30,10 @@ index 151a87ee50..918d3d1067 100644
  	friend inline bool operator==(const WebPageDraft&, const WebPageDraft&)
  		= default;
 diff --git a/Telegram/SourceFiles/history/view/controls/history_view_draft_options.cpp b/Telegram/SourceFiles/history/view/controls/history_view_draft_options.cpp
-index 3cdb414094..77331d5f36 100644
+index 9dabfb1091..1d73bf27a8 100644
 --- a/Telegram/SourceFiles/history/view/controls/history_view_draft_options.cpp
 +++ b/Telegram/SourceFiles/history/view/controls/history_view_draft_options.cpp
-@@ -43,6 +43,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -44,6 +44,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "ui/toast/toast.h"
  #include "ui/vertical_list.h"
  #include "ui/ui_utility.h"
@@ -41,7 +41,7 @@ index 3cdb414094..77331d5f36 100644
  #include "window/themes/window_theme.h"
  #include "window/section_widget.h"
  #include "window/window_peer_menu.h"
-@@ -725,8 +726,8 @@ void DraftOptionsBox(
+@@ -726,8 +727,8 @@ void DraftOptionsBox(
  		Ui::SettingsSlider *tabs = nullptr;
  		PreviewWrap *wrap = nullptr;
  
@@ -52,7 +52,7 @@ index 3cdb414094..77331d5f36 100644
  		rpl::lifetime resolveLifetime;
  
  		Fn<void()> rebuild;
-@@ -1080,7 +1081,7 @@ void DraftOptionsBox(
+@@ -1082,7 +1083,7 @@ void DraftOptionsBox(
  	};
  
  	const auto &resolver = args.resolver;
@@ -61,7 +61,7 @@ index 3cdb414094..77331d5f36 100644
  		const auto now = base::unixtime::now();
  		if (!page || (page->pendingTill > 0 && page->pendingTill < now)) {
  			show->showToast(tr::lng_preview_cant(tr::now));
-@@ -1089,26 +1090,27 @@ void DraftOptionsBox(
+@@ -1091,26 +1092,27 @@ void DraftOptionsBox(
  			base::timer_once(
  				(delay + 1) * crl::time(1000)
  			) | rpl::on_next([=] {
@@ -92,7 +92,7 @@ index 3cdb414094..77331d5f36 100644
  		resolver->request(link, force);
  
  		state->resolveLifetime = resolver->resolved(
-@@ -1117,17 +1119,19 @@ void DraftOptionsBox(
+@@ -1119,17 +1121,19 @@ void DraftOptionsBox(
  				state->resolveLifetime.destroy();
  				state->performSwitch(
  					link,

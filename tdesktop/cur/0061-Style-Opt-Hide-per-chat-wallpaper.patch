@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Hide per-chat wallpaper
 
 
 diff --git a/Telegram/SourceFiles/data/data_channel.cpp b/Telegram/SourceFiles/data/data_channel.cpp
-index 8687dadc9f..05646f4af9 100644
+index 08ae3869be..da106b5e7e 100644
 --- a/Telegram/SourceFiles/data/data_channel.cpp
 +++ b/Telegram/SourceFiles/data/data_channel.cpp
 @@ -29,6 +29,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 8687dadc9f..05646f4af9 100644
  #include "base/unixtime.h"
  #include "core/application.h"
  #include "history/history.h"
-@@ -1481,7 +1482,7 @@ void ApplyChannelUpdate(
+@@ -1546,7 +1547,7 @@ void ApplyChannelUpdate(
  		session->sendAsPeers().setChosen(channel, PeerId());
  	}
  
@@ -26,7 +26,7 @@ index 8687dadc9f..05646f4af9 100644
  			Data::WallPaper::Create(&channel->session(), *paper));
  	} else {
 diff --git a/Telegram/SourceFiles/data/data_user.cpp b/Telegram/SourceFiles/data/data_user.cpp
-index 2a5c93abdb..c6e45b0827 100644
+index a013d9b222..8d9fb8841b 100644
 --- a/Telegram/SourceFiles/data/data_user.cpp
 +++ b/Telegram/SourceFiles/data/data_user.cpp
 @@ -17,6 +17,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -37,7 +37,7 @@ index 2a5c93abdb..c6e45b0827 100644
  #include "main/main_session.h"
  #include "data/business/data_business_common.h"
  #include "data/business/data_business_info.h"
-@@ -992,7 +993,7 @@ void ApplyUserUpdate(not_null<UserData*> user, const MTPDuserFull &update) {
+@@ -1009,7 +1010,7 @@ void ApplyUserUpdate(not_null<UserData*> user, const MTPDuserFull &update) {
  		}
  	}
  

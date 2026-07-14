@@ -5,10 +5,10 @@ Subject: [PATCH] (Style)(Opt) Unround messages
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
-index dc833e832b..8ae6f115a4 100644
+index f515885973..286f01a1ed 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
-@@ -37,6 +37,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -38,6 +38,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "history/view/media/history_view_media_common.h"
  #include "history/view/media/history_view_media_spoiler.h"
  #include "window/window_session_controller.h"
@@ -16,7 +16,7 @@ index dc833e832b..8ae6f115a4 100644
  #include "core/application.h" // Application::showDocument.
  #include "core/core_settings.h"
  #include "ui/chat/attach/attach_prepare.h"
-@@ -623,8 +624,10 @@ void Gif::draw(Painter &p, const PaintContext &context) const {
+@@ -678,8 +679,10 @@ void Gif::draw(Painter &p, const PaintContext &context) const {
  			} else {
  				displayMute = true;
  			}
@@ -27,7 +27,7 @@ index dc833e832b..8ae6f115a4 100644
  		} else {
  			request.rounding = MediaRoundingMask(rounding);
  		}
-@@ -681,7 +684,11 @@ void Gif::draw(Painter &p, const PaintContext &context) const {
+@@ -736,7 +739,11 @@ void Gif::draw(Painter &p, const PaintContext &context) const {
  				auto q = QPainter(&frame);
  				fillImageSpoiler(q, _spoiler.get(), rthumb, context);
  			}
@@ -39,10 +39,10 @@ index dc833e832b..8ae6f115a4 100644
  		}
  		p.setOpacity(1.);
  	}
-@@ -1150,9 +1157,13 @@ void Gif::validateThumbCache(
+@@ -1241,9 +1248,13 @@ void Gif::validateThumbCache(
  		return;
  	}
- 	auto cache = prepareThumbCache(outer);
+ 	auto cache = prepareThumbCache(scaled);
 +if (!Yukigram::Settings::UnroundMessages->current()) {
  	_thumbCache = isEllipse
  		? Images::Circle(std::move(cache))

@@ -22,10 +22,10 @@ index 0000000000..9d9591e164
 +indent_style = space
 +indent_size = 4
 diff --git a/Telegram/SourceFiles/core/application.cpp b/Telegram/SourceFiles/core/application.cpp
-index aeb5a6008c..cbf0bd815d 100644
+index 9be1f88a3a..5907305165 100644
 --- a/Telegram/SourceFiles/core/application.cpp
 +++ b/Telegram/SourceFiles/core/application.cpp
-@@ -51,6 +51,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -52,6 +52,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "lang/lang_cloud_manager.h"
  #include "lang/lang_hardcoded.h"
  #include "lang/lang_instance.h"
@@ -33,7 +33,7 @@ index aeb5a6008c..cbf0bd815d 100644
  #include "inline_bots/bot_attach_web_view.h"
  #include "mainwidget.h"
  #include "tray.h"
-@@ -273,6 +274,7 @@ void Application::run() {
+@@ -274,6 +275,7 @@ void Application::run() {
  	style::internal::StartFonts();
  
  	ValidateScale();
@@ -42,7 +42,7 @@ index aeb5a6008c..cbf0bd815d 100644
  	refreshGlobalProxy(); // Depends on app settings being read.
  
 diff --git a/Telegram/SourceFiles/lang/lang_instance.cpp b/Telegram/SourceFiles/lang/lang_instance.cpp
-index eadb2659d1..a6e3912742 100644
+index d91107f8ca..e6f70fb189 100644
 --- a/Telegram/SourceFiles/lang/lang_instance.cpp
 +++ b/Telegram/SourceFiles/lang/lang_instance.cpp
 @@ -13,6 +13,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -53,7 +53,7 @@ index eadb2659d1..a6e3912742 100644
  #include "base/platform/base_platform_info.h"
  #include "base/qthelp_regex.h"
  
-@@ -247,6 +248,7 @@ Instance::Instance(not_null<Instance*> derived, const PrivateTag &)
+@@ -249,6 +250,7 @@ Instance::Instance(not_null<Instance*> derived, const PrivateTag &)
  
  void Instance::switchToId(const Language &data) {
  	reset(data);
@@ -61,7 +61,7 @@ index eadb2659d1..a6e3912742 100644
  	if (_id == u"#TEST_X"_q || _id == u"#TEST_0"_q) {
  		for (auto &value : _values) {
  			value = PrepareTestValue(value, _id[5]);
-@@ -272,6 +274,7 @@ void Instance::setBaseId(const QString &baseId, const QString &pluralId) {
+@@ -274,6 +276,7 @@ void Instance::setBaseId(const QString &baseId, const QString &pluralId) {
  void Instance::switchToCustomFile(const QString &filePath) {
  	if (loadFromCustomFile(filePath)) {
  		Local::writeLangPack();

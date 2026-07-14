@@ -33,7 +33,7 @@ index deaf4ab31f..8df07cb3d5 100644
  	base::ConcurrentTimerEnvironment environment;
  	return sandbox.start();
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 13ecca0b42..50eeb2a924 100644
+index 809793c7fa..f5cff71b06 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -6,6 +6,7 @@ For license and copyright information please follow this link:
@@ -44,7 +44,7 @@ index 13ecca0b42..50eeb2a924 100644
  
  #include "data/components/passkeys.h"
  #include "main/main_session.h"
-@@ -191,6 +192,7 @@ void AddOption(
+@@ -193,6 +194,7 @@ void AddOption(
  			return;
  		}
  		option.set(toggled);

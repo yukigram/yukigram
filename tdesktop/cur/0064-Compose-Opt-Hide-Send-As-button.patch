@@ -5,12 +5,12 @@ Subject: [PATCH] (Compose)(Opt) Hide Send As button
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index cfbb1a9ff4..27de73dc48 100644
+index 6461f57d4f..deeea44210 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -63,6 +63,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "ui/controls/send_as_button.h"
+@@ -64,6 +64,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "ui/controls/silent_toggle.h"
+ #include "ui/screen_reader_mode.h"
  #include "ui/ui_utility.h"
 +#include "yukigram/settings/hide_send_as.h"
  #include "inline_bots/inline_bot_result.h"

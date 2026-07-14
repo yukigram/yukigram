@@ -17,7 +17,7 @@ index 4ef4cc7be1..67c31f4874 100644
  
  [[nodiscard]] QImage CacheDiceImage(
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index e3397a6b64..fcf038ad27 100644
+index 4c92cff3cb..f9316483f0 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
 @@ -213,7 +213,7 @@ mediaInPaletteSelected: TextPalette(defaultTextPalette) {

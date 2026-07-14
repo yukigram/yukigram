@@ -6,10 +6,10 @@ Subject: [PATCH] (Yukigram) Settings page
 Co-Authored-By: Lunya <241520024+lunya-miaou@users.noreply.github.com>
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 822edb59d7..e0079c5583 100644
+index 4c30a80efd..a4980e14c1 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1766,6 +1766,8 @@ PRIVATE
+@@ -1822,6 +1822,8 @@ PRIVATE
      settings/sections/settings_shortcuts.h
      settings/sections/settings_websites.cpp
      settings/sections/settings_websites.h
@@ -19,10 +19,10 @@ index 822edb59d7..e0079c5583 100644
      storage/details/storage_file_utilities.h
      storage/details/storage_settings_scheme.cpp
 diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
-index b52dc8de9b..c4d9a3e5f8 100644
+index 0c4fd4e026..b780d7af63 100644
 --- a/Telegram/Resources/langs/lang.strings
 +++ b/Telegram/Resources/langs/lang.strings
-@@ -856,6 +856,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -857,6 +857,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  "lng_settings_add_account_about" = "You can add up to four accounts with different phone numbers.";
  "lng_settings_peer_to_peer_about" = "Disabling peer-to-peer will relay all calls through Telegram servers to avoid revealing your IP address, but may decrease audio and video quality.";
  "lng_settings_advanced" = "Advanced";

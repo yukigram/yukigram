@@ -20,7 +20,7 @@ index 0000000000..07bc0f276e
 +    " stroke="#fff" fill="#0000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
 +</svg>
 diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
-index 0d9684cd52..f79c262e68 100644
+index c38858ba5a..1e5bceb58e 100644
 --- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 @@ -12,6 +12,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -60,7 +60,7 @@ index 0d9684cd52..f79c262e68 100644
  	_infoToggle->setClickedCallback([=] { toggleInfoSection(); });
  	_back->setAcceptBoth();
  	_back->addClickHandler([=](Qt::MouseButton) {
-@@ -1206,6 +1215,10 @@ void TopBarWidget::updateControlsGeometry() {
+@@ -1240,6 +1249,10 @@ void TopBarWidget::updateControlsGeometry() {
  		_infoToggle->moveToRight(_rightTaken, otherButtonsTop);
  		_rightTaken += _infoToggle->width();
  	}
@@ -71,7 +71,7 @@ index 0d9684cd52..f79c262e68 100644
  	_recentActions->moveToRight(_rightTaken, otherButtonsTop);
  	if (!_recentActions->isHidden()) {
  		_rightTaken += _recentActions->width() + st::topBarSkip;
-@@ -1347,6 +1360,30 @@ void TopBarWidget::updateControlsVisibility() {
+@@ -1382,6 +1395,30 @@ void TopBarWidget::updateControlsVisibility() {
  		return false;
  	}();
  	_recentActions->setVisible(isAdmin);
@@ -103,10 +103,10 @@ index 0d9684cd52..f79c262e68 100644
  		if (const auto peer = _activeChat.key.peer()) {
  			if (const auto user = peer->asUser()) {
 diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.h b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.h
-index 9793406f45..f9861e8147 100644
+index e986cabb54..6b2ea7a06f 100644
 --- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.h
 +++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.h
-@@ -241,6 +241,7 @@ private:
+@@ -246,6 +246,7 @@ private:
  	object_ptr<Ui::IconButton> _groupCall;
  	object_ptr<Ui::IconButton> _search;
  	object_ptr<Ui::IconButton> _recentActions;
@@ -115,10 +115,10 @@ index 9793406f45..f9861e8147 100644
  	object_ptr<Ui::IconButton> _menuToggle;
  	base::unique_qptr<Ui::PopupMenu> _menu;
 diff --git a/Telegram/SourceFiles/info/info.style b/Telegram/SourceFiles/info/info.style
-index 5591311a2e..88d1884cf5 100644
+index 3232e71019..cefdb47a56 100644
 --- a/Telegram/SourceFiles/info/info.style
 +++ b/Telegram/SourceFiles/info/info.style
-@@ -1048,6 +1048,10 @@ topBarRecentActions: IconButton(topBarSearch) {
+@@ -1135,6 +1135,10 @@ topBarRecentActions: IconButton(topBarSearch) {
  	icon: icon {{ "info/edit/group_manage_actions_topbar", menuIconFg }};
  	iconOver: icon {{ "info/edit/group_manage_actions_topbar", menuIconFgOver }};
  }

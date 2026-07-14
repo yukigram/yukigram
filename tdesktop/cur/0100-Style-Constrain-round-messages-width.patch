@@ -5,19 +5,25 @@ Subject: [PATCH] (Style) Constrain round messages width
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
-index 0f2da2682b..dc833e832b 100644
+index ebb84988a6..f515885973 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
-@@ -406,11 +406,17 @@ QSize Gif::countCurrentSize(int newWidth) {
- 		auto reply = _parent->Get<Reply>();
+@@ -428,6 +428,7 @@ QSize Gif::countCurrentSize(int newWidth) {
  		auto forwarded = item->Get<HistoryMessageForwarded>();
- 		if (via || reply || forwarded) {
+ 		RefreshEphemeralPlate(_parent, _ephemeral.text);
+ 		if (via || reply || forwarded || !_ephemeral.text.isEmpty()) {
 +			const auto prevWidth = newWidth;
  			auto additional = additionalWidth(reply, via, forwarded);
  			newWidth += additional;
  			accumulate_min(newWidth, availableWidth);
- 			auto usew = maxWidth() - additional;
- 			auto availw = newWidth - usew - st::msgReplyPadding.left() - st::msgReplyPadding.left() - st::msgReplyPadding.left();
+@@ -445,9 +446,14 @@ QSize Gif::countCurrentSize(int newWidth) {
+ 			const auto rectw = _ephemeral.onTop
+ 				? std::min(newWidth - st::msgReplyPadding.left(), additional)
+ 				: (newWidth - usew - st::msgReplyPadding.left());
+-			const auto availw = rectw
++			auto availw = rectw
+ 				- st::msgReplyPadding.left()
+ 				- st::msgReplyPadding.left();
 +			const auto diff = newWidth - prevWidth;
 +			if (diff < 128) {
 +				newHeight -= (128 - diff);

@@ -5,10 +5,10 @@ Subject: [PATCH] (Style) Fix button rounding in history top bar
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
-index f79c262e68..0f103f406a 100644
+index 1e5bceb58e..2c9882db2c 100644
 --- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
-@@ -1125,6 +1125,7 @@ void TopBarWidget::updateControlsGeometry() {
+@@ -1159,6 +1159,7 @@ void TopBarWidget::updateControlsGeometry() {
  		};
  		auto first = (Ui::RoundButton*)(nullptr);
  		auto last = (Ui::RoundButton*)(nullptr);
@@ -16,7 +16,7 @@ index f79c262e68..0f103f406a 100644
  		for (const auto button : buttons) {
  			if (!button->isHidden()) {
  				if (!first) {
-@@ -1133,6 +1134,7 @@ void TopBarWidget::updateControlsGeometry() {
+@@ -1167,6 +1168,7 @@ void TopBarWidget::updateControlsGeometry() {
  				last = button;
  			}
  		}

@@ -75,10 +75,10 @@ index 2e8ee8c52d..4a11612dad 100644
  }
  
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
-index 3b49e9c007..2cee977b2c 100644
+index 177398280c..9dbb6810c6 100644
 --- a/Telegram/SourceFiles/history/history_item.cpp
 +++ b/Telegram/SourceFiles/history/history_item.cpp
-@@ -1410,7 +1410,7 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
+@@ -1411,7 +1411,7 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
  
  QString GenerateServiceTime(TimeId date) {
  	if (date > 0) {
@@ -87,7 +87,7 @@ index 3b49e9c007..2cee977b2c 100644
  	}
  	return QString();
  }
-@@ -8030,7 +8030,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
+@@ -8180,7 +8180,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
  	};
  	const auto time = QLocale().toString(
  		scheduled.time(),
@@ -97,10 +97,10 @@ index 3b49e9c007..2cee977b2c 100644
  		prepareWithDate(tr::lng_group_call_starts_date(
  			tr::now,
 diff --git a/Telegram/SourceFiles/history/history_item_text.cpp b/Telegram/SourceFiles/history/history_item_text.cpp
-index be6b59aa6a..a1c8e9d244 100644
+index 33333e29bc..12a79ba436 100644
 --- a/Telegram/SourceFiles/history/history_item_text.cpp
 +++ b/Telegram/SourceFiles/history/history_item_text.cpp
-@@ -351,7 +351,7 @@ TextForMimeData HistorySelectedItemPlainWrappedText(
+@@ -384,7 +384,7 @@ TextForMimeData HistorySelectedItemPlainWrappedText(
  		TextForMimeData &&body) {
  	auto result = TextForMimeData();
  	const auto time = u"[%1] "_q.arg(
@@ -110,10 +110,10 @@ index be6b59aa6a..a1c8e9d244 100644
  	const auto size = time.size() + author.size() + 2 + body.expanded.size();
  	result.reserve(size);
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-index 12101bf4c8..bc1d16f23a 100644
+index 62b202ec35..fe587e4a23 100644
 --- a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-@@ -489,7 +489,7 @@ void BottomInfo::layoutDateText() {
+@@ -500,7 +500,7 @@ void BottomInfo::layoutDateText() {
  		? FormatEditedDate(_data.date, _data.editedDate)
  		: edited + ((_data.flags & Data::Flag::ForwardedDate)
  		? Ui::FormatDateTimeSavedFrom(_data.date)

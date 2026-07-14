@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface)(Opt) Compact chat list
 
 
 diff --git a/Telegram/SourceFiles/dialogs/dialogs.style b/Telegram/SourceFiles/dialogs/dialogs.style
-index 64d66da238..a2f9ad0bad 100644
+index 411095083e..e6de1bbd89 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs.style
 +++ b/Telegram/SourceFiles/dialogs/dialogs.style
 @@ -100,6 +100,11 @@ defaultDialogRow: DialogRow {
@@ -17,11 +17,11 @@ index 64d66da238..a2f9ad0bad 100644
 +	photoSize: 20px;
 +	nameLeft: 40px;
 +}
- taggedDialogRow: DialogRow(defaultDialogRow) {
- 	height: 72px;
- 	textTop: 30px;
+ communityRequestableListItem: PeerListItem(defaultPeerListItem) {
+ 	height: dialogsRowHeight;            // == st::defaultDialogRow.height (62px)
+ 	photoSize: 46px;                     // == st::defaultDialogRow.photoSize
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_entry.cpp b/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
-index 2796d3a2c1..36f3450c00 100644
+index 5c93c8e501..79eae215c9 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_entry.cpp
 @@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -40,7 +40,7 @@ index 2796d3a2c1..36f3450c00 100644
  #include "ui/text/format_values.h"
  #include "ui/text/text_options.h"
  #include "ui/ui_utility.h"
-@@ -523,6 +525,9 @@ void Entry::updateChatListEntryHeight() {
+@@ -528,6 +530,9 @@ void Entry::updateChatListEntryHeight() {
  }
  
  bool Entry::hasChatsFilterTags(FilterId exclude) const {
@@ -51,10 +51,10 @@ index 2796d3a2c1..36f3450c00 100644
  		return false;
  	}
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-index 7bd0b72cf6..f6028a7272 100644
+index 45898b3f73..cf566012ac 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-@@ -37,6 +37,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "ui/rect.h"
  #include "ui/screen_reader_mode.h"
  #include "ui/ui_utility.h"
@@ -62,7 +62,7 @@ index 7bd0b72cf6..f6028a7272 100644
  #include "data/components/sponsored_messages.h"
  #include "data/data_drafts.h"
  #include "data/data_folder.h"
-@@ -385,6 +386,7 @@ InnerWidget::InnerWidget(
+@@ -396,6 +397,7 @@ InnerWidget::InnerWidget(
  	Ui::ScheduleThanosEffectWarmUp(&session(), lifetime());
  
  	rpl::merge(
@@ -70,7 +70,7 @@ index 7bd0b72cf6..f6028a7272 100644
  		session().settings().archiveCollapsedChanges() | rpl::map_to(false),
  		session().data().chatsFilters().changed() | rpl::map_to(true),
  		session().data().chatsFilters().tagsEnabledChanges(
-@@ -915,7 +917,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
+@@ -1063,7 +1065,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
  			}
  		}
  
@@ -80,7 +80,7 @@ index 7bd0b72cf6..f6028a7272 100644
  
  		const auto videoUserpic = validateVideoUserpic(row);
  		const auto cacheRatio = style::DevicePixelRatio();
-@@ -1849,7 +1853,7 @@ void InnerWidget::performDrag() {
+@@ -2072,7 +2076,7 @@ void InnerWidget::performDrag() {
  			('@' + u).toUtf8());
  	}
  
@@ -89,7 +89,7 @@ index 7bd0b72cf6..f6028a7272 100644
  	auto pixmap = QPixmap(Size(st.height * style::DevicePixelRatio()));
  	pixmap.setDevicePixelRatio(style::DevicePixelRatio());
  	pixmap.fill(Qt::transparent);
-@@ -5602,7 +5606,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
+@@ -5989,7 +5993,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
  		: st::dialogsCallBadgeSize;
  	const auto stroke = st::dialogsOnlineBadgeStroke;
  	const auto skip = user
@@ -99,7 +99,7 @@ index 7bd0b72cf6..f6028a7272 100644
  	const auto updateRect = QRect(
  		_st->photoSize - skip.x() - size,
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_row.cpp b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
-index 3b01b6e83f..6c8faed4ef 100644
+index 79a1fb2d1f..153c64505a 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -110,7 +110,7 @@ index 3b01b6e83f..6c8faed4ef 100644
  #include "dialogs/dialogs_entry.h"
  #include "dialogs/ui/dialogs_video_userpic.h"
  #include "dialogs/ui/dialogs_layout.h"
-@@ -301,6 +302,9 @@ Row::~Row() {
+@@ -330,6 +331,9 @@ Row::~Row() {
  const style::DialogRow &Row::ComputeSt(
  		not_null<const Entry*> entry,
  		FilterId filterId) {
@@ -120,7 +120,7 @@ index 3b01b6e83f..6c8faed4ef 100644
  	if (const auto history = entry->asHistory()) {
  		const auto hasTags = entry->hasChatsFilterTags(filterId);
  		const auto wideRow = history->peer->displayAsForum()
-@@ -513,7 +517,7 @@ void Row::PaintCornerBadgeFrame(
+@@ -607,7 +611,7 @@ void Row::PaintCornerBadgeFrame(
  		: st::dialogsCallBadgeSize;
  	const auto stroke = st::dialogsOnlineBadgeStroke;
  	const auto skip = online
@@ -129,7 +129,7 @@ index 3b01b6e83f..6c8faed4ef 100644
  		: st::dialogsCallBadgeSkip;
  	const auto shrink = (size / 2) * (1. - topLayerProgress);
  
-@@ -595,7 +599,8 @@ void Row::paintUserpic(
+@@ -714,7 +718,8 @@ void Row::paintUserpic(
  	const auto limit = Ui::kOutlineSegmentsMax;
  	const auto storiesCount = std::min(storiesCountReal, limit);
  	const auto storiesUnreadCount = std::min(storiesUnreadCountReal, limit);
@@ -139,16 +139,16 @@ index 3b01b6e83f..6c8faed4ef 100644
  		_cornerBadgeUserpic->frame = QImage(
  			frameSize,
  			QImage::Format_ARGB32_Premultiplied);
-@@ -615,6 +620,7 @@ void Row::paintUserpic(
- 	const auto subscribed = Data::ChannelHasSubscriptionUntilDate(
- 		peer ? peer->asChannel() : nullptr);
+@@ -743,6 +748,7 @@ void Row::paintUserpic(
+ 		&& !subscribed
+ 		&& !insideCommunity;
  	if (keyChanged
 +		|| frameSizeChanged
  		|| !_cornerBadgeUserpic->layersManager.isFinished()
  		|| _cornerBadgeUserpic->active != active
- 		|| _cornerBadgeUserpic->frameIndex != frameIndex
+ 		|| _cornerBadgeUserpic->hidden != (hidden ? 1 : 0)
 diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
-index b94497266b..5a9386629e 100644
+index 3e15b0c071..71861cff2c 100644
 --- a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 +++ b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -168,7 +168,7 @@ index b94497266b..5a9386629e 100644
  		p.drawImage(
  			left,
  			top,
-@@ -400,6 +401,7 @@ template <typename PaintItemCallback>
+@@ -439,6 +440,7 @@ template <typename PaintItemCallback>
  void PaintRow(
  		Painter &p,
  		not_null<const BasicRow*> row,
@@ -176,7 +176,7 @@ index b94497266b..5a9386629e 100644
  		QRect geometry,
  		not_null<Entry*> entry,
  		VideoUserpic *videoUserpic,
-@@ -411,11 +413,23 @@ void PaintRow(
+@@ -450,11 +452,23 @@ void PaintRow(
  		HistoryItem *item,
  		const Data::Draft *draft,
  		TimeId date,
@@ -201,7 +201,7 @@ index b94497266b..5a9386629e 100644
  	const auto supportMode = entry->session().supportMode();
  	if (supportMode) {
  		draft = nullptr;
-@@ -565,6 +579,7 @@ void PaintRow(
+@@ -604,6 +618,7 @@ void PaintRow(
  				+ st::dialogsChatTypeSkip);
  		}
  	}
@@ -209,7 +209,7 @@ index b94497266b..5a9386629e 100644
  	auto texttop = context.st->textTop;
  	if (const auto folder = entry->asFolder()) {
  		const auto availableWidth = PaintWideCounter(
-@@ -756,6 +771,10 @@ void PaintRow(
+@@ -821,6 +836,10 @@ void PaintRow(
  			texttop,
  			context.width);
  	}
@@ -220,7 +220,7 @@ index b94497266b..5a9386629e 100644
  	const auto sendStateIcon = [&]() -> const style::icon* {
  		if (!thread) {
  			return nullptr;
-@@ -1171,6 +1190,7 @@ void RowPainter::Paint(
+@@ -1237,6 +1256,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,
@@ -228,7 +228,7 @@ index b94497266b..5a9386629e 100644
  		QRect(0, 0, context.width, row->height()),
  		entry,
  		videoUserpic,
-@@ -1283,6 +1303,7 @@ void RowPainter::Paint(
+@@ -1349,6 +1369,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,

@@ -18,7 +18,7 @@ index 9bf8912af4..11d1abe174 100644
  }
  
 diff --git a/Telegram/SourceFiles/core/version.h b/Telegram/SourceFiles/core/version.h
-index ee9b931097..514026ebd9 100644
+index 61e93df298..d2e227576d 100644
 --- a/Telegram/SourceFiles/core/version.h
 +++ b/Telegram/SourceFiles/core/version.h
 @@ -20,8 +20,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -29,9 +29,9 @@ index ee9b931097..514026ebd9 100644
 -constexpr auto AppFile = "Telegram"_cs;
 +constexpr auto AppName = "Yukigram"_cs;
 +constexpr auto AppFile = "yukigram"_cs;
- constexpr auto AppVersion = 6009004;
- constexpr auto AppVersionStr = "6.9.4";
- constexpr auto AppBetaVersion = true;
+ constexpr auto AppVersion = 7000001;
+ constexpr auto AppVersionStr = "7.0.1";
+ constexpr auto AppBetaVersion = false;
 diff --git a/Telegram/SourceFiles/intro/intro_start.cpp b/Telegram/SourceFiles/intro/intro_start.cpp
 index d1b835a09a..a871886d76 100644
 --- a/Telegram/SourceFiles/intro/intro_start.cpp
@@ -72,7 +72,7 @@ index c8c0a20587..9006f3ed62 100644
  	}
  	const auto history = thread->owningHistory();
 diff --git a/Telegram/SourceFiles/window/window_main_menu.cpp b/Telegram/SourceFiles/window/window_main_menu.cpp
-index 89ecba366f..a26a7cc91a 100644
+index f6f0985397..ae1c2bf919 100644
 --- a/Telegram/SourceFiles/window/window_main_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_main_menu.cpp
 @@ -384,8 +384,8 @@ MainMenu::MainMenu(

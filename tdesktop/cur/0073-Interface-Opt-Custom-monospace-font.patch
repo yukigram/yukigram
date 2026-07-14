@@ -28,7 +28,7 @@ index 8df07cb3d5..c1e759cef2 100644
  	// Must be called after options are inited.
  	initHighDpi();
 diff --git a/Telegram/SourceFiles/settings/sections/settings_chat.cpp b/Telegram/SourceFiles/settings/sections/settings_chat.cpp
-index 6ab0a4d2b7..d50f30ddb1 100644
+index 4f73e56ce4..16c5ddc63c 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_chat.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_chat.cpp
 @@ -52,6 +52,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -79,7 +79,7 @@ index 6ab0a4d2b7..d50f30ddb1 100644
  }
  
  void BuildCloudThemesSection(SectionBuilder &builder) {
-@@ -2800,7 +2820,7 @@ void SetupThemeSettings(
+@@ -2813,7 +2833,7 @@ void SetupThemeSettings(
  			return result;
  		};
  		controller->show(
@@ -88,7 +88,7 @@ index 6ab0a4d2b7..d50f30ddb1 100644
  	});
  	if (highlights) {
  		highlights->push_back({
-@@ -2809,6 +2829,59 @@ void SetupThemeSettings(
+@@ -2822,6 +2842,59 @@ void SetupThemeSettings(
  		});
  	}
  

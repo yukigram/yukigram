@@ -5,10 +5,10 @@ Subject: [PATCH] (Major) Split Stickers and GIFs chat permission toggle
 
 
 diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
-index c4d9a3e5f8..cb9a1430a9 100644
+index b780d7af63..31ca3796d7 100644
 --- a/Telegram/Resources/langs/lang.strings
 +++ b/Telegram/Resources/langs/lang.strings
-@@ -6867,6 +6867,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -7031,6 +7031,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  "lng_admin_log_banned_send_voice_messages" = "Send voice messages";
  "lng_admin_log_banned_send_video_messages" = "Send video messages";
  "lng_admin_log_banned_send_stickers" = "Send stickers & GIFs";
@@ -20,7 +20,7 @@ index c4d9a3e5f8..cb9a1430a9 100644
  "lng_admin_log_banned_send_polls" = "Send polls";
  "lng_admin_log_banned_send_reactions" = "Send reactions";
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_peer_permissions_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_peer_permissions_box.cpp
-index f5875e68e9..ad12512c28 100644
+index 3b2fe36f99..e27fff6543 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_peer_permissions_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_peer_permissions_box.cpp
 @@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -46,7 +46,7 @@ index f5875e68e9..ad12512c28 100644
  		{ Flag::EmbedLinks, tr::lng_rights_chat_send_links(tr::now) },
  		{ Flag::SendPolls, tr::lng_rights_chat_send_polls(tr::now) },
  		{ Flag::SendReactions, tr::lng_rights_chat_send_reactions(tr::now) },
-@@ -279,18 +280,6 @@ auto Dependencies(ChatRestrictions)
+@@ -290,18 +291,6 @@ auto Dependencies(ChatRestrictions)
  	using Flag = ChatRestriction;
  
  	return {
@@ -65,7 +65,7 @@ index f5875e68e9..ad12512c28 100644
  		// embed_links -> send_plain
  		{ Flag::EmbedLinks, Flag::SendOther },
  
-@@ -1460,14 +1449,6 @@ ChatAdminRights DisabledByDefaultRestrictions(not_null<PeerData*> peer) {
+@@ -1471,14 +1460,6 @@ ChatAdminRights DisabledByDefaultRestrictions(not_null<PeerData*> peer) {
  ChatRestrictions FixDependentRestrictions(ChatRestrictions restrictions) {
  	const auto &dependencies = Dependencies(restrictions);
  
@@ -100,23 +100,23 @@ index 250eceb7a4..df5eeef392 100644
  		{ Flag::SendReactions, tr::lng_admin_log_banned_send_reactions },
  		{ Flag::SendPolls, tr::lng_admin_log_banned_send_polls },
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 27de73dc48..16454a7c42 100644
+index deeea44210..45e6e1e061 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -9529,7 +9529,7 @@ bool HistoryWidget::sendExistingDocument(
- 		Api::MessageToSend messageToSend,
- 		std::optional<MsgId> localId) {
- 	const auto error = _peer
+@@ -9635,7 +9635,7 @@ bool HistoryWidget::sendExistingDocument(
+ 	const auto ephemeralReply = session().ephemeralMessages()
+ 		.isEphemeralBotReply(messageToSend.action.replyTo.messageId);
+ 	const auto error = (_peer && !ephemeralReply)
 -		? Data::RestrictionError(_peer, ChatRestriction::SendStickers)
 +		? Data::RestrictionError(_peer, document->isGifv() ? ChatRestriction::SendGifs : ChatRestriction::SendStickers)
  		: Data::SendError();
  	if (error) {
  		Data::ShowSendErrorToast(controller(), _peer, error);
 diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-index 8a39cc0e18..c23b8d49bd 100644
+index 67ee70bef6..851338e89b 100644
 --- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-@@ -72,6 +72,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -74,6 +74,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "data/data_saved_messages.h"
  #include "data/data_saved_sublist.h"
  #include "data/data_session.h"
@@ -124,20 +124,20 @@ index 8a39cc0e18..c23b8d49bd 100644
  #include "data/data_user.h"
  #include "data/data_chat.h"
  #include "data/data_channel.h"
-@@ -1874,7 +1875,7 @@ bool ChatWidget::sendExistingDocument(
- 		std::optional<MsgId> localId) {
- 	const auto error = Data::RestrictionError(
- 		_peer,
--		ChatRestriction::SendStickers);
-+		document->isGifv() ? ChatRestriction::SendGifs : ChatRestriction::SendStickers);
+@@ -1921,7 +1922,7 @@ bool ChatWidget::sendExistingDocument(
+ 	const auto ephemeralReply = session().ephemeralMessages()
+ 		.isEphemeralBotReply(messageToSend.action.replyTo.messageId);
+ 	const auto error = !ephemeralReply
+-		? Data::RestrictionError(_peer, ChatRestriction::SendStickers)
++		? Data::RestrictionError(_peer, document->isGifv() ? ChatRestriction::SendGifs : ChatRestriction::SendStickers)
+ 		: Data::SendError();
  	if (error) {
  		Data::ShowSendErrorToast(controller(), _peer, error);
- 		return false;
 diff --git a/Telegram/SourceFiles/history/view/history_view_scheduled_section.cpp b/Telegram/SourceFiles/history/view/history_view_scheduled_section.cpp
-index cc6c7c952d..51c15e36f2 100644
+index f3c2e537bf..83e0ba90d9 100644
 --- a/Telegram/SourceFiles/history/view/history_view_scheduled_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_scheduled_section.cpp
-@@ -842,7 +842,7 @@ bool ScheduledWidget::sendExistingDocument(
+@@ -850,7 +850,7 @@ bool ScheduledWidget::sendExistingDocument(
  		Api::MessageToSend messageToSend) {
  	const auto error = Data::RestrictionError(
  		_history->peer,

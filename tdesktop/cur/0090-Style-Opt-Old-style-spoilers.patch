@@ -5,10 +5,10 @@ Subject: [PATCH] (Style)(Opt) Old-style spoilers
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_media.cpp b/Telegram/SourceFiles/history/view/media/history_view_media.cpp
-index a116d6ac20..63f2eb2d37 100644
+index 67f58e003a..06a0b8ca16 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_media.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_media.cpp
-@@ -21,6 +21,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -22,6 +22,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "data/data_session.h"
  #include "data/data_web_page.h"
  #include "lang/lang_keys.h"
@@ -16,7 +16,7 @@ index a116d6ac20..63f2eb2d37 100644
  #include "ui/item_text_options.h"
  #include "ui/chat/chat_style.h"
  #include "ui/chat/message_bubble.h"
-@@ -30,6 +31,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -31,6 +32,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "ui/painter.h"
  #include "ui/power_saving.h"
  #include "ui/text/text_utilities.h"
@@ -24,7 +24,7 @@ index a116d6ac20..63f2eb2d37 100644
  #include "core/ui_integration.h"
  #include "styles/style_chat.h"
  #include "styles/style_chat_helpers.h"
-@@ -361,6 +363,18 @@ void Media::fillImageSpoiler(
+@@ -362,6 +364,18 @@ void Media::fillImageSpoiler(
  		Ui::DefaultImageSpoiler().frame(
  			spoiler->animation->index(context.now, pausedSpoiler)),
  		spoiler->cornerCache);

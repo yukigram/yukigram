@@ -5,10 +5,10 @@ Subject: [PATCH] (Message)(Opt) Disable animoji
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index c384a06d3b..f2310f9366 100644
+index 70bf55cd47..b645b33833 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
-@@ -45,6 +45,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -46,6 +46,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "payments/payments_reaction_process.h" // TryAddingPaidReaction.
  #include "window/window_session_controller.h"
  #include "window/section_widget.h"
@@ -16,7 +16,7 @@ index c384a06d3b..f2310f9366 100644
  #include "ui/chat/chat_style.h"
  #include "ui/effects/glare.h"
  #include "ui/effects/path_shift_gradient.h"
-@@ -1582,7 +1583,7 @@ void Element::refreshMedia(Element *replacing) {
+@@ -1616,7 +1617,7 @@ void Element::refreshMedia(Element *replacing) {
  		const auto emoji = isolatedEmoji();
  		const auto emojiStickers = &history()->session().emojiStickersPack();
  		const auto skipPremiumEffect = false;

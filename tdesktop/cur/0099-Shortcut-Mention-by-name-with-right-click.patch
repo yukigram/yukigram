@@ -6,10 +6,10 @@ Subject: [PATCH] (Shortcut) Mention by name with right-click
 Vanilla way (Ctrl + Left click) still works
 
 diff --git a/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp b/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp
-index 9497d87bf3..494b93a7d5 100644
+index 28b90efa6b..1834dce4c0 100644
 --- a/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp
 +++ b/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp
-@@ -1430,6 +1430,8 @@ void FieldAutocomplete::Inner::mousePressEvent(QMouseEvent *e) {
+@@ -1574,6 +1574,8 @@ void FieldAutocomplete::Inner::mousePressEvent(QMouseEvent *e) {
  			_down = _sel;
  			_previewTimer.callOnce(QApplication::startDragTime());
  		}
@@ -18,7 +18,7 @@ index 9497d87bf3..494b93a7d5 100644
  	}
  }
  
-@@ -1745,7 +1747,7 @@ void InitFieldAutocomplete(
+@@ -1901,7 +1903,7 @@ void InitFieldAutocomplete(
  		const auto user = data.user;
  		const auto ctrlClick = base::IsCtrlPressed()
  			&& data.method == FieldAutocomplete::ChooseMethod::ByClick;
