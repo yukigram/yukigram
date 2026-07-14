@@ -12,7 +12,7 @@ Minus the bullshit, plus the features.
 [Full feature/bug list]: ./FEATURES.md
 [Contributing notes]: ./CONTRIBUTING.md
 [LLM usage policy]: ./CONTRIBUTING.md#fuck-off-with-your-llms
-[Telegram channel]: https://t.me/yukigram
+[Telegram channel]: https://telegram.me/yukigram
 
 ## Patches?
 
