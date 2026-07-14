@@ -104,6 +104,7 @@ These are placed under `(Minor)` category.
 - :star: More info in folder chat list
 - :zap: Warn when polls forbid revoting
 - :star: Show deleted reply ID
+- :star: Show community ID
 
 These are placed under `(Info)` category.
 

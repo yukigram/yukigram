@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) English
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 new file mode 100644
-index 0000000000..73a723a4de
+index 0000000000..4889abc295
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -0,0 +1,178 @@
+@@ -0,0 +1,179 @@
 +{
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -50,6 +50,7 @@ index 0000000000..73a723a4de
 +    "history/tooltip/message-id": "Message ID: {id}",
 +    "info/peer-dc/inferred": "Inferred DC",
 +    "info/peer-id/broadcast": "Channel ID",
++    "info/peer-id/community": "Community ID",
 +    "info/peer-id/channel-like": "Channel-like ID",
 +    "info/peer-id/forum": "Forum ID",
 +    "info/peer-id/group": "Legacy group ID",

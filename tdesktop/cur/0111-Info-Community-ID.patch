@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Tue, 14 Jul 2026 20:56:38 +0000
+Subject: [PATCH] (Info) Community ID
+
+
+diff --git a/Telegram/SourceFiles/boxes/peers/community_box.cpp b/Telegram/SourceFiles/boxes/peers/community_box.cpp
+index e966fe3d39..43aa8cf2a6 100644
+--- a/Telegram/SourceFiles/boxes/peers/community_box.cpp
++++ b/Telegram/SourceFiles/boxes/peers/community_box.cpp
+@@ -25,6 +25,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "info/profile/info_profile_values.h"
+ #include "lang/lang_hardcoded.h"
+ #include "lang/lang_keys.h"
++#include "yukigram/lang.h"
+ #include "main/main_session.h"
+ #include "main/session/session_show.h"
+ #include "settings/settings_common.h"
+@@ -223,6 +224,14 @@ void SetupCommunityContent(
+ 		return;
+ 	}
+ 
++	const auto raw = community->id.value & PeerId::kChatTypeMask;
++	Ui::AddSkip(container);
++	Ui::AddSubsectionTitle(container, rktr("info/peer-id/community"));
++	Ui::AddDividerText(container, rpl::single(Ui::Text::Link(
++		Lang::FormatCountDecimal(raw),
++		"internal:~peer_id~:copy:" + QString::number(raw)
++	)));
++
+ 	Ui::AddSkip(container);
+ 	const auto toggle = Settings::AddButtonWithIcon(
+ 		container,
