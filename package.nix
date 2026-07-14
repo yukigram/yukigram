@@ -25,7 +25,7 @@ telegram-desktop.overrideAttrs (final: prev: {
     meta = {
       description = "Telegram Desktop, minus the bullshit, plus the features";
       homepage = "https://github.com/yukigram/yukigram";
-      changelog = "https://t.me/yukigram";
+      changelog = "https://github.com/yukigram/yukigram/releases";
       mainProgram = "io.github.yukigram.devel";
     };
   });
