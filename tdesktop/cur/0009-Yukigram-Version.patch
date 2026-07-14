@@ -5,7 +5,7 @@ Subject: [PATCH] (Yukigram) Version
 
 
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
-index 8d9a25a9e3..5078a8b720 100644
+index 0b6c68a289..4bb010f83a 100644
 --- a/Telegram/SourceFiles/boxes/about_box.cpp
 +++ b/Telegram/SourceFiles/boxes/about_box.cpp
 @@ -62,7 +62,8 @@ rpl::producer<TextWithEntities> Text3() {

@@ -5,7 +5,7 @@ Subject: [PATCH] (Yukigram) Branding
 
 
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
-index 11d1abe174..8d9a25a9e3 100644
+index 11d1abe174..0b6c68a289 100644
 --- a/Telegram/SourceFiles/boxes/about_box.cpp
 +++ b/Telegram/SourceFiles/boxes/about_box.cpp
 @@ -13,6 +13,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -38,13 +38,18 @@ index 11d1abe174..8d9a25a9e3 100644
 -		tr::lng_about_text3_faq(tr::url(telegramFaqLink())),
 -		tr::marked);
 +	return rktre("about/3/text",
-+		{ "channel_link", Ui::Text::Link(ktr("about/3/channel"), "https://t.me/yukigram") },
++		{ "channel_link", Ui::Text::Link(ktr("about/3/channel"), "https://telegram.me/yukigram") },
 +		{ "faq_link", Ui::Text::Link(tr::lng_about_text3_faq(tr::now), telegramFaqLink()) });
  }
  
  } // namespace
+@@ -311,4 +309,3 @@ void ArchiveHintBox(
+ 		box->addButton(std::move(button));
+ 	}
+ }
+-
 diff --git a/Telegram/SourceFiles/history/history_item_helpers.cpp b/Telegram/SourceFiles/history/history_item_helpers.cpp
-index e31c3a82f0..4f9bb0601a 100644
+index e31c3a82f0..5981f9f7fb 100644
 --- a/Telegram/SourceFiles/history/history_item_helpers.cpp
 +++ b/Telegram/SourceFiles/history/history_item_helpers.cpp
 @@ -52,6 +52,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -75,7 +80,7 @@ index e31c3a82f0..4f9bb0601a 100644
 +		ktr("unsupported-message/button/text"),
  		Button::Visual(),
 -		QByteArray("https://desktop.telegram.org"));
-+		QByteArray("https://t.me/yukigram"));
++		QByteArray("https://telegram.me/yukigram"));
  	markup.rows.push_back(std::move(row));
  	return markup;
  }

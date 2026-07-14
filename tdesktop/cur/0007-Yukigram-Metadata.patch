@@ -106,7 +106,7 @@ index b9926b14b8..f74bdddddc 100644
 +Name=Quit Yukigram
  Icon=application-exit
 diff --git a/lib/xdg/io.github.yukigram.metainfo.xml b/lib/xdg/io.github.yukigram.metainfo.xml
-index c65e2f02c4..62392575d3 100644
+index c65e2f02c4..ade5dfe814 100644
 --- a/lib/xdg/io.github.yukigram.metainfo.xml
 +++ b/lib/xdg/io.github.yukigram.metainfo.xml
 @@ -3,33 +3,21 @@
@@ -145,7 +145,7 @@ index c65e2f02c4..62392575d3 100644
 -    <url type="vcs-browser">https://github.com/telegramdesktop/tdesktop</url>
 -    <url type="contribute">https://github.com/telegramdesktop/tdesktop/blob/dev/.github/CONTRIBUTING.md</url>
 +    <developer id="io.github.yukigram"><name>Yukigram</name></developer>
-+    <url type="homepage">https://t.me/yukigram</url>
++    <url type="homepage">https://github.com/yukigram/yukigram</url>
 +    <url type="bugtracker">https://github.com/yukigram/yukigram/issues</url>
 +    <url type="vcs-browser">https://github.com/yukigram/yukigram</url>
 +    <url type="contribute">https://github.com/yukigram/yukigram/blob/main/.github/CONTRIBUTING.md</url>
