@@ -58,8 +58,6 @@ These are placed under `(Yukigram)` category.
     and makes resulting D-Bus object path invalid
     if application name contains forbidden characters, e.g. dots)
 
-[tdesktop#30840]: https://github.com/telegramdesktop/tdesktop/issues/30840
-
 These are placed under `(Fix)` category.
 
 ## Annoyances
