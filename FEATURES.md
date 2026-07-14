@@ -210,6 +210,7 @@ These are placed under `(Chat)` category.
     (up to full size)
 - :zap: :gear: Change round video messages size
     (up to full size)
+- :star: Revert liquid glass peer tab strip
 
 These are placed under `(Style)` category.
 

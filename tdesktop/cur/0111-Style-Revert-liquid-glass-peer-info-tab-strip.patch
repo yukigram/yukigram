@@ -1,0 +1,72 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Tue, 14 Jul 2026 20:08:36 +0000
+Subject: [PATCH] (Style) Revert liquid glass peer info tab strip
+
+
+diff --git a/Telegram/SourceFiles/info/info.style b/Telegram/SourceFiles/info/info.style
+index cefdb47a56..0ed90678ea 100644
+--- a/Telegram/SourceFiles/info/info.style
++++ b/Telegram/SourceFiles/info/info.style
+@@ -874,10 +874,10 @@ infoMediaTabsRightSkip: 13px;
+ infoMediaGridSizeStep: 16px;
+ 
+ infoProfileTabsStrip: ProfileTabsStrip {
+-	height: 48px;
++	height: 42px;
+ 	margin: margins(8px, 6px, 8px, 6px);
+ 	skip: 0px;
+-	tabPadding: margins(16px, 0px, 16px, 0px);
++	tabPadding: margins(10px, 0px, 10px, 0px);
+ 	activeSkip: 4px;
+ 	style: semiboldTextStyle;
+ 	fg: windowSubTextFg;
+@@ -892,7 +892,7 @@ infoProfileTabsStrip: ProfileTabsStrip {
+ infoProfileTabsShadow: BoxShadow {
+ 	blurRadius: 8px;
+ 	offset: point(0px, 2px);
+-	opacity: 0.18;
++	opacity: 0.0;
+ }
+ 
+ infoCommonGroupsMargin: margins(0px, 2px, 0px, 2px);
+diff --git a/Telegram/SourceFiles/info/profile/tabs/info_profile_tabs_strip.cpp b/Telegram/SourceFiles/info/profile/tabs/info_profile_tabs_strip.cpp
+index 893ce3fe9d..7ac14b1763 100644
+--- a/Telegram/SourceFiles/info/profile/tabs/info_profile_tabs_strip.cpp
++++ b/Telegram/SourceFiles/info/profile/tabs/info_profile_tabs_strip.cpp
+@@ -31,6 +31,7 @@ void PaintIslandOutline(
+ 		const QRectF &island,
+ 		float64 radius,
+ 		const style::color &bg) {
++	return;
+ 	const auto light = (bg->c.lightness() >= 128);
+ 	const auto width = light ? (0.6 * st::lineWidth) : double(st::lineWidth);
+ 	if (light) {
+@@ -436,12 +437,12 @@ void TabsStrip::paintEvent(QPaintEvent *e) {
+ 	auto hq = PainterHighQualityEnabler(p);
+ 	p.setBrush(_st.bg);
+ 	p.setPen(Qt::NoPen);
+-	p.drawRoundedRect(island, radius, radius);
++	p.drawRect(island);
+ 
+ 	validateContent(island);
+ 
+ 	auto clip = QPainterPath();
+-	clip.addRoundedRect(QRectF(island), radius, radius);
++	clip.addRect(QRectF(island));
+ 	p.setClipPath(clip);
+ 	p.drawImage(island.topLeft(), _content);
+ 	p.setClipping(false);
+@@ -471,10 +472,9 @@ void TabsStrip::validateContent(QRect island) {
+ 		const auto highlight = currentHighlightRect().translated(
+ 			origin.x(),
+ 			origin.y());
+-		const auto highlightRadius = highlight.height() / 2.;
+-		p.setBrush(_st.bgActive);
++		p.setBrush(_st.fgActive);
+ 		p.setPen(Qt::NoPen);
+-		p.drawRoundedRect(highlight, highlightRadius, highlightRadius);
++		p.drawRoundedRect(QRect(highlight.left(), highlight.bottom(), highlight.width(), 2), 1, 1);
+ 	}
+ 	for (auto i = 0, c = int(_buttons.size()); i != c; ++i) {
+ 		auto &button = _buttons[i];

@@ -95,6 +95,7 @@ path = [
     "tdesktop/cur/*-Interface-Show-custom-title-in-group-call-bar.patch",
     "tdesktop/cur/*-Interface-Opt-Prevent-delete-history.patch",
     "tdesktop/cur/*-Compose-Opt-Replace-preview-links.patch",
+    "tdesktop/cur/*-Style-Revert-liquid-glass-peer-info-tab-strip.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors <https://github.com/yukigram/yukigram>"
