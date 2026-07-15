@@ -211,7 +211,7 @@ jobs:
 
           . bin/activate
           yes '' | pmbootstrap init || true
-          pmbootstrap config systemd never
+          pmbootstrap config service_manager openrc
           pmbootstrap config mirrors.systemd none
 
       - name: Prepare private key
