@@ -1,0 +1,4 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p git-absorb
+set -x
+git absorb --base HEAD^{/#flatten} --force-author "$@"

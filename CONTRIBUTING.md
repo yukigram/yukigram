@@ -63,6 +63,12 @@ git worktree add ../yukigram-worktree
 
 Folder `s` contains a collection of mildly useful scripts.
 
+#### `absorb`
+
+A wrapper around [`git-absorb`] already set up for Yukigram.
+
+[`git-absorb`]: https://github.com/tummychow/git-absorb
+
 #### `flatten`
 
 Flatten all the submodules in the current directory.
@@ -268,6 +274,8 @@ please ensure the following is true:
 1. REUSE.toml mentions the patch in relevant sections
 
 ## Fixing previous patches
+
+> Try using `../yukigram/s/absorb` to create fixup commits automatically
 
 Use fixup-commits to avoid rebasing every minute:
 
