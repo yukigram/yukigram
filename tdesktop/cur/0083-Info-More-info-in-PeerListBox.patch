@@ -5,7 +5,7 @@ Subject: [PATCH] (Info) More info in PeerListBox
 
 
 diff --git a/Telegram/SourceFiles/boxes/peer_list_box.cpp b/Telegram/SourceFiles/boxes/peer_list_box.cpp
-index 1377a2e726..06e11b3380 100644
+index 1377a2e726..c38b89fd58 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peer_list_box.cpp
 @@ -27,8 +27,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -19,7 +19,7 @@ index 1377a2e726..06e11b3380 100644
  #include "data/data_chat.h"
  #include "data/data_session.h"
  #include "data/data_changes.h"
-@@ -733,18 +735,23 @@ void PeerListRow::refreshStatus() {
+@@ -733,18 +735,29 @@ void PeerListRow::refreshStatus() {
  			_statusValidTill = crl::now()
  				+ Data::OnlineChangeTimeout(user, time);
  		}
@@ -31,24 +31,29 @@ index 1377a2e726..06e11b3380 100644
 -			setStatusText(tr::lng_chat_status_members(tr::now, lt_count_decimal, chat->count));
  		} else {
 -			setStatusText(tr::lng_group_status(tr::now));
--		}
++			setStatusText(ktr("box/peer-list/count/members", chat->count, { "kind", ktr("box/peer-list/group") }, { "count", QString::number(chat->count) }));
++		}
++	} else if (const auto channel = peer()->asChannel()) {
++		const auto kind = ktr(channel->isCommunity() ? "box/peer-list/channel-like/community"
++			: channel->isMonoforum() ? "box/peer-list/channel-like/monoforum"
++			: channel->isForum() ? "box/peer-list/channel-like/forum"
++			: channel->isMegagroup() ? "box/peer-list/channel-like/supergroup"
++			: channel->isBroadcast() ? "box/peer-list/channel-like/broadcast"
++			: "box/peer-list/channel-like/unknown");
++		if (channel->membersCountKnown()) {
++			setStatusText(ktr(
++				channel->isBroadcast() ? "box/peer-list/count/subscribers" : "box/peer-list/count/members",
++				channel->membersCount(),
++				{ "kind", kind },
++				{ "count", QString::number(channel->membersCount()) }
++			));
++		} else {
++			setStatusText(kind);
+ 		}
 -	} else if (peer()->isMegagroup()) {
 -		setStatusText(tr::lng_group_status(tr::now));
 -	} else if (peer()->isChannel()) {
 -		setStatusText(tr::lng_channel_status(tr::now));
-+			setStatusText(ktr("box/peer-list/count/members", chat->count, { "kind", ktr("box/peer-list/group") }, { "count", QString::number(chat->count) }));
-+		}
-+	} else if (const auto channel = peer()->asChannel(); channel->membersCountKnown()) {
-+		setStatusText(ktr(
-+			channel->isBroadcast() ? "box/peer-list/count/subscribers" : "box/peer-list/count/members",
-+			channel->membersCount(),
-+			{ "kind", ktr(channel->isMonoforum() ? "box/peer-list/channel-like/monoforum"
-+				: channel->isForum() ? "box/peer-list/channel-like/forum"
-+				: channel->isMegagroup() ? "box/peer-list/channel-like/supergroup"
-+				: channel->isBroadcast() ? "box/peer-list/channel-like/broadcast"
-+				: "box/peer-list/channel-like/unknown") },
-+			{ "count", QString::number(channel->membersCount()) }
-+		));
  	}
  }
  

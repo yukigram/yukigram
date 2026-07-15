@@ -7,7 +7,7 @@ This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
 
 diff --git a/Telegram/SourceFiles/boxes/filters/edit_filter_chats_preview.cpp b/Telegram/SourceFiles/boxes/filters/edit_filter_chats_preview.cpp
-index 193866516a..f88c72dc6c 100644
+index 193866516a..0a3bf728bb 100644
 --- a/Telegram/SourceFiles/boxes/filters/edit_filter_chats_preview.cpp
 +++ b/Telegram/SourceFiles/boxes/filters/edit_filter_chats_preview.cpp
 @@ -9,8 +9,12 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -40,7 +40,7 @@ index 193866516a..f88c72dc6c 100644
  	for (auto &[history, userpic, name, button] : _removePeer) {
  		const auto peer = history->peer;
  		const auto savedMessages = peer->isSelf();
-@@ -168,6 +175,55 @@ void FilterChatsPreview::paintEvent(QPaintEvent *e) {
+@@ -168,6 +175,56 @@ void FilterChatsPreview::paintEvent(QPaintEvent *e) {
  				top + iconTop,
  				width(),
  				st.photoSize);
@@ -76,7 +76,8 @@ index 193866516a..f88c72dc6c 100644
 +					statuses << tr::lng_chat_status_members(tr::now, lt_count_decimal, chat->count);
 +				}
 +			} else if (const auto channel = history->peer->asChannel()) {
-+				statuses << ktr(channel->isMonoforum() ? "box/peer-list/channel-like/monoforum"
++				statuses << ktr(channel->isCommunity() ? "box/peer-list/channel-like/community"
++					: channel->isMonoforum() ? "box/peer-list/channel-like/monoforum"
 +					: channel->isForum() ? "box/peer-list/channel-like/forum"
 +					: channel->isMegagroup() ? "box/peer-list/channel-like/supergroup"
 +					: channel->isBroadcast() ? "box/peer-list/channel-like/broadcast"
@@ -96,7 +97,7 @@ index 193866516a..f88c72dc6c 100644
  			p.setPen(st::contactsNameFg);
  			if (name.isEmpty()) {
  				name.setText(
-@@ -175,12 +231,17 @@ void FilterChatsPreview::paintEvent(QPaintEvent *e) {
+@@ -175,12 +232,17 @@ void FilterChatsPreview::paintEvent(QPaintEvent *e) {
  					history->peer->name(),
  					Ui::NameTextOptions());
  			}

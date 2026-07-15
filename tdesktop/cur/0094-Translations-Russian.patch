@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) Russian
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..e95091a892
+index 0000000000..e670cac73f
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
-@@ -0,0 +1,185 @@
+@@ -0,0 +1,186 @@
 +{
 +    "about/1/text": "Неофициальный форк {tdesktop_link},\nкоторый добавляет фичи и убирает мусор.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -23,6 +23,7 @@ index 0000000000..e95091a892
 +    "box/forward/copy": "Скопировать в…",
 +    "box/forward/steal": "Только медиа в…",
 +    "box/peer-list/channel-like/broadcast": "канал",
++    "box/peer-list/channel-like/community": "сообщество",
 +    "box/peer-list/channel-like/forum": "форум",
 +    "box/peer-list/channel-like/monoforum": "монофорум",
 +    "box/peer-list/channel-like/supergroup": "супергруппа",
