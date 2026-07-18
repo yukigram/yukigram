@@ -7,10 +7,10 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
-index a25e0b2c2b..e0a27c3979 100644
+index f51da609e2..f842602bf7 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
-@@ -2022,6 +2022,9 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
+@@ -2035,6 +2035,9 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
  			(participant->isUser()
  				? &st::menuIconProfile
  				: &st::menuIconInfo));
@@ -21,10 +21,10 @@ index a25e0b2c2b..e0a27c3979 100644
  	if (user && !_peer->isBroadcast()) {
  		const auto isSelf = user->isSelf();
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index b0d408a7bf..97a0bb0858 100644
+index 585c1c4d81..b6867db3d6 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3005,6 +3005,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+@@ -3015,6 +3015,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
  				std::move(callback),
  				&st::menuIconStats);
  		}
@@ -43,10 +43,10 @@ index b0d408a7bf..97a0bb0858 100644
  	const auto addPhotoActions = [&](not_null<PhotoData*> photo, HistoryItem *item) {
  		const auto media = photo->activeMediaView();
 diff --git a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
-index 68b9bbee8e..0d4b10f5cb 100644
+index dcdad6f048..0a029f8081 100644
 --- a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
-@@ -449,6 +449,27 @@ void AddForwardAction(
+@@ -450,6 +450,27 @@ void AddForwardAction(
  	AddForwardMessageAction(menu, request, list);
  }
  
@@ -74,7 +74,7 @@ index 68b9bbee8e..0d4b10f5cb 100644
  bool AddSendNowSelectedAction(
  		not_null<Ui::PopupMenu*> menu,
  		const ContextMenuRequest &request,
-@@ -1069,6 +1090,7 @@ void AddMessageActions(
+@@ -1090,6 +1111,7 @@ void AddMessageActions(
  		not_null<ListWidget*> list) {
  	AddPostLinkAction(menu, request);
  	AddForwardAction(menu, request, list);

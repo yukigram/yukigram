@@ -19,7 +19,7 @@ index 4c30a80efd..a4980e14c1 100644
      storage/details/storage_file_utilities.h
      storage/details/storage_settings_scheme.cpp
 diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
-index 0c4fd4e026..b780d7af63 100644
+index 940d8a09ee..eceb514767 100644
 --- a/Telegram/Resources/langs/lang.strings
 +++ b/Telegram/Resources/langs/lang.strings
 @@ -857,6 +857,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

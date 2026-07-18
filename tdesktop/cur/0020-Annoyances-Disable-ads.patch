@@ -36,10 +36,10 @@ index 40c00c4bb4..d9f005df85 100644
  }
  
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-index e6f6d8efc2..45898b3f73 100644
+index fa370dab63..86df016b39 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-@@ -4687,6 +4687,7 @@ void InnerWidget::peerSearchReceived(Api::PeerSearchResult result) {
+@@ -4699,6 +4699,7 @@ void InnerWidget::peerSearchReceived(Api::PeerSearchResult result) {
  		if (inlist(peer) || _sponsoredRemoved.contains(peer)) {
  			continue;
  		}

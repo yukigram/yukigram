@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
-index 5534c68532..a25e0b2c2b 100644
+index 68a4cc50e8..f51da609e2 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
 @@ -848,7 +848,7 @@ PeerData *ParticipantsAdditionalData::applyParticipant(
@@ -52,7 +52,7 @@ index 5534c68532..a25e0b2c2b 100644
  	_infoNotLoaded.erase(user);
  	_adminRights.erase(user);
  	_adminCanEdit.erase(user);
-@@ -1964,6 +1970,25 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
+@@ -1977,6 +1983,25 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
  			result->addAction(std::move(button));
  		};
  
@@ -78,7 +78,7 @@ index 5534c68532..a25e0b2c2b 100644
  		if (const auto by = _additional.restrictedBy(participant)) {
  			if (const auto since = _additional.restrictedSince(participant)) {
  				addInfoAction(
-@@ -1978,6 +2003,8 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
+@@ -1991,6 +2016,8 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
  				if (const auto since = _additional.adminPromotedSince(user)) {
  					addInfoAction(by, tr::lng_rights_about_by, since);
  				}
@@ -88,10 +88,10 @@ index 5534c68532..a25e0b2c2b 100644
  		}
  	});
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_participants_box.h b/Telegram/SourceFiles/boxes/peers/edit_participants_box.h
-index 6d40bec4c2..51fd764757 100644
+index 43b2786535..99a1ab2b0c 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_participants_box.h
 +++ b/Telegram/SourceFiles/boxes/peers/edit_participants_box.h
-@@ -154,7 +154,7 @@ public:
+@@ -156,7 +156,7 @@ public:
  private:
  	UserData *applyCreator(const Api::ChatParticipant &data);
  	UserData *applyAdmin(const Api::ChatParticipant &data);

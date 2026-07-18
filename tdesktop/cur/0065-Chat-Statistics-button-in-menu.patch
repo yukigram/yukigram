@@ -5,7 +5,7 @@ Subject: [PATCH] (Chat) Statistics button in menu
 
 
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index 4758cfe713..0a0956861d 100644
+index 94a3d4aeb3..8dd8ce24d0 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
 @@ -1888,6 +1888,7 @@ void Filler::fillHistoryActions() {

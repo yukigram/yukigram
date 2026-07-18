@@ -5,10 +5,10 @@ Subject: [PATCH] (Interface) Sensible peer id and join date rendering
 
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-index cb2887a23b..039e8cc62b 100644
+index 7c0695b89f..8887bb2ed4 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-@@ -70,6 +70,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -72,6 +72,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "inline_bots/bot_attach_web_view.h"
  #include "iv/iv_instance.h"
  #include "lang/lang_keys.h"
@@ -16,7 +16,7 @@ index cb2887a23b..039e8cc62b 100644
  #include "main/main_session.h"
  #include "menu/menu_mute.h"
  #include "settings/settings_common.h"
-@@ -225,69 +226,6 @@ base::options::toggle ShowChannelJoinedBelowAbout({
+@@ -227,69 +228,6 @@ base::options::toggle ShowChannelJoinedBelowAbout({
  	return Ui::CreateSkipWidget(parent, st::infoProfileSkip);
  }
  
@@ -86,7 +86,7 @@ index cb2887a23b..039e8cc62b 100644
  [[nodiscard]] bool AreNonTrivialHours(const Data::WorkingHours &hours) {
  	if (!hours) {
  		return false;
-@@ -1641,6 +1579,48 @@ Section DetailsFiller::makeInfo() {
+@@ -1643,6 +1581,48 @@ Section DetailsFiller::makeInfo() {
  				}
  			});
  	};
@@ -135,7 +135,7 @@ index cb2887a23b..039e8cc62b 100644
  	if (const auto user = _peer->asUser()) {
  		if (user->session().supportMode()) {
  			addInfoLineGeneric(
-@@ -1677,9 +1657,8 @@ Section DetailsFiller::makeInfo() {
+@@ -1679,9 +1659,8 @@ Section DetailsFiller::makeInfo() {
  			: tr::lng_info_bio_label();
  		const auto about = addInfoLine(
  			std::move(label),
@@ -147,7 +147,7 @@ index cb2887a23b..039e8cc62b 100644
  
  		const auto usernameLine = addInfoOneLine(
  			UsernamesSubtext(_peer, tr::lng_info_username_label()),
-@@ -1727,6 +1706,8 @@ Section DetailsFiller::makeInfo() {
+@@ -1729,6 +1708,8 @@ Section DetailsFiller::makeInfo() {
  			return false;
  		});
  
@@ -156,7 +156,7 @@ index cb2887a23b..039e8cc62b 100644
  		if (!user->isBot()) {
  			tracker.track(result->add(
  				CreateBirthday(result, controller, user),
-@@ -1841,11 +1822,13 @@ Section DetailsFiller::makeInfo() {
+@@ -1843,11 +1824,13 @@ Section DetailsFiller::makeInfo() {
  
  		const auto about = addInfoLine(tr::lng_info_about_label(), _topic
  			? rpl::single(TextWithEntities())

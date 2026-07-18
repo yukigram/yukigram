@@ -5,11 +5,11 @@ Subject: [PATCH] (Style) Revert liquid glass peer info tab strip
 
 
 diff --git a/Telegram/SourceFiles/info/info.style b/Telegram/SourceFiles/info/info.style
-index cefdb47a56..0ed90678ea 100644
+index 6083daacaf..b522ffceb7 100644
 --- a/Telegram/SourceFiles/info/info.style
 +++ b/Telegram/SourceFiles/info/info.style
-@@ -874,10 +874,10 @@ infoMediaTabsRightSkip: 13px;
- infoMediaGridSizeStep: 16px;
+@@ -887,10 +887,10 @@ infoMediaGridSizeStep: 16px;
+ infoMediaTabsMinBodyWidth: infoMediaMinGridSize + infoMediaSkip + infoMediaSkip + infoMediaTabsRightSkip;
  
  infoProfileTabsStrip: ProfileTabsStrip {
 -	height: 48px;
@@ -21,7 +21,7 @@ index cefdb47a56..0ed90678ea 100644
  	activeSkip: 4px;
  	style: semiboldTextStyle;
  	fg: windowSubTextFg;
-@@ -892,7 +892,7 @@ infoProfileTabsStrip: ProfileTabsStrip {
+@@ -905,7 +905,7 @@ infoProfileTabsStrip: ProfileTabsStrip {
  infoProfileTabsShadow: BoxShadow {
  	blurRadius: 8px;
  	offset: point(0px, 2px);

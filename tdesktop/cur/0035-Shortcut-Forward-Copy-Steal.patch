@@ -5,10 +5,10 @@ Subject: [PATCH] (Shortcut) Forward/Copy/Steal
 
 
 diff --git a/Telegram/SourceFiles/boxes/peer_list_box.h b/Telegram/SourceFiles/boxes/peer_list_box.h
-index 26a7de83b6..1b5df51984 100644
+index eee902d03f..f293251e5a 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_box.h
 +++ b/Telegram/SourceFiles/boxes/peer_list_box.h
-@@ -362,6 +362,9 @@ struct PeerListState;
+@@ -364,6 +364,9 @@ struct PeerListState;
  
  class PeerListDelegate {
  public:
@@ -18,7 +18,7 @@ index 26a7de83b6..1b5df51984 100644
  	virtual void peerListSetTitle(rpl::producer<QString> title) = 0;
  	virtual void peerListSetAdditionalTitle(rpl::producer<QString> title) = 0;
  	virtual void peerListSetHideEmpty(bool hide) = 0;
-@@ -1201,7 +1204,11 @@ public:
+@@ -1203,7 +1206,11 @@ public:
  	[[nodiscard]] rpl::producer<int> multiSelectHeightValue() const;
  	[[nodiscard]] rpl::producer<> noSearchSubmits() const;
  
@@ -30,7 +30,7 @@ index 26a7de83b6..1b5df51984 100644
  		setTitle(std::move(title));
  	}
  	void peerListSetAdditionalTitle(rpl::producer<QString> title) override {
-@@ -1264,6 +1271,8 @@ private:
+@@ -1266,6 +1273,8 @@ private:
  	void refreshSectionIndex();
  	void updateSectionIndexGeometry();
  
@@ -40,10 +40,10 @@ index 26a7de83b6..1b5df51984 100644
  	object_ptr<PeerListSectionIndex> _sectionIndex = { nullptr };
  
 diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
-index 3d62f96e18..40590df472 100644
+index 69c507d435..ae0b4f0c12 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 +++ b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
-@@ -917,6 +917,7 @@ void ChooseRecipientBoxController::rowClicked(not_null<PeerListRow*> row) {
+@@ -926,6 +926,7 @@ void ChooseRecipientBoxController::rowClicked(not_null<PeerListRow*> row) {
  			});
  		*weak = owned.data();
  		delegate()->peerListUiShow()->showBox(std::move(owned));
@@ -51,7 +51,7 @@ index 3d62f96e18..40590df472 100644
  		return;
  	} else if (const auto monoforum = peer->monoforum()) {
  		const auto weak = std::make_shared<base::weak_qptr<Ui::BoxContent>>();
-@@ -956,6 +957,7 @@ void ChooseRecipientBoxController::rowClicked(not_null<PeerListRow*> row) {
+@@ -1009,6 +1010,7 @@ void ChooseRecipientBoxController::rowClicked(not_null<PeerListRow*> row) {
  			});
  		*weak = owned.data();
  		delegate()->peerListUiShow()->showBox(std::move(owned));
@@ -100,7 +100,7 @@ index c6e50ec09b..5edcc82e3a 100644
  
  [[maybe_unused]] constexpr auto kShowFolder = {
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 6f3d56956f..1a7fbaf2e0 100644
+index 4b55eabcd2..4ea6b4183c 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -111,7 +111,7 @@ index 6f3d56956f..1a7fbaf2e0 100644
  #include "core/click_handler_types.h"
  #include "core/phone_click_handler.h"
  #include "data/data_chat_participant_status.h"
-@@ -500,6 +501,8 @@ HistoryInner::HistoryInner(
+@@ -508,6 +509,8 @@ HistoryInner::HistoryInner(
  		update();
  	}, lifetime());
  
@@ -120,7 +120,7 @@ index 6f3d56956f..1a7fbaf2e0 100644
  	HistoryView::Reactions::SetupManagerList(
  		_reactionsManager.get(),
  		_reactionsItem.value());
-@@ -6346,6 +6349,38 @@ bool CanSendReply(not_null<const HistoryItem*> item) {
+@@ -6389,6 +6392,38 @@ bool CanSendReply(not_null<const HistoryItem*> item) {
  	return true;
  }
  
@@ -160,10 +160,10 @@ index 6f3d56956f..1a7fbaf2e0 100644
  
  std::vector<HistoryView::Element*> HistoryInner::accessibleElements() const {
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.h b/Telegram/SourceFiles/history/history_inner_widget.h
-index b9c1d65c86..dadde58def 100644
+index 12cb3eb786..c69bc6a269 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.h
 +++ b/Telegram/SourceFiles/history/history_inner_widget.h
-@@ -534,6 +534,7 @@ private:
+@@ -540,6 +540,7 @@ private:
  	void blockSenderAsGroup(FullMsgId itemId);
  	void copySelectedText();
  	void editCaptionUploadLayer(not_null<HistoryItem*> item);
@@ -172,10 +172,10 @@ index b9c1d65c86..dadde58def 100644
  	[[nodiscard]] auto reactionButtonParameters(
  		not_null<const Element*> view,
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 0039f26144..9580cf757b 100644
+index 1f4fa855f5..4bcce29deb 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -10426,7 +10426,7 @@ bool HistoryWidget::updateCanSendMessage() {
+@@ -10473,7 +10473,7 @@ bool HistoryWidget::updateCanSendMessage() {
  	return true;
  }
  
@@ -184,7 +184,7 @@ index 0039f26144..9580cf757b 100644
  	if (!_list) {
  		return;
  	}
-@@ -10435,7 +10435,7 @@ void HistoryWidget::forwardSelected() {
+@@ -10482,7 +10482,7 @@ void HistoryWidget::forwardSelected() {
  		if (const auto strong = weak.get()) {
  			strong->clearSelected();
  		}
@@ -194,7 +194,7 @@ index 0039f26144..9580cf757b 100644
  
  void HistoryWidget::confirmDeleteSelected() {
 diff --git a/Telegram/SourceFiles/history/history_widget.h b/Telegram/SourceFiles/history/history_widget.h
-index b71670a494..a7bcfe9626 100644
+index f08687b23e..1b9465aa2d 100644
 --- a/Telegram/SourceFiles/history/history_widget.h
 +++ b/Telegram/SourceFiles/history/history_widget.h
 @@ -304,7 +304,7 @@ public:
@@ -207,10 +207,10 @@ index b71670a494..a7bcfe9626 100644
  	void clearSelected();
  
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index d54a447cfb..4758cfe713 100644
+index d00215ee43..94a3d4aeb3 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
-@@ -3023,7 +3023,8 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(
+@@ -3026,7 +3026,8 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(
  base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  		std::shared_ptr<ChatHelpers::Show> show,
  		Data::ForwardDraft &&draft,
@@ -220,7 +220,7 @@ index d54a447cfb..4758cfe713 100644
  	const auto session = &show->session();
  	const auto owner = &session->data();
  	const auto itemsList = owner->idsToItems(draft.ids);
-@@ -3036,6 +3037,11 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3039,6 +3040,11 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  	const auto showForwardOptions = !hasOnlyForcedForwardedInfo
  		&& (!hasRichPage
  			|| HistoryView::Controls::CanHideForwardAuthor(session, itemsList));
@@ -232,7 +232,7 @@ index d54a447cfb..4758cfe713 100644
  	draft.options = HistoryView::Controls::NormalizeForwardOptions(
  		session,
  		itemsList,
-@@ -3218,6 +3224,20 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3224,6 +3230,20 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  		box->peerListContent()->restoreState(std::move(state));
  	};
  
@@ -253,7 +253,7 @@ index d54a447cfb..4758cfe713 100644
  	const auto state = [&] {
  		auto controller = std::make_unique<Controller>(session);
  		const auto controllerRaw = controller.get();
-@@ -3266,13 +3286,15 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3272,13 +3292,15 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  				== Data::ForwardOptions::NoNamesAndCaptions),
  		});
  		show->showBox(std::move(box));
@@ -270,7 +270,7 @@ index d54a447cfb..4758cfe713 100644
  			const auto peer = thread->peer();
  			if (peer->isSelf()
  				&& !draft.ids.empty()
-@@ -3463,6 +3485,7 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3469,6 +3491,7 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  				state->box->forwardOptions(),
  				[=](Ui::ForwardOptions o) {
  					state->box->setForwardOptions(o);
@@ -278,7 +278,7 @@ index d54a447cfb..4758cfe713 100644
  				},
  				state->menu->lifetime());
  
-@@ -3574,21 +3597,25 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3580,21 +3603,25 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  		not_null<Window::SessionNavigation*> navigation,
  		Data::ForwardDraft &&draft,

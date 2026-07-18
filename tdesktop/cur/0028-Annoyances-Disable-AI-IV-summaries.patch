@@ -5,7 +5,7 @@ Subject: [PATCH] (Annoyances) Disable AI IV summaries
 
 
 diff --git a/Telegram/SourceFiles/iv/iv_rich_page.cpp b/Telegram/SourceFiles/iv/iv_rich_page.cpp
-index 86316dddd6..0eda46b40f 100644
+index c9b232ea0f..bead0f18af 100644
 --- a/Telegram/SourceFiles/iv/iv_rich_page.cpp
 +++ b/Telegram/SourceFiles/iv/iv_rich_page.cpp
 @@ -1271,7 +1271,9 @@ void AppendBlock(

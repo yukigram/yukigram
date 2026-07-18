@@ -5,12 +5,12 @@ Subject: [PATCH] (Info) Show mutual contacts
 
 
 diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
-index 40590df472..b434329713 100644
+index ae0b4f0c12..0bb46a0123 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 +++ b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
-@@ -63,6 +63,42 @@ constexpr auto kSearchPerPage = 50;
- 
- } // namespace
+@@ -72,6 +72,42 @@ Data::CommunityInfo *JoinedCommunityChats(not_null<PeerData*> peer) {
+ 	return (info && !info->histories().empty()) ? info : nullptr;
+ }
  
 +ContactRow::ContactRow(
 +	not_null<UserData*> user)
@@ -51,7 +51,7 @@ index 40590df472..b434329713 100644
  object_ptr<Ui::BoxContent> PrepareContactsBox(
  		not_null<Window::SessionController*> window) {
  	using Mode = ContactsBoxController::SortMode;
-@@ -814,7 +850,7 @@ bool ContactsBoxController::appendRow(not_null<UserData*> user) {
+@@ -823,7 +859,7 @@ bool ContactsBoxController::appendRow(not_null<UserData*> user) {
  
  std::unique_ptr<PeerListRow> ContactsBoxController::createRow(
  		not_null<UserData*> user) {
@@ -61,10 +61,10 @@ index 40590df472..b434329713 100644
  
  RecipientMoneyRestrictionError WriteMoneyRestrictionError(
 diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.h b/Telegram/SourceFiles/boxes/peer_list_controllers.h
-index c110499c48..33a581c328 100644
+index f238e858b1..e360797553 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_controllers.h
 +++ b/Telegram/SourceFiles/boxes/peer_list_controllers.h
-@@ -39,6 +39,26 @@ namespace Window {
+@@ -40,6 +40,26 @@ namespace Window {
  class SessionController;
  } // namespace Window
  

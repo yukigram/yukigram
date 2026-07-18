@@ -5,10 +5,10 @@ Subject: [PATCH] (Info)(Opt) Show inferred peer DC
 
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-index 039e8cc62b..818b04cd9c 100644
+index 8887bb2ed4..de6fc898c6 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-@@ -42,6 +42,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -44,6 +44,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "data/data_forum.h"
  #include "data/data_forum_topic.h"
  #include "data/data_peer_values.h"
@@ -16,7 +16,7 @@ index 039e8cc62b..818b04cd9c 100644
  #include "data/data_saved_sublist.h"
  #include "data/data_session.h"
  #include "data/data_user.h"
-@@ -103,6 +104,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -105,6 +106,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "window/window_peer_menu.h"
  #include "window/window_separate_id.h"
  #include "window/window_session_controller.h"
@@ -24,7 +24,7 @@ index 039e8cc62b..818b04cd9c 100644
  #include "styles/style_boxes.h"
  #include "styles/style_channel_earn.h" // st::channelEarnCurrencyCommonMargins
  #include "styles/style_chat_helpers.h"
-@@ -1602,6 +1604,22 @@ Section DetailsFiller::makeInfo() {
+@@ -1604,6 +1606,22 @@ Section DetailsFiller::makeInfo() {
  			);
  		}
  	};
@@ -47,7 +47,7 @@ index 039e8cc62b..818b04cd9c 100644
  	const auto setupJoinDate = [&] {
  		if (ShowChannelJoinedBelowAbout.value()) {
  			if (const auto channel = _peer->asChannel()) {
-@@ -1707,6 +1725,7 @@ Section DetailsFiller::makeInfo() {
+@@ -1709,6 +1727,7 @@ Section DetailsFiller::makeInfo() {
  		});
  
  		setupPeerId();
@@ -55,7 +55,7 @@ index 039e8cc62b..818b04cd9c 100644
  
  		if (!user->isBot()) {
  			tracker.track(result->add(
-@@ -1828,6 +1847,7 @@ Section DetailsFiller::makeInfo() {
+@@ -1830,6 +1849,7 @@ Section DetailsFiller::makeInfo() {
  		}
  
  		setupPeerId();

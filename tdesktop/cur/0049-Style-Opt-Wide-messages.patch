@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Wide messages
 
 
 diff --git a/Telegram/SourceFiles/data/data_media_types.cpp b/Telegram/SourceFiles/data/data_media_types.cpp
-index 089aa5fb11..fe9195c283 100644
+index 69b521a540..f51bcfdfd3 100644
 --- a/Telegram/SourceFiles/data/data_media_types.cpp
 +++ b/Telegram/SourceFiles/data/data_media_types.cpp
 @@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -26,7 +26,7 @@ index 089aa5fb11..fe9195c283 100644
  		return std::make_unique<HistoryView::Photo>(
  			message,
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 1a7fbaf2e0..b0d408a7bf 100644
+index 4ea6b4183c..585c1c4d81 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -15,6 +15,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -37,7 +37,7 @@ index 1a7fbaf2e0..b0d408a7bf 100644
  #include "history/history_item_helpers.h"
  #include "history/view/controls/history_view_forward_panel.h"
  #include "history/view/controls/history_view_draft_options.h"
-@@ -5348,7 +5349,7 @@ void HistoryInner::mouseActionUpdate() {
+@@ -5389,7 +5390,7 @@ void HistoryInner::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = _contentWidth;
@@ -68,7 +68,7 @@ index b645b33833..4b176ac8dc 100644
  			maxwidth,
  			st::msgMaxWidth
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 4be084457b..77a68b2d20 100644
+index c4ae5cc75b..e3196c0b5b 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -79,7 +79,7 @@ index 4be084457b..77a68b2d20 100644
  #include "history/history.h"
  #include "history/history_item.h"
  #include "history/history_item_components.h"
-@@ -4452,7 +4453,7 @@ void ListWidget::mouseActionUpdate() {
+@@ -4469,7 +4470,7 @@ void ListWidget::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = view->width();
@@ -328,7 +328,7 @@ index 5acbea7480..19662da8a4 100644
  	auto newHeight = 0;
  
 diff --git a/Telegram/SourceFiles/iv/markdown/iv_markdown_article.cpp b/Telegram/SourceFiles/iv/markdown/iv_markdown_article.cpp
-index 03d281f7d9..075f12b1b9 100644
+index e661319f92..49e8057b4c 100644
 --- a/Telegram/SourceFiles/iv/markdown/iv_markdown_article.cpp
 +++ b/Telegram/SourceFiles/iv/markdown/iv_markdown_article.cpp
 @@ -15,6 +15,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -347,7 +347,7 @@ index 03d281f7d9..075f12b1b9 100644
  #include "styles/style_widgets.h"
  
  #include <algorithm>
-@@ -4009,6 +4011,8 @@ void MarkdownArticle::Impl::clearTextLeafHeightOverride() {
+@@ -4053,6 +4055,8 @@ void MarkdownArticle::Impl::clearTextLeafHeightOverride() {
  int MarkdownArticle::Impl::maxWidth() {
  	const auto &st = layoutStyle();
  	return std::max(
@@ -357,10 +357,10 @@ index 03d281f7d9..075f12b1b9 100644
  		st.pagePadding.left()
  			+ st.pagePadding.right()
 diff --git a/Telegram/SourceFiles/iv/markdown/iv_markdown_history_view_media.cpp b/Telegram/SourceFiles/iv/markdown/iv_markdown_history_view_media.cpp
-index 68467236e0..8981a8cbf7 100644
+index 48e40e4072..615e2b089d 100644
 --- a/Telegram/SourceFiles/iv/markdown/iv_markdown_history_view_media.cpp
 +++ b/Telegram/SourceFiles/iv/markdown/iv_markdown_history_view_media.cpp
-@@ -859,6 +859,7 @@ int IvHistoryViewSlideshowBlock::frameHeight(int width) const {
+@@ -864,6 +864,7 @@ int IvHistoryViewSlideshowBlock::frameHeight(int width) const {
  	for (const auto &original : _slideOriginalSizes) {
  		const auto natural = MediaHeightForWidth(
  			outer,
