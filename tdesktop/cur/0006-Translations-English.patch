@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) English
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 new file mode 100644
-index 0000000000..cea67ccc7e
+index 0000000000..5ada8d0abc
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -0,0 +1,180 @@
+@@ -0,0 +1,182 @@
 +{
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -140,6 +140,8 @@ index 0000000000..cea67ccc7e
 +    "opt/preview-replace/desc": "",
 +    "opt/preview-replace-patterns/name": "Patterns to replace in previews",
 +    "opt/preview-replace-patterns/desc": "One rule per line.\nRule is a pair of regex pattern\nand what to replace it with.\nRule parts are separated by space.\nUse \\1, \\2, etc. for capture groups.",
++    "opt/qscroller/name": "Kinetic scrolling",
++    "opt/qscroller/desc": "",
 +    "opt/quick-admin-list/name": "Admin list button",
 +    "opt/quick-admin-list/desc": "",
 +    "opt/quick-recent-actions/name": "Recent actions button",

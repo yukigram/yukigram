@@ -6,10 +6,10 @@ Subject: [PATCH] (Yukigram) Experimental settings mirror
 
 diff --git a/Telegram/SourceFiles/yukigram/settings/mirrored.cpp b/Telegram/SourceFiles/yukigram/settings/mirrored.cpp
 new file mode 100644
-index 0000000000..cdaca30dd3
+index 0000000000..873fefbe1e
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/settings/mirrored.cpp
-@@ -0,0 +1,61 @@
+@@ -0,0 +1,68 @@
 +#include "yukigram/options.h"
 +#include "chat_helpers/tabbed_panel.h"
 +#include "chat_helpers/stickers_list_widget.h"
@@ -18,6 +18,7 @@ index 0000000000..cdaca30dd3
 +#include "mainwidget.h"
 +#include "window/window_peer_menu.h"
 +#include "ui/chat/chat_style_radius.h"
++#include "ui/widgets/scroll_area.h"
 +
 +namespace Yukigram::Settings {
 +
@@ -67,6 +68,12 @@ index 0000000000..cdaca30dd3
 +	.keywords = { u"yukigram"_q, u"experimental"_q, u"round"_q, u"radius"_q, u"corner"_q, u"bubble"_q },
 +	.category = "style",
 +	.restartRequired = true,
++	.mirrorExperimental = true,
++});
++
++rpl::variable<bool> *QScroller = Yukigram::Options::make<bool>(Ui::kOptionQScroller, {
++	.keywords = { u"yukigram"_q, u"experimental"_q, u"kinetic"_q, u"qscroller"_q },
++	.category = "interface",
 +	.mirrorExperimental = true,
 +});
 +
