@@ -5,7 +5,7 @@ Subject: [PATCH] (Compose)(Opt) Hide Send As button
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 297556b821..6bbfdca0c7 100644
+index 33238f7420..fd4403a7f5 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -64,6 +64,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

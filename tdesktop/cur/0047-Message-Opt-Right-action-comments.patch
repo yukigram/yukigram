@@ -5,7 +5,7 @@ Subject: [PATCH] (Message)(Opt) Right action comments
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index c14dfc1515..286ce93823 100644
+index 787d1e7bd6..28ee0c8f6b 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -37,6 +37,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -62,7 +62,7 @@ index c14dfc1515..286ce93823 100644
  	_comments->ripple = std::make_unique<Ui::RippleAnimation>(
  		st::defaultRippleAnimation,
  		std::move(mask.image),
-@@ -5735,9 +5739,10 @@ bool Message::displayRightActionComments() const {
+@@ -5739,9 +5743,10 @@ bool Message::displayRightActionComments() const {
  	return !isPinnedContext()
  		&& (context() != Context::SavedSublist)
  		&& data()->repliesAreComments()
@@ -74,7 +74,7 @@ index c14dfc1515..286ce93823 100644
  }
  
  std::optional<QSize> Message::rightActionSize() const {
-@@ -6580,7 +6585,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -6584,7 +6589,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  			newHeight += (bottomInfoHeight - st::msgDateFont->height);
  		}
  
