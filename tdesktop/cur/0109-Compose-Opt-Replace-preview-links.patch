@@ -5,10 +5,10 @@ Subject: [PATCH] (Compose)(Opt) Replace preview links
 
 
 diff --git a/Telegram/SourceFiles/apiwrap.cpp b/Telegram/SourceFiles/apiwrap.cpp
-index 2e0e04410d..db36b10c13 100644
+index 813dd5bb1a..80c9b88cbe 100644
 --- a/Telegram/SourceFiles/apiwrap.cpp
 +++ b/Telegram/SourceFiles/apiwrap.cpp
-@@ -4660,7 +4660,7 @@ void ApiWrap::sendMessage(
+@@ -4666,7 +4666,7 @@ void ApiWrap::sendMessage(
  			|| (exactWebPage && !isLast);
  		const auto manualWebPage = exactWebPage
  			&& !ignoreWebPage

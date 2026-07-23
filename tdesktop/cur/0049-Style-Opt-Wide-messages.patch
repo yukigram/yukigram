@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Wide messages
 
 
 diff --git a/Telegram/SourceFiles/data/data_media_types.cpp b/Telegram/SourceFiles/data/data_media_types.cpp
-index 69b521a540..f51bcfdfd3 100644
+index ef36995e66..37e3c4d45e 100644
 --- a/Telegram/SourceFiles/data/data_media_types.cpp
 +++ b/Telegram/SourceFiles/data/data_media_types.cpp
 @@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -26,7 +26,7 @@ index 69b521a540..f51bcfdfd3 100644
  		return std::make_unique<HistoryView::Photo>(
  			message,
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 4ea6b4183c..585c1c4d81 100644
+index 365a02bb9e..580714badc 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -15,6 +15,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -68,7 +68,7 @@ index b645b33833..4b176ac8dc 100644
  			maxwidth,
  			st::msgMaxWidth
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index c4ae5cc75b..e3196c0b5b 100644
+index 9dcaad90f2..e5b3a493d8 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -79,7 +79,7 @@ index c4ae5cc75b..e3196c0b5b 100644
  #include "history/history.h"
  #include "history/history_item.h"
  #include "history/history_item_components.h"
-@@ -4469,7 +4470,7 @@ void ListWidget::mouseActionUpdate() {
+@@ -4510,7 +4511,7 @@ void ListWidget::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = view->width();

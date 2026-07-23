@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface)(Opt) Compact chat list
 
 
 diff --git a/Telegram/SourceFiles/dialogs/dialogs.style b/Telegram/SourceFiles/dialogs/dialogs.style
-index dfe7e213b5..8acbfd5064 100644
+index 663901fe80..3753fbced3 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs.style
 +++ b/Telegram/SourceFiles/dialogs/dialogs.style
 @@ -100,6 +100,11 @@ defaultDialogRow: DialogRow {
@@ -51,7 +51,7 @@ index 3d4e41a0cd..d90a9b0cbe 100644
  		return false;
  	}
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-index 86df016b39..3f8bb991b7 100644
+index 39e6de8fc8..6171fc1b69 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 @@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -70,7 +70,7 @@ index 86df016b39..3f8bb991b7 100644
  		session().settings().archiveCollapsedChanges() | rpl::map_to(false),
  		session().data().chatsFilters().changed() | rpl::map_to(true),
  		session().data().chatsFilters().tagsEnabledChanges(
-@@ -1063,7 +1065,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
+@@ -1070,7 +1072,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
  			}
  		}
  
@@ -80,7 +80,7 @@ index 86df016b39..3f8bb991b7 100644
  
  		const auto videoUserpic = validateVideoUserpic(row);
  		const auto cacheRatio = style::DevicePixelRatio();
-@@ -2075,7 +2079,7 @@ void InnerWidget::performDrag() {
+@@ -2082,7 +2086,7 @@ void InnerWidget::performDrag() {
  			('@' + u).toUtf8());
  	}
  
@@ -89,7 +89,7 @@ index 86df016b39..3f8bb991b7 100644
  	auto pixmap = QPixmap(Size(st.height * style::DevicePixelRatio()));
  	pixmap.setDevicePixelRatio(style::DevicePixelRatio());
  	pixmap.fill(Qt::transparent);
-@@ -6005,7 +6009,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
+@@ -6012,7 +6016,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
  		: st::dialogsCallBadgeSize;
  	const auto stroke = st::dialogsOnlineBadgeStroke;
  	const auto skip = user

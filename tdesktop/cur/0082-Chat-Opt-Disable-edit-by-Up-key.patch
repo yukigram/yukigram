@@ -7,7 +7,7 @@ This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 2ad60c9917..eb6fd80375 100644
+index 9812618138..ff61562b0b 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -18,6 +18,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -18,7 +18,7 @@ index 2ad60c9917..eb6fd80375 100644
  #include "ui/boxes/confirm_box.h"
  #include "boxes/delete_messages_box.h"
  #include "boxes/send_credits_box.h"
-@@ -8808,6 +8809,7 @@ void HistoryWidget::keyPressEvent(QKeyEvent *e) {
+@@ -8771,6 +8772,7 @@ void HistoryWidget::keyPressEvent(QKeyEvent *e) {
  		_scroll->keyPressEvent(e);
  	} else if (e->key() == Qt::Key_Up && !commonModifiers) {
  		if (!_field->empty()
@@ -27,7 +27,7 @@ index 2ad60c9917..eb6fd80375 100644
  			|| _editMsgId
  			|| _replyTo) {
 diff --git a/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp b/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp
-index 058a134cad..b37929e06a 100644
+index b3ff6898ae..10e5e3a806 100644
 --- a/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp
 +++ b/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp
 @@ -96,6 +96,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -38,7 +38,7 @@ index 058a134cad..b37929e06a 100644
  #include "ui/item_text_options.h"
  #include "ui/text/text_options.h"
  #include "ui/text/text_utilities.h"
-@@ -2502,7 +2503,7 @@ void ComposeControls::initKeyHandler() {
+@@ -2514,7 +2515,7 @@ void ComposeControls::initKeyHandler() {
  			_attachRequests.fire({});
  			return;
  		}

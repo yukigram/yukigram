@@ -5,7 +5,7 @@ Subject: [PATCH] (Shortcut) Open group from peer info
 
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
-index 94e8d33815..423148040b 100644
+index dd552f51e2..69789d26f8 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
 @@ -912,7 +912,12 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {

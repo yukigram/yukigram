@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index 8dd8ce24d0..d270a5ed63 100644
+index 606103b5e0..2fdd61bc49 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
 @@ -23,6 +23,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -26,7 +26,7 @@ index 8dd8ce24d0..d270a5ed63 100644
  	void addDirectMessages();
  	void addToggleTopicClosed();
  	void addExportChat();
-@@ -1005,6 +1007,20 @@ void Filler::addViewDiscussion() {
+@@ -1008,6 +1010,20 @@ void Filler::addViewDiscussion() {
  	}, &st::menuIconDiscussion);
  }
  
@@ -47,7 +47,7 @@ index 8dd8ce24d0..d270a5ed63 100644
  void Filler::addDirectMessages() {
  	const auto channel = _peer->asBroadcast();
  	if (!channel) {
-@@ -1889,6 +1905,7 @@ void Filler::fillHistoryActions() {
+@@ -1892,6 +1908,7 @@ void Filler::fillHistoryActions() {
  	addViewAsTopics();
  	addManageChat();
  	addViewStatistics();

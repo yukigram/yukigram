@@ -5,10 +5,10 @@ Subject: [PATCH] (Fix) Non-admin monoforum button in menu
 
 
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index d270a5ed63..a328c8a762 100644
+index 2fdd61bc49..ccdd5528da 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
-@@ -1027,7 +1027,7 @@ void Filler::addDirectMessages() {
+@@ -1030,7 +1030,7 @@ void Filler::addDirectMessages() {
  		return;
  	}
  	const auto monoforum = channel->broadcastMonoforum();

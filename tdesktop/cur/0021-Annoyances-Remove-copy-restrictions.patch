@@ -5,7 +5,7 @@ Subject: [PATCH] (Annoyances) Remove copy restrictions
 
 
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index e775cfc3ca..4b55eabcd2 100644
+index 82e7c10f5d..8ca146c00b 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -3831,12 +3831,12 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
@@ -32,10 +32,10 @@ index e775cfc3ca..4b55eabcd2 100644
  		return true;
  	}
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 786719d890..c4ae5cc75b 100644
+index ae7b17ac4a..9dcaad90f2 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-@@ -1720,18 +1720,16 @@ bool ListWidget::isEmpty() const {
+@@ -1758,18 +1758,16 @@ bool ListWidget::isEmpty() const {
  }
  
  bool ListWidget::hasCopyRestriction(HistoryItem *item) const {
@@ -57,7 +57,7 @@ index 786719d890..c4ae5cc75b 100644
  		return false;
  	}
  	_delegate->listUiShow()->showToast((type == CopyRestrictionType::Channel)
-@@ -1744,7 +1742,7 @@ bool ListWidget::showCopyRestriction(HistoryItem *item) {
+@@ -1782,7 +1780,7 @@ bool ListWidget::showCopyRestriction(HistoryItem *item) {
  
  bool ListWidget::showCopyMediaRestriction(not_null<HistoryItem*> item) {
  	const auto type = _delegate->listCopyMediaRestrictionType(item);
@@ -66,7 +66,7 @@ index 786719d890..c4ae5cc75b 100644
  		return false;
  	}
  	_delegate->listUiShow()->showToast((type == CopyRestrictionType::Channel)
-@@ -1756,6 +1754,7 @@ bool ListWidget::showCopyMediaRestriction(not_null<HistoryItem*> item) {
+@@ -1794,6 +1792,7 @@ bool ListWidget::showCopyMediaRestriction(not_null<HistoryItem*> item) {
  }
  
  bool ListWidget::hasCopyRestrictionForSelected() const {
@@ -74,7 +74,7 @@ index 786719d890..c4ae5cc75b 100644
  	if (hasCopyRestriction()) {
  		return true;
  	}
-@@ -1789,9 +1788,7 @@ bool ListWidget::showCopyRestrictionForSelected() {
+@@ -1827,9 +1826,7 @@ bool ListWidget::showCopyRestrictionForSelected() {
  }
  
  bool ListWidget::hasSelectRestriction() const {
@@ -86,7 +86,7 @@ index 786719d890..c4ae5cc75b 100644
  
  Element *ListWidget::lookupItemByY(int y) const {
 diff --git a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-index b64aa56f9a..313b807d42 100644
+index 9d2c7408a5..9aee842485 100644
 --- a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 +++ b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 @@ -1302,6 +1302,7 @@ QSize OverlayWidget::flipSizeByRotation(QSize size) const {

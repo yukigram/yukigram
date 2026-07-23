@@ -17,7 +17,7 @@ index 0a029f8081..9cf3032015 100644
  		&& !poll->revotingDisabled()) {
  		menu->addAction(
 diff --git a/Telegram/SourceFiles/history/view/media/menu/history_view_poll_menu.cpp b/Telegram/SourceFiles/history/view/media/menu/history_view_poll_menu.cpp
-index 111a67d3be..70c8eadcfd 100644
+index 3ea1053378..adabe7f516 100644
 --- a/Telegram/SourceFiles/history/view/media/menu/history_view_poll_menu.cpp
 +++ b/Telegram/SourceFiles/history/view/media/menu/history_view_poll_menu.cpp
 @@ -197,8 +197,7 @@ void FillPollAnswerMenu(

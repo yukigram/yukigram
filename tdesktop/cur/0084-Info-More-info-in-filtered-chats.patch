@@ -122,7 +122,7 @@ index 193866516a..0a3bf728bb 100644
  		top += st.height;
  	}
 diff --git a/Telegram/SourceFiles/window/window.style b/Telegram/SourceFiles/window/window.style
-index 34b5e9cc3f..d9556b0b7a 100644
+index 688c18c29e..9435cfc05a 100644
 --- a/Telegram/SourceFiles/window/window.style
 +++ b/Telegram/SourceFiles/window/window.style
 @@ -284,6 +284,8 @@ windowFilterSmallItem: PeerListItem(defaultPeerListItem) {
@@ -134,7 +134,7 @@ index 34b5e9cc3f..d9556b0b7a 100644
  	photoSize: 34px;
  	checkbox: RoundImageCheckbox(defaultPeerListCheckbox) {
  		imageRadius: 17px;
-@@ -326,6 +328,9 @@ windowFilterChatsSectionSubtitle: FlatLabel(defaultFlatLabel) {
+@@ -335,6 +337,9 @@ windowFilterChatsSectionSubtitle: FlatLabel(defaultFlatLabel) {
  	textFg: searchedBarFg;
  }
  windowFilterChatsSectionSubtitlePadding: margins(22px, 5px, 22px, 5px);
@@ -145,7 +145,7 @@ index 34b5e9cc3f..d9556b0b7a 100644
  windowArchiveToast: Toast(defaultToast) {
  	minWidth: boxWideWidth;
 diff --git a/Telegram/lib_ui/ui/widgets/widgets.style b/Telegram/lib_ui/ui/widgets/widgets.style
-index d17f4abc42..0d12802059 100644
+index 3b99cfab3f..74efd90252 100644
 --- a/Telegram/lib_ui/ui/widgets/widgets.style
 +++ b/Telegram/lib_ui/ui/widgets/widgets.style
 @@ -1382,6 +1382,8 @@ PeerListItem {

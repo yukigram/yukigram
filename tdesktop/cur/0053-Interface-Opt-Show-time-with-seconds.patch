@@ -149,7 +149,7 @@ index 580b190077..ca20eab24d 100644
  	if (voteDate == nowDate) {
  		return;
 diff --git a/Telegram/SourceFiles/lang/lang_keys.cpp b/Telegram/SourceFiles/lang/lang_keys.cpp
-index f3269a4099..24f1a95c5a 100644
+index ed1ad43f29..30c26f9a70 100644
 --- a/Telegram/SourceFiles/lang/lang_keys.cpp
 +++ b/Telegram/SourceFiles/lang/lang_keys.cpp
 @@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -160,7 +160,7 @@ index f3269a4099..24f1a95c5a 100644
  
  #include <QtCore/QLocale>
  
-@@ -180,7 +181,7 @@ QString langDateTime(const QDateTime &date) {
+@@ -193,7 +194,7 @@ QString langDateTime(const QDateTime &date) {
  		lt_date,
  		langDayOfMonth(date.date()),
  		lt_time,
@@ -169,7 +169,7 @@ index f3269a4099..24f1a95c5a 100644
  }
  
  QString langDateTimeFull(const QDateTime &date) {
-@@ -189,11 +190,35 @@ QString langDateTimeFull(const QDateTime &date) {
+@@ -202,11 +203,35 @@ QString langDateTimeFull(const QDateTime &date) {
  		lt_date,
  		langDayOfMonthFull(date.date()),
  		lt_time,
@@ -207,10 +207,10 @@ index f3269a4099..24f1a95c5a 100644
  	return kDefaultLanguage.utf16();
  }
 diff --git a/Telegram/SourceFiles/lang/lang_keys.h b/Telegram/SourceFiles/lang/lang_keys.h
-index ec576b07e3..e60a0ecb0b 100644
+index 7ac9707b79..1d6602481b 100644
 --- a/Telegram/SourceFiles/lang/lang_keys.h
 +++ b/Telegram/SourceFiles/lang/lang_keys.h
-@@ -37,6 +37,9 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -40,6 +40,9 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  
  namespace Lang {
  

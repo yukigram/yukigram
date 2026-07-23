@@ -5,7 +5,7 @@ Subject: [PATCH] (Yukigram) Options framework
 
 
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
-index deaf4ab31f..8df07cb3d5 100644
+index 7766e23a47..75dbe1efbb 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
 +++ b/Telegram/SourceFiles/core/launcher.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index deaf4ab31f..8df07cb3d5 100644
  
  #include <QtCore/QLoggingCategory>
  #include <QtCore/QStandardPaths>
-@@ -389,6 +390,7 @@ int Launcher::exec() {
+@@ -387,6 +388,7 @@ int Launcher::exec() {
  	// Must be started before Platform is started.
  	Logs::start();
  	base::options::init(cWorkingDir() + "tdata/experimental_options.json");
@@ -24,7 +24,7 @@ index deaf4ab31f..8df07cb3d5 100644
  
  	// Must be called after options are inited.
  	initHighDpi();
-@@ -632,6 +634,7 @@ void Launcher::processArguments() {
+@@ -630,6 +632,7 @@ void Launcher::processArguments() {
  int Launcher::executeApplication() {
  	FilteredCommandLineArguments arguments(_argc, _argv);
  	Sandbox sandbox(arguments.count(), arguments.values());
@@ -33,7 +33,7 @@ index deaf4ab31f..8df07cb3d5 100644
  	base::ConcurrentTimerEnvironment environment;
  	return sandbox.start();
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 809793c7fa..f5cff71b06 100644
+index c668c1f667..73f2d6c2cc 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -6,6 +6,7 @@ For license and copyright information please follow this link:
@@ -42,9 +42,9 @@ index 809793c7fa..f5cff71b06 100644
  #include "settings/settings_experimental.h"
 +#include "yukigram/options_runtime.h"
  
+ #include "settings/settings_common.h"
  #include "data/components/passkeys.h"
- #include "main/main_session.h"
-@@ -193,6 +194,7 @@ void AddOption(
+@@ -196,6 +197,7 @@ void AddOption(
  			return;
  		}
  		option.set(toggled);

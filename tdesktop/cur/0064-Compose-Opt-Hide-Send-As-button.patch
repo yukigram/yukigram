@@ -5,7 +5,7 @@ Subject: [PATCH] (Compose)(Opt) Hide Send As button
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index fcd6cd49ce..7fba0bcae3 100644
+index 297556b821..6bbfdca0c7 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -64,6 +64,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index fcd6cd49ce..7fba0bcae3 100644
  #include "inline_bots/inline_bot_result.h"
  #include "base/event_filter.h"
  #include "base/options.h"
-@@ -3834,6 +3835,14 @@ void HistoryWidget::refreshSuggestPostToggle() {
+@@ -3797,6 +3798,14 @@ void HistoryWidget::refreshSuggestPostToggle() {
  }
  
  void HistoryWidget::setupSendAsToggle() {
@@ -31,7 +31,7 @@ index fcd6cd49ce..7fba0bcae3 100644
  	session().sendAsPeers().updated(
  	) | rpl::filter([=](Main::SendAsKey key) {
  		return (key.peer == _peer)
-@@ -3850,7 +3859,7 @@ void HistoryWidget::refreshSendAsToggle() {
+@@ -3813,7 +3822,7 @@ void HistoryWidget::refreshSendAsToggle() {
  	Expects(_peer != nullptr);
  
  	const auto key = Main::SendAsKey{ _peer, Main::SendAsType::Message };

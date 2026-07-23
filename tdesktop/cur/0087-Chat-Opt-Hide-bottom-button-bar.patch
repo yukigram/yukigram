@@ -5,7 +5,7 @@ Subject: [PATCH] (Chat)(Opt) Hide bottom button bar
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index eb6fd80375..7e2c1caf6d 100644
+index ff61562b0b..6811f2afad 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -104,6 +104,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -29,7 +29,7 @@ index eb6fd80375..7e2c1caf6d 100644
  	_fieldChatStyle = InitMessageField(controller, _field, [=](
  			not_null<DocumentData*> document) {
  		if (_peer && Data::AllowEmojiWithoutPremium(_peer, document)) {
-@@ -6496,6 +6503,7 @@ bool HistoryWidget::isBotStart() const {
+@@ -6459,6 +6466,7 @@ bool HistoryWidget::isBotStart() const {
  	const auto user = _peer ? _peer->asUser() : nullptr;
  	if (!user
  		|| !user->isBot()
@@ -37,7 +37,7 @@ index eb6fd80375..7e2c1caf6d 100644
  		|| !_canSendMessages) {
  		return false;
  	} else if (!user->botInfo->startToken.isEmpty()) {
-@@ -6511,10 +6519,16 @@ bool HistoryWidget::isReportMessages() const {
+@@ -6474,10 +6482,16 @@ bool HistoryWidget::isReportMessages() const {
  }
  
  bool HistoryWidget::isBlocked() const {
@@ -54,7 +54,7 @@ index eb6fd80375..7e2c1caf6d 100644
  	if (const auto channel = _peer ? _peer->asChannel() : nullptr) {
  		return !channel->amIn() && !channel->isMonoforum() && !_canSendMessages;
  	}
-@@ -6527,6 +6541,7 @@ bool HistoryWidget::isChoosingTheme() const {
+@@ -6490,6 +6504,7 @@ bool HistoryWidget::isChoosingTheme() const {
  
  bool HistoryWidget::isMuteUnmute() const {
  	return _peer

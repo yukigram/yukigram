@@ -5,10 +5,10 @@ Subject: [PATCH] (Shortcut) Hide "Join group" button in open groups
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 4bcce29deb..480a2d914b 100644
+index 23450ae488..dda32747f9 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -6505,7 +6505,7 @@ bool HistoryWidget::isBlocked() const {
+@@ -6468,7 +6468,7 @@ bool HistoryWidget::isBlocked() const {
  
  bool HistoryWidget::isJoinChannel() const {
  	if (const auto channel = _peer ? _peer->asChannel() : nullptr) {

@@ -26,7 +26,7 @@ index 08ae3869be..da106b5e7e 100644
  			Data::WallPaper::Create(&channel->session(), *paper));
  	} else {
 diff --git a/Telegram/SourceFiles/data/data_user.cpp b/Telegram/SourceFiles/data/data_user.cpp
-index a013d9b222..8d9fb8841b 100644
+index 79c01e6215..26e6ca1542 100644
 --- a/Telegram/SourceFiles/data/data_user.cpp
 +++ b/Telegram/SourceFiles/data/data_user.cpp
 @@ -17,6 +17,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -37,7 +37,7 @@ index a013d9b222..8d9fb8841b 100644
  #include "main/main_session.h"
  #include "data/business/data_business_common.h"
  #include "data/business/data_business_info.h"
-@@ -1009,7 +1010,7 @@ void ApplyUserUpdate(not_null<UserData*> user, const MTPDuserFull &update) {
+@@ -1000,7 +1001,7 @@ void ApplyUserUpdate(not_null<UserData*> user, const MTPDuserFull &update) {
  		}
  	}
  
