@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) English
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 new file mode 100644
-index 0000000000..5ada8d0abc
+index 0000000000..0eec394206
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -0,0 +1,182 @@
+@@ -0,0 +1,184 @@
 +{
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -177,6 +177,8 @@ index 0000000000..5ada8d0abc
 +    "opt/wide-messages/name": "Wide messages",
 +    "opt/wide-messages/desc": "",
 +    "settings/chat/mono-font/title": "Monospace font family",
++    "settings/for-inu/inu": "Inugram",
++    "settings/for-inu/text": "This is a link to an {inu_link} setting",
 +    "settings/main/restart/title": "Restart now",
 +    "settings/privacy/sessions/client-api-id": "Client API ID",
 +    "settings/privacy/sessions/client/official": "Official",

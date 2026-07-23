@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) Russian
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..ee3bcf8368
+index 0000000000..ed441de49e
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
-@@ -0,0 +1,188 @@
+@@ -0,0 +1,190 @@
 +{
 +    "about/1/text": "Неофициальный форк {tdesktop_link},\nкоторый добавляет фичи и убирает мусор.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -183,6 +183,8 @@ index 0000000000..ee3bcf8368
 +    "opt/wide-messages/name": "Широкие сообщения",
 +    "opt/wide-messages/desc": "",
 +    "settings/chat/mono-font/title": "Моноширинный шрифт",
++    "settings/for-inu/inu": "Inugram",
++    "settings/for-inu/text": "Это ссылка на настройку из {inu_link}",
 +    "settings/main/restart/title": "Перезапустить",
 +    "settings/privacy/sessions/client-api-id": "API ID клиента",
 +    "settings/privacy/sessions/client/official": "Официальный",
