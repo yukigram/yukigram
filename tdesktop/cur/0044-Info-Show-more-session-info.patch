@@ -40,7 +40,7 @@ index 25c97f3945..8663c2ac23 100644
  	};
  	using List = std::vector<Entry>;
 diff --git a/Telegram/SourceFiles/settings/sections/settings_active_sessions.cpp b/Telegram/SourceFiles/settings/sections/settings_active_sessions.cpp
-index bab18dca01..874b3fe02a 100644
+index 27616cbf6f..4cac7827ce 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_active_sessions.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_active_sessions.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

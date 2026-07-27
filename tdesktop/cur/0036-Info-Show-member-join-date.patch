@@ -7,10 +7,10 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
-index 68a4cc50e8..f51da609e2 100644
+index 8dd0b39c1a..bf4b843c54 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
-@@ -848,7 +848,7 @@ PeerData *ParticipantsAdditionalData::applyParticipant(
+@@ -884,7 +884,7 @@ PeerData *ParticipantsAdditionalData::applyParticipant(
  				&& overrideRole != Role::Members) {
  				return logBad();
  			}
@@ -19,7 +19,7 @@ index 68a4cc50e8..f51da609e2 100644
  		}
  		case Api::ChatParticipant::Type::Restricted:
  		case Api::ChatParticipant::Type::Banned:
-@@ -876,7 +876,7 @@ PeerData *ParticipantsAdditionalData::applyParticipant(
+@@ -912,7 +912,7 @@ PeerData *ParticipantsAdditionalData::applyParticipant(
  
  UserData *ParticipantsAdditionalData::applyCreator(
  		const Api::ChatParticipant &data) {
@@ -28,7 +28,7 @@ index 68a4cc50e8..f51da609e2 100644
  		_creator = user;
  		_adminRights[user] = data.rights();
  		if (user->isSelf()) {
-@@ -929,8 +929,8 @@ UserData *ParticipantsAdditionalData::applyAdmin(
+@@ -965,8 +965,8 @@ UserData *ParticipantsAdditionalData::applyAdmin(
  	return user;
  }
  
@@ -39,7 +39,7 @@ index 68a4cc50e8..f51da609e2 100644
  	if (!user) {
  		return nullptr;
  	} else if (_peer->isChat()) {
-@@ -939,6 +939,12 @@ UserData *ParticipantsAdditionalData::applyRegular(UserId userId) {
+@@ -975,6 +975,12 @@ UserData *ParticipantsAdditionalData::applyRegular(UserId userId) {
  		return user;
  	}
  
@@ -52,7 +52,7 @@ index 68a4cc50e8..f51da609e2 100644
  	_infoNotLoaded.erase(user);
  	_adminRights.erase(user);
  	_adminCanEdit.erase(user);
-@@ -1977,6 +1983,25 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
+@@ -2013,6 +2019,25 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
  			result->addAction(std::move(button));
  		};
  
@@ -78,7 +78,7 @@ index 68a4cc50e8..f51da609e2 100644
  		if (const auto by = _additional.restrictedBy(participant)) {
  			if (const auto since = _additional.restrictedSince(participant)) {
  				addInfoAction(
-@@ -1991,6 +2016,8 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
+@@ -2027,6 +2052,8 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
  				if (const auto since = _additional.adminPromotedSince(user)) {
  					addInfoAction(by, tr::lng_rights_about_by, since);
  				}

@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface)(Opt) Prevent delete history
 
 
 diff --git a/Telegram/SourceFiles/boxes/moderate_messages_box.cpp b/Telegram/SourceFiles/boxes/moderate_messages_box.cpp
-index 6ee22b2f61..a0e3f07b1f 100644
+index 12d604d255..706a3af89a 100644
 --- a/Telegram/SourceFiles/boxes/moderate_messages_box.cpp
 +++ b/Telegram/SourceFiles/boxes/moderate_messages_box.cpp
 @@ -33,6 +33,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -24,7 +24,7 @@ index 6ee22b2f61..a0e3f07b1f 100644
  #include "ui/widgets/buttons.h"
  #include "ui/widgets/checkbox.h"
  #include "ui/widgets/expandable_peer_list.h"
-@@ -1570,6 +1572,11 @@ void SafeSubmitOnEnter(not_null<Ui::GenericBox*> box) {
+@@ -1571,6 +1573,11 @@ void SafeSubmitOnEnter(not_null<Ui::GenericBox*> box) {
  }
  
  void DeleteChatBox(not_null<Ui::GenericBox*> box, not_null<PeerData*> peer) {
@@ -36,7 +36,7 @@ index 6ee22b2f61..a0e3f07b1f 100644
  	const auto container = box->verticalLayout();
  
  	const auto userpicPeer = peer->userpicPaintingPeer();
-@@ -1746,6 +1753,11 @@ void DeleteChatBox(not_null<Ui::GenericBox*> box, not_null<PeerData*> peer) {
+@@ -1747,6 +1754,11 @@ void DeleteChatBox(not_null<Ui::GenericBox*> box, not_null<PeerData*> peer) {
  void DeleteSublistBox(
  		not_null<Ui::GenericBox*> box,
  		not_null<Data::SavedSublist*> sublist) {
@@ -92,7 +92,7 @@ index f7b493bfe7..9e7948d017 100644
  	const auto chat = channel->migrateFrom();
  
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index ccdd5528da..631a8c0cb6 100644
+index e416fd6e24..e92215cf7b 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
 @@ -47,6 +47,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

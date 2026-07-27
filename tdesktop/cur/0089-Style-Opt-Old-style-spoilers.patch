@@ -125,7 +125,7 @@ index d4413de547..5e834a11c4 100644
  	const auto source = frame.source;
  	const auto ratio = style::DevicePixelRatio();
 diff --git a/Telegram/lib_ui/ui/text/text_renderer.cpp b/Telegram/lib_ui/ui/text/text_renderer.cpp
-index f89fc9e75d..2da7c5e314 100644
+index da27ab62ba..5c8ace67fe 100644
 --- a/Telegram/lib_ui/ui/text/text_renderer.cpp
 +++ b/Telegram/lib_ui/ui/text/text_renderer.cpp
 @@ -18,6 +18,10 @@
@@ -139,7 +139,7 @@ index f89fc9e75d..2da7c5e314 100644
  namespace Ui::Text {
  namespace {
  
-@@ -1619,7 +1623,7 @@ void Renderer::paintSpoilerRects(
+@@ -1623,7 +1627,7 @@ void Renderer::paintSpoilerRects(
  	const auto frame = _spoilerCache->lookup(color->c)->frame(index);
  	if (_spoilerCache) {
  		for (const auto &rect : rects) {

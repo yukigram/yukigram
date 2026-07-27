@@ -70,10 +70,10 @@ index b758fa94a0..f4c7cd8438 100644
  	}
  
 diff --git a/Telegram/SourceFiles/window/main_window.cpp b/Telegram/SourceFiles/window/main_window.cpp
-index 13ed5aa8d4..c8c0a20587 100644
+index df60162bd7..16ceeed1e0 100644
 --- a/Telegram/SourceFiles/window/main_window.cpp
 +++ b/Telegram/SourceFiles/window/main_window.cpp
-@@ -123,7 +123,7 @@ const char kOptionNewWindowsSizeAsFirst[] = "new-windows-size-as-first";
+@@ -126,7 +126,7 @@ const char kOptionNewWindowsSizeAsFirst[] = "new-windows-size-as-first";
  const char kOptionDisableTouchbar[] = "touchbar-disabled";
  
  const QImage &Logo() {

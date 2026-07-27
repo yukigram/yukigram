@@ -26,7 +26,7 @@ index ef36995e66..37e3c4d45e 100644
  		return std::make_unique<HistoryView::Photo>(
  			message,
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 1adfffd75d..1971ff9bab 100644
+index 45db15edcc..e7c7b1d19e 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -15,6 +15,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -37,7 +37,7 @@ index 1adfffd75d..1971ff9bab 100644
  #include "history/history_item_helpers.h"
  #include "history/view/controls/history_view_forward_panel.h"
  #include "history/view/controls/history_view_draft_options.h"
-@@ -5391,7 +5392,7 @@ void HistoryInner::mouseActionUpdate() {
+@@ -5464,7 +5465,7 @@ void HistoryInner::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = _contentWidth;
@@ -47,7 +47,7 @@ index 1adfffd75d..1971ff9bab 100644
  					}
  					auto widthForDate = maxwidth - st::msgServiceMargin.left() - st::msgServiceMargin.left();
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index b645b33833..4b176ac8dc 100644
+index aae866e749..76b4533d0b 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -58,7 +58,7 @@ index b645b33833..4b176ac8dc 100644
  #include "history/view/history_view_service_message.h"
  #include "history/view/history_view_message.h"
  #include "history/view/media/history_view_community_added.h"
-@@ -778,7 +779,7 @@ void UnreadBar::paint(
+@@ -779,7 +780,7 @@ void UnreadBar::paint(
  	p.setPen(st->historyUnreadBarFg());
  
  	int maxwidth = w;
@@ -68,7 +68,7 @@ index b645b33833..4b176ac8dc 100644
  			maxwidth,
  			st::msgMaxWidth
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index d15462feb0..f7bc51a8e7 100644
+index 6d64939d83..d4377c6d54 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -79,7 +79,7 @@ index d15462feb0..f7bc51a8e7 100644
  #include "history/history.h"
  #include "history/history_item.h"
  #include "history/history_item_components.h"
-@@ -4513,7 +4514,7 @@ void ListWidget::mouseActionUpdate() {
+@@ -4546,7 +4547,7 @@ void ListWidget::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = view->width();
@@ -89,7 +89,7 @@ index d15462feb0..f7bc51a8e7 100644
  					}
  					auto widthForDate = maxwidth - st::msgServiceMargin.left() - st::msgServiceMargin.left();
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 28ee0c8f6b..ff9e8ec003 100644
+index f75c9d3209..cf3dc40605 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -15,6 +15,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -100,7 +100,7 @@ index 28ee0c8f6b..ff9e8ec003 100644
  #include "history/view/history_view_cursor_state.h"
  #include "history/history_item_components.h"
  #include "history/history_item_helpers.h"
-@@ -6401,7 +6402,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -6402,7 +6403,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  		}
  	}
  	accumulate_min(contentWidth, maxWidth());
@@ -109,7 +109,7 @@ index 28ee0c8f6b..ff9e8ec003 100644
  		? 0x3FFFFFF
  		: std::max({
  			st::msgMaxWidth,
-@@ -6482,7 +6483,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -6483,7 +6484,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  		if (reactionsInBubble) {
  			_reactions->resizeGetHeight(textWidth);
  		}
@@ -158,7 +158,7 @@ index f9004762ad..3caedf1758 100644
  	}
  	contentWidth -= st::msgServiceMargin.left() + st::msgServiceMargin.left(); // two small margins
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_document.cpp b/Telegram/SourceFiles/history/view/media/history_view_document.cpp
-index 51b786de86..3fa0665761 100644
+index dcddff4c85..23525497f0 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_document.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_document.cpp
 @@ -18,6 +18,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -169,7 +169,7 @@ index 51b786de86..3fa0665761 100644
  #include "core/click_handler_types.h" // kDocumentFilenameTooltipProperty.
  #include "history/view/history_view_element.h"
  #include "history/view/history_view_message.h"
-@@ -599,8 +600,10 @@ QSize Document::countOptimalSize() {
+@@ -600,8 +601,10 @@ QSize Document::countOptimalSize() {
  
  	if (const auto named = Get<HistoryDocumentNamed>()) {
  		accumulate_max(maxWidth, tleft + named->name.maxWidth() + tright);
@@ -264,7 +264,7 @@ index 7699aa4c07..14b4e2c35d 100644
  			st::historyGroupSkip)
  		: LayoutPlaylist(sizes);
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_photo.cpp b/Telegram/SourceFiles/history/view/media/history_view_photo.cpp
-index 803e842667..1a382d7314 100644
+index 316ab68df3..16a1716338 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_photo.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_photo.cpp
 @@ -16,6 +16,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -275,7 +275,7 @@ index 803e842667..1a382d7314 100644
  #include "lang/lang_keys.h"
  #include "media/streaming/media_streaming_instance.h"
  #include "media/streaming/media_streaming_player.h"
-@@ -247,7 +248,7 @@ QSize Photo::countOptimalSize() {
+@@ -246,7 +247,7 @@ QSize Photo::countOptimalSize() {
  		(_parent->hasBubble()
  			? st::historyPhotoBubbleMinWidth
  			: st::minPhotoSize),
@@ -284,7 +284,7 @@ index 803e842667..1a382d7314 100644
  	const auto maxActualWidth = qMax(scaled.width(), minWidth);
  	auto maxWidth = qMax(maxActualWidth, scaled.height());
  	auto minHeight = qMax(scaled.height(), st::minPhotoSize);
-@@ -256,7 +257,10 @@ QSize Photo::countOptimalSize() {
+@@ -255,7 +256,10 @@ QSize Photo::countOptimalSize() {
  		const auto captionMaxWidth = _parent->textualMaxWidth();
  		if (botTop || !_parent->data()->isFakeAboutView()) {
  			const auto maxWithCaption = qMin(st::msgMaxWidth, captionMaxWidth);
@@ -296,7 +296,7 @@ index 803e842667..1a382d7314 100644
  			minHeight = adjustHeightForLessCrop(
  				dimensions,
  				{ maxWidth, minHeight });
-@@ -276,7 +280,7 @@ QSize Photo::countCurrentSize(int newWidth) {
+@@ -275,7 +279,7 @@ QSize Photo::countCurrentSize(int newWidth) {
  	const auto hostedInstantView = IsHostedInstantViewMedia(_parent);
  	const auto thumbMaxWidth = hostedInstantView
  		? std::max(newWidth, 1)
@@ -306,7 +306,7 @@ index 803e842667..1a382d7314 100644
  		_parent->minWidthForMedia(),
  		qMin(thumbMaxWidth, _parent->hasBubble()
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_web_page.cpp b/Telegram/SourceFiles/history/view/media/history_view_web_page.cpp
-index 5acbea7480..19662da8a4 100644
+index 700dc32cdf..ff9fda1555 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_web_page.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_web_page.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -317,7 +317,7 @@ index 5acbea7480..19662da8a4 100644
  #include "history/view/media/history_view_media_common.h"
  #include "history/view/media/history_view_media_generic.h"
  #include "history/view/media/history_view_unique_gift.h"
-@@ -772,6 +773,9 @@ QSize WebPage::countCurrentSize(int newWidth) {
+@@ -774,6 +775,9 @@ QSize WebPage::countCurrentSize(int newWidth) {
  	}
  
  	const auto padding = inBubblePadding() + innerMargin();
@@ -357,10 +357,18 @@ index 46b17936bd..006fd2fcf8 100644
  		st.pagePadding.left()
  			+ st.pagePadding.right()
 diff --git a/Telegram/SourceFiles/iv/markdown/iv_markdown_history_view_media.cpp b/Telegram/SourceFiles/iv/markdown/iv_markdown_history_view_media.cpp
-index 36d3ebf645..46f1bafb5d 100644
+index 4244d0eb0f..6ce65a9287 100644
 --- a/Telegram/SourceFiles/iv/markdown/iv_markdown_history_view_media.cpp
 +++ b/Telegram/SourceFiles/iv/markdown/iv_markdown_history_view_media.cpp
-@@ -948,6 +948,7 @@ int IvHistoryViewSlideshowBlock::frameHeight(int width) const {
+@@ -48,6 +48,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "main/main_session_settings.h"
+ #include "ui/basic_click_handlers.h"
+ #include "window/window_session_controller.h"
++#include "styles/style_chat.h"
+ 
+ #include "rpl/filter.h"
+ #include "rpl/lifetime.h"
+@@ -946,6 +947,7 @@ int IvHistoryViewSlideshowBlock::frameHeight(int width) const {
  	for (const auto &original : _slideOriginalSizes) {
  		const auto natural = MediaHeightForWidth(
  			outer,
@@ -444,7 +452,7 @@ index a6fe8c1f18..bdbf8c94fa 100644
  	gsl::span<const QSize> slideOriginalSizes);
  
 diff --git a/Telegram/SourceFiles/window/themes/window_theme_preview.cpp b/Telegram/SourceFiles/window/themes/window_theme_preview.cpp
-index 0130e318a0..90dc18226d 100644
+index 737c6add5e..39f86e7bad 100644
 --- a/Telegram/SourceFiles/window/themes/window_theme_preview.cpp
 +++ b/Telegram/SourceFiles/window/themes/window_theme_preview.cpp
 @@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

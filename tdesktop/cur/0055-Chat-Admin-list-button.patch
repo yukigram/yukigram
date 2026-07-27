@@ -20,7 +20,7 @@ index 0000000000..07bc0f276e
 +    " stroke="#fff" fill="#0000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
 +</svg>
 diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
-index c38858ba5a..1e5bceb58e 100644
+index 7a10e006c6..45694abcc0 100644
 --- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 @@ -12,6 +12,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -39,7 +39,7 @@ index c38858ba5a..1e5bceb58e 100644
  #include "yukigram/settings/quick_recent_actions.h"
  #include "base/call_delayed.h"
  #include "base/unixtime.h"
-@@ -129,6 +131,7 @@ TopBarWidget::TopBarWidget(
+@@ -128,6 +130,7 @@ TopBarWidget::TopBarWidget(
  , _groupCall(this, st::topBarGroupCall)
  , _search(this, st::topBarSearch)
  , _recentActions(this, st::topBarRecentActions)
@@ -47,7 +47,7 @@ index c38858ba5a..1e5bceb58e 100644
  , _infoToggle(this, st::topBarInfo)
  , _menuToggle(this, st::topBarMenuToggle)
  , _titlePeerText(st::windowMinWidth / 3)
-@@ -166,6 +169,12 @@ TopBarWidget::TopBarWidget(
+@@ -165,6 +168,12 @@ TopBarWidget::TopBarWidget(
  		const auto channel = _activeChat.key.peer()->asChannel();
  		_controller->showSection(std::make_shared<AdminLog::SectionMemento>(channel));
  	});
@@ -60,7 +60,7 @@ index c38858ba5a..1e5bceb58e 100644
  	_infoToggle->setClickedCallback([=] { toggleInfoSection(); });
  	_back->setAcceptBoth();
  	_back->addClickHandler([=](Qt::MouseButton) {
-@@ -1240,6 +1249,10 @@ void TopBarWidget::updateControlsGeometry() {
+@@ -1239,6 +1248,10 @@ void TopBarWidget::updateControlsGeometry() {
  		_infoToggle->moveToRight(_rightTaken, otherButtonsTop);
  		_rightTaken += _infoToggle->width();
  	}
@@ -71,7 +71,7 @@ index c38858ba5a..1e5bceb58e 100644
  	_recentActions->moveToRight(_rightTaken, otherButtonsTop);
  	if (!_recentActions->isHidden()) {
  		_rightTaken += _recentActions->width() + st::topBarSkip;
-@@ -1382,6 +1395,30 @@ void TopBarWidget::updateControlsVisibility() {
+@@ -1381,6 +1394,30 @@ void TopBarWidget::updateControlsVisibility() {
  		return false;
  	}();
  	_recentActions->setVisible(isAdmin);
@@ -115,10 +115,10 @@ index e986cabb54..6b2ea7a06f 100644
  	object_ptr<Ui::IconButton> _menuToggle;
  	base::unique_qptr<Ui::PopupMenu> _menu;
 diff --git a/Telegram/SourceFiles/info/info.style b/Telegram/SourceFiles/info/info.style
-index 0f15ae2df7..6083daacaf 100644
+index deec7b7d37..7bc3e9eae6 100644
 --- a/Telegram/SourceFiles/info/info.style
 +++ b/Telegram/SourceFiles/info/info.style
-@@ -1148,6 +1148,10 @@ topBarRecentActions: IconButton(topBarSearch) {
+@@ -958,6 +958,10 @@ topBarRecentActions: IconButton(topBarSearch) {
  	icon: icon {{ "info/edit/group_manage_actions_topbar", menuIconFg }};
  	iconOver: icon {{ "info/edit/group_manage_actions_topbar", menuIconFgOver }};
  }

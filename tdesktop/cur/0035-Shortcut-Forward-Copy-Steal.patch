@@ -40,7 +40,7 @@ index eee902d03f..f293251e5a 100644
  	object_ptr<PeerListSectionIndex> _sectionIndex = { nullptr };
  
 diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
-index 69c507d435..ae0b4f0c12 100644
+index 6d3ec65249..426ce7ed82 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 +++ b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 @@ -926,6 +926,7 @@ void ChooseRecipientBoxController::rowClicked(not_null<PeerListRow*> row) {
@@ -100,7 +100,7 @@ index c6e50ec09b..5edcc82e3a 100644
  
  [[maybe_unused]] constexpr auto kShowFolder = {
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 41ccc3d55f..1adfffd75d 100644
+index 87f1d754e7..45db15edcc 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -111,7 +111,7 @@ index 41ccc3d55f..1adfffd75d 100644
  #include "core/click_handler_types.h"
  #include "core/phone_click_handler.h"
  #include "data/data_chat_participant_status.h"
-@@ -508,6 +509,8 @@ HistoryInner::HistoryInner(
+@@ -507,6 +508,8 @@ HistoryInner::HistoryInner(
  		update();
  	}, lifetime());
  
@@ -120,7 +120,7 @@ index 41ccc3d55f..1adfffd75d 100644
  	HistoryView::Reactions::SetupManagerList(
  		_reactionsManager.get(),
  		_reactionsItem.value());
-@@ -6396,6 +6399,38 @@ bool CanSendReply(not_null<const HistoryItem*> item) {
+@@ -6471,6 +6474,38 @@ bool CanSendReply(not_null<const HistoryItem*> item) {
  	return true;
  }
  
@@ -160,10 +160,10 @@ index 41ccc3d55f..1adfffd75d 100644
  
  std::vector<HistoryView::Element*> HistoryInner::accessibleElements() const {
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.h b/Telegram/SourceFiles/history/history_inner_widget.h
-index 866318c22c..fa33bb8e10 100644
+index 6b41b204d4..e263e01337 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.h
 +++ b/Telegram/SourceFiles/history/history_inner_widget.h
-@@ -540,6 +540,7 @@ private:
+@@ -539,6 +539,7 @@ private:
  	void blockSenderAsGroup(FullMsgId itemId);
  	void copySelectedText();
  	void editCaptionUploadLayer(not_null<HistoryItem*> item);
@@ -172,10 +172,10 @@ index 866318c22c..fa33bb8e10 100644
  	[[nodiscard]] auto reactionButtonParameters(
  		not_null<const Element*> view,
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 9ec4628601..61f3438e4c 100644
+index f58c42131a..3cd88bee53 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -10436,7 +10436,7 @@ bool HistoryWidget::updateCanSendMessage() {
+@@ -10444,7 +10444,7 @@ bool HistoryWidget::updateCanSendMessage() {
  	return true;
  }
  
@@ -184,7 +184,7 @@ index 9ec4628601..61f3438e4c 100644
  	if (!_list) {
  		return;
  	}
-@@ -10445,7 +10445,7 @@ void HistoryWidget::forwardSelected() {
+@@ -10453,7 +10453,7 @@ void HistoryWidget::forwardSelected() {
  		if (const auto strong = weak.get()) {
  			strong->clearSelected();
  		}
@@ -207,7 +207,7 @@ index d437579ee9..766f8c5383 100644
  	void clearSelected();
  
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index 67155d2087..c329f727f1 100644
+index 7670702e44..af26204b4a 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
 @@ -3029,7 +3029,8 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(

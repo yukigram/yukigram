@@ -5,10 +5,10 @@ Subject: [PATCH] (Info) Community ID
 
 
 diff --git a/Telegram/SourceFiles/boxes/peers/community_box.cpp b/Telegram/SourceFiles/boxes/peers/community_box.cpp
-index e966fe3d39..43aa8cf2a6 100644
+index e2673b619b..70f0b9d6ba 100644
 --- a/Telegram/SourceFiles/boxes/peers/community_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/community_box.cpp
-@@ -25,6 +25,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -26,6 +26,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "info/profile/info_profile_values.h"
  #include "lang/lang_hardcoded.h"
  #include "lang/lang_keys.h"
@@ -16,7 +16,7 @@ index e966fe3d39..43aa8cf2a6 100644
  #include "main/main_session.h"
  #include "main/session/session_show.h"
  #include "settings/settings_common.h"
-@@ -223,6 +224,14 @@ void SetupCommunityContent(
+@@ -224,6 +225,14 @@ void SetupCommunityContent(
  		return;
  	}
  

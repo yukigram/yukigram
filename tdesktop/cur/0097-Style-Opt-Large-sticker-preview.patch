@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Large sticker preview
 
 
 diff --git a/Telegram/SourceFiles/window/window_media_preview.cpp b/Telegram/SourceFiles/window/window_media_preview.cpp
-index e81ece340a..8775e353e8 100644
+index 8089ccb690..6a5c764e7d 100644
 --- a/Telegram/SourceFiles/window/window_media_preview.cpp
 +++ b/Telegram/SourceFiles/window/window_media_preview.cpp
 @@ -24,6 +24,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -15,8 +15,8 @@ index e81ece340a..8775e353e8 100644
 +#include "yukigram/settings/large_sticker_preview.h"
  #include "styles/style_chat_helpers.h"
  #include "styles/style_chat.h"
- #include "styles/style_layers.h"
-@@ -365,6 +366,9 @@ QSize MediaPreviewWidget::currentDimensions() const {
+ 
+@@ -364,6 +365,9 @@ QSize MediaPreviewWidget::currentDimensions() const {
  		}
  		if (_document->sticker()) {
  			box = QSize(st::maxStickerSize, st::maxStickerSize);

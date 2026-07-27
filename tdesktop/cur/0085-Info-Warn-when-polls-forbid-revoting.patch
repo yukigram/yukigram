@@ -5,7 +5,7 @@ Subject: [PATCH] (Info) Warn when polls forbid revoting
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_poll.cpp b/Telegram/SourceFiles/history/view/media/history_view_poll.cpp
-index af67d95642..c4870c76db 100644
+index 77856011cd..2282c32fec 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_poll.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_poll.cpp
 @@ -12,6 +12,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

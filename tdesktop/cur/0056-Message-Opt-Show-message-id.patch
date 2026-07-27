@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-index fe587e4a23..0be17a3e7f 100644
+index 25d8816144..3c64c1eece 100644
 --- a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 @@ -23,6 +23,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -18,7 +18,7 @@ index fe587e4a23..0be17a3e7f 100644
  #include "base/unixtime.h"
  #include "chat_helpers/emoji_interactions.h"
  #include "core/click_handler_types.h"
-@@ -500,7 +501,8 @@ void BottomInfo::layoutDateText() {
+@@ -499,7 +500,8 @@ void BottomInfo::layoutDateText() {
  		? FormatEditedDate(_data.date, _data.editedDate)
  		: edited + ((_data.flags & Data::Flag::ForwardedDate)
  		? Ui::FormatDateTimeSavedFrom(_data.date)
@@ -28,7 +28,7 @@ index fe587e4a23..0be17a3e7f 100644
  	const auto afterAuthor = prefix + date;
  	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
  	const auto authorWidth = st::msgDateFont->width(author);
-@@ -740,6 +742,9 @@ BottomInfo::Data BottomInfoDataFromMessage(not_null<Message*> message) {
+@@ -739,6 +741,9 @@ BottomInfo::Data BottomInfoDataFromMessage(not_null<Message*> message) {
  			result.flags |= Flag::Silent;
  		}
  	}
@@ -51,7 +51,7 @@ index 0382cbc33a..2ac2a2e18a 100644
  		int64 tonStake = 0;
  		int stars = 0;
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 4b176ac8dc..82df2bd96a 100644
+index 76b4533d0b..ddbec47d8b 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -34,6 +34,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -68,9 +68,9 @@ index 4b176ac8dc..82df2bd96a 100644
  #include "lang/lang_keys.h"
 +#include "yukigram/lang.h"
  #include "styles/style_chat.h"
+ #include "styles/style_chat_style.h"
  #include "styles/style_dialogs.h"
- #include "styles/style_iv.h"
-@@ -734,6 +736,10 @@ QString DateTooltipText(not_null<Element*> view) {
+@@ -735,6 +737,10 @@ QString DateTooltipText(not_null<Element*> view) {
  	if (const auto stars = item->out() ? item->starsPaid() : 0) {
  		dateText += '\n' + tr::lng_you_paid_stars(tr::now, lt_count, stars);
  	}

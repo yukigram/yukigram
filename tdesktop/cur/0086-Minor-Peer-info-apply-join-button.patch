@@ -5,10 +5,10 @@ Subject: [PATCH] (Minor) Peer info apply join button
 
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
-index baa19434c6..ee1b621180 100644
+index 322045b86b..e0b6c86e11 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
-@@ -61,6 +61,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -59,6 +59,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "info/userpic/info_userpic_emoji_builder_common.h"
  #include "info/userpic/info_userpic_emoji_builder_menu_item.h"
  #include "lang/lang_keys.h"
@@ -16,7 +16,7 @@ index baa19434c6..ee1b621180 100644
  #include "lottie/lottie_animation.h"
  #include "lottie/lottie_multi_player.h"
  #include "main/main_session.h"
-@@ -937,6 +938,7 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
+@@ -933,6 +934,7 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
  	if (canJoin) {
  		const auto join = Ui::CreateChild<TopBarActionButton>(
  			this,

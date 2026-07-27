@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface)(Opt) Compact chat list
 
 
 diff --git a/Telegram/SourceFiles/dialogs/dialogs.style b/Telegram/SourceFiles/dialogs/dialogs.style
-index 663901fe80..3753fbced3 100644
+index 2b0fe956c3..223f76870b 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs.style
 +++ b/Telegram/SourceFiles/dialogs/dialogs.style
 @@ -100,6 +100,11 @@ defaultDialogRow: DialogRow {
@@ -99,7 +99,7 @@ index 39e6de8fc8..6171fc1b69 100644
  	const auto updateRect = QRect(
  		_st->photoSize - skip.x() - size,
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_row.cpp b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
-index 79a1fb2d1f..153c64505a 100644
+index 5b6af5dea2..e333ba82cb 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -110,7 +110,7 @@ index 79a1fb2d1f..153c64505a 100644
  #include "dialogs/dialogs_entry.h"
  #include "dialogs/ui/dialogs_video_userpic.h"
  #include "dialogs/ui/dialogs_layout.h"
-@@ -330,6 +331,9 @@ Row::~Row() {
+@@ -329,6 +330,9 @@ Row::~Row() {
  const style::DialogRow &Row::ComputeSt(
  		not_null<const Entry*> entry,
  		FilterId filterId) {
@@ -120,7 +120,7 @@ index 79a1fb2d1f..153c64505a 100644
  	if (const auto history = entry->asHistory()) {
  		const auto hasTags = entry->hasChatsFilterTags(filterId);
  		const auto wideRow = history->peer->displayAsForum()
-@@ -607,7 +611,7 @@ void Row::PaintCornerBadgeFrame(
+@@ -606,7 +610,7 @@ void Row::PaintCornerBadgeFrame(
  		: st::dialogsCallBadgeSize;
  	const auto stroke = st::dialogsOnlineBadgeStroke;
  	const auto skip = online
@@ -129,7 +129,7 @@ index 79a1fb2d1f..153c64505a 100644
  		: st::dialogsCallBadgeSkip;
  	const auto shrink = (size / 2) * (1. - topLayerProgress);
  
-@@ -714,7 +718,8 @@ void Row::paintUserpic(
+@@ -713,7 +717,8 @@ void Row::paintUserpic(
  	const auto limit = Ui::kOutlineSegmentsMax;
  	const auto storiesCount = std::min(storiesCountReal, limit);
  	const auto storiesUnreadCount = std::min(storiesUnreadCountReal, limit);
@@ -139,7 +139,7 @@ index 79a1fb2d1f..153c64505a 100644
  		_cornerBadgeUserpic->frame = QImage(
  			frameSize,
  			QImage::Format_ARGB32_Premultiplied);
-@@ -743,6 +748,7 @@ void Row::paintUserpic(
+@@ -742,6 +747,7 @@ void Row::paintUserpic(
  		&& !subscribed
  		&& !insideCommunity;
  	if (keyChanged
@@ -148,7 +148,7 @@ index 79a1fb2d1f..153c64505a 100644
  		|| _cornerBadgeUserpic->active != active
  		|| _cornerBadgeUserpic->hidden != (hidden ? 1 : 0)
 diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
-index 3e15b0c071..71861cff2c 100644
+index 0c120c5b9b..ef25d1e487 100644
 --- a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 +++ b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -159,7 +159,7 @@ index 3e15b0c071..71861cff2c 100644
  #include "dialogs/dialogs_list.h"
  #include "dialogs/dialogs_three_state_icon.h"
  #include "dialogs/dialogs_quick_action.h"
-@@ -116,7 +117,7 @@ int PaintRightButtonImpl(QPainter &p, const PaintContext &context) {
+@@ -117,7 +118,7 @@ int PaintRightButtonImpl(QPainter &p, const PaintContext &context) {
  		const auto left = context.width
  			- size.width()
  			- rightButton->st->margin.right();
@@ -168,7 +168,7 @@ index 3e15b0c071..71861cff2c 100644
  		p.drawImage(
  			left,
  			top,
-@@ -439,6 +440,7 @@ template <typename PaintItemCallback>
+@@ -440,6 +441,7 @@ template <typename PaintItemCallback>
  void PaintRow(
  		Painter &p,
  		not_null<const BasicRow*> row,
@@ -176,7 +176,7 @@ index 3e15b0c071..71861cff2c 100644
  		QRect geometry,
  		not_null<Entry*> entry,
  		VideoUserpic *videoUserpic,
-@@ -450,11 +452,23 @@ void PaintRow(
+@@ -451,11 +453,23 @@ void PaintRow(
  		HistoryItem *item,
  		const Data::Draft *draft,
  		TimeId date,
@@ -201,7 +201,7 @@ index 3e15b0c071..71861cff2c 100644
  	const auto supportMode = entry->session().supportMode();
  	if (supportMode) {
  		draft = nullptr;
-@@ -604,6 +618,7 @@ void PaintRow(
+@@ -605,6 +619,7 @@ void PaintRow(
  				+ st::dialogsChatTypeSkip);
  		}
  	}
@@ -209,7 +209,7 @@ index 3e15b0c071..71861cff2c 100644
  	auto texttop = context.st->textTop;
  	if (const auto folder = entry->asFolder()) {
  		const auto availableWidth = PaintWideCounter(
-@@ -821,6 +836,10 @@ void PaintRow(
+@@ -822,6 +837,10 @@ void PaintRow(
  			texttop,
  			context.width);
  	}
@@ -220,7 +220,7 @@ index 3e15b0c071..71861cff2c 100644
  	const auto sendStateIcon = [&]() -> const style::icon* {
  		if (!thread) {
  			return nullptr;
-@@ -1237,6 +1256,7 @@ void RowPainter::Paint(
+@@ -1238,6 +1257,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,
@@ -228,7 +228,7 @@ index 3e15b0c071..71861cff2c 100644
  		QRect(0, 0, context.width, row->height()),
  		entry,
  		videoUserpic,
-@@ -1349,6 +1369,7 @@ void RowPainter::Paint(
+@@ -1350,6 +1370,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,

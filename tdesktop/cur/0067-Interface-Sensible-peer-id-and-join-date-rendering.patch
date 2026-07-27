@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface) Sensible peer id and join date rendering
 
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-index 7c0695b89f..8887bb2ed4 100644
+index 91df06b19f..15fcbfa6bc 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 @@ -72,6 +72,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 7c0695b89f..8887bb2ed4 100644
  #include "main/main_session.h"
  #include "menu/menu_mute.h"
  #include "settings/settings_common.h"
-@@ -227,69 +228,6 @@ base::options::toggle ShowChannelJoinedBelowAbout({
+@@ -228,69 +229,6 @@ base::options::toggle ShowChannelJoinedBelowAbout({
  	return Ui::CreateSkipWidget(parent, st::infoProfileSkip);
  }
  
@@ -86,7 +86,7 @@ index 7c0695b89f..8887bb2ed4 100644
  [[nodiscard]] bool AreNonTrivialHours(const Data::WorkingHours &hours) {
  	if (!hours) {
  		return false;
-@@ -1643,6 +1581,48 @@ Section DetailsFiller::makeInfo() {
+@@ -1644,6 +1582,48 @@ Section DetailsFiller::makeInfo() {
  				}
  			});
  	};
@@ -135,7 +135,7 @@ index 7c0695b89f..8887bb2ed4 100644
  	if (const auto user = _peer->asUser()) {
  		if (user->session().supportMode()) {
  			addInfoLineGeneric(
-@@ -1679,9 +1659,8 @@ Section DetailsFiller::makeInfo() {
+@@ -1680,9 +1660,8 @@ Section DetailsFiller::makeInfo() {
  			: tr::lng_info_bio_label();
  		const auto about = addInfoLine(
  			std::move(label),
@@ -147,7 +147,7 @@ index 7c0695b89f..8887bb2ed4 100644
  
  		const auto usernameLine = addInfoOneLine(
  			UsernamesSubtext(_peer, tr::lng_info_username_label()),
-@@ -1729,6 +1708,8 @@ Section DetailsFiller::makeInfo() {
+@@ -1730,6 +1709,8 @@ Section DetailsFiller::makeInfo() {
  			return false;
  		});
  
@@ -156,7 +156,7 @@ index 7c0695b89f..8887bb2ed4 100644
  		if (!user->isBot()) {
  			tracker.track(result->add(
  				CreateBirthday(result, controller, user),
-@@ -1843,11 +1824,13 @@ Section DetailsFiller::makeInfo() {
+@@ -1844,11 +1825,13 @@ Section DetailsFiller::makeInfo() {
  
  		const auto about = addInfoLine(tr::lng_info_about_label(), _topic
  			? rpl::single(TextWithEntities())

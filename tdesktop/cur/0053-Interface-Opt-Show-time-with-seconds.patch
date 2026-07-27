@@ -7,10 +7,10 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/api/api_who_reacted.cpp b/Telegram/SourceFiles/api/api_who_reacted.cpp
-index 5cc833ec41..020c95b5e9 100644
+index c920be85ce..664fa7bfc9 100644
 --- a/Telegram/SourceFiles/api/api_who_reacted.cpp
 +++ b/Telegram/SourceFiles/api/api_who_reacted.cpp
-@@ -707,23 +707,14 @@ QString FormatReadDate(TimeId date, const QDateTime &now) {
+@@ -706,23 +706,14 @@ QString FormatReadDate(TimeId date, const QDateTime &now) {
  	const auto parsed = base::unixtime::parse(date);
  	const auto readDate = parsed.date();
  	const auto nowDate = now.date();
@@ -110,10 +110,10 @@ index 33333e29bc..12a79ba436 100644
  	const auto size = time.size() + author.size() + 2 + body.expanded.size();
  	result.reserve(size);
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-index 62b202ec35..fe587e4a23 100644
+index e01afbe210..25d8816144 100644
 --- a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-@@ -500,7 +500,7 @@ void BottomInfo::layoutDateText() {
+@@ -499,7 +499,7 @@ void BottomInfo::layoutDateText() {
  		? FormatEditedDate(_data.date, _data.editedDate)
  		: edited + ((_data.flags & Data::Flag::ForwardedDate)
  		? Ui::FormatDateTimeSavedFrom(_data.date)
@@ -136,10 +136,10 @@ index 0e58229f31..df1d4da4d4 100644
  		_status = tr::lng_call_duration_info(
  			tr::now,
 diff --git a/Telegram/SourceFiles/info/polls/info_polls_results_inner_widget.cpp b/Telegram/SourceFiles/info/polls/info_polls_results_inner_widget.cpp
-index 580b190077..ca20eab24d 100644
+index 362702d90b..f7169048e3 100644
 --- a/Telegram/SourceFiles/info/polls/info_polls_results_inner_widget.cpp
 +++ b/Telegram/SourceFiles/info/polls/info_polls_results_inner_widget.cpp
-@@ -134,7 +134,7 @@ void VoterRow::computeTexts() {
+@@ -133,7 +133,7 @@ void VoterRow::computeTexts() {
  	const auto voteDate = parsed.date();
  	_timeText = QLocale().toString(
  		parsed.time(),

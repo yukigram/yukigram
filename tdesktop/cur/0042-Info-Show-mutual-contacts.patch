@@ -5,7 +5,7 @@ Subject: [PATCH] (Info) Show mutual contacts
 
 
 diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
-index ae0b4f0c12..0bb46a0123 100644
+index 426ce7ed82..0d4fb206a8 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 +++ b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 @@ -72,6 +72,42 @@ Data::CommunityInfo *JoinedCommunityChats(not_null<PeerData*> peer) {

@@ -5,7 +5,7 @@ Subject: [PATCH] (Chat)(Opt) Hide bottom button bar
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 799231728e..48bb7c618a 100644
+index 08e2abe4ec..19796d8cb9 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -104,6 +104,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 799231728e..48bb7c618a 100644
  #include "history/history.h"
  #include "history/history_item.h"
  #include "history/history_item_helpers.h" // GetErrorForSending.
-@@ -541,6 +542,12 @@ HistoryWidget::HistoryWidget(
+@@ -542,6 +543,12 @@ HistoryWidget::HistoryWidget(
  		updateControlsGeometry();
  	}, lifetime());
  
@@ -29,7 +29,7 @@ index 799231728e..48bb7c618a 100644
  	_fieldChatStyle = InitMessageField(controller, _field, [=](
  			not_null<DocumentData*> document) {
  		if (_peer && Data::AllowEmojiWithoutPremium(_peer, document)) {
-@@ -6459,6 +6466,7 @@ bool HistoryWidget::isBotStart() const {
+@@ -6464,6 +6471,7 @@ bool HistoryWidget::isBotStart() const {
  	const auto user = _peer ? _peer->asUser() : nullptr;
  	if (!user
  		|| !user->isBot()
@@ -37,7 +37,7 @@ index 799231728e..48bb7c618a 100644
  		|| !_canSendMessages) {
  		return false;
  	} else if (!user->botInfo->startToken.isEmpty()) {
-@@ -6474,10 +6482,16 @@ bool HistoryWidget::isReportMessages() const {
+@@ -6479,10 +6487,16 @@ bool HistoryWidget::isReportMessages() const {
  }
  
  bool HistoryWidget::isBlocked() const {
@@ -54,7 +54,7 @@ index 799231728e..48bb7c618a 100644
  	if (const auto channel = _peer ? _peer->asChannel() : nullptr) {
  		return !channel->amIn() && !channel->isMonoforum() && !_canSendMessages;
  	}
-@@ -6490,6 +6504,7 @@ bool HistoryWidget::isChoosingTheme() const {
+@@ -6495,6 +6509,7 @@ bool HistoryWidget::isChoosingTheme() const {
  
  bool HistoryWidget::isMuteUnmute() const {
  	return _peer
@@ -63,7 +63,7 @@ index 799231728e..48bb7c618a 100644
  			|| (_peer->isGigagroup() && !Data::CanSendAnything(_peer))
  			|| _peer->isRepliesChat()
 diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-index 41956c1b75..4a8806c255 100644
+index a451eea69d..f7b6a30d55 100644
 --- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 @@ -30,6 +30,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

@@ -7,10 +7,10 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
-index f51da609e2..f842602bf7 100644
+index bf4b843c54..2961aad34f 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
-@@ -2035,6 +2035,9 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
+@@ -2071,6 +2071,9 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
  			(participant->isUser()
  				? &st::menuIconProfile
  				: &st::menuIconInfo));
@@ -18,13 +18,13 @@ index f51da609e2..f842602bf7 100644
 +			_navigation->parentController()->searchMessages2(QString(), _peer, participant);
 +		}, &st::menuIconSearch);
  	}
- 	if (user && !_peer->isBroadcast()) {
+ 	if (user && SupportsMemberTags(_peer)) {
  		const auto isSelf = user->isSelf();
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 1971ff9bab..0e3f3d1cd0 100644
+index e7c7b1d19e..16b580dab1 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3017,6 +3017,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+@@ -3054,6 +3054,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
  				std::move(callback),
  				&st::menuIconStats);
  		}
@@ -43,7 +43,7 @@ index 1971ff9bab..0e3f3d1cd0 100644
  	const auto addPhotoActions = [&](not_null<PhotoData*> photo, HistoryItem *item) {
  		const auto media = photo->activeMediaView();
 diff --git a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
-index dcdad6f048..0a029f8081 100644
+index a149eaeac8..82d219541d 100644
 --- a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
 @@ -450,6 +450,27 @@ void AddForwardAction(
@@ -74,7 +74,7 @@ index dcdad6f048..0a029f8081 100644
  bool AddSendNowSelectedAction(
  		not_null<Ui::PopupMenu*> menu,
  		const ContextMenuRequest &request,
-@@ -1090,6 +1111,7 @@ void AddMessageActions(
+@@ -1106,6 +1127,7 @@ void AddMessageActions(
  		not_null<ListWidget*> list) {
  	AddPostLinkAction(menu, request);
  	AddForwardAction(menu, request, list);

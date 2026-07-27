@@ -5,7 +5,7 @@ Subject: [PATCH] (Info) More info in PeerListBox
 
 
 diff --git a/Telegram/SourceFiles/boxes/peer_list_box.cpp b/Telegram/SourceFiles/boxes/peer_list_box.cpp
-index 386d5a3dff..948cc26626 100644
+index 238800af0f..75bcd22a2e 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peer_list_box.cpp
 @@ -27,6 +27,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 386d5a3dff..948cc26626 100644
  #include "storage/file_download.h"
  #include "data/data_peer_values.h"
  #include "data/data_channel.h"
-@@ -735,25 +736,34 @@ void PeerListRow::refreshStatus() {
+@@ -734,21 +735,34 @@ void PeerListRow::refreshStatus() {
  			_statusValidTill = crl::now()
  				+ Data::OnlineChangeTimeout(user, time);
  		}
@@ -40,11 +40,12 @@ index 386d5a3dff..948cc26626 100644
 +			: channel->isBroadcast() ? "box/peer-list/channel-like/broadcast"
 +			: "box/peer-list/channel-like/unknown");
  		if (channel->isCommunity()) {
- 			const auto info = channel->communityInfo();
- 			const auto count = info ? int(info->histories().size()) : 0;
- 			setStatusText(count
- 				? tr::lng_community_chats(tr::now, lt_count, count)
- 				: tr::lng_community_status(tr::now));
+-			setStatusText(tr::lng_community_status(tr::now));
++			const auto info = channel->communityInfo();
++			const auto count = info ? int(info->histories().size()) : 0;
++			setStatusText(count
++				? tr::lng_community_chats(tr::now, lt_count, count)
++				: tr::lng_community_status(tr::now));
 +		} else if (channel->membersCountKnown()) {
 +			setStatusText(ktr(
 +				channel->isBroadcast() ? "box/peer-list/count/subscribers" : "box/peer-list/count/members",

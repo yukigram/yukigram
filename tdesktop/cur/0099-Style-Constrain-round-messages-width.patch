@@ -5,10 +5,10 @@ Subject: [PATCH] (Style) Constrain round messages width
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
-index ebb84988a6..f515885973 100644
+index 18dd900821..7ab02b7289 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
-@@ -428,6 +428,7 @@ QSize Gif::countCurrentSize(int newWidth) {
+@@ -429,6 +429,7 @@ QSize Gif::countCurrentSize(int newWidth) {
  		auto forwarded = item->Get<HistoryMessageForwarded>();
  		RefreshEphemeralPlate(_parent, _ephemeral.text);
  		if (via || reply || forwarded || !_ephemeral.text.isEmpty()) {
@@ -16,7 +16,7 @@ index ebb84988a6..f515885973 100644
  			auto additional = additionalWidth(reply, via, forwarded);
  			newWidth += additional;
  			accumulate_min(newWidth, availableWidth);
-@@ -445,9 +446,14 @@ QSize Gif::countCurrentSize(int newWidth) {
+@@ -446,9 +447,14 @@ QSize Gif::countCurrentSize(int newWidth) {
  			const auto rectw = _ephemeral.onTop
  				? std::min(newWidth - st::msgReplyPadding.left(), additional)
  				: (newWidth - usew - st::msgReplyPadding.left());

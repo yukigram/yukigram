@@ -149,7 +149,7 @@ index 4f73e56ce4..16c5ddc63c 100644
  }
  
 diff --git a/Telegram/SourceFiles/ui/boxes/choose_font_box.cpp b/Telegram/SourceFiles/ui/boxes/choose_font_box.cpp
-index bc1cbb69b0..cab2ff78d8 100644
+index 56a7386cb6..42a6f92df6 100644
 --- a/Telegram/SourceFiles/ui/boxes/choose_font_box.cpp
 +++ b/Telegram/SourceFiles/ui/boxes/choose_font_box.cpp
 @@ -28,6 +28,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
