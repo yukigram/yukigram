@@ -63,18 +63,18 @@ index 08e2abe4ec..19796d8cb9 100644
  			|| (_peer->isGigagroup() && !Data::CanSendAnything(_peer))
  			|| _peer->isRepliesChat()
 diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-index a451eea69d..f7b6a30d55 100644
+index f4e5d7bb96..8d4cae2493 100644
 --- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-@@ -30,6 +30,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "history/history_item_helpers.h" // GetErrorForSending.
+@@ -31,6 +31,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "history/history_view_pull_to_next_channel.h"
  #include "iv/iv_rich_message_serializer.h"
  #include "iv/iv_rich_page.h"
 +#include "yukigram/settings/hide_bottom_bar.h"
  #include "ui/chat/pinned_bar.h"
  #include "ui/chat/chat_style.h"
  #include "ui/controls/swipe_handler.h"
-@@ -1898,6 +1899,10 @@ void ChatWidget::refreshJoinGroupButton() {
+@@ -1912,6 +1913,10 @@ void ChatWidget::refreshJoinGroupButton() {
  		set(nullptr);
  	} else {
  		_canSendTexts = false;

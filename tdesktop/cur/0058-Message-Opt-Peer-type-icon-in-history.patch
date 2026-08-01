@@ -7,7 +7,7 @@ This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index cf3dc40605..70e439bade 100644
+index d97a485be3..34150efb5e 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -59,6 +59,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -63,7 +63,7 @@ index cf3dc40605..70e439bade 100644
  				accumulate_max(maxWidth, namew);
  				accumulate_max(nonTextMax, namew);
  			} else if (via && !displayForwardedFrom()) {
-@@ -2453,6 +2485,19 @@ void Message::paintFromName(
+@@ -2457,6 +2489,19 @@ void Message::paintFromName(
  		context,
  		colorIndex(),
  		colorCollectible());
@@ -83,7 +83,7 @@ index cf3dc40605..70e439bade 100644
  	const auto nameText = [&] {
  		if (from) {
  			validateFromNameText(from);
-@@ -4111,6 +4156,8 @@ bool Message::getStateFromName(
+@@ -4115,6 +4160,8 @@ bool Message::getStateFromName(
  			availableWidth -= st::msgPadding.right() + badgeWidth;
  		}
  		const auto item = data();
@@ -92,7 +92,7 @@ index cf3dc40605..70e439bade 100644
  		const auto from = item->displayFrom();
  		const auto nameText = [&]() -> const Ui::Text::String * {
  			if (from) {
-@@ -4142,7 +4189,7 @@ bool Message::getStateFromName(
+@@ -4146,7 +4193,7 @@ bool Message::getStateFromName(
  		}
  		if (point.x() >= availableLeft
  			&& point.x() < availableLeft + availableWidth

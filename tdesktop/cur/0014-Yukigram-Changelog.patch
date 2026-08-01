@@ -5,14 +5,21 @@ Subject: [PATCH] (Yukigram) Changelog
 
 
 diff --git a/changelog.txt b/changelog.txt
-index ce047bf050..9c7761693b 100644
+index a91fa11bf4..05eae6c2ad 100644
 --- a/changelog.txt
 +++ b/changelog.txt
-@@ -1,3 +1,11 @@
+@@ -1,3 +1,7 @@
 +9999 wip (01.01.99)
 +
-+- No changes
++- Upstream updated to 7.0.7
 +
+ 7.0.7 (31.07.26)
+ 
+ - Add geometric shapes to the image editor.
+@@ -7,6 +11,10 @@
+ - Fix Mini App cookies on Linux.
+ - Crash fixes.
+ 
 +7.0.6.0 (27.07.26)
 +
 +- Upstream updated to 7.0.6
@@ -20,7 +27,7 @@ index ce047bf050..9c7761693b 100644
  7.0.6 (27.07.26)
  
  - Allow muting forever by left click on the profile mute button.
-@@ -5,6 +13,11 @@
+@@ -14,6 +22,11 @@
  - Fix adding admins in communities.
  - Crash fixes.
  
@@ -32,7 +39,7 @@ index ce047bf050..9c7761693b 100644
  7.0.5 (23.07.26)
  
  - Improve slideshow preload / animation / swipes in rich messages.
-@@ -23,6 +36,10 @@
+@@ -32,6 +45,10 @@
  
  - Fix media viewer freezes on macOS.
  
@@ -43,7 +50,7 @@ index ce047bf050..9c7761693b 100644
  7.0.2 (17.07.26)
  
  - Fix editing existing rich messages.
-@@ -30,6 +47,12 @@
+@@ -39,6 +56,12 @@
  - Improve rich messages editor (drag-n-drop, changing tables).
  - Allow forwarding to chats hidden inside a community.
  
@@ -56,7 +63,7 @@ index ce047bf050..9c7761693b 100644
  7.0.1 (14.07.26)
  
  - Rich Text Editor.
-@@ -42,6 +65,22 @@
+@@ -51,6 +74,22 @@
  - Ephemeral messages in groups.
  - Communities of chats.
  
@@ -79,7 +86,7 @@ index ce047bf050..9c7761693b 100644
  6.9.4 beta (02.07.26)
  
  - Add rich message editor with media, tables and math formulas.
-@@ -54,12 +93,39 @@
+@@ -63,12 +102,39 @@
  - Add alphabetical fast-scroll index to contacts box.
  - Improve screen reader accessibility for chats list and folders.
  
@@ -119,7 +126,7 @@ index ce047bf050..9c7761693b 100644
  6.9.2 (10.06.26)
  
  - Fix possible crash in OpenGL init (Linux).
-@@ -69,6 +135,24 @@
+@@ -78,6 +144,24 @@
  - Fix display of rich messages in Recent Actions.
  - Replace dispatch with TooManyCooks (Linux).
  
@@ -144,7 +151,7 @@ index ce047bf050..9c7761693b 100644
  6.9.1 (09.06.26)
  
  - Fix sending several same custom emoji.
-@@ -82,6 +166,10 @@
+@@ -91,6 +175,10 @@
  - Viewer for Markdown files in .md format.
  - Instant View that's really instant.
  
@@ -155,7 +162,7 @@ index ce047bf050..9c7761693b 100644
  6.8.5 beta (04.06.26)
  
  - Animated 3D objects on settings covers (premium star, coin, diamond).
-@@ -98,6 +186,54 @@
+@@ -107,6 +195,54 @@
  - Fix pause of animated reactions when opening their context menu.
  - Improve performance with RHI enabled.
  
@@ -210,7 +217,7 @@ index ce047bf050..9c7761693b 100644
  6.8.4 beta (27.05.26)
  
  - Drag-and-drop of photos into chats.
-@@ -110,6 +246,31 @@
+@@ -119,6 +255,31 @@
  - Fix borders in Instant View tables.
  - Fix several possible crashes.
  
@@ -242,7 +249,7 @@ index ce047bf050..9c7761693b 100644
  6.8.3 beta (19.05.26)
  
  - In-app markdown file viewer.
-@@ -120,6 +281,63 @@
+@@ -129,6 +290,63 @@
  - Upgrade to Qt 6.11.1 on macOS and Linux.
  - Test QRhi for Thanos effect on Qt 6.11.1.
  
@@ -306,7 +313,7 @@ index ce047bf050..9c7761693b 100644
  6.8.2 (12.05.26)
  
  - Fix non-premium sending of existing custom reactions.
-@@ -132,6 +350,23 @@
+@@ -141,6 +359,23 @@
  - Return "Chatbots" to Telegram Business.
  - Separate badge background color keys for sidebar buttons.
  
@@ -330,7 +337,7 @@ index ce047bf050..9c7761693b 100644
  6.8.1 (08.05.26)
  
  - Fix crash in anonymous group admins messages.
-@@ -149,6 +384,54 @@
+@@ -158,6 +393,54 @@
  - Fix tg:// link handling on cold start and login widget window activation.
  - Copy and paste formatting to and from HTML.
  
@@ -385,7 +392,7 @@ index ce047bf050..9c7761693b 100644
  6.7.8 (24.04.26)
  
  - Proxy auto-rotation option.
-@@ -165,6 +448,12 @@
+@@ -174,6 +457,12 @@
  - Fix crash in proxy sharing before auth.
  - Fix layout for RTL messages.
  
@@ -398,7 +405,7 @@ index ce047bf050..9c7761693b 100644
  6.7.7 beta (20.04.26)
  
  - Proxy auto-rotation option.
-@@ -179,6 +468,32 @@
+@@ -188,6 +477,32 @@
  - Fix stories in albums with reorder enabled.
  - Fix layout for RTL messages.
  
@@ -431,7 +438,7 @@ index ce047bf050..9c7761693b 100644
  6.7.6 (14.04.26)
  
  - Gradient-reveal animation for text appearing in messages.
-@@ -195,6 +510,40 @@
+@@ -204,6 +519,40 @@
  - Fix several poll display and voting menu issues.
  - Fix possible crashes in chats list, url auth and others.
  
@@ -472,7 +479,7 @@ index ce047bf050..9c7761693b 100644
  6.7.5 (07.04.26)
  
  - Support for gradual appearing of bot reply messages.
-@@ -214,6 +563,36 @@
+@@ -223,6 +572,36 @@
  - Fix tooltip crash in top peers selector with small width.
  - Fix preserving markers after video quality switch in media view.
  

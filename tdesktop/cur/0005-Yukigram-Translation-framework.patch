@@ -22,7 +22,7 @@ index 0000000000..9d9591e164
 +indent_style = space
 +indent_size = 4
 diff --git a/Telegram/SourceFiles/core/application.cpp b/Telegram/SourceFiles/core/application.cpp
-index 4708d1980c..7bf7dbf37b 100644
+index c8a464f74d..0dbd07b8fa 100644
 --- a/Telegram/SourceFiles/core/application.cpp
 +++ b/Telegram/SourceFiles/core/application.cpp
 @@ -52,6 +52,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -33,8 +33,8 @@ index 4708d1980c..7bf7dbf37b 100644
  #include "inline_bots/bot_attach_web_view.h"
  #include "mainwidget.h"
  #include "tray.h"
-@@ -273,6 +274,7 @@ void Application::run() {
- 	style::internal::StartFonts();
+@@ -276,6 +277,7 @@ void Application::run() {
+ 	Test::ApplyStartupOverrides();
  
  	ValidateScale();
 +	Yukigram::Lang::Reload();
