@@ -5,7 +5,7 @@ Subject: [PATCH] (Chat)(Opt) Hide bottom button bar
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 08e2abe4ec..19796d8cb9 100644
+index 03d80d3e8a..9167bf59d3 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -104,6 +104,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 08e2abe4ec..19796d8cb9 100644
  #include "history/history.h"
  #include "history/history_item.h"
  #include "history/history_item_helpers.h" // GetErrorForSending.
-@@ -542,6 +543,12 @@ HistoryWidget::HistoryWidget(
+@@ -546,6 +547,12 @@ HistoryWidget::HistoryWidget(
  		updateControlsGeometry();
  	}, lifetime());
  
@@ -29,7 +29,7 @@ index 08e2abe4ec..19796d8cb9 100644
  	_fieldChatStyle = InitMessageField(controller, _field, [=](
  			not_null<DocumentData*> document) {
  		if (_peer && Data::AllowEmojiWithoutPremium(_peer, document)) {
-@@ -6464,6 +6471,7 @@ bool HistoryWidget::isBotStart() const {
+@@ -6480,6 +6487,7 @@ bool HistoryWidget::isBotStart() const {
  	const auto user = _peer ? _peer->asUser() : nullptr;
  	if (!user
  		|| !user->isBot()
@@ -37,7 +37,7 @@ index 08e2abe4ec..19796d8cb9 100644
  		|| !_canSendMessages) {
  		return false;
  	} else if (!user->botInfo->startToken.isEmpty()) {
-@@ -6479,10 +6487,16 @@ bool HistoryWidget::isReportMessages() const {
+@@ -6495,10 +6503,16 @@ bool HistoryWidget::isReportMessages() const {
  }
  
  bool HistoryWidget::isBlocked() const {
@@ -54,7 +54,7 @@ index 08e2abe4ec..19796d8cb9 100644
  	if (const auto channel = _peer ? _peer->asChannel() : nullptr) {
  		return !channel->amIn() && !channel->isMonoforum() && !_canSendMessages;
  	}
-@@ -6495,6 +6509,7 @@ bool HistoryWidget::isChoosingTheme() const {
+@@ -6511,6 +6525,7 @@ bool HistoryWidget::isChoosingTheme() const {
  
  bool HistoryWidget::isMuteUnmute() const {
  	return _peer
@@ -63,7 +63,7 @@ index 08e2abe4ec..19796d8cb9 100644
  			|| (_peer->isGigagroup() && !Data::CanSendAnything(_peer))
  			|| _peer->isRepliesChat()
 diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-index f4e5d7bb96..8d4cae2493 100644
+index 57c3025f13..83a028457d 100644
 --- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 @@ -31,6 +31,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -74,7 +74,7 @@ index f4e5d7bb96..8d4cae2493 100644
  #include "ui/chat/pinned_bar.h"
  #include "ui/chat/chat_style.h"
  #include "ui/controls/swipe_handler.h"
-@@ -1912,6 +1913,10 @@ void ChatWidget::refreshJoinGroupButton() {
+@@ -1914,6 +1915,10 @@ void ChatWidget::refreshJoinGroupButton() {
  		set(nullptr);
  	} else {
  		_canSendTexts = false;

@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface)(Opt) Single-column layout
 
 
 diff --git a/Telegram/SourceFiles/mainwidget.cpp b/Telegram/SourceFiles/mainwidget.cpp
-index f4ba1fd4db..6a2fac973d 100644
+index f57cfb4c7b..75f898d486 100644
 --- a/Telegram/SourceFiles/mainwidget.cpp
 +++ b/Telegram/SourceFiles/mainwidget.cpp
 @@ -36,6 +36,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -24,7 +24,7 @@ index f4ba1fd4db..6a2fac973d 100644
  		Core::App().settings().dialogsWithChatWidthRatioChanges(
  		) | filter(true) | rpl::to_empty,
  		Core::App().settings().dialogsNoChatWidthRatioChanges(
-@@ -2903,7 +2905,7 @@ void MainWidget::updateWindowAdaptiveLayout() {
+@@ -2916,7 +2918,7 @@ void MainWidget::updateWindowAdaptiveLayout() {
  
  	// Check if we are in a single-column layout in a wide enough window
  	// for the normal layout. If so, switch to the normal layout.

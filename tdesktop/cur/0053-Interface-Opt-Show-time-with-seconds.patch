@@ -97,10 +97,10 @@ index 177398280c..9dbb6810c6 100644
  		prepareWithDate(tr::lng_group_call_starts_date(
  			tr::now,
 diff --git a/Telegram/SourceFiles/history/history_item_text.cpp b/Telegram/SourceFiles/history/history_item_text.cpp
-index 33333e29bc..12a79ba436 100644
+index 0c04e23d39..126a464e13 100644
 --- a/Telegram/SourceFiles/history/history_item_text.cpp
 +++ b/Telegram/SourceFiles/history/history_item_text.cpp
-@@ -384,7 +384,7 @@ TextForMimeData HistorySelectedItemPlainWrappedText(
+@@ -397,7 +397,7 @@ TextForMimeData HistorySelectedItemPlainWrappedText(
  		TextForMimeData &&body) {
  	auto result = TextForMimeData();
  	const auto time = u"[%1] "_q.arg(

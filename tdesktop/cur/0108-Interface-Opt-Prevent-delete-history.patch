@@ -49,7 +49,7 @@ index 12d604d255..706a3af89a 100644
  
  	const auto weak = base::make_weak(sublist.get());
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
-index f7b493bfe7..9e7948d017 100644
+index e5ff8a2774..7594ee686a 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
 @@ -62,6 +62,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -68,7 +68,7 @@ index f7b493bfe7..9e7948d017 100644
  #include "ui/wrap/vertical_layout.h"
  #include "ui/ui_utility.h"
  #include "window/window_session_controller.h"
-@@ -2994,6 +2996,11 @@ void Controller::deleteWithConfirmation() {
+@@ -3009,6 +3011,11 @@ void Controller::deleteWithConfirmation() {
  	const auto channel = _peer->asChannel();
  	Assert(channel != nullptr);
  
@@ -80,7 +80,7 @@ index f7b493bfe7..9e7948d017 100644
  	const auto text = (_isGroup
  		? tr::lng_sure_delete_group
  		: tr::lng_sure_delete_channel)(tr::now);
-@@ -3012,6 +3019,10 @@ void Controller::deleteWithConfirmation() {
+@@ -3027,6 +3034,10 @@ void Controller::deleteWithConfirmation() {
  void Controller::deleteChannel() {
  	Expects(_peer->isChannel());
  
@@ -92,7 +92,7 @@ index f7b493bfe7..9e7948d017 100644
  	const auto chat = channel->migrateFrom();
  
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index e416fd6e24..e92215cf7b 100644
+index ecf46ac9fd..d0445a8dad 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
 @@ -47,6 +47,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -103,7 +103,7 @@ index e416fd6e24..e92215cf7b 100644
  #include "inline_bots/bot_attach_web_view.h" // InlineBots::PeerType.
  #include "ui/toast/toast.h"
  #include "ui/text/format_values.h"
-@@ -4107,6 +4108,10 @@ Fn<void()> ClearHistoryHandler(
+@@ -4103,6 +4104,10 @@ Fn<void()> ClearHistoryHandler(
  		not_null<PeerData*> peer) {
  	return [=] {
  		if (!controller->showFrozenError()) {

@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface)(Opt) Compact chat list
 
 
 diff --git a/Telegram/SourceFiles/dialogs/dialogs.style b/Telegram/SourceFiles/dialogs/dialogs.style
-index 2b0fe956c3..223f76870b 100644
+index d35fe59ea6..959be4e42e 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs.style
 +++ b/Telegram/SourceFiles/dialogs/dialogs.style
 @@ -100,6 +100,11 @@ defaultDialogRow: DialogRow {
@@ -99,7 +99,7 @@ index 1721f4963c..cc5999eb1d 100644
  	const auto updateRect = QRect(
  		_st->photoSize - skip.x() - size,
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_row.cpp b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
-index 5b6af5dea2..e333ba82cb 100644
+index 12930c3c29..09f68f9131 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -110,7 +110,7 @@ index 5b6af5dea2..e333ba82cb 100644
  #include "dialogs/dialogs_entry.h"
  #include "dialogs/ui/dialogs_video_userpic.h"
  #include "dialogs/ui/dialogs_layout.h"
-@@ -329,6 +330,9 @@ Row::~Row() {
+@@ -343,6 +344,9 @@ Row::~Row() {
  const style::DialogRow &Row::ComputeSt(
  		not_null<const Entry*> entry,
  		FilterId filterId) {
@@ -120,7 +120,7 @@ index 5b6af5dea2..e333ba82cb 100644
  	if (const auto history = entry->asHistory()) {
  		const auto hasTags = entry->hasChatsFilterTags(filterId);
  		const auto wideRow = history->peer->displayAsForum()
-@@ -606,7 +610,7 @@ void Row::PaintCornerBadgeFrame(
+@@ -620,7 +624,7 @@ void Row::PaintCornerBadgeFrame(
  		: st::dialogsCallBadgeSize;
  	const auto stroke = st::dialogsOnlineBadgeStroke;
  	const auto skip = online
@@ -129,7 +129,7 @@ index 5b6af5dea2..e333ba82cb 100644
  		: st::dialogsCallBadgeSkip;
  	const auto shrink = (size / 2) * (1. - topLayerProgress);
  
-@@ -713,7 +717,8 @@ void Row::paintUserpic(
+@@ -727,7 +731,8 @@ void Row::paintUserpic(
  	const auto limit = Ui::kOutlineSegmentsMax;
  	const auto storiesCount = std::min(storiesCountReal, limit);
  	const auto storiesUnreadCount = std::min(storiesUnreadCountReal, limit);
@@ -139,7 +139,7 @@ index 5b6af5dea2..e333ba82cb 100644
  		_cornerBadgeUserpic->frame = QImage(
  			frameSize,
  			QImage::Format_ARGB32_Premultiplied);
-@@ -742,6 +747,7 @@ void Row::paintUserpic(
+@@ -756,6 +761,7 @@ void Row::paintUserpic(
  		&& !subscribed
  		&& !insideCommunity;
  	if (keyChanged

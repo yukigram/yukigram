@@ -5,10 +5,10 @@ Subject: [PATCH] (Shortcut) Normal send in context menu
 
 
 diff --git a/Telegram/SourceFiles/menu/menu_send.cpp b/Telegram/SourceFiles/menu/menu_send.cpp
-index 1e2bb9c495..f5f80464e8 100644
+index 3734d42bdf..c4093f9897 100644
 --- a/Telegram/SourceFiles/menu/menu_send.cpp
 +++ b/Telegram/SourceFiles/menu/menu_send.cpp
-@@ -741,6 +741,7 @@ FillMenuResult FillSendMenu(
+@@ -743,6 +743,7 @@ FillMenuResult FillSendMenu(
  		? *iconsOverride
  		: st::defaultComposeIcons;
  

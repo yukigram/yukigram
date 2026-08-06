@@ -51,7 +51,7 @@ index 0382cbc33a..2ac2a2e18a 100644
  		int64 tonStake = 0;
  		int stars = 0;
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 76b4533d0b..ddbec47d8b 100644
+index 10979aabec..bb693e19f5 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -34,6 +34,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

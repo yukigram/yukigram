@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Round message size
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
-index 574b2f724b..c24a3e2368 100644
+index 74e0c05c68..c8a2539c8f 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 @@ -51,6 +51,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

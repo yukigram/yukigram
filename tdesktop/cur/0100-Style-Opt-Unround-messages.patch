@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Unround messages
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
-index 7ab02b7289..574b2f724b 100644
+index a606815342..74e0c05c68 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 @@ -38,6 +38,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -39,7 +39,7 @@ index 7ab02b7289..574b2f724b 100644
  		}
  		p.setOpacity(1.);
  	}
-@@ -1242,9 +1249,13 @@ void Gif::validateThumbCache(
+@@ -1251,9 +1258,13 @@ void Gif::validateThumbCache(
  		return;
  	}
  	auto cache = prepareThumbCache(scaled);

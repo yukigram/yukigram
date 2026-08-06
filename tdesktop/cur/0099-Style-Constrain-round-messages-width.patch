@@ -5,7 +5,7 @@ Subject: [PATCH] (Style) Constrain round messages width
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
-index 18dd900821..7ab02b7289 100644
+index f68cecf314..a606815342 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 @@ -429,6 +429,7 @@ QSize Gif::countCurrentSize(int newWidth) {

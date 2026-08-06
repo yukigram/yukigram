@@ -100,7 +100,7 @@ index c6e50ec09b..5edcc82e3a 100644
  
  [[maybe_unused]] constexpr auto kShowFolder = {
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index eb7844c7f2..2a7cdd3f29 100644
+index e3290648fc..8270f034b7 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -111,7 +111,7 @@ index eb7844c7f2..2a7cdd3f29 100644
  #include "core/click_handler_types.h"
  #include "core/phone_click_handler.h"
  #include "data/data_chat_participant_status.h"
-@@ -507,6 +508,8 @@ HistoryInner::HistoryInner(
+@@ -508,6 +509,8 @@ HistoryInner::HistoryInner(
  		update();
  	}, lifetime());
  
@@ -120,7 +120,7 @@ index eb7844c7f2..2a7cdd3f29 100644
  	HistoryView::Reactions::SetupManagerList(
  		_reactionsManager.get(),
  		_reactionsItem.value());
-@@ -6475,6 +6478,38 @@ bool CanSendReply(not_null<const HistoryItem*> item) {
+@@ -6470,6 +6473,38 @@ bool CanSendReply(not_null<const HistoryItem*> item) {
  	return true;
  }
  
@@ -172,10 +172,10 @@ index 6b41b204d4..e263e01337 100644
  	[[nodiscard]] auto reactionButtonParameters(
  		not_null<const Element*> view,
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index f58c42131a..3cd88bee53 100644
+index 2071a9d289..8e26e5bb4d 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -10444,7 +10444,7 @@ bool HistoryWidget::updateCanSendMessage() {
+@@ -10510,7 +10510,7 @@ bool HistoryWidget::updateCanSendMessage() {
  	return true;
  }
  
@@ -184,7 +184,7 @@ index f58c42131a..3cd88bee53 100644
  	if (!_list) {
  		return;
  	}
-@@ -10453,7 +10453,7 @@ void HistoryWidget::forwardSelected() {
+@@ -10519,7 +10519,7 @@ void HistoryWidget::forwardSelected() {
  		if (const auto strong = weak.get()) {
  			strong->clearSelected();
  		}
@@ -194,7 +194,7 @@ index f58c42131a..3cd88bee53 100644
  
  void HistoryWidget::confirmDeleteSelected() {
 diff --git a/Telegram/SourceFiles/history/history_widget.h b/Telegram/SourceFiles/history/history_widget.h
-index d437579ee9..766f8c5383 100644
+index dd698561c1..586776728b 100644
 --- a/Telegram/SourceFiles/history/history_widget.h
 +++ b/Telegram/SourceFiles/history/history_widget.h
 @@ -304,7 +304,7 @@ public:
@@ -207,10 +207,10 @@ index d437579ee9..766f8c5383 100644
  	void clearSelected();
  
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index 7670702e44..af26204b4a 100644
+index b76da19319..1ce9f43247 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
-@@ -3029,7 +3029,8 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(
+@@ -3009,7 +3009,8 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(
  base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  		std::shared_ptr<ChatHelpers::Show> show,
  		Data::ForwardDraft &&draft,
@@ -220,7 +220,7 @@ index 7670702e44..af26204b4a 100644
  	const auto session = &show->session();
  	const auto owner = &session->data();
  	const auto itemsList = owner->idsToItems(draft.ids);
-@@ -3042,6 +3043,11 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3022,6 +3023,11 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  	const auto showForwardOptions = !hasOnlyForcedForwardedInfo
  		&& (!hasRichPage
  			|| HistoryView::Controls::CanHideForwardAuthor(session, itemsList));
@@ -232,7 +232,7 @@ index 7670702e44..af26204b4a 100644
  	draft.options = HistoryView::Controls::NormalizeForwardOptions(
  		session,
  		itemsList,
-@@ -3227,6 +3233,20 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3207,6 +3213,20 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  		box->peerListContent()->restoreState(std::move(state));
  	};
  
@@ -253,7 +253,7 @@ index 7670702e44..af26204b4a 100644
  	const auto state = [&] {
  		auto controller = std::make_unique<Controller>(session);
  		const auto controllerRaw = controller.get();
-@@ -3275,13 +3295,15 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3255,13 +3275,15 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  				== Data::ForwardOptions::NoNamesAndCaptions),
  		});
  		show->showBox(std::move(box));
@@ -270,7 +270,7 @@ index 7670702e44..af26204b4a 100644
  			const auto peer = thread->peer();
  			if (peer->isSelf()
  				&& !draft.ids.empty()
-@@ -3472,6 +3494,7 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3452,6 +3474,7 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  				state->box->forwardOptions(),
  				[=](Ui::ForwardOptions o) {
  					state->box->setForwardOptions(o);
@@ -278,7 +278,7 @@ index 7670702e44..af26204b4a 100644
  				},
  				state->menu->lifetime());
  
-@@ -3583,21 +3606,25 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
+@@ -3563,21 +3586,25 @@ base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  		not_null<Window::SessionNavigation*> navigation,
  		Data::ForwardDraft &&draft,
@@ -309,10 +309,10 @@ index 7670702e44..af26204b4a 100644
  
  base::weak_qptr<Ui::BoxContent> ShowShareGameBox(
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.h b/Telegram/SourceFiles/window/window_peer_menu.h
-index 8664c91dbb..35fc31db43 100644
+index 0414bad533..8192a79fd9 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.h
 +++ b/Telegram/SourceFiles/window/window_peer_menu.h
-@@ -206,15 +206,18 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(
+@@ -209,15 +209,18 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(
  base::weak_qptr<Ui::BoxContent> ShowForwardMessagesBox(
  	std::shared_ptr<ChatHelpers::Show> show,
  	Data::ForwardDraft &&draft,

@@ -5,10 +5,10 @@ Subject: [PATCH] (Yukigram) AppId
 
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 4ff5243a93..78060a5f29 100644
+index 3b0d313dde..7a9232f5a6 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -2082,6 +2082,21 @@ PRIVATE
+@@ -2084,6 +2084,21 @@ PRIVATE
  file(GLOB_RECURSE yuki_src CONFIGURE_DEPENDS "${src_loc}/yukigram/*.cpp" "${src_loc}/yukigram/*.h")
  target_sources(Telegram PRIVATE ${yuki_src})
  
@@ -30,7 +30,7 @@ index 4ff5243a93..78060a5f29 100644
  if (APPLE)
      nice_target_sources(Telegram ${src_loc}
      PRIVATE
-@@ -2280,7 +2295,7 @@ else()
+@@ -2283,7 +2298,7 @@ else()
          set(bundle_identifier "com.tdesktop.Telegram")
      endif()
      set(bundle_entitlements "Telegram.entitlements")
@@ -39,7 +39,7 @@ index 4ff5243a93..78060a5f29 100644
  endif()
  
  if (CMAKE_GENERATOR STREQUAL Xcode)
-@@ -2326,7 +2341,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+@@ -2329,7 +2344,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
  if (APPLE
      OR is_multi_config
      OR NOT CMAKE_EXECUTABLE_SUFFIX STREQUAL ""
@@ -48,7 +48,7 @@ index 4ff5243a93..78060a5f29 100644
      set(output_folder ${CMAKE_BINARY_DIR})
  else()
      set(output_folder ${CMAKE_BINARY_DIR}/bin)
-@@ -2500,30 +2515,37 @@ elseif (build_winstore)
+@@ -2503,30 +2518,37 @@ elseif (build_winstore)
      )
  endif()
  

@@ -7,18 +7,18 @@ This patch is adapted from Forkgram.
 Original author: 23rd <23rd@vivaldi.net>
 
 diff --git a/Telegram/SourceFiles/history/history_item_components.cpp b/Telegram/SourceFiles/history/history_item_components.cpp
-index 3b24c2be7b..652851aeeb 100644
+index 60f51bec90..dbbb2f2185 100644
 --- a/Telegram/SourceFiles/history/history_item_components.cpp
 +++ b/Telegram/SourceFiles/history/history_item_components.cpp
-@@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "api/api_text_entities.h"
+@@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "base/qt/qt_key_modifiers.h"
+ #include "base/algorithm.h"
  #include "base/options.h"
 +#include "base/unixtime.h"
  #include "lang/lang_keys.h"
  #include "ui/effects/ripple_animation.h"
  #include "ui/effects/spoiler_mess.h"
-@@ -377,6 +378,9 @@ void HistoryMessageForwarded::create(
+@@ -381,6 +382,9 @@ void HistoryMessageForwarded::create(
  				tr::marked);
  		}
  	}

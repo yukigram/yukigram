@@ -21,10 +21,10 @@ index bf4b843c54..2961aad34f 100644
  	if (user && SupportsMemberTags(_peer)) {
  		const auto isSelf = user->isSelf();
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index db6a767c2e..5be4480915 100644
+index 192573dc04..fe5dad2e83 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3058,6 +3058,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+@@ -3059,6 +3059,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
  				std::move(callback),
  				&st::menuIconStats);
  		}
@@ -43,10 +43,10 @@ index db6a767c2e..5be4480915 100644
  	const auto addPhotoActions = [&](not_null<PhotoData*> photo, HistoryItem *item) {
  		const auto media = photo->activeMediaView();
 diff --git a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
-index a149eaeac8..82d219541d 100644
+index 94fe16516d..ec6c2c24e2 100644
 --- a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
-@@ -450,6 +450,27 @@ void AddForwardAction(
+@@ -451,6 +451,27 @@ void AddForwardAction(
  	AddForwardMessageAction(menu, request, list);
  }
  
@@ -74,7 +74,7 @@ index a149eaeac8..82d219541d 100644
  bool AddSendNowSelectedAction(
  		not_null<Ui::PopupMenu*> menu,
  		const ContextMenuRequest &request,
-@@ -1106,6 +1127,7 @@ void AddMessageActions(
+@@ -1121,6 +1142,7 @@ void AddMessageActions(
  		not_null<ListWidget*> list) {
  	AddPostLinkAction(menu, request);
  	AddForwardAction(menu, request, list);

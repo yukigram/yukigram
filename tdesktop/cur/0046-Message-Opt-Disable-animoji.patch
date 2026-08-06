@@ -5,7 +5,7 @@ Subject: [PATCH] (Message)(Opt) Disable animoji
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 536c0900e6..aae866e749 100644
+index accf8dc687..1c8f6ca06d 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -46,6 +46,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

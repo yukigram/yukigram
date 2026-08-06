@@ -5,10 +5,10 @@ Subject: [PATCH] (Annoyances) Remove copy restrictions
 
 
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 2e70d0e518..eb7844c7f2 100644
+index 045c1d289a..e3290648fc 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3874,12 +3874,12 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+@@ -3885,12 +3885,12 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
  }
  
  bool HistoryInner::hasCopyRestriction(HistoryItem *item) const {
@@ -23,7 +23,7 @@ index 2e70d0e518..eb7844c7f2 100644
  }
  
  bool HistoryInner::showCopyRestriction(HistoryItem *item) {
-@@ -3907,6 +3907,7 @@ bool HistoryInner::showCopyMediaRestriction(not_null<HistoryItem*> item) {
+@@ -3918,6 +3918,7 @@ bool HistoryInner::showCopyMediaRestriction(not_null<HistoryItem*> item) {
  }
  
  bool HistoryInner::hasCopyRestrictionForSelected() const {
@@ -32,7 +32,7 @@ index 2e70d0e518..eb7844c7f2 100644
  		return true;
  	}
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 07c9d9dea2..6d64939d83 100644
+index e1d9fdf26d..3d4c6c8150 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -1773,18 +1773,16 @@ bool ListWidget::isEmpty() const {
@@ -86,7 +86,7 @@ index 07c9d9dea2..6d64939d83 100644
  
  Element *ListWidget::lookupItemByY(int y) const {
 diff --git a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-index d94bfb7f74..139f30468e 100644
+index 81ba091204..3af7d601e5 100644
 --- a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 +++ b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 @@ -1303,6 +1303,7 @@ QSize OverlayWidget::flipSizeByRotation(QSize size) const {

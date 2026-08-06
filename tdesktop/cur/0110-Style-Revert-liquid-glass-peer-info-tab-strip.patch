@@ -5,7 +5,7 @@ Subject: [PATCH] (Style) Revert liquid glass peer info tab strip
 
 
 diff --git a/Telegram/SourceFiles/info/info.style b/Telegram/SourceFiles/info/info.style
-index 7bc3e9eae6..5adba73c33 100644
+index 002cab951b..3a7a717e6f 100644
 --- a/Telegram/SourceFiles/info/info.style
 +++ b/Telegram/SourceFiles/info/info.style
 @@ -703,10 +703,10 @@ infoMediaGridSizeStep: 16px;

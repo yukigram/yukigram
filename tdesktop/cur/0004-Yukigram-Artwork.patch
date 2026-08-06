@@ -5,10 +5,10 @@ Subject: [PATCH] (Yukigram) Artwork
 
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 78060a5f29..2afb2011ae 100644
+index 7a9232f5a6..cb213ff406 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -2528,20 +2528,7 @@ if (LINUX AND DESKTOP_APP_USE_PACKAGED)
+@@ -2531,20 +2531,7 @@ if (LINUX AND DESKTOP_APP_USE_PACKAGED)
      configure_file("../lib/xdg/io.github.yukigram.metainfo.xml" "${CMAKE_CURRENT_BINARY_DIR}/${YUKIGRAM_APP_ID}.metainfo.xml" @ONLY)
      generate_appstream_changelog(Telegram "${CMAKE_SOURCE_DIR}/changelog.txt" "${CMAKE_CURRENT_BINARY_DIR}/${YUKIGRAM_APP_ID}.metainfo.xml")
      install(TARGETS Telegram RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" BUNDLE DESTINATION "${CMAKE_INSTALL_BINDIR}")
