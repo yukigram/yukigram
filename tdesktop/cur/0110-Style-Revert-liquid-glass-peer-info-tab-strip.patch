@@ -31,7 +31,7 @@ index 002cab951b..3a7a717e6f 100644
  
  infoCommonGroupsMargin: margins(0px, 2px, 0px, 2px);
 diff --git a/Telegram/SourceFiles/info/profile/tabs/info_profile_tabs_strip.cpp b/Telegram/SourceFiles/info/profile/tabs/info_profile_tabs_strip.cpp
-index 893ce3fe9d..7ac14b1763 100644
+index 893ce3fe9d..edabb90c9a 100644
 --- a/Telegram/SourceFiles/info/profile/tabs/info_profile_tabs_strip.cpp
 +++ b/Telegram/SourceFiles/info/profile/tabs/info_profile_tabs_strip.cpp
 @@ -31,6 +31,7 @@ void PaintIslandOutline(
@@ -47,7 +47,7 @@ index 893ce3fe9d..7ac14b1763 100644
  	p.setBrush(_st.bg);
  	p.setPen(Qt::NoPen);
 -	p.drawRoundedRect(island, radius, radius);
-+	p.drawRect(island);
++	p.drawRect(rect()); // also draw solid bg before island
  
  	validateContent(island);
  
