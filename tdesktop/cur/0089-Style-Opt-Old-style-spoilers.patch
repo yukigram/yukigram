@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Old-style spoilers
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_media.cpp b/Telegram/SourceFiles/history/view/media/history_view_media.cpp
-index 67f58e003a..06a0b8ca16 100644
+index 67f58e003a..5925b8603f 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_media.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_media.cpp
 @@ -22,6 +22,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -29,9 +29,9 @@ index 67f58e003a..06a0b8ca16 100644
  			spoiler->animation->index(context.now, pausedSpoiler)),
  		spoiler->cornerCache);
 +if (Yukigram::Settings::OldStyleSpoilers->current()) {
-+	const auto center = rect.topRight() + QPoint(-24, 24);
-+	const auto iconRect = QRect(rect.topRight() - QPoint(48, 0), QSize(48, 48));
-+	const auto radius = 18;
++	const auto center = rect.topRight() + QPoint(style::ConvertScale(-24), style::ConvertScale(24));
++	const auto iconRect = QRect(rect.topRight() + QPoint(style::ConvertScale(-40), style::ConvertScale(8)), style::ConvertScale(QSize(32, 32)));
++	const auto radius = style::ConvertScale(18);
 +	p.setPen(Qt::NoPen);
 +	p.setBrush(st::msgDateImgBg->c);
 +	{
