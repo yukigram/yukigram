@@ -7,10 +7,10 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index 3f1896bad0..b1493217d9 100644
+index 3421ffe214..e7814a182c 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
-@@ -23,6 +23,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -24,6 +24,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "api/api_communities.h"
  #include "api/api_global_privacy.h"
  #include "lang/lang_keys.h"
@@ -18,7 +18,7 @@ index 3f1896bad0..b1493217d9 100644
  #include "lottie/lottie_icon.h"
  #include "ui/boxes/confirm_box.h"
  #include "base/random.h"
-@@ -320,6 +321,7 @@ private:
+@@ -324,6 +325,7 @@ private:
  	void addToggleNoForwards();
  	void addBlockUser();
  	void addViewDiscussion();
@@ -26,7 +26,7 @@ index 3f1896bad0..b1493217d9 100644
  	void addDirectMessages();
  	void addToggleTopicClosed();
  	void addExportChat();
-@@ -988,6 +990,20 @@ void Filler::addViewDiscussion() {
+@@ -992,6 +994,20 @@ void Filler::addViewDiscussion() {
  	}, &st::menuIconDiscussion);
  }
  
@@ -47,7 +47,7 @@ index 3f1896bad0..b1493217d9 100644
  void Filler::addDirectMessages() {
  	const auto channel = _peer->asBroadcast();
  	if (!channel) {
-@@ -1872,6 +1888,7 @@ void Filler::fillHistoryActions() {
+@@ -1877,6 +1893,7 @@ void Filler::fillHistoryActions() {
  	addViewAsTopics();
  	addManageChat();
  	addViewStatistics();

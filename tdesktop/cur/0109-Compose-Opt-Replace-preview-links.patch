@@ -5,10 +5,10 @@ Subject: [PATCH] (Compose)(Opt) Replace preview links
 
 
 diff --git a/Telegram/SourceFiles/apiwrap.cpp b/Telegram/SourceFiles/apiwrap.cpp
-index e8a16b46f4..4d95b16d21 100644
+index dca7558109..b7a2b34def 100644
 --- a/Telegram/SourceFiles/apiwrap.cpp
 +++ b/Telegram/SourceFiles/apiwrap.cpp
-@@ -4683,7 +4683,7 @@ void ApiWrap::sendMessage(
+@@ -4750,7 +4750,7 @@ void ApiWrap::sendMessage(
  			|| (exactWebPage && !isLast);
  		const auto manualWebPage = exactWebPage
  			&& !ignoreWebPage
@@ -18,7 +18,7 @@ index e8a16b46f4..4d95b16d21 100644
  		if (ignoreWebPage) {
  			sendFlags |= MTPmessages_SendMessage::Flag::f_no_webpage;
 diff --git a/Telegram/SourceFiles/data/data_drafts.h b/Telegram/SourceFiles/data/data_drafts.h
-index 151a87ee50..918d3d1067 100644
+index f610d7ab60..19c9fc6bcc 100644
 --- a/Telegram/SourceFiles/data/data_drafts.h
 +++ b/Telegram/SourceFiles/data/data_drafts.h
 @@ -48,6 +48,7 @@ struct WebPageDraft {

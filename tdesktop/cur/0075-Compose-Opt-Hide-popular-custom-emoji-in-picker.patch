@@ -5,7 +5,7 @@ Subject: [PATCH] (Compose)(Opt) Hide popular custom emoji in picker
 
 
 diff --git a/Telegram/SourceFiles/chat_helpers/emoji_list_widget.cpp b/Telegram/SourceFiles/chat_helpers/emoji_list_widget.cpp
-index 654a660a3b..ad804c4717 100644
+index 50727d494b..0604645b86 100644
 --- a/Telegram/SourceFiles/chat_helpers/emoji_list_widget.cpp
 +++ b/Telegram/SourceFiles/chat_helpers/emoji_list_widget.cpp
 @@ -53,6 +53,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

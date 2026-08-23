@@ -5,7 +5,7 @@ Subject: [PATCH] (Chat)(Opt) Hide bottom button bar
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 03d80d3e8a..9167bf59d3 100644
+index 59bd287bcf..a68923a4a0 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -104,6 +104,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 03d80d3e8a..9167bf59d3 100644
  #include "history/history.h"
  #include "history/history_item.h"
  #include "history/history_item_helpers.h" // GetErrorForSending.
-@@ -546,6 +547,12 @@ HistoryWidget::HistoryWidget(
+@@ -559,6 +560,12 @@ HistoryWidget::HistoryWidget(
  		updateControlsGeometry();
  	}, lifetime());
  
@@ -29,7 +29,7 @@ index 03d80d3e8a..9167bf59d3 100644
  	_fieldChatStyle = InitMessageField(controller, _field, [=](
  			not_null<DocumentData*> document) {
  		if (_peer && Data::AllowEmojiWithoutPremium(_peer, document)) {
-@@ -6480,6 +6487,7 @@ bool HistoryWidget::isBotStart() const {
+@@ -6619,6 +6626,7 @@ bool HistoryWidget::isBotStart() const {
  	const auto user = _peer ? _peer->asUser() : nullptr;
  	if (!user
  		|| !user->isBot()
@@ -37,54 +37,63 @@ index 03d80d3e8a..9167bf59d3 100644
  		|| !_canSendMessages) {
  		return false;
  	} else if (!user->botInfo->startToken.isEmpty()) {
-@@ -6495,10 +6503,16 @@ bool HistoryWidget::isReportMessages() const {
+@@ -6634,10 +6642,12 @@ bool HistoryWidget::isReportMessages() const {
  }
  
  bool HistoryWidget::isBlocked() const {
-+	// if (Yukigram::Settings::HideBottomBar->current()) {
-+	// 	return false;
-+	// }
++	// if (Yukigram::Settings::HideBottomBar->current()) return false;
  	return _peer && _peer->isUser() && _peer->asUser()->isBlocked();
  }
  
  bool HistoryWidget::isJoinChannel() const {
-+	if (Yukigram::Settings::HideBottomBar->current()) {
-+		return false;
-+	}
++	if (Yukigram::Settings::HideBottomBar->current()) return false;
  	if (const auto channel = _peer ? _peer->asChannel() : nullptr) {
  		return !channel->amIn() && !channel->isMonoforum() && !_canSendMessages;
  	}
-@@ -6511,6 +6525,7 @@ bool HistoryWidget::isChoosingTheme() const {
+@@ -6649,6 +6659,7 @@ bool HistoryWidget::isChoosingTheme() const {
+ }
  
  bool HistoryWidget::isMuteUnmute() const {
++	if (Yukigram::Settings::HideBottomBar->current()) return false;
  	return _peer
-+		&& !Yukigram::Settings::HideBottomBar->current()
  		&& ((_peer->isBroadcast() && !_peer->asChannel()->canPostMessages())
  			|| (_peer->isGigagroup() && !Data::CanSendAnything(_peer))
- 			|| _peer->isRepliesChat()
-diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-index 57c3025f13..83a028457d 100644
---- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-+++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-@@ -31,6 +31,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "history/history_view_pull_to_next_channel.h"
- #include "iv/iv_rich_message_serializer.h"
- #include "iv/iv_rich_page.h"
+diff --git a/Telegram/SourceFiles/history/view/controls/history_view_bottom_controls.cpp b/Telegram/SourceFiles/history/view/controls/history_view_bottom_controls.cpp
+index c34d06a26e..7d3f3057b5 100644
+--- a/Telegram/SourceFiles/history/view/controls/history_view_bottom_controls.cpp
++++ b/Telegram/SourceFiles/history/view/controls/history_view_bottom_controls.cpp
+@@ -21,6 +21,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "data/data_session.h"
+ #include "data/data_user.h"
+ #include "data/notify/data_notify_settings.h"
 +#include "yukigram/settings/hide_bottom_bar.h"
- #include "ui/chat/pinned_bar.h"
- #include "ui/chat/chat_style.h"
- #include "ui/controls/swipe_handler.h"
-@@ -1914,6 +1915,10 @@ void ChatWidget::refreshJoinGroupButton() {
- 		set(nullptr);
- 	} else {
- 		_canSendTexts = false;
-+		if (Yukigram::Settings::HideBottomBar->current()) {
-+			set(nullptr);
-+			return;
-+		}
- 		if (!_joinGroup) {
- 			set(std::make_unique<Ui::FlatButton>(
- 				this,
+ #include "history/history.h"
+ #include "history/history_item_helpers.h"
+ #include "history/view/controls/compose_controls_common.h"
+@@ -544,6 +545,7 @@ bool BottomControls::isJoinChannel() const {
+ 		return false;
+ 	}
+ 	if (const auto channel = _peer->asChannel()) {
++		if (Yukigram::Settings::HideBottomBar->current()) return false;
+ 		return !channel->amIn() && !channel->isMonoforum();
+ 	}
+ 	return false;
+@@ -560,6 +562,7 @@ bool BottomControls::isJoinGroup() const {
+ 	const auto canSend = !channel->isForum()
+ 		? Data::CanSendAnything(channel)
+ 		: (_topic && Data::CanSendAnything(_topic));
++	if (Yukigram::Settings::HideBottomBar->current()) return false;
+ 	return !channel->amIn() && !canSend;
+ }
+ 
+@@ -567,6 +570,7 @@ bool BottomControls::isMuteUnmute() const {
+ 	if (_mode != BottomControlsMode::History) {
+ 		return false;
+ 	}
++	if (Yukigram::Settings::HideBottomBar->current()) return false;
+ 	return (_peer->isBroadcast() && !_peer->asChannel()->canPostMessages())
+ 		|| (_peer->isGigagroup() && !Data::CanSendAnything(_peer))
+ 		|| _peer->isRepliesChat()
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp b/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp
 new file mode 100644
 index 0000000000..a48a380230

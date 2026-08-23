@@ -5,10 +5,10 @@ Subject: [PATCH] (Interface) Show custom title in group call bar
 
 
 diff --git a/Telegram/SourceFiles/ui/chat/group_call_bar.cpp b/Telegram/SourceFiles/ui/chat/group_call_bar.cpp
-index 13481b99dd..db62cde0b8 100644
+index 5870107971..bce1a1db62 100644
 --- a/Telegram/SourceFiles/ui/chat/group_call_bar.cpp
 +++ b/Telegram/SourceFiles/ui/chat/group_call_bar.cpp
-@@ -293,17 +293,17 @@ void GroupCallBar::paintTitleAndStatus(Painter &p) {
+@@ -297,17 +297,17 @@ void GroupCallBar::paintTitleAndStatus(Painter &p) {
  		left,
  		titleTop,
  		width,

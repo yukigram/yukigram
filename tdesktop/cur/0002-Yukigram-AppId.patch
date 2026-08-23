@@ -5,10 +5,10 @@ Subject: [PATCH] (Yukigram) AppId
 
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 3b0d313dde..7a9232f5a6 100644
+index 859b1923de..2c16916e1e 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -2084,6 +2084,21 @@ PRIVATE
+@@ -2152,6 +2152,21 @@ PRIVATE
  file(GLOB_RECURSE yuki_src CONFIGURE_DEPENDS "${src_loc}/yukigram/*.cpp" "${src_loc}/yukigram/*.h")
  target_sources(Telegram PRIVATE ${yuki_src})
  
@@ -30,7 +30,7 @@ index 3b0d313dde..7a9232f5a6 100644
  if (APPLE)
      nice_target_sources(Telegram ${src_loc}
      PRIVATE
-@@ -2283,7 +2298,7 @@ else()
+@@ -2351,7 +2366,7 @@ else()
          set(bundle_identifier "com.tdesktop.Telegram")
      endif()
      set(bundle_entitlements "Telegram.entitlements")
@@ -39,7 +39,7 @@ index 3b0d313dde..7a9232f5a6 100644
  endif()
  
  if (CMAKE_GENERATOR STREQUAL Xcode)
-@@ -2329,7 +2344,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+@@ -2397,7 +2412,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
  if (APPLE
      OR is_multi_config
      OR NOT CMAKE_EXECUTABLE_SUFFIX STREQUAL ""
@@ -48,7 +48,7 @@ index 3b0d313dde..7a9232f5a6 100644
      set(output_folder ${CMAKE_BINARY_DIR})
  else()
      set(output_folder ${CMAKE_BINARY_DIR}/bin)
-@@ -2503,30 +2518,37 @@ elseif (build_winstore)
+@@ -2571,30 +2586,37 @@ elseif (build_winstore)
      )
  endif()
  
@@ -110,10 +110,10 @@ index 3b0d313dde..7a9232f5a6 100644
 +    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${YUKIGRAM_APP_ID}.metainfo.xml" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/metainfo")
  endif()
 diff --git a/Telegram/Resources/qrc/telegram/telegram.qrc b/Telegram/Resources/qrc/telegram/telegram.qrc
-index 2aac736dbc..c02976b34c 100644
+index 6c966a19f3..632fb2c2d5 100644
 --- a/Telegram/Resources/qrc/telegram/telegram.qrc
 +++ b/Telegram/Resources/qrc/telegram/telegram.qrc
-@@ -67,6 +67,5 @@
+@@ -87,6 +87,5 @@
    </qresource>
    <qresource prefix="/misc">
      <file alias="default_shortcuts-custom.json">../../default_shortcuts-custom.json</file>

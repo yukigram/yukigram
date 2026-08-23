@@ -5,7 +5,7 @@ Subject: [PATCH] (Reactions)(Opt) Hide Star reaction count completely
 
 
 diff --git a/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp b/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp
-index 3f1948e60b..60180e0d82 100644
+index ddf0b9718a..08a8809129 100644
 --- a/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp
 +++ b/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp
 @@ -29,6 +29,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

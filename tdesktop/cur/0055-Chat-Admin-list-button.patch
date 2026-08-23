@@ -20,7 +20,7 @@ index 0000000000..07bc0f276e
 +    " stroke="#fff" fill="#0000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
 +</svg>
 diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
-index 7f4622f9af..6ebc9bfbe7 100644
+index e316e6398b..9139c16129 100644
 --- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 @@ -12,6 +12,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -60,7 +60,7 @@ index 7f4622f9af..6ebc9bfbe7 100644
  	_infoToggle->setClickedCallback([=] { toggleInfoSection(); });
  	_back->setAcceptBoth();
  	_back->addClickHandler([=](Qt::MouseButton) {
-@@ -1263,6 +1272,10 @@ void TopBarWidget::updateControlsGeometry() {
+@@ -1264,6 +1273,10 @@ void TopBarWidget::updateControlsGeometry() {
  		_infoToggle->moveToRight(_rightTaken, otherButtonsTop);
  		_rightTaken += _infoToggle->width();
  	}
@@ -71,7 +71,7 @@ index 7f4622f9af..6ebc9bfbe7 100644
  	_recentActions->moveToRight(_rightTaken, otherButtonsTop);
  	if (!_recentActions->isHidden()) {
  		_rightTaken += _recentActions->width() + st::topBarSkip;
-@@ -1402,6 +1415,30 @@ void TopBarWidget::updateControlsVisibility() {
+@@ -1407,6 +1420,30 @@ void TopBarWidget::updateControlsVisibility() {
  		return false;
  	}();
  	_recentActions->setVisible(isAdmin);
@@ -115,10 +115,10 @@ index 82fa74ac66..c871f3657d 100644
  	object_ptr<Ui::IconButton> _menuToggle;
  	base::unique_qptr<Ui::PopupMenu> _menu;
 diff --git a/Telegram/SourceFiles/info/info.style b/Telegram/SourceFiles/info/info.style
-index efb4c95f6b..002cab951b 100644
+index e562a0edc6..76df256799 100644
 --- a/Telegram/SourceFiles/info/info.style
 +++ b/Telegram/SourceFiles/info/info.style
-@@ -958,6 +958,10 @@ topBarRecentActions: IconButton(topBarSearch) {
+@@ -961,6 +961,10 @@ topBarRecentActions: IconButton(topBarSearch) {
  	icon: icon {{ "info/edit/group_manage_actions_topbar", menuIconFg }};
  	iconOver: icon {{ "info/edit/group_manage_actions_topbar", menuIconFgOver }};
  }

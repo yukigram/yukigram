@@ -5,10 +5,10 @@ Subject: [PATCH] (Style)(Opt) Hide message tail
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index a18eb8c241..d47f12cb12 100644
+index 281f982912..78abd55dc5 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
-@@ -35,6 +35,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -36,6 +36,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "iv/markdown/iv_markdown_prepare_links.h"
  #include "iv/iv_instance.h"
  #include "iv/iv_rich_page.h"
@@ -16,7 +16,7 @@ index a18eb8c241..d47f12cb12 100644
  #include "boxes/premium_preview_box.h"
  #include "boxes/share_box.h"
  #include "boxes/peers/tag_info_box.h"
-@@ -6378,6 +6379,7 @@ Ui::BubbleRounding Message::countMessageRounding() const {
+@@ -6563,6 +6564,7 @@ Ui::BubbleRounding Message::countMessageRounding() const {
  	const auto item = data();
  	const auto keyboard = item->inlineReplyKeyboard();
  	const auto skipTail = smallBottom

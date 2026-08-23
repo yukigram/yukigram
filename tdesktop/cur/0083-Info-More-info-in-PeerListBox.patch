@@ -5,7 +5,7 @@ Subject: [PATCH] (Info) More info in PeerListBox
 
 
 diff --git a/Telegram/SourceFiles/boxes/peer_list_box.cpp b/Telegram/SourceFiles/boxes/peer_list_box.cpp
-index 238800af0f..75bcd22a2e 100644
+index 234e905996..4170f8857f 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peer_list_box.cpp
 @@ -27,6 +27,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 238800af0f..75bcd22a2e 100644
  #include "storage/file_download.h"
  #include "data/data_peer_values.h"
  #include "data/data_channel.h"
-@@ -734,21 +735,34 @@ void PeerListRow::refreshStatus() {
+@@ -735,21 +736,34 @@ void PeerListRow::refreshStatus() {
  			_statusValidTill = crl::now()
  				+ Data::OnlineChangeTimeout(user, time);
  		}

@@ -33,7 +33,7 @@ index 7766e23a47..75dbe1efbb 100644
  	base::ConcurrentTimerEnvironment environment;
  	return sandbox.start();
 diff --git a/Telegram/SourceFiles/settings/settings_experimental.cpp b/Telegram/SourceFiles/settings/settings_experimental.cpp
-index 7594b38a67..27e4879669 100644
+index db7181977c..10a9ec42fe 100644
 --- a/Telegram/SourceFiles/settings/settings_experimental.cpp
 +++ b/Telegram/SourceFiles/settings/settings_experimental.cpp
 @@ -6,6 +6,7 @@ For license and copyright information please follow this link:
@@ -44,7 +44,7 @@ index 7594b38a67..27e4879669 100644
  
  #include "settings/settings_common.h"
  #include "data/components/passkeys.h"
-@@ -257,6 +258,7 @@ QString AddOption(
+@@ -255,6 +256,7 @@ QString AddOption(
  			return;
  		}
  		option.set(toggled);

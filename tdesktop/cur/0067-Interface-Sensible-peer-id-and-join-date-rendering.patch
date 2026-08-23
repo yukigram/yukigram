@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface) Sensible peer id and join date rendering
 
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-index 91df06b19f..15fcbfa6bc 100644
+index 3a2745e617..158f7a4ce7 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 @@ -72,6 +72,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

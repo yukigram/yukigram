@@ -7,10 +7,10 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-index 25d8816144..3c64c1eece 100644
+index db7981db87..99080d8560 100644
 --- a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-@@ -23,6 +23,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -24,6 +24,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "history/view/media/history_view_media.h"
  #include "history/view/history_view_message.h"
  #include "history/view/history_view_cursor_state.h"
@@ -18,7 +18,7 @@ index 25d8816144..3c64c1eece 100644
  #include "base/unixtime.h"
  #include "chat_helpers/emoji_interactions.h"
  #include "core/click_handler_types.h"
-@@ -499,7 +500,8 @@ void BottomInfo::layoutDateText() {
+@@ -504,7 +505,8 @@ void BottomInfo::layoutDateText() {
  		? FormatEditedDate(_data.date, _data.editedDate)
  		: edited + ((_data.flags & Data::Flag::ForwardedDate)
  		? Ui::FormatDateTimeSavedFrom(_data.date)
@@ -28,7 +28,7 @@ index 25d8816144..3c64c1eece 100644
  	const auto afterAuthor = prefix + date;
  	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
  	const auto authorWidth = st::msgDateFont->width(author);
-@@ -739,6 +741,9 @@ BottomInfo::Data BottomInfoDataFromMessage(not_null<Message*> message) {
+@@ -747,6 +749,9 @@ BottomInfo::Data BottomInfoDataFromMessage(not_null<Message*> message) {
  			result.flags |= Flag::Silent;
  		}
  	}
@@ -39,10 +39,10 @@ index 25d8816144..3c64c1eece 100644
  		return result;
  	}
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.h b/Telegram/SourceFiles/history/view/history_view_bottom_info.h
-index 0382cbc33a..2ac2a2e18a 100644
+index 6c82f97195..10f705f565 100644
 --- a/Telegram/SourceFiles/history/view/history_view_bottom_info.h
 +++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.h
-@@ -54,6 +54,7 @@ public:
+@@ -55,6 +55,7 @@ public:
  		QDateTime date;
  		QDateTime editedDate;
  		QString author;
@@ -51,10 +51,10 @@ index 0382cbc33a..2ac2a2e18a 100644
  		int64 tonStake = 0;
  		int stars = 0;
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index 10979aabec..bb693e19f5 100644
+index d42b7f305d..d1b4512627 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
-@@ -34,6 +34,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -36,6 +36,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "data/data_session.h"
  #include "iv/iv_cached_media.h"
  #include "iv/iv_rich_page.h"
@@ -62,7 +62,7 @@ index 10979aabec..bb693e19f5 100644
  #include "base/unixtime.h"
  #include "boxes/premium_preview_box.h"
  #include "core/application.h"
-@@ -67,6 +68,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -70,6 +71,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "data/data_message_reactions.h"
  #include "data/data_user.h"
  #include "lang/lang_keys.h"
@@ -70,7 +70,7 @@ index 10979aabec..bb693e19f5 100644
  #include "styles/style_chat.h"
  #include "styles/style_chat_style.h"
  #include "styles/style_dialogs.h"
-@@ -735,6 +737,10 @@ QString DateTooltipText(not_null<Element*> view) {
+@@ -751,6 +753,10 @@ QString DateTooltipText(not_null<Element*> view) {
  	if (const auto stars = item->out() ? item->starsPaid() : 0) {
  		dateText += '\n' + tr::lng_you_paid_stars(tr::now, lt_count, stars);
  	}

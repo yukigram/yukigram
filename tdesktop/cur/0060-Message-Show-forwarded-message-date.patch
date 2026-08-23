@@ -7,7 +7,7 @@ This patch is adapted from Forkgram.
 Original author: 23rd <23rd@vivaldi.net>
 
 diff --git a/Telegram/SourceFiles/history/history_item_components.cpp b/Telegram/SourceFiles/history/history_item_components.cpp
-index 60f51bec90..dbbb2f2185 100644
+index 4a9953cf61..5f2c4e5ed8 100644
 --- a/Telegram/SourceFiles/history/history_item_components.cpp
 +++ b/Telegram/SourceFiles/history/history_item_components.cpp
 @@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -18,7 +18,7 @@ index 60f51bec90..dbbb2f2185 100644
  #include "lang/lang_keys.h"
  #include "ui/effects/ripple_animation.h"
  #include "ui/effects/spoiler_mess.h"
-@@ -381,6 +382,9 @@ void HistoryMessageForwarded::create(
+@@ -384,6 +385,9 @@ void HistoryMessageForwarded::create(
  				tr::marked);
  		}
  	}

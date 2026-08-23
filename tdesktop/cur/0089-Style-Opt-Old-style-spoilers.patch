@@ -5,10 +5,10 @@ Subject: [PATCH] (Style)(Opt) Old-style spoilers
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_media.cpp b/Telegram/SourceFiles/history/view/media/history_view_media.cpp
-index 67f58e003a..5925b8603f 100644
+index 03e0d99743..a6b8ff994b 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_media.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_media.cpp
-@@ -22,6 +22,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -24,6 +24,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "data/data_session.h"
  #include "data/data_web_page.h"
  #include "lang/lang_keys.h"
@@ -16,7 +16,7 @@ index 67f58e003a..5925b8603f 100644
  #include "ui/item_text_options.h"
  #include "ui/chat/chat_style.h"
  #include "ui/chat/message_bubble.h"
-@@ -31,6 +32,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -33,6 +34,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "ui/painter.h"
  #include "ui/power_saving.h"
  #include "ui/text/text_utilities.h"
@@ -24,7 +24,7 @@ index 67f58e003a..5925b8603f 100644
  #include "core/ui_integration.h"
  #include "styles/style_chat.h"
  #include "styles/style_chat_helpers.h"
-@@ -362,6 +364,18 @@ void Media::fillImageSpoiler(
+@@ -364,6 +366,18 @@ void Media::fillImageSpoiler(
  		Ui::DefaultImageSpoiler().frame(
  			spoiler->animation->index(context.now, pausedSpoiler)),
  		spoiler->cornerCache);
@@ -79,7 +79,7 @@ index 0000000000..4a84202013
 +extern const char kOptionOldStyleSpoilers[];
 +}
 diff --git a/Telegram/lib_ui/ui/effects/spoiler_mess.cpp b/Telegram/lib_ui/ui/effects/spoiler_mess.cpp
-index d4413de547..5e834a11c4 100644
+index 61edbb2345..6a06670438 100644
 --- a/Telegram/lib_ui/ui/effects/spoiler_mess.cpp
 +++ b/Telegram/lib_ui/ui/effects/spoiler_mess.cpp
 @@ -10,6 +10,7 @@
@@ -90,7 +90,7 @@ index d4413de547..5e834a11c4 100644
  #include "base/random.h"
  #include "base/flags.h"
  
-@@ -428,14 +429,33 @@ SpoilerMessCached GenerateSpoilerMess(
+@@ -485,14 +486,33 @@ SpoilerMessCached GenerateSpoilerMess(
  		size);
  }
  

@@ -5,7 +5,7 @@ Subject: [PATCH] (Info)(Opt) Show inferred peer DC
 
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-index 15fcbfa6bc..a7f4b3ab79 100644
+index 158f7a4ce7..cbe5680563 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 @@ -44,6 +44,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/api/api_who_reacted.cpp b/Telegram/SourceFiles/api/api_who_reacted.cpp
-index c920be85ce..664fa7bfc9 100644
+index 6c8c4ad8df..e3570634ad 100644
 --- a/Telegram/SourceFiles/api/api_who_reacted.cpp
 +++ b/Telegram/SourceFiles/api/api_who_reacted.cpp
 @@ -706,23 +706,14 @@ QString FormatReadDate(TimeId date, const QDateTime &now) {
@@ -40,10 +40,10 @@ index c920be85ce..664fa7bfc9 100644
  
  bool WhoReadExists(not_null<HistoryItem*> item) {
 diff --git a/Telegram/SourceFiles/data/data_peer_values.cpp b/Telegram/SourceFiles/data/data_peer_values.cpp
-index 2e8ee8c52d..4a11612dad 100644
+index 375eb8052b..fc0fbc50bc 100644
 --- a/Telegram/SourceFiles/data/data_peer_values.cpp
 +++ b/Telegram/SourceFiles/data/data_peer_values.cpp
-@@ -461,10 +461,10 @@ QString OnlineText(Data::LastseenStatus status, TimeId now) {
+@@ -483,10 +483,10 @@ QString OnlineText(Data::LastseenStatus status, TimeId now) {
  	const auto nowFull = base::unixtime::parse(now);
  	const auto locale = QLocale();
  	if (onlineFull.date() == nowFull.date()) {
@@ -56,7 +56,7 @@ index 2e8ee8c52d..4a11612dad 100644
  		return tr::lng_status_lastseen_yesterday(tr::now, lt_time, onlineTime);
  	}
  	const auto date = locale.toString(onlineFull.date(), QLocale::ShortFormat);
-@@ -489,14 +489,14 @@ QString OnlineTextFull(not_null<UserData*> user, TimeId now) {
+@@ -511,14 +511,14 @@ QString OnlineTextFull(not_null<UserData*> user, TimeId now) {
  	const auto nowFull = base::unixtime::parse(now);
  	const auto locale = QLocale();
  	if (onlineFull.date() == nowFull.date()) {
@@ -75,10 +75,10 @@ index 2e8ee8c52d..4a11612dad 100644
  }
  
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
-index 177398280c..9dbb6810c6 100644
+index 0959f2be7d..539d615acf 100644
 --- a/Telegram/SourceFiles/history/history_item.cpp
 +++ b/Telegram/SourceFiles/history/history_item.cpp
-@@ -1411,7 +1411,7 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
+@@ -1469,7 +1469,7 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
  
  QString GenerateServiceTime(TimeId date) {
  	if (date > 0) {
@@ -87,7 +87,7 @@ index 177398280c..9dbb6810c6 100644
  	}
  	return QString();
  }
-@@ -8180,7 +8180,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
+@@ -8507,7 +8507,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
  	};
  	const auto time = QLocale().toString(
  		scheduled.time(),
@@ -97,7 +97,7 @@ index 177398280c..9dbb6810c6 100644
  		prepareWithDate(tr::lng_group_call_starts_date(
  			tr::now,
 diff --git a/Telegram/SourceFiles/history/history_item_text.cpp b/Telegram/SourceFiles/history/history_item_text.cpp
-index 0c04e23d39..126a464e13 100644
+index 947b1f9d07..2b7b58b26c 100644
 --- a/Telegram/SourceFiles/history/history_item_text.cpp
 +++ b/Telegram/SourceFiles/history/history_item_text.cpp
 @@ -397,7 +397,7 @@ TextForMimeData HistorySelectedItemPlainWrappedText(
@@ -110,10 +110,10 @@ index 0c04e23d39..126a464e13 100644
  	const auto size = time.size() + author.size() + 2 + body.expanded.size();
  	result.reserve(size);
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-index e01afbe210..25d8816144 100644
+index 21ac2d0973..db7981db87 100644
 --- a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-@@ -499,7 +499,7 @@ void BottomInfo::layoutDateText() {
+@@ -504,7 +504,7 @@ void BottomInfo::layoutDateText() {
  		? FormatEditedDate(_data.date, _data.editedDate)
  		: edited + ((_data.flags & Data::Flag::ForwardedDate)
  		? Ui::FormatDateTimeSavedFrom(_data.date)
@@ -221,10 +221,10 @@ index 7ac9707b79..1d6602481b 100644
  [[nodiscard]] rpl::producer<> Updated();
  [[nodiscard]] QString GetNonDefaultValue(const QByteArray &key);
 diff --git a/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp b/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
-index bb659f5e5a..2cf15b48c8 100644
+index 4ad411b028..c7aa006de5 100644
 --- a/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
 +++ b/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
-@@ -671,7 +671,7 @@ void WhenAction::resolveMinWidth() {
+@@ -672,7 +672,7 @@ void WhenAction::resolveMinWidth() {
  	const auto sampleDate = QDate::currentDate();
  	const auto sampleTime = QLocale().toString(
  		QTime::currentTime(),

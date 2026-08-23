@@ -49,10 +49,10 @@ index 12d604d255..706a3af89a 100644
  
  	const auto weak = base::make_weak(sublist.get());
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
-index e5ff8a2774..7594ee686a 100644
+index 1f3189ad4b..0a39f57828 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
-@@ -62,6 +62,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -65,6 +65,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "info/info_memento.h"
  #include "lang/lang_hardcoded.h"
  #include "lang/lang_keys.h"
@@ -60,7 +60,7 @@ index e5ff8a2774..7594ee686a 100644
  #include "mtproto/sender.h"
  #include "main/main_app_config.h"
  #include "settings/settings_common.h"
-@@ -81,6 +82,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -84,6 +85,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "ui/widgets/labels.h"
  #include "ui/wrap/padding_wrap.h"
  #include "ui/wrap/slide_wrap.h"
@@ -68,7 +68,7 @@ index e5ff8a2774..7594ee686a 100644
  #include "ui/wrap/vertical_layout.h"
  #include "ui/ui_utility.h"
  #include "window/window_session_controller.h"
-@@ -3009,6 +3011,11 @@ void Controller::deleteWithConfirmation() {
+@@ -3067,6 +3069,11 @@ void Controller::deleteWithConfirmation() {
  	const auto channel = _peer->asChannel();
  	Assert(channel != nullptr);
  
@@ -80,7 +80,7 @@ index e5ff8a2774..7594ee686a 100644
  	const auto text = (_isGroup
  		? tr::lng_sure_delete_group
  		: tr::lng_sure_delete_channel)(tr::now);
-@@ -3027,6 +3034,10 @@ void Controller::deleteWithConfirmation() {
+@@ -3085,6 +3092,10 @@ void Controller::deleteWithConfirmation() {
  void Controller::deleteChannel() {
  	Expects(_peer->isChannel());
  
@@ -92,10 +92,10 @@ index e5ff8a2774..7594ee686a 100644
  	const auto chat = channel->migrateFrom();
  
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index ecf46ac9fd..d0445a8dad 100644
+index 7e4b812045..795311feff 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
-@@ -47,6 +47,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -49,6 +49,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "boxes/peers/edit_contact_box.h"
  #include "boxes/peers/prepare_short_info_box.h"
  #include "calls/calls_instance.h"
@@ -103,7 +103,7 @@ index ecf46ac9fd..d0445a8dad 100644
  #include "inline_bots/bot_attach_web_view.h" // InlineBots::PeerType.
  #include "ui/toast/toast.h"
  #include "ui/text/format_values.h"
-@@ -4103,6 +4104,10 @@ Fn<void()> ClearHistoryHandler(
+@@ -4355,6 +4356,10 @@ Fn<void()> ClearHistoryHandler(
  		not_null<PeerData*> peer) {
  	return [=] {
  		if (!controller->showFrozenError()) {

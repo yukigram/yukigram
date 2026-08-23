@@ -5,10 +5,10 @@ Subject: [PATCH] (Annoyances) Disable AI IV summaries
 
 
 diff --git a/Telegram/SourceFiles/iv/iv_rich_page.cpp b/Telegram/SourceFiles/iv/iv_rich_page.cpp
-index fc68ae5999..fe0ea49a69 100644
+index ff9ee8409b..cb5f5f0c10 100644
 --- a/Telegram/SourceFiles/iv/iv_rich_page.cpp
 +++ b/Telegram/SourceFiles/iv/iv_rich_page.cpp
-@@ -1329,7 +1329,9 @@ void AppendBlock(
+@@ -1412,7 +1412,9 @@ void AppendBlock(
  		AdoptAnchor(&parsed.anchorId, &parsed.text);
  		parsed.caption = ParseRichText(data.vcaption(), context);
  		AdoptAnchor(&parsed.anchorId, &parsed.caption);

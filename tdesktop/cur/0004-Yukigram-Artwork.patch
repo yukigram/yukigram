@@ -5,10 +5,10 @@ Subject: [PATCH] (Yukigram) Artwork
 
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 7a9232f5a6..cb213ff406 100644
+index 2c16916e1e..0efefc833d 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -2531,20 +2531,7 @@ if (LINUX AND DESKTOP_APP_USE_PACKAGED)
+@@ -2599,20 +2599,7 @@ if (LINUX AND DESKTOP_APP_USE_PACKAGED)
      configure_file("../lib/xdg/io.github.yukigram.metainfo.xml" "${CMAKE_CURRENT_BINARY_DIR}/${YUKIGRAM_APP_ID}.metainfo.xml" @ONLY)
      generate_appstream_changelog(Telegram "${CMAKE_SOURCE_DIR}/changelog.txt" "${CMAKE_CURRENT_BINARY_DIR}/${YUKIGRAM_APP_ID}.metainfo.xml")
      install(TARGETS Telegram RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" BUNDLE DESTINATION "${CMAKE_INSTALL_BINDIR}")
@@ -43,7 +43,7 @@ index 0000000000..e9ddc94952
 +    <path d="M2,8.625l2.5,0.9375L5.75,13l1.788-2.3875L10.75,11.75l1.25-8.75L2,8.625zM6.481,10.15l-0.5725,1.553l-0.6787-1.9487l5.251-4.769L6.481,10.15z" fill="#eee" />
 +</svg>
 diff --git a/Telegram/Resources/qrc/telegram/telegram.qrc b/Telegram/Resources/qrc/telegram/telegram.qrc
-index c02976b34c..d27bd67732 100644
+index 632fb2c2d5..b6c6943cdd 100644
 --- a/Telegram/Resources/qrc/telegram/telegram.qrc
 +++ b/Telegram/Resources/qrc/telegram/telegram.qrc
 @@ -5,8 +5,8 @@
@@ -70,10 +70,10 @@ index b758fa94a0..f4c7cd8438 100644
  	}
  
 diff --git a/Telegram/SourceFiles/window/main_window.cpp b/Telegram/SourceFiles/window/main_window.cpp
-index df60162bd7..16ceeed1e0 100644
+index 54332a729b..ae6ff42e1e 100644
 --- a/Telegram/SourceFiles/window/main_window.cpp
 +++ b/Telegram/SourceFiles/window/main_window.cpp
-@@ -126,7 +126,7 @@ const char kOptionNewWindowsSizeAsFirst[] = "new-windows-size-as-first";
+@@ -127,7 +127,7 @@ const char kOptionNewWindowsSizeAsFirst[] = "new-windows-size-as-first";
  const char kOptionDisableTouchbar[] = "touchbar-disabled";
  
  const QImage &Logo() {

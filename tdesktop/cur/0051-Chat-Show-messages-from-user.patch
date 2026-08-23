@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
-index bf4b843c54..2961aad34f 100644
+index 62b6100801..2a2ff44aef 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
 @@ -2071,6 +2071,9 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
@@ -21,10 +21,10 @@ index bf4b843c54..2961aad34f 100644
  	if (user && SupportsMemberTags(_peer)) {
  		const auto isSelf = user->isSelf();
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 192573dc04..fe5dad2e83 100644
+index d8091323e5..6f4c9da91f 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3059,6 +3059,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+@@ -3046,6 +3046,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
  				std::move(callback),
  				&st::menuIconStats);
  		}
@@ -43,11 +43,11 @@ index 192573dc04..fe5dad2e83 100644
  	const auto addPhotoActions = [&](not_null<PhotoData*> photo, HistoryItem *item) {
  		const auto media = photo->activeMediaView();
 diff --git a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
-index 94fe16516d..ec6c2c24e2 100644
+index b07c0f1d41..0c1fde505c 100644
 --- a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
-@@ -451,6 +451,27 @@ void AddForwardAction(
- 	AddForwardMessageAction(menu, request, list);
+@@ -647,6 +647,27 @@ void AddOfferAction(
+ 	}), &st::menuIconTagSell);
  }
  
 +void AddMsgsFromUserAction(
@@ -74,39 +74,43 @@ index 94fe16516d..ec6c2c24e2 100644
  bool AddSendNowSelectedAction(
  		not_null<Ui::PopupMenu*> menu,
  		const ContextMenuRequest &request,
-@@ -1121,6 +1142,7 @@ void AddMessageActions(
- 		not_null<ListWidget*> list) {
+@@ -1406,6 +1427,7 @@ void AddMessageActions(
  	AddPostLinkAction(menu, request);
  	AddForwardAction(menu, request, list);
+ 	AddOfferAction(menu, request, list);
 +	AddMsgsFromUserAction(menu, request, list);
  	AddSendNowAction(menu, request, list);
  	AddDeleteAction(menu, request, list);
  	AddDownloadFilesAction(menu, request, list);
+diff --git a/Telegram/SourceFiles/window/window_session_controller.cpp b/Telegram/SourceFiles/window/window_session_controller.cpp
+index 656dd70d56..c3e7f4a581 100644
+--- a/Telegram/SourceFiles/window/window_session_controller.cpp
++++ b/Telegram/SourceFiles/window/window_session_controller.cpp
+@@ -1508,6 +1508,15 @@ void SessionNavigation::searchMessages(
+ 	parentController()->content()->searchMessages(query, inChat, searchFrom);
+ }
+ 
++void SessionNavigation::searchMessages2(const QString &query, PeerData* inPeer, PeerData *from) {
++	searchMessages(
++		query,
++		(inPeer && !inPeer->isUser())
++		? inPeer->owner().history(inPeer).get()
++		: Dialogs::Key(),
++		from ? from : inPeer);
++}
++
+ auto SessionNavigation::showToast(Ui::Toast::Config &&config)
+ -> base::weak_ptr<Ui::Toast::Instance> {
+ 	return uiShow()->showToast(std::move(config));
 diff --git a/Telegram/SourceFiles/window/window_session_controller.h b/Telegram/SourceFiles/window/window_session_controller.h
-index 83bda15591..1798969c79 100644
+index c759949b73..721076cd57 100644
 --- a/Telegram/SourceFiles/window/window_session_controller.h
 +++ b/Telegram/SourceFiles/window/window_session_controller.h
-@@ -10,6 +10,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "base/timer.h"
- #include "chat_helpers/compose/compose_show.h"
- #include "data/data_chat_participant_status.h"
-+#include "data/data_session.h"
-+#include "data/data_peer.h"
- #include "data/data_report.h"
- #include "dialogs/dialogs_key.h"
- #include "mtproto/sender.h"
-@@ -312,6 +314,15 @@ public:
+@@ -312,6 +312,8 @@ public:
  		Dialogs::Key inChat,
  		PeerData *searchFrom = nullptr);
  
-+	void searchMessages2(const QString &query, PeerData* inPeer, PeerData *from) {
-+		searchMessages(
-+			query,
-+			(inPeer && !inPeer->isUser())
-+			? inPeer->owner().history(inPeer).get()
-+			: Dialogs::Key(),
-+			from ? from : inPeer);
-+	}
++	void searchMessages2(const QString &query, PeerData* inPeer, PeerData *from);
 +
  	void resolveBoostState(
  		not_null<ChannelData*> channel,

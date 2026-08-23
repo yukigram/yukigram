@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface)(Opt) Single-column layout
 
 
 diff --git a/Telegram/SourceFiles/mainwidget.cpp b/Telegram/SourceFiles/mainwidget.cpp
-index f57cfb4c7b..75f898d486 100644
+index a0529ea9b1..8fbbd1e621 100644
 --- a/Telegram/SourceFiles/mainwidget.cpp
 +++ b/Telegram/SourceFiles/mainwidget.cpp
 @@ -36,6 +36,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index f57cfb4c7b..75f898d486 100644
  #include "window/window_connecting_widget.h"
  #include "window/window_top_bar_wrap.h"
  #include "window/notifications_manager.h"
-@@ -337,6 +338,7 @@ MainWidget::MainWidget(
+@@ -351,6 +352,7 @@ MainWidget::MainWidget(
  		});
  	};
  	rpl::merge(
@@ -24,7 +24,7 @@ index f57cfb4c7b..75f898d486 100644
  		Core::App().settings().dialogsWithChatWidthRatioChanges(
  		) | filter(true) | rpl::to_empty,
  		Core::App().settings().dialogsNoChatWidthRatioChanges(
-@@ -2916,7 +2918,7 @@ void MainWidget::updateWindowAdaptiveLayout() {
+@@ -3169,7 +3171,7 @@ void MainWidget::updateWindowAdaptiveLayout() {
  
  	// Check if we are in a single-column layout in a wide enough window
  	// for the normal layout. If so, switch to the normal layout.
@@ -46,10 +46,10 @@ index 784164db99..198efb8f88 100644
  #include "data/data_session.h"
  #include "core/application.h"
 diff --git a/Telegram/SourceFiles/window/window_session_controller.cpp b/Telegram/SourceFiles/window/window_session_controller.cpp
-index 6251bbcc19..d94416c088 100644
+index 8119bd7cc6..656dd70d56 100644
 --- a/Telegram/SourceFiles/window/window_session_controller.cpp
 +++ b/Telegram/SourceFiles/window/window_session_controller.cpp
-@@ -89,6 +89,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -90,6 +90,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "ui/effects/message_sending_animation_controller.h"
  #include "ui/style/style_palette_colorizer.h"
  #include "ui/toast/toast.h"
@@ -57,7 +57,7 @@ index 6251bbcc19..d94416c088 100644
  #include "calls/calls_instance.h" // Core::App().calls().inCall().
  #include "calls/group/calls_group_call.h"
  #include "calls/group/calls_group_common.h"
-@@ -2602,6 +2603,7 @@ auto SessionController::computeColumnLayout() const -> ColumnLayout {
+@@ -2622,6 +2623,7 @@ auto SessionController::computeColumnLayout() const -> ColumnLayout {
  	auto dialogsWidth = 0, chatWidth = 0, thirdWidth = 0;
  
  	auto useOneColumnLayout = [&] {

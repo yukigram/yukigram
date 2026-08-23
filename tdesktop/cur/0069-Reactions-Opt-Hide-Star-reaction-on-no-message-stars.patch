@@ -5,7 +5,7 @@ Subject: [PATCH] (Reactions)(Opt) Hide Star reaction on no message stars
 
 
 diff --git a/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp b/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp
-index 130b8eb778..3f1948e60b 100644
+index ae17555034..ddf0b9718a 100644
 --- a/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp
 +++ b/Telegram/SourceFiles/history/view/reactions/history_view_reactions.cpp
 @@ -29,6 +29,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
