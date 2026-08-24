@@ -2,9 +2,8 @@
   lib,
   stdenv,
   telegram-desktop,
+  cmark-gfm,
   gst_all_1,
-  minizip,
-  zlib,
 }:
 telegram-desktop.overrideAttrs (final: prev: {
   pname = "yukigram";
@@ -28,6 +27,8 @@ telegram-desktop.overrideAttrs (final: prev: {
       changelog = "https://github.com/yukigram/yukigram/releases";
       mainProgram = "io.github.yukigram.devel";
     };
+    # 7.1 broke non-bundled cmark-gfm?
+    buildInputs = lib.remove cmark-gfm prev.buildInputs;
   });
 
   # webkitgtk requires gstreamer for audio support
