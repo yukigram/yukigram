@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
-index 48a6b995ba..62b6100801 100644
+index b333b8a6a5..f07db4926d 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_participants_box.cpp
 @@ -884,7 +884,7 @@ PeerData *ParticipantsAdditionalData::applyParticipant(
@@ -52,7 +52,7 @@ index 48a6b995ba..62b6100801 100644
  	_infoNotLoaded.erase(user);
  	_adminRights.erase(user);
  	_adminCanEdit.erase(user);
-@@ -2013,6 +2019,25 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
+@@ -2018,6 +2024,25 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
  			result->addAction(std::move(button));
  		};
  
@@ -78,7 +78,7 @@ index 48a6b995ba..62b6100801 100644
  		if (const auto by = _additional.restrictedBy(participant)) {
  			if (const auto since = _additional.restrictedSince(participant)) {
  				addInfoAction(
-@@ -2027,6 +2052,8 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
+@@ -2032,6 +2057,8 @@ base::unique_qptr<Ui::PopupMenu> ParticipantsBoxController::rowContextMenu(
  				if (const auto since = _additional.adminPromotedSince(user)) {
  					addInfoAction(by, tr::lng_rights_about_by, since);
  				}
@@ -88,7 +88,7 @@ index 48a6b995ba..62b6100801 100644
  		}
  	});
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_participants_box.h b/Telegram/SourceFiles/boxes/peers/edit_participants_box.h
-index 43b2786535..99a1ab2b0c 100644
+index ed59143d81..b3e9a3decc 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_participants_box.h
 +++ b/Telegram/SourceFiles/boxes/peers/edit_participants_box.h
 @@ -156,7 +156,7 @@ public:

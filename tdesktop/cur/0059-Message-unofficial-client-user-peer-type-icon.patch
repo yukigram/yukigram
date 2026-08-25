@@ -21,7 +21,7 @@ index b379a24b2a..281f982912 100644
  		}
  	}
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index 09310125a8..c5c4482fd3 100644
+index b31a08c531..82b3d01391 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
 @@ -584,6 +584,8 @@ msgNameDeletedIcon: icon {{ "dialogs/dialogs_sending", attentionButtonFg, point(

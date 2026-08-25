@@ -9,10 +9,10 @@ file handles them just fine.
 Type "registertg" in settings to clean leftover files.
 
 diff --git a/Telegram/SourceFiles/core/application.cpp b/Telegram/SourceFiles/core/application.cpp
-index 439e0aa009..1e0dbf6a9e 100644
+index 3bd2bfac06..fb06ff7f77 100644
 --- a/Telegram/SourceFiles/core/application.cpp
 +++ b/Telegram/SourceFiles/core/application.cpp
-@@ -2036,7 +2036,7 @@ void Application::RegisterUrlScheme() {
+@@ -2035,7 +2035,7 @@ void Application::RegisterUrlScheme() {
  		? u"-workdir \"%1\""_q.arg(cWorkingDir())
  		: QString();
  
@@ -21,7 +21,7 @@ index 439e0aa009..1e0dbf6a9e 100644
  		.executable = Platform::ExecutablePathForShortcuts(),
  		.arguments = arguments,
  		.protocol = u"tg"_q,
-@@ -2047,7 +2047,7 @@ void Application::RegisterUrlScheme() {
+@@ -2046,7 +2046,7 @@ void Application::RegisterUrlScheme() {
  		.displayAppDescription = AppName.utf16(),
  	});
  

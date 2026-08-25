@@ -35,7 +35,7 @@ index b724eb2774..9ac239bf31 100644
  			tr::lng_create_channel_title(),
  			{ &st::menuIconChannel }
 diff --git a/Telegram/SourceFiles/window/window_session_controller.cpp b/Telegram/SourceFiles/window/window_session_controller.cpp
-index c3e7f4a581..e605c837e7 100644
+index 941c3782c9..33a4310326 100644
 --- a/Telegram/SourceFiles/window/window_session_controller.cpp
 +++ b/Telegram/SourceFiles/window/window_session_controller.cpp
 @@ -3348,6 +3348,10 @@ void SessionController::showNewGroup() {

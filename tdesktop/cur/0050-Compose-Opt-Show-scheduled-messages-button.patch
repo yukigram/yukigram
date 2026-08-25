@@ -5,7 +5,7 @@ Subject: [PATCH] (Compose)(Opt) Show scheduled messages button
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 1612e7ec38..5557ead193 100644
+index 7040c15620..2124d83a63 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -36,6 +36,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

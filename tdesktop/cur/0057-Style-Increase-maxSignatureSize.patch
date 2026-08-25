@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: Js0n <29531167+JasonKhew96@users.noreply.github.com>
 
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index 50a871e03a..d012928eba 100644
+index c0cc0d105d..3f2cb7a8b5 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
 @@ -171,7 +171,7 @@ maxStickerSize: 224px;

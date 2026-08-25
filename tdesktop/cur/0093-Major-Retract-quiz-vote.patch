@@ -5,10 +5,10 @@ Subject: [PATCH] (Major) Retract quiz vote
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
-index 0c1fde505c..c0cf787803 100644
+index 6714fd07df..8e35f021df 100644
 --- a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
-@@ -2313,7 +2313,6 @@ void FillPollOptionPage(
+@@ -2314,7 +2314,6 @@ void FillPollOptionPage(
  		return;
  	}
  	if (!poll->closed()

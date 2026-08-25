@@ -172,10 +172,10 @@ index e134ea07e6..fd6b9c4bb8 100644
  	[[nodiscard]] auto reactionButtonParameters(
  		not_null<const Element*> view,
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 23b69a434a..41445dc9b3 100644
+index fe7ab06840..1fcd73110b 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -10705,7 +10705,7 @@ bool HistoryWidget::updateCanSendMessage() {
+@@ -10706,7 +10706,7 @@ bool HistoryWidget::updateCanSendMessage() {
  	return true;
  }
  
@@ -184,7 +184,7 @@ index 23b69a434a..41445dc9b3 100644
  	if (!_list) {
  		return;
  	}
-@@ -10717,7 +10717,7 @@ void HistoryWidget::forwardSelected() {
+@@ -10718,7 +10718,7 @@ void HistoryWidget::forwardSelected() {
  			if (const auto strong = weak.get()) {
  				strong->clearSelected();
  			}

@@ -7,10 +7,10 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/chat_helpers/message_field.cpp b/Telegram/SourceFiles/chat_helpers/message_field.cpp
-index 8e494a7047..663e06216d 100644
+index fd19c79863..50c975828b 100644
 --- a/Telegram/SourceFiles/chat_helpers/message_field.cpp
 +++ b/Telegram/SourceFiles/chat_helpers/message_field.cpp
-@@ -217,7 +217,30 @@ void EditLinkBox(
+@@ -220,7 +220,30 @@ void EditLinkBox(
  
  	const auto submit = [=] {
  		const auto linkText = text->getTextWithTags();

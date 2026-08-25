@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
-index f574fb2061..0959f2be7d 100644
+index 2d81250dac..6a90b133fc 100644
 --- a/Telegram/SourceFiles/history/history_item.cpp
 +++ b/Telegram/SourceFiles/history/history_item.cpp
 @@ -1467,11 +1467,19 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {

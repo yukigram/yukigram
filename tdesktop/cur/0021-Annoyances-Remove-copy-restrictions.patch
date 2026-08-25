@@ -32,7 +32,7 @@ index 3b4407738f..3d2cd28efe 100644
  		return true;
  	}
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index ddfda9aeea..8042126f73 100644
+index d1c8903d27..0db904189a 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -2101,18 +2101,16 @@ bool ListWidget::isEmpty() const {

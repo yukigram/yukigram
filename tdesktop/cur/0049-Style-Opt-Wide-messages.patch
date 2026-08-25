@@ -47,7 +47,7 @@ index f73ca399dc..d8091323e5 100644
  					}
  					auto widthForDate = maxwidth - st::msgServiceMargin.left() - st::msgServiceMargin.left();
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index aeca55d2d5..d42b7f305d 100644
+index 071c4c1cef..9de8024212 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -68,7 +68,7 @@ index aeca55d2d5..d42b7f305d 100644
  			maxwidth,
  			st::msgMaxWidth
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 8042126f73..f810160ed1 100644
+index 0db904189a..613aeb3852 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

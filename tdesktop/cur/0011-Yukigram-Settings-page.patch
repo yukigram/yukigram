@@ -6,7 +6,7 @@ Subject: [PATCH] (Yukigram) Settings page
 Co-Authored-By: Lunya <241520024+lunya-miaou@users.noreply.github.com>
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 0efefc833d..0795954942 100644
+index 8084cd108f..615ed46768 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
 @@ -1881,6 +1881,8 @@ PRIVATE
@@ -19,10 +19,10 @@ index 0efefc833d..0795954942 100644
      storage/details/storage_file_utilities.h
      storage/details/storage_settings_scheme.cpp
 diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
-index 3a61dbf742..c29dda7620 100644
+index 0d832d8450..a268c03fd4 100644
 --- a/Telegram/Resources/langs/lang.strings
 +++ b/Telegram/Resources/langs/lang.strings
-@@ -869,6 +869,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -870,6 +870,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  "lng_settings_add_account_about" = "You can add up to four accounts with different phone numbers.";
  "lng_settings_peer_to_peer_about" = "Disabling peer-to-peer will relay all calls through Telegram servers to avoid revealing your IP address, but may decrease audio and video quality.";
  "lng_settings_advanced" = "Advanced";

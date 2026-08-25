@@ -5,10 +5,10 @@ Subject: [PATCH] (Major) Split Stickers and GIFs chat permission toggle
 
 
 diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
-index c29dda7620..ba685ba8b6 100644
+index a268c03fd4..75372f0a63 100644
 --- a/Telegram/Resources/langs/lang.strings
 +++ b/Telegram/Resources/langs/lang.strings
-@@ -7172,6 +7172,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -7174,6 +7174,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  "lng_admin_log_banned_send_voice_messages" = "Send voice messages";
  "lng_admin_log_banned_send_video_messages" = "Send video messages";
  "lng_admin_log_banned_send_stickers" = "Send stickers & GIFs";
@@ -100,7 +100,7 @@ index 62fe4d7751..e4771e1558 100644
  		{ Flag::SendReactions, tr::lng_admin_log_banned_send_reactions },
  		{ Flag::SendPolls, tr::lng_admin_log_banned_send_polls },
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 7680c45814..1fcf94b203 100644
+index a5f687dcf1..f09b461897 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -9896,7 +9896,7 @@ bool HistoryWidget::sendExistingDocument(
@@ -113,7 +113,7 @@ index 7680c45814..1fcf94b203 100644
  	if (error) {
  		Data::ShowSendErrorToast(controller(), _peer, error);
 diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-index 207742f8b5..0ed985fe12 100644
+index ce2094bbb4..a1bcb68165 100644
 --- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 @@ -98,6 +98,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -134,7 +134,7 @@ index 207742f8b5..0ed985fe12 100644
  	if (error) {
  		Data::ShowSendErrorToast(controller(), _peer, error);
 diff --git a/Telegram/SourceFiles/history/view/history_view_scheduled_section.cpp b/Telegram/SourceFiles/history/view/history_view_scheduled_section.cpp
-index f47388c963..89b32795ae 100644
+index cafbe6a6a7..d90ae06a28 100644
 --- a/Telegram/SourceFiles/history/view/history_view_scheduled_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_scheduled_section.cpp
 @@ -868,7 +868,7 @@ bool ScheduledWidget::sendExistingDocument(
