@@ -1,0 +1,44 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yuki Sireneva <sylfn@disroot.org>
+Date: Tue, 25 Aug 2026 15:05:41 +0000
+Subject: [PATCH] (Style) Revert restore windows pill
+
+
+diff --git a/Telegram/SourceFiles/dialogs/ui/restore_windows_offer.cpp b/Telegram/SourceFiles/dialogs/ui/restore_windows_offer.cpp
+index 37b53d74c6..6409e2081e 100644
+--- a/Telegram/SourceFiles/dialogs/ui/restore_windows_offer.cpp
++++ b/Telegram/SourceFiles/dialogs/ui/restore_windows_offer.cpp
+@@ -97,7 +97,7 @@ Ui::Text::GeometryDescriptor RestoreWindowsOffer::questionGeometry() const {
+ }
+ 
+ void RestoreWindowsOffer::relayout() {
+-	const auto &margins = st::dialogsTopBarSuggestionMargins;
++	const auto &margins = QRect(0, 0, 0, 0);
+ 	const auto &padding = st::restoreWindowsOfferPadding;
+ 	const auto textMargin = ButtonTextMargin();
+ 	const auto buttonSkip = st::restoreWindowsOfferButtonSkip;
+@@ -190,20 +190,10 @@ void RestoreWindowsOffer::relayout() {
+ 
+ void RestoreWindowsOffer::paintEvent(QPaintEvent *e) {
+ 	auto p = QPainter(this);
+-	const auto pill = rect() - st::dialogsTopBarSuggestionMargins;
+-	const auto radius = std::min({
+-		PillRadius(),
+-		pill.width() / 2,
+-		pill.height() / 2,
+-	});
+-	_shadow.paint(p, pill, radius);
+-	{
+-		auto hq = PainterHighQualityEnabler(p);
+-		p.setBrush(st::dialogsBg);
+-		p.setPen(Qt::NoPen);
+-		p.drawRoundedRect(pill, radius, radius);
+-	}
+-	PaintPillOutline(p, pill, radius);
++	const auto pill = rect();
++	p.setBrush(st::dialogsBg);
++	p.setPen(Qt::NoPen);
++	p.drawRect(pill);
+ 	p.setPen(st::windowFg);
+ 	_question.draw(p, {
+ 		.position = _questionPosition,
