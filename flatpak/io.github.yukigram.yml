@@ -1,8 +1,8 @@
-id: io.github.yukigram
+id: io.github.yukigram.devel
 runtime: org.gnome.Platform
 runtime-version: '50'
 sdk: org.gnome.Sdk
-command: io.github.yukigram
+command: io.github.yukigram.devel
 finish-args:
   - --share=ipc
   - --share=network
@@ -23,7 +23,7 @@ modules:
     buildsystem: simple
     build-commands:
       - cp -r ./. /app/
-      - chmod +x /app/bin/io.github.yukigram
+      - chmod +x /app/bin/io.github.yukigram.devel
     sources:
       - type: dir
         path: ../../yukigram-worktree/app/
