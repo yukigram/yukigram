@@ -100,7 +100,7 @@ index 62fe4d7751..e4771e1558 100644
  		{ Flag::SendReactions, tr::lng_admin_log_banned_send_reactions },
  		{ Flag::SendPolls, tr::lng_admin_log_banned_send_polls },
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 97d7a73ffe..597a137669 100644
+index ede7554fd9..bd31c144f7 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -9916,7 +9916,7 @@ bool HistoryWidget::sendExistingDocument(

@@ -89,7 +89,7 @@ index a6d4808730..d8a0dd6f41 100644
  					}
  					auto widthForDate = maxwidth - st::msgServiceMargin.left() - st::msgServiceMargin.left();
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index fce07fb15e..92a0b1273e 100644
+index fce07fb15e..55ef46e4d4 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -16,6 +16,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -105,7 +105,7 @@ index fce07fb15e..92a0b1273e 100644
  	}
  	accumulate_min(contentWidth, maxWidth());
 -	_bubbleWidthLimit = (UnlimitedMessageWidth.value() && !mediaDisplayed)
-+	_bubbleWidthLimit = (Yukigram::Settings::WideMessages->current() || UnlimitedMessageWidth.value() && !mediaDisplayed)
++	_bubbleWidthLimit = (Yukigram::Settings::WideMessages->current() || (UnlimitedMessageWidth.value() && !mediaDisplayed))
  		? 0x3FFFFFF
  		: std::max({
  			st::msgMaxWidth,

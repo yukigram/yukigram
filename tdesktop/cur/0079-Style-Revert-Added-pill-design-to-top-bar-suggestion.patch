@@ -6,7 +6,7 @@ Subject: [PATCH] (Style) Revert "Added pill design to top bar suggestion."
 This reverts commit 5a7621eef9c201b84f8c7a178d17a59e645f426a.
 
 diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_top_bar_suggestion_content.cpp b/Telegram/SourceFiles/dialogs/ui/dialogs_top_bar_suggestion_content.cpp
-index edd25d571b..67003723fd 100644
+index edd25d571b..ba4dface1e 100644
 --- a/Telegram/SourceFiles/dialogs/ui/dialogs_top_bar_suggestion_content.cpp
 +++ b/Telegram/SourceFiles/dialogs/ui/dialogs_top_bar_suggestion_content.cpp
 @@ -111,6 +111,10 @@ int PaintSuggestionBubbleBackground(
@@ -116,10 +116,11 @@ index edd25d571b..67003723fd 100644
  	}, _rightButton->lifetime());
  	_rightButton->setFullRadius(true);
  	_rightButton->setClickedCallback(std::move(callback));
-@@ -447,20 +421,9 @@ void TopBarSuggestionContent::draw(QPainter &p) {
+@@ -446,21 +420,9 @@ void TopBarSuggestionContent::draw(QPainter &p) {
+ 	};
  	if (TopBarSuggestionNarrow(width())) {
  		setControlsVisible(false);
- 		const auto &margins = st::dialogsTopBarSuggestionMargins;
+-		const auto &margins = st::dialogsTopBarSuggestionMargins;
 -		const auto pill = outer - margins;
 -		const auto radius = PaintSuggestionBubbleBackground(
 -			p,
@@ -139,7 +140,7 @@ index edd25d571b..67003723fd 100644
  		const auto accentSide = st::dialogsRequestsBubbleIconSize;
  		const auto accent = QRect(
  			pill.x() + (pill.width() - accentSide) / 2,
-@@ -476,31 +439,17 @@ void TopBarSuggestionContent::draw(QPainter &p) {
+@@ -476,31 +438,17 @@ void TopBarSuggestionContent::draw(QPainter &p) {
  		return;
  	}
  	setControlsVisible(true);
@@ -181,7 +182,7 @@ index edd25d571b..67003723fd 100644
  	const auto availableWidthNoPhoto = outer.width()
  		- (_rightArrow
  			? (_rightArrow->width() / 4 * 3) // Takes full height.
-@@ -566,10 +515,10 @@ void TopBarSuggestionContent::draw(QPainter &p) {
+@@ -566,10 +514,10 @@ void TopBarSuggestionContent::draw(QPainter &p) {
  		auto st = Ui::UnreadBadgeStyle();
  		const auto rightInset = _geometry.rightInset
  			? _geometry.rightInset
@@ -194,7 +195,7 @@ index edd25d571b..67003723fd 100644
  			+ (_geometry.cardInnerHeight - st.size) / 2;
  		Ui::PaintUnreadBadge(p, _rightBadgeText, badgeRight, badgeTop, st);
  	}
-@@ -640,25 +589,21 @@ int TopBarSuggestionContent::resizeGetHeight(int newWidth) {
+@@ -640,25 +588,21 @@ int TopBarSuggestionContent::resizeGetHeight(int newWidth) {
  			fullHeight * (1. - _collapseProgress)));
  	}
  	if (TopBarSuggestionNarrow(newWidth)) {
@@ -222,7 +223,7 @@ index edd25d571b..67003723fd 100644
  		- (_rightArrow
  			? (_rightArrow->width() / 4 * 3) // Takes full height.
  			: 0)
-@@ -666,7 +611,7 @@ int TopBarSuggestionContent::resizeGetHeight(int newWidth) {
+@@ -666,7 +610,7 @@ int TopBarSuggestionContent::resizeGetHeight(int newWidth) {
  	const auto availableWidth = availableWidthNoPhoto
  		- (_rightHide ? _rightHide->width() : 0);
  	if (availableWidth <= 0) {
@@ -231,7 +232,7 @@ index edd25d571b..67003723fd 100644
  	}
  	const auto hasSecondLineTitle
  		= (availableWidth < _contentTitle.maxWidth());
-@@ -697,8 +642,7 @@ int TopBarSuggestionContent::resizeGetHeight(int newWidth) {
+@@ -697,8 +641,7 @@ int TopBarSuggestionContent::resizeGetHeight(int newWidth) {
  	const auto capped = std::min(
  		natural,
  		st::sponsoredMessageBarMaxHeight);
@@ -241,7 +242,7 @@ index edd25d571b..67003723fd 100644
  }
  
  void TopBarSuggestionContent::setCollapseProgress(
-@@ -738,25 +682,15 @@ void TopBarSuggestionContent::setLeadingWidget(Ui::RpWidget *widget) {
+@@ -738,25 +681,15 @@ void TopBarSuggestionContent::setLeadingWidget(Ui::RpWidget *widget) {
  	}
  	widget->setParent(this);
  	widget->setAttribute(Qt::WA_TransparentForMouseEvents);

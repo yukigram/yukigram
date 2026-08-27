@@ -5,7 +5,7 @@ Subject: [PATCH] (Compose)(Opt) Show scheduled messages button
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index e664d33def..bbf1e1e665 100644
+index e664d33def..ef62bbf999 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -36,6 +36,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,15 +16,18 @@ index e664d33def..bbf1e1e665 100644
  #include "ui/emoji_config.h"
  #include "ui/chat/attach/attach_prepare.h"
  #include "ui/chat/choose_theme_controller.h"
-@@ -3851,7 +3852,7 @@ void HistoryWidget::setupScheduledToggle() {
+@@ -3851,9 +3852,9 @@ void HistoryWidget::setupScheduledToggle() {
  }
  
  void HistoryWidget::refreshScheduledToggle() {
 -	const auto has = _history
-+	const auto has = Yukigram::Settings::AlwaysShowScheduled->current() || _history
++	const auto has = Yukigram::Settings::AlwaysShowScheduled->current() || (_history
  		&& _canSendMessages
- 		&& (session().scheduledMessages().count(_history) > 0);
+-		&& (session().scheduledMessages().count(_history) > 0);
++		&& (session().scheduledMessages().count(_history) > 0));
  	if (!_scheduled && has) {
+ 		_scheduled.create(this, st::historyScheduledToggle);
+ 		_scheduled->setAccessibleName(tr::lng_scheduled_messages(tr::now));
 diff --git a/Telegram/SourceFiles/yukigram/settings/always_show_scheduled.cpp b/Telegram/SourceFiles/yukigram/settings/always_show_scheduled.cpp
 new file mode 100644
 index 0000000000..6962836dd6
