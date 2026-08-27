@@ -75,7 +75,7 @@ index 375eb8052b..fc0fbc50bc 100644
  }
  
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
-index 6a90b133fc..c0e00bc658 100644
+index 46cb954299..09673deeee 100644
 --- a/Telegram/SourceFiles/history/history_item.cpp
 +++ b/Telegram/SourceFiles/history/history_item.cpp
 @@ -1469,7 +1469,7 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
@@ -87,7 +87,7 @@ index 6a90b133fc..c0e00bc658 100644
  	}
  	return QString();
  }
-@@ -8507,7 +8507,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
+@@ -8556,7 +8556,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
  	};
  	const auto time = QLocale().toString(
  		scheduled.time(),
@@ -221,10 +221,10 @@ index 7ac9707b79..1d6602481b 100644
  [[nodiscard]] rpl::producer<> Updated();
  [[nodiscard]] QString GetNonDefaultValue(const QByteArray &key);
 diff --git a/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp b/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
-index 3b078113b3..a8aa9e743a 100644
+index 6851dee06d..f4e23c02a0 100644
 --- a/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
 +++ b/Telegram/SourceFiles/ui/controls/who_reacted_context_action.cpp
-@@ -673,7 +673,7 @@ void WhenAction::resolveMinWidth() {
+@@ -672,7 +672,7 @@ void WhenAction::resolveMinWidth() {
  	const auto sampleDate = QDate::currentDate();
  	const auto sampleTime = QLocale().toString(
  		QTime::currentTime(),

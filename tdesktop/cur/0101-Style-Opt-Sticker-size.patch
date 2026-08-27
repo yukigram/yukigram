@@ -17,7 +17,7 @@ index 4ef4cc7be1..67c31f4874 100644
  
  [[nodiscard]] QImage CacheDiceImage(
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index 82b3d01391..f75704ccb6 100644
+index 723b1ebb9e..bb029c51f0 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
 @@ -167,7 +167,7 @@ mediaInPaletteSelected: TextPalette(defaultTextPalette) {
@@ -30,32 +30,33 @@ index 82b3d01391..f75704ccb6 100644
  maxGifSize: 320px;
  maxVideoMessageSize: 240px;
 diff --git a/Telegram/SourceFiles/window/window_media_preview.cpp b/Telegram/SourceFiles/window/window_media_preview.cpp
-index 45ae3784dc..be894c853d 100644
+index 7f09c2e3c7..6a13e9dd7a 100644
 --- a/Telegram/SourceFiles/window/window_media_preview.cpp
 +++ b/Telegram/SourceFiles/window/window_media_preview.cpp
-@@ -362,16 +362,18 @@ QSize MediaPreviewWidget::currentDimensions() const {
- 				result = QSize(gif->width(), gif->height());
- 			}
+@@ -25,6 +25,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "ui/ui_utility.h"
+ #include "window/window_session_controller.h"
+ #include "yukigram/settings/large_sticker_preview.h"
++#include "yukigram/settings/sticker_size.h"
+ #include "styles/style_chat_helpers.h"
+ #include "styles/style_chat.h"
+ 
+@@ -377,12 +378,11 @@ QSize MediaPreviewWidget::currentDimensions() const {
  		}
-+		const auto maxStickerSize = 224;
+ 		const auto max = _maxContentSize
+ 			? _maxContentSize
+-			: st::maxStickerSize;
++			: Yukigram::Settings::LargeStickerPreview->current()
++			? st::maxStickerSize
++			: Yukigram::Settings::StickerSize->current();
  		if (_document->sticker()) {
-+		if (Yukigram::Settings::LargeStickerPreview->current()) {
- 			box = QSize(st::maxStickerSize, st::maxStickerSize);
+ 			box = QSize(max, max);
 -			if (Yukigram::Settings::LargeStickerPreview->current()) {
 -				box *= 2;
 -			}
-+		} else {
-+			box = QSize(maxStickerSize, maxStickerSize);
-+		}
  			if (_document->isPremiumSticker()) {
  				result = (box /= kPremiumDownscale);
  			}
- 		} else {
--			box = QSize(2 * st::maxStickerSize, 2 * st::maxStickerSize);
-+			box = QSize(2 * maxStickerSize, 2 * maxStickerSize);
- 		}
- 	}
- 	result = QSize(
 diff --git a/Telegram/SourceFiles/yukigram/settings/sticker_size.cpp b/Telegram/SourceFiles/yukigram/settings/sticker_size.cpp
 new file mode 100644
 index 0000000000..82c6463771

@@ -18,7 +18,7 @@ index 9bf8912af4..11d1abe174 100644
  }
  
 diff --git a/Telegram/SourceFiles/core/version.h b/Telegram/SourceFiles/core/version.h
-index 41f4530b84..cbf0afb1df 100644
+index 2695572e0a..ea8ead47e5 100644
 --- a/Telegram/SourceFiles/core/version.h
 +++ b/Telegram/SourceFiles/core/version.h
 @@ -20,8 +20,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -29,8 +29,8 @@ index 41f4530b84..cbf0afb1df 100644
 -constexpr auto AppFile = "Telegram"_cs;
 +constexpr auto AppName = "Yukigram"_cs;
 +constexpr auto AppFile = "yukigram"_cs;
- constexpr auto AppVersion = 7001002;
- constexpr auto AppVersionStr = "7.1.2";
+ constexpr auto AppVersion = 7001003;
+ constexpr auto AppVersionStr = "7.1.3";
  constexpr auto AppBetaVersion = false;
 diff --git a/Telegram/SourceFiles/intro/intro_start.cpp b/Telegram/SourceFiles/intro/intro_start.cpp
 index d1b835a09a..a871886d76 100644
@@ -59,10 +59,10 @@ index 28e0f9f07a..6e525994db 100644
  
  		st::notifyClose.icon.paint(p, w - st::notifyClosePos.x() - st::notifyClose.width + st::notifyClose.iconPosition.x(), st::notifyClosePos.y() + st::notifyClose.iconPosition.y(), w);
 diff --git a/Telegram/SourceFiles/window/main_window.cpp b/Telegram/SourceFiles/window/main_window.cpp
-index ae6ff42e1e..4798a35e45 100644
+index 847b7525f8..2bb1efebe7 100644
 --- a/Telegram/SourceFiles/window/main_window.cpp
 +++ b/Telegram/SourceFiles/window/main_window.cpp
-@@ -861,7 +861,7 @@ void MainWindow::updateTitle() {
+@@ -871,7 +871,7 @@ void MainWindow::updateTitle() {
  		: Dialogs::Key();
  	const auto thread = key ? key.thread() : nullptr;
  	if (!thread) {

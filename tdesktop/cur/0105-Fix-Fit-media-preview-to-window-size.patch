@@ -5,12 +5,12 @@ Subject: [PATCH] (Fix) Fit media preview to window size
 
 
 diff --git a/Telegram/SourceFiles/window/window_media_preview.cpp b/Telegram/SourceFiles/window/window_media_preview.cpp
-index be894c853d..9321937ad0 100644
+index 6a13e9dd7a..0743147dd8 100644
 --- a/Telegram/SourceFiles/window/window_media_preview.cpp
 +++ b/Telegram/SourceFiles/window/window_media_preview.cpp
-@@ -375,6 +375,7 @@ QSize MediaPreviewWidget::currentDimensions() const {
+@@ -389,6 +389,7 @@ QSize MediaPreviewWidget::currentDimensions() const {
  		} else {
- 			box = QSize(2 * maxStickerSize, 2 * maxStickerSize);
+ 			box = QSize(2 * max, 2 * max);
  		}
 +		box = QSize(std::min(box.width(), width() - 30), std::min(box.height(), height() - 100));
  	}

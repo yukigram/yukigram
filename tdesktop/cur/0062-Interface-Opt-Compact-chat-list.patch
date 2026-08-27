@@ -51,7 +51,7 @@ index 1eb99adc64..6c3b3df7cb 100644
  		return false;
  	}
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-index 5e4cf619c8..6e947d24a7 100644
+index d471d7e232..c71e8ef27d 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 @@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -62,7 +62,7 @@ index 5e4cf619c8..6e947d24a7 100644
  #include "data/components/sponsored_messages.h"
  #include "data/data_drafts.h"
  #include "data/data_folder.h"
-@@ -396,6 +397,7 @@ InnerWidget::InnerWidget(
+@@ -397,6 +398,7 @@ InnerWidget::InnerWidget(
  	Ui::ScheduleThanosEffectWarmUp(&session(), lifetime());
  
  	rpl::merge(
@@ -70,7 +70,7 @@ index 5e4cf619c8..6e947d24a7 100644
  		session().settings().archiveCollapsedChanges() | rpl::map_to(false),
  		session().data().chatsFilters().changed() | rpl::map_to(true),
  		session().data().chatsFilters().tagsEnabledChanges(
-@@ -1070,7 +1072,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
+@@ -1071,7 +1073,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
  			}
  		}
  
@@ -80,7 +80,7 @@ index 5e4cf619c8..6e947d24a7 100644
  
  		const auto videoUserpic = validateVideoUserpic(row);
  		const auto cacheRatio = style::DevicePixelRatio();
-@@ -2082,7 +2086,7 @@ void InnerWidget::performDrag() {
+@@ -2083,7 +2087,7 @@ void InnerWidget::performDrag() {
  			('@' + u).toUtf8());
  	}
  
@@ -89,7 +89,7 @@ index 5e4cf619c8..6e947d24a7 100644
  	auto pixmap = QPixmap(Size(st.height * style::DevicePixelRatio()));
  	pixmap.setDevicePixelRatio(style::DevicePixelRatio());
  	pixmap.fill(Qt::transparent);
-@@ -6026,7 +6030,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
+@@ -6052,7 +6056,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
  		: st::dialogsCallBadgeSize;
  	const auto stroke = st::dialogsOnlineBadgeStroke;
  	const auto skip = user

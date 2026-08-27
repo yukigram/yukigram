@@ -92,10 +92,10 @@ index 1f3189ad4b..0a39f57828 100644
  	const auto chat = channel->migrateFrom();
  
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index 7e4b812045..795311feff 100644
+index 8f074195f2..27fbb90e50 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
-@@ -49,6 +49,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -50,6 +50,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "boxes/peers/edit_contact_box.h"
  #include "boxes/peers/prepare_short_info_box.h"
  #include "calls/calls_instance.h"
@@ -103,7 +103,7 @@ index 7e4b812045..795311feff 100644
  #include "inline_bots/bot_attach_web_view.h" // InlineBots::PeerType.
  #include "ui/toast/toast.h"
  #include "ui/text/format_values.h"
-@@ -4355,6 +4356,10 @@ Fn<void()> ClearHistoryHandler(
+@@ -4318,6 +4319,10 @@ Fn<void()> ClearHistoryHandler(
  		not_null<PeerData*> peer) {
  	return [=] {
  		if (!controller->showFrozenError()) {

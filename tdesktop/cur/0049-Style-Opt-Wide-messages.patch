@@ -26,7 +26,7 @@ index 4064f9d25f..3f9b97fb18 100644
  		return std::make_unique<HistoryView::Photo>(
  			message,
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index f73ca399dc..d8091323e5 100644
+index 2b43c6f512..dc407f1463 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -15,6 +15,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -37,7 +37,7 @@ index f73ca399dc..d8091323e5 100644
  #include "history/history_item_helpers.h"
  #include "history/view/controls/history_view_forward_panel.h"
  #include "history/view/controls/history_view_draft_options.h"
-@@ -5504,7 +5505,7 @@ void HistoryInner::mouseActionUpdate() {
+@@ -5498,7 +5499,7 @@ void HistoryInner::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = _contentWidth;
@@ -68,7 +68,7 @@ index 071c4c1cef..9de8024212 100644
  			maxwidth,
  			st::msgMaxWidth
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 0db904189a..613aeb3852 100644
+index a6d4808730..d8a0dd6f41 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -79,7 +79,7 @@ index 0db904189a..613aeb3852 100644
  #include "history/history.h"
  #include "history/history_item.h"
  #include "history/history_item_components.h"
-@@ -5111,7 +5112,7 @@ void ListWidget::mouseActionUpdate() {
+@@ -5149,7 +5150,7 @@ void ListWidget::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = view->width();
@@ -89,7 +89,7 @@ index 0db904189a..613aeb3852 100644
  					}
  					auto widthForDate = maxwidth - st::msgServiceMargin.left() - st::msgServiceMargin.left();
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 8aa9f5ff7e..77732ce8fa 100644
+index fce07fb15e..92a0b1273e 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -16,6 +16,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -243,7 +243,7 @@ index 49f1e0b080..2d0d513383 100644
  
  QSize CountMediaSize(QSize desired, int newWidth) {
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_media_grouped.cpp b/Telegram/SourceFiles/history/view/media/history_view_media_grouped.cpp
-index 8849f1f984..fa8bb1f169 100644
+index c7878ff937..f8023d2f2e 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_media_grouped.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_media_grouped.cpp
 @@ -13,6 +13,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -357,7 +357,7 @@ index f8eed07d0f..d373a69516 100644
  		st.pagePadding.left()
  			+ st.pagePadding.right()
 diff --git a/Telegram/SourceFiles/iv/markdown/iv_markdown_history_view_media.cpp b/Telegram/SourceFiles/iv/markdown/iv_markdown_history_view_media.cpp
-index 630cab682d..a4dce54639 100644
+index 98a765ab35..acf89ea3a9 100644
 --- a/Telegram/SourceFiles/iv/markdown/iv_markdown_history_view_media.cpp
 +++ b/Telegram/SourceFiles/iv/markdown/iv_markdown_history_view_media.cpp
 @@ -48,6 +48,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -366,9 +366,9 @@ index 630cab682d..a4dce54639 100644
  #include "window/window_session_controller.h"
 +#include "styles/style_chat.h"
  
+ #include "rpl/event_stream.h"
  #include "rpl/filter.h"
- #include "rpl/lifetime.h"
-@@ -990,6 +991,7 @@ int IvHistoryViewSlideshowBlock::frameHeight(int width) const {
+@@ -1009,6 +1010,7 @@ int IvHistoryViewSlideshowBlock::frameHeight(int width) const {
  	for (const auto &original : _slideOriginalSizes) {
  		const auto natural = MediaHeightForWidth(
  			outer,

@@ -7,10 +7,10 @@ This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index d31bcb6de6..7040c15620 100644
+index a53e315b54..e664d33def 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -11278,10 +11278,6 @@ void HistoryWidget::paintEditHeader(
+@@ -11298,10 +11298,6 @@ void HistoryWidget::paintEditHeader(
  		- timeSinceMessage;
  	if (editTimeLeft < 2) {
  		editTimeLeftText = u"0:00"_q;
@@ -21,7 +21,7 @@ index d31bcb6de6..7040c15620 100644
  	} else {
  		updateIn = static_cast<int>(editTimeLeft % 1000);
  		if (!updateIn) {
-@@ -11290,9 +11286,9 @@ void HistoryWidget::paintEditHeader(
+@@ -11310,9 +11306,9 @@ void HistoryWidget::paintEditHeader(
  		++updateIn;
  
  		editTimeLeft = (editTimeLeft - 1) / 1000; // seconds

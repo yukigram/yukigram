@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/boxes/sticker_set_box.cpp b/Telegram/SourceFiles/boxes/sticker_set_box.cpp
-index f88068134c..a588fc5e0d 100644
+index 9d1e8345ab..2803ff5e27 100644
 --- a/Telegram/SourceFiles/boxes/sticker_set_box.cpp
 +++ b/Telegram/SourceFiles/boxes/sticker_set_box.cpp
 @@ -30,6 +30,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -18,7 +18,7 @@ index f88068134c..a588fc5e0d 100644
  #include "lottie/lottie_animation.h"
  #include "lottie/lottie_multi_player.h"
  #include "main/main_session.h"
-@@ -76,6 +77,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -77,6 +78,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "styles/style_info.h"
  #include "styles/style_menu_icons.h"
  #include "styles/style_premium.h"
@@ -26,7 +26,7 @@ index f88068134c..a588fc5e0d 100644
  
  #include <QtWidgets/QApplication>
  #include <QtGui/QClipboard>
-@@ -996,6 +998,24 @@ void StickerSetBox::updateButtons() {
+@@ -1007,6 +1009,24 @@ void StickerSetBox::updateButtons() {
  				menu->addAction(std::move(item));
  			});
  		}();
@@ -51,7 +51,7 @@ index f88068134c..a588fc5e0d 100644
  		if (_inner->notInstalled()) {
  			if (!_session->premium()
  				&& _session->premiumPossible()
-@@ -1091,6 +1111,7 @@ void StickerSetBox::updateButtons() {
+@@ -1102,6 +1122,7 @@ void StickerSetBox::updateButtons() {
  					tr::lng_context_copy_link(tr::now),
  					copyLink,
  					&st::menuIconCopy);

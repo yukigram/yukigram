@@ -7,7 +7,7 @@ This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 77732ce8fa..b379a24b2a 100644
+index 92a0b1273e..a536e0a5f0 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -61,6 +61,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -102,10 +102,10 @@ index 77732ce8fa..b379a24b2a 100644
  			recordLinkRipplePoint(point, trect.topLeft());
  			_fromLinkRipplePointSet = 1;
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index 3f2cb7a8b5..b31a08c531 100644
+index 94fe2aaeb5..dd42355ff6 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
-@@ -574,6 +574,17 @@ historyAudioRadialLine: 2px;
+@@ -579,6 +579,17 @@ historyAudioRadialLine: 2px;
  historyAudioDownloadShift: 28px;
  
  

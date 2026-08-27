@@ -5,7 +5,7 @@ Subject: [PATCH] (Style) Fix button rounding in history top bar
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
-index 9139c16129..05dbc36488 100644
+index 40af6e89fd..5326df9c92 100644
 --- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 @@ -1183,6 +1183,7 @@ void TopBarWidget::updateControlsGeometry() {
