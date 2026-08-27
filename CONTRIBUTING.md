@@ -241,9 +241,11 @@ git am -3 ../yukigram/tdesktop
 
 - Be not afraid
 - Enable [git-rerere]
+- Try [mergiraf]
 - Maybe some more?
 
 [git-rerere]: https://git-scm.com/docs/git-rerere
+[mergiraf]: https://mergiraf.org
 
 ## Adding a new patch
 
