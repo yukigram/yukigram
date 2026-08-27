@@ -294,6 +294,18 @@ cd tdesktop
 ../yukigram/s/rebase
 ```
 
+Alternatively, you can try using experimental [`git history`][git-history] command:
+
+```shell
+cd tdesktop
+git log --oneline # determine relevant commit id
+git history fixup COMMIT
+```
+
+This way history will be rewritten automatically without calling rebase script afterwards.
+
+[git-history]: https://git-scm.com/docs/git-history
+
 ## Formatting patches
 
 ```shell
