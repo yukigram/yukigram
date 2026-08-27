@@ -30,7 +30,7 @@ index 723b1ebb9e..bb029c51f0 100644
  maxGifSize: 320px;
  maxVideoMessageSize: 240px;
 diff --git a/Telegram/SourceFiles/window/window_media_preview.cpp b/Telegram/SourceFiles/window/window_media_preview.cpp
-index 7f09c2e3c7..6a13e9dd7a 100644
+index 0252315a8e..6a13e9dd7a 100644
 --- a/Telegram/SourceFiles/window/window_media_preview.cpp
 +++ b/Telegram/SourceFiles/window/window_media_preview.cpp
 @@ -25,6 +25,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -41,22 +41,17 @@ index 7f09c2e3c7..6a13e9dd7a 100644
  #include "styles/style_chat_helpers.h"
  #include "styles/style_chat.h"
  
-@@ -377,12 +378,11 @@ QSize MediaPreviewWidget::currentDimensions() const {
- 		}
+@@ -378,8 +379,8 @@ QSize MediaPreviewWidget::currentDimensions() const {
  		const auto max = _maxContentSize
  			? _maxContentSize
+ 			: Yukigram::Settings::LargeStickerPreview->current()
+-			? 512
 -			: st::maxStickerSize;
-+			: Yukigram::Settings::LargeStickerPreview->current()
 +			? st::maxStickerSize
 +			: Yukigram::Settings::StickerSize->current();
  		if (_document->sticker()) {
  			box = QSize(max, max);
--			if (Yukigram::Settings::LargeStickerPreview->current()) {
--				box *= 2;
--			}
  			if (_document->isPremiumSticker()) {
- 				result = (box /= kPremiumDownscale);
- 			}
 diff --git a/Telegram/SourceFiles/yukigram/settings/sticker_size.cpp b/Telegram/SourceFiles/yukigram/settings/sticker_size.cpp
 new file mode 100644
 index 0000000000..82c6463771
