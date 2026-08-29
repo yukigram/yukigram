@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p bash jq nix-prefetch-git
+#! nix-shell -i bash -p bash jaq nix-prefetch-git
 set -exuo pipefail
 
 info() { printf "\033[36m[INFO]\033[0m: %s\n" "$@"; }
@@ -24,7 +24,7 @@ Hash=$(
         --rev "$Version" \
         --fetch-submodules \
         --no-add-path \
-    | jq .hash
+    | jaq .hash
 )
 
 sed -i -E -f - .github/workflows/bincache.yml <<EOF
