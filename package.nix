@@ -9,13 +9,13 @@ telegram-desktop.overrideAttrs (final: prev: {
   pname = "yukigram";
   unwrapped = prev.unwrapped.overrideAttrs (final: prev: {
     pname = "yukigram-unwrapped";
-    version = "7.1.5.0-rc.1+wip";
+    version = "7.1.5.0";
     src = prev.src.overrideAttrs {
       rev = "v7.1.5";
       hash = "sha256-FbenDWiv4fxb6GHHsP0P7VLoMk6h+BYcfpomvS22b/c=";
     };
     cmakeFlags = prev.cmakeFlags ++ [
-      (lib.cmakeBool "DEVEL" true)
+      (lib.cmakeBool "DEVEL" false)
     ];
     patches = let
       readDir' = d: lib.pipe d [builtins.readDir builtins.attrNames (map (lib.path.append d))];
@@ -25,7 +25,7 @@ telegram-desktop.overrideAttrs (final: prev: {
       description = "Telegram Desktop, minus the bullshit, plus the features";
       homepage = "https://github.com/yukigram/yukigram";
       changelog = "https://github.com/yukigram/yukigram/releases";
-      mainProgram = "io.github.yukigram.devel";
+      mainProgram = "io.github.yukigram";
     };
     # 7.1 broke non-bundled cmark-gfm?
     buildInputs = lib.remove cmark-gfm prev.buildInputs;
