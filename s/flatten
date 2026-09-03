@@ -4,7 +4,7 @@ set -exuo pipefail
 test -f .gitmodules
 test -d .git
 # delete submodule traces
-find -type f -\( -name .git -o -name .gitmodules -\) -delete
+find -type f \( -name .git -o -name .gitmodules \) -delete
 # delete config leftovers
 <.git/config awk '/^\[/{s=0;} /^\[submodule/{s=1;} //{if (!s) print;}' | sponge .git/config
 # force git to update index
