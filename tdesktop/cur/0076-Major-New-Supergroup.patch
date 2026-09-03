@@ -7,10 +7,10 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/window/window_main_menu.cpp b/Telegram/SourceFiles/window/window_main_menu.cpp
-index b724eb2774..9ac239bf31 100644
+index 0b337fab24..c36247fa14 100644
 --- a/Telegram/SourceFiles/window/window_main_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_main_menu.cpp
-@@ -32,6 +32,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -33,6 +33,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "info/profile/info_profile_icon.h"
  #include "info/stories/info_stories_widget.h"
  #include "lang/lang_keys.h"
@@ -18,7 +18,7 @@ index b724eb2774..9ac239bf31 100644
  #include "main/main_account.h"
  #include "main/main_domain.h"
  #include "main/main_session.h"
-@@ -685,6 +686,15 @@ void MainMenu::setupMenu() {
+@@ -689,6 +690,15 @@ void MainMenu::setupMenu() {
  			}
  		});
  

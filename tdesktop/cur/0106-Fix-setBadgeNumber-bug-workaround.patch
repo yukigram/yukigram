@@ -18,7 +18,7 @@ I'm unsure whether it is really a Qt bug or I'm just unlucky to have hit
 this corner case, because I set applicationName to application id...
 
 diff --git a/Telegram/SourceFiles/platform/linux/main_window_linux.cpp b/Telegram/SourceFiles/platform/linux/main_window_linux.cpp
-index abf764ba2d..4a641ae87a 100644
+index 5c09c6b57a..67e3e85344 100644
 --- a/Telegram/SourceFiles/platform/linux/main_window_linux.cpp
 +++ b/Telegram/SourceFiles/platform/linux/main_window_linux.cpp
 @@ -154,9 +154,9 @@ void MainWindow::updateWindowIcon() {

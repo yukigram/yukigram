@@ -5,10 +5,10 @@ Subject: [PATCH] (Yukigram) Branding
 
 
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
-index 11d1abe174..0b6c68a289 100644
+index 2556fcbe47..e02325295a 100644
 --- a/Telegram/SourceFiles/boxes/about_box.cpp
 +++ b/Telegram/SourceFiles/boxes/about_box.cpp
-@@ -13,6 +13,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -14,6 +14,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "core/update_checker.h"
  #include "core/version.h"
  #include "lang/lang_keys.h"
@@ -16,7 +16,7 @@ index 11d1abe174..0b6c68a289 100644
  #include "ui/boxes/confirm_box.h"
  #include "ui/painter.h"
  #include "ui/rect.h"
-@@ -35,10 +36,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -36,10 +37,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  namespace {
  
  rpl::producer<TextWithEntities> Text1() {
@@ -29,7 +29,7 @@ index 11d1abe174..0b6c68a289 100644
  }
  
  rpl::producer<TextWithEntities> Text2() {
-@@ -55,10 +54,9 @@ rpl::producer<TextWithEntities> Text2() {
+@@ -56,10 +55,9 @@ rpl::producer<TextWithEntities> Text2() {
  }
  
  rpl::producer<TextWithEntities> Text3() {
@@ -43,7 +43,7 @@ index 11d1abe174..0b6c68a289 100644
  }
  
  } // namespace
-@@ -311,4 +309,3 @@ void ArchiveHintBox(
+@@ -331,4 +329,3 @@ void ArchiveHintBox(
  		box->addButton(std::move(button));
  	}
  }

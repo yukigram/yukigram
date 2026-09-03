@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface)(Opt) Custom monospace font
 
 
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
-index 75dbe1efbb..9931baabb2 100644
+index ef757e3aba..adcc3380ea 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
 +++ b/Telegram/SourceFiles/core/launcher.cpp
 @@ -26,6 +26,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -19,7 +19,7 @@ index 75dbe1efbb..9931baabb2 100644
  namespace Core {
  namespace {
  
-@@ -389,6 +393,7 @@ int Launcher::exec() {
+@@ -395,6 +399,7 @@ int Launcher::exec() {
  	Logs::start();
  	base::options::init(cWorkingDir() + "tdata/experimental_options.json");
  	Yukigram::Options::init();
@@ -28,7 +28,7 @@ index 75dbe1efbb..9931baabb2 100644
  	// Must be called after options are inited.
  	initHighDpi();
 diff --git a/Telegram/SourceFiles/settings/sections/settings_chat.cpp b/Telegram/SourceFiles/settings/sections/settings_chat.cpp
-index 7df815c378..9642a51bb8 100644
+index 358d192fc5..ff48c64247 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_chat.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_chat.cpp
 @@ -52,6 +52,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -79,7 +79,7 @@ index 7df815c378..9642a51bb8 100644
  }
  
  void BuildCloudThemesSection(SectionBuilder &builder) {
-@@ -2820,7 +2840,7 @@ void SetupThemeSettings(
+@@ -2822,7 +2842,7 @@ void SetupThemeSettings(
  			return result;
  		};
  		controller->show(
@@ -88,7 +88,7 @@ index 7df815c378..9642a51bb8 100644
  	});
  	if (highlights) {
  		highlights->push_back({
-@@ -2829,6 +2849,59 @@ void SetupThemeSettings(
+@@ -2831,6 +2851,59 @@ void SetupThemeSettings(
  		});
  	}
  

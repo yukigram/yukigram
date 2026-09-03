@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Unround messages
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
-index 7a0f4f2666..5d63ddbce2 100644
+index e4e9b3c16a..79e50e4a56 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_gif.cpp
 @@ -40,6 +40,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 7a0f4f2666..5d63ddbce2 100644
  #include "core/application.h" // Application::showDocument.
  #include "core/core_settings.h"
  #include "ui/chat/attach/attach_prepare.h"
-@@ -704,8 +705,10 @@ void Gif::draw(Painter &p, const PaintContext &context) const {
+@@ -745,8 +746,10 @@ void Gif::draw(Painter &p, const PaintContext &context) const {
  			} else {
  				displayMute = true;
  			}
@@ -27,7 +27,7 @@ index 7a0f4f2666..5d63ddbce2 100644
  		} else {
  			request.rounding = MediaRoundingMask(rounding);
  		}
-@@ -762,7 +765,11 @@ void Gif::draw(Painter &p, const PaintContext &context) const {
+@@ -803,7 +806,11 @@ void Gif::draw(Painter &p, const PaintContext &context) const {
  				auto q = QPainter(&frame);
  				fillImageSpoiler(q, _spoiler.get(), rthumb, context);
  			}
@@ -39,7 +39,7 @@ index 7a0f4f2666..5d63ddbce2 100644
  		}
  		p.setOpacity(1.);
  	}
-@@ -1199,9 +1206,13 @@ void Gif::validateThumbCache(
+@@ -1240,9 +1247,13 @@ void Gif::validateThumbCache(
  		return;
  	}
  	auto cache = prepareThumbCache(scaled);

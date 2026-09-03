@@ -5,10 +5,10 @@ Subject: [PATCH] (Yukigram) Version
 
 
 diff --git a/Telegram/SourceFiles/boxes/about_box.cpp b/Telegram/SourceFiles/boxes/about_box.cpp
-index 0b6c68a289..96c9143ae6 100644
+index e02325295a..0326020af2 100644
 --- a/Telegram/SourceFiles/boxes/about_box.cpp
 +++ b/Telegram/SourceFiles/boxes/about_box.cpp
-@@ -62,7 +62,8 @@ rpl::producer<TextWithEntities> Text3() {
+@@ -63,7 +63,8 @@ rpl::producer<TextWithEntities> Text3() {
  } // namespace
  
  void AboutBox(not_null<Ui::GenericBox*> box) {

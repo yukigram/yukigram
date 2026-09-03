@@ -6,10 +6,10 @@ Subject: [PATCH] (Yukigram) Settings page
 Co-Authored-By: Lunya <241520024+lunya-miaou@users.noreply.github.com>
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 0a052a6524..9d9a9d6f9d 100644
+index fbddc83194..99a1797651 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1889,6 +1889,8 @@ PRIVATE
+@@ -1901,6 +1901,8 @@ PRIVATE
      settings/sections/settings_shortcuts.h
      settings/sections/settings_websites.cpp
      settings/sections/settings_websites.h
@@ -19,7 +19,7 @@ index 0a052a6524..9d9a9d6f9d 100644
      storage/details/storage_file_utilities.h
      storage/details/storage_settings_scheme.cpp
 diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
-index d57a556f17..28fc4cf3de 100644
+index 76f9aaebba..74106b0cd0 100644
 --- a/Telegram/Resources/langs/lang.strings
 +++ b/Telegram/Resources/langs/lang.strings
 @@ -870,6 +870,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

@@ -5,7 +5,7 @@ Subject: [PATCH] (Info) Deleted reply ID
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_reply.cpp b/Telegram/SourceFiles/history/view/history_view_reply.cpp
-index 9fbe455fc5..abc4371b78 100644
+index 77dc14c1df..3ff20a796c 100644
 --- a/Telegram/SourceFiles/history/view/history_view_reply.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_reply.cpp
 @@ -25,6 +25,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 9fbe455fc5..abc4371b78 100644
  #include "main/main_session.h"
  #include "ui/chat/chat_style.h"
  #include "ui/effects/ripple_animation.h"
-@@ -693,8 +694,8 @@ void Reply::updateName(
+@@ -717,8 +718,8 @@ void Reply::updateName(
  		_stateText = ((fields.messageId || fields.storyId) && !unavailable)
  			? tr::lng_profile_loading(tr::now)
  			: fields.storyId

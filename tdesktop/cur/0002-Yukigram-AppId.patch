@@ -5,10 +5,10 @@ Subject: [PATCH] (Yukigram) AppId
 
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 105518e3ec..ddc738c631 100644
+index 7175cac767..a6a7cb47b9 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -2162,6 +2162,21 @@ PRIVATE
+@@ -2180,6 +2180,21 @@ PRIVATE
  file(GLOB_RECURSE yuki_src CONFIGURE_DEPENDS "${src_loc}/yukigram/*.cpp" "${src_loc}/yukigram/*.h")
  target_sources(Telegram PRIVATE ${yuki_src})
  
@@ -30,7 +30,7 @@ index 105518e3ec..ddc738c631 100644
  if (APPLE)
      nice_target_sources(Telegram ${src_loc}
      PRIVATE
-@@ -2361,7 +2376,7 @@ else()
+@@ -2379,7 +2394,7 @@ else()
          set(bundle_identifier "com.tdesktop.Telegram")
      endif()
      set(bundle_entitlements "Telegram.entitlements")
@@ -39,7 +39,7 @@ index 105518e3ec..ddc738c631 100644
  endif()
  
  if (CMAKE_GENERATOR STREQUAL Xcode)
-@@ -2407,7 +2422,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+@@ -2425,7 +2440,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
  if (APPLE
      OR is_multi_config
      OR NOT CMAKE_EXECUTABLE_SUFFIX STREQUAL ""
@@ -48,7 +48,7 @@ index 105518e3ec..ddc738c631 100644
      set(output_folder ${CMAKE_BINARY_DIR})
  else()
      set(output_folder ${CMAKE_BINARY_DIR}/bin)
-@@ -2581,30 +2596,37 @@ elseif (build_winstore)
+@@ -2603,30 +2618,37 @@ elseif (build_winstore)
      )
  endif()
  
@@ -132,7 +132,7 @@ index 0000000000..9efde8c043
 +  </qresource>
 +</RCC>
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
-index 2487d4d5bd..7766e23a47 100644
+index ef9f96f1b5..c2a32c9745 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
 +++ b/Telegram/SourceFiles/core/launcher.cpp
 @@ -19,6 +19,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -153,10 +153,10 @@ index 2487d4d5bd..7766e23a47 100644
  #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
  	// fallback session management is useless for tdesktop since it doesn't have
 diff --git a/Telegram/SourceFiles/platform/linux/specific_linux.cpp b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-index a5249ff47a..b758fa94a0 100644
+index e9f4e5b07e..329fee5713 100644
 --- a/Telegram/SourceFiles/platform/linux/specific_linux.cpp
 +++ b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-@@ -21,6 +21,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -22,6 +22,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "core/update_checker.h"
  #include "core/version.h"
  #include "data/data_location.h"
@@ -164,7 +164,7 @@ index a5249ff47a..b758fa94a0 100644
  #include "window/window_controller.h"
  #include "webview/platform/linux/webview_linux_webkitgtk.h"
  
-@@ -232,7 +233,7 @@ bool GenerateDesktopFile(
+@@ -233,7 +234,7 @@ bool GenerateDesktopFile(
  	DEBUG_LOG(("App Info: placing .desktop file to %1").arg(targetPath));
  	if (!QDir(targetPath).exists()) QDir().mkpath(targetPath);
  
@@ -173,7 +173,7 @@ index a5249ff47a..b758fa94a0 100644
  	const auto targetFile = targetPath
  		+ QGuiApplication::desktopFileName()
  		+ u".desktop"_q;
-@@ -371,7 +372,7 @@ bool GenerateDesktopFile(
+@@ -372,7 +373,7 @@ bool GenerateDesktopFile(
  		hashMd5Hex(d.constData(), d.size(), md5Hash);
  
  		if (!Core::Launcher::Instance().customWorkingDir()) {
@@ -182,7 +182,7 @@ index a5249ff47a..b758fa94a0 100644
  				targetPath,
  				md5Hash));
  
-@@ -380,7 +381,7 @@ bool GenerateDesktopFile(
+@@ -381,7 +382,7 @@ bool GenerateDesktopFile(
  			hashMd5Hex(exePath.constData(), exePath.size(), md5Hash);
  		}
  
@@ -191,7 +191,7 @@ index a5249ff47a..b758fa94a0 100644
  			targetPath,
  			md5Hash));
  	}
-@@ -439,7 +440,7 @@ bool GenerateServiceFile(bool silent = false) {
+@@ -440,7 +441,7 @@ bool GenerateServiceFile(bool silent = false) {
  		const auto d = QFile::encodeName(QDir(cWorkingDir()).absolutePath());
  		hashMd5Hex(d.constData(), d.size(), md5Hash);
  
@@ -200,7 +200,7 @@ index a5249ff47a..b758fa94a0 100644
  			targetPath,
  			md5Hash));
  	}
-@@ -737,11 +738,11 @@ void start() {
+@@ -738,11 +739,11 @@ void start() {
  		}
  
  		if (!Core::UpdaterDisabled()) {

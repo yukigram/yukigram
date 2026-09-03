@@ -5,7 +5,7 @@ Subject: [PATCH] (Yukigram) Options framework
 
 
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
-index 7766e23a47..75dbe1efbb 100644
+index c2a32c9745..ef757e3aba 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
 +++ b/Telegram/SourceFiles/core/launcher.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 7766e23a47..75dbe1efbb 100644
  
  #include <QtCore/QLoggingCategory>
  #include <QtCore/QStandardPaths>
-@@ -387,6 +388,7 @@ int Launcher::exec() {
+@@ -393,6 +394,7 @@ int Launcher::exec() {
  	// Must be started before Platform is started.
  	Logs::start();
  	base::options::init(cWorkingDir() + "tdata/experimental_options.json");
@@ -24,7 +24,7 @@ index 7766e23a47..75dbe1efbb 100644
  
  	// Must be called after options are inited.
  	initHighDpi();
-@@ -630,6 +632,7 @@ void Launcher::processArguments() {
+@@ -637,6 +639,7 @@ void Launcher::processArguments() {
  int Launcher::executeApplication() {
  	FilteredCommandLineArguments arguments(_argc, _argv);
  	Sandbox sandbox(arguments.count(), arguments.values());

@@ -40,10 +40,10 @@ index 6c8c4ad8df..e3570634ad 100644
  
  bool WhoReadExists(not_null<HistoryItem*> item) {
 diff --git a/Telegram/SourceFiles/data/data_peer_values.cpp b/Telegram/SourceFiles/data/data_peer_values.cpp
-index 375eb8052b..fc0fbc50bc 100644
+index fe008ba767..4bc10525f9 100644
 --- a/Telegram/SourceFiles/data/data_peer_values.cpp
 +++ b/Telegram/SourceFiles/data/data_peer_values.cpp
-@@ -483,10 +483,10 @@ QString OnlineText(Data::LastseenStatus status, TimeId now) {
+@@ -487,10 +487,10 @@ QString OnlineText(Data::LastseenStatus status, TimeId now) {
  	const auto nowFull = base::unixtime::parse(now);
  	const auto locale = QLocale();
  	if (onlineFull.date() == nowFull.date()) {
@@ -56,7 +56,7 @@ index 375eb8052b..fc0fbc50bc 100644
  		return tr::lng_status_lastseen_yesterday(tr::now, lt_time, onlineTime);
  	}
  	const auto date = locale.toString(onlineFull.date(), QLocale::ShortFormat);
-@@ -511,14 +511,14 @@ QString OnlineTextFull(not_null<UserData*> user, TimeId now) {
+@@ -515,14 +515,14 @@ QString OnlineTextFull(not_null<UserData*> user, TimeId now) {
  	const auto nowFull = base::unixtime::parse(now);
  	const auto locale = QLocale();
  	if (onlineFull.date() == nowFull.date()) {
