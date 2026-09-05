@@ -205,6 +205,9 @@ jobs:
           pip3 install tomli
           pip3 install https://gitlab.postmarketos.org/postmarketOS/pmbootstrap/-/archive/main.tar.gz
 
+          # Use github aports mirror to avoid being ratelimited
+          sed -i s,https://gitlab.alpinelinux.org/alpine/aports.git,https://github.com/alpinelinux/aports.git, lib/python*/site-packages/pmb/config/__init__.py
+
       - name: pmbootstrap init
         run: |
           set -exuo pipefail
