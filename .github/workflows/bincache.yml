@@ -307,6 +307,7 @@ jobs:
           pkgver=7.2.8 # Upstream version
           pkgdesc="Yukigram (Telegram Desktop fork) messaging app"
           makedepends="\$makedepends tlottie-dev"
+          depends="\$depends tlottie"
           source="\${source/https:*-full.tar.gz/https://github.com/telegramdesktop/tdesktop/releases/download/v\$pkgver/tdesktop-\$pkgver-full.tar.gz}"
           builddir="\${builddir/__pkgver__/\$pkgver}"
           pkgver=$pkgver # Yukigram version
