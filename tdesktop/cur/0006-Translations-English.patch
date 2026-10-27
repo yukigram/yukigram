@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) English
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 new file mode 100644
-index 0000000000..74bd78e50c
+index 0000000000..cdb244d522
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -0,0 +1,189 @@
+@@ -0,0 +1,201 @@
 +{
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -87,6 +87,14 @@ index 0000000000..74bd78e50c
 +    "optgroup/system": "System",
 +    "opt/always-show-scheduled/name": "Always show scheduled messages button",
 +    "opt/always-show-scheduled/desc": "",
++    "opt/call-bitrate/name": "Call audio bitrate",
++    "opt/call-bitrate/desc": "",
++    "opt/call-bitrate-max/name": "Call bitrate maximum",
++    "opt/call-bitrate-max/desc": "",
++    "opt/call-bitrate-min/name": "Call bitrate minimum",
++    "opt/call-bitrate-min/desc": "",
++    "opt/call-bitrate-pin/name": "Pin call min and max to the main bitrate",
++    "opt/call-bitrate-pin/desc": "On: a call keeps exactly its bitrate, and the minimum and maximum follow it. Off: the call adapts between the minimum and the maximum. Group calls always use their own bitrate.",
 +    "opt/comments-button-always-right/name": "Right action comments button",
 +    "opt/comments-button-always-right/desc": "",
 +    "opt/compact-chat-list/name": "Compact chat list",
@@ -105,6 +113,8 @@ index 0000000000..74bd78e50c
 +    "opt/force-mobile-layout/desc": "",
 +    "opt/forum-hide-chats-list/name": "Hide narrow column chat list in forums",
 +    "opt/forum-hide-chats-list/desc": "",
++    "opt/group-call-bitrate/name": "Group call audio bitrate",
++    "opt/group-call-bitrate/desc": "",
 +    "opt/hide-bottom-bar/name": "Hide bottom button bar",
 +    "opt/hide-bottom-bar/desc": "",
 +    "opt/hide-message-tail/name": "Hide message bubble tail",
@@ -181,6 +191,8 @@ index 0000000000..74bd78e50c
 +    "opt/voice-bitrate/desc": "",
 +    "opt/wide-messages/name": "Wide messages",
 +    "opt/wide-messages/desc": "",
++    "settings/audio/hint": "A higher bitrate sounds clearer and uses more upload traffic. Changes apply to the next recording or call. During a call, watch the bandwidth estimate (BWE): it should stay at or above the bitrate.",
++    "settings/audio/reset/title": "Reset voice and call bitrate",
 +    "settings/chat/mono-font/title": "Monospace font family",
 +    "settings/for-inu/inu": "Inugram",
 +    "settings/for-inu/text": "This is a link to an {inu_link} setting",

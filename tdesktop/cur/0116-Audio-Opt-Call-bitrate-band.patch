@@ -1,0 +1,699 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: zoh-li <i@zoh.li>
+Date: Tue, 27 Oct 2026 14:59:35 +0330
+Subject: [PATCH] (Audio)(Opt) Call bitrate band
+
+
+diff --git a/Telegram/SourceFiles/calls/calls_call.cpp b/Telegram/SourceFiles/calls/calls_call.cpp
+index a67723f582..73efe045f5 100644
+--- a/Telegram/SourceFiles/calls/calls_call.cpp
++++ b/Telegram/SourceFiles/calls/calls_call.cpp
+@@ -32,6 +32,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "webrtc/webrtc_environment.h"
+ #include "webrtc/webrtc_video_track.h"
+ #include "window/window_controller.h"
++#include "yukigram/settings/audio_bitrate.h"
+ 
+ #include <tgcalls/Instance.h>
+ #include <tgcalls/VideoCaptureInterface.h>
+@@ -1080,6 +1081,8 @@ void Call::createAndStartController(const MTPDphoneCall &call) {
+ 
+ 	_conferenceSupported = call.is_conference_supported();
+ 
++	Yukigram::Settings::PublishCallBand();
++
+ 	const auto &protocol = call.vprotocol().c_phoneCallProtocol();
+ 	const auto &serverConfig = _user->session().serverConfig();
+ 
+diff --git a/Telegram/SourceFiles/calls/group/calls_group_call.cpp b/Telegram/SourceFiles/calls/group/calls_group_call.cpp
+index a4f2b2d8f3..188dbe1fe5 100644
+--- a/Telegram/SourceFiles/calls/group/calls_group_call.cpp
++++ b/Telegram/SourceFiles/calls/group/calls_group_call.cpp
+@@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "webrtc/webrtc_video_track.h"
+ #include "webrtc/webrtc_create_adm.h"
+ #include "webrtc/webrtc_environment.h"
++#include "yukigram/settings/audio_bitrate.h"
+ 
+ #include <tgcalls/group/GroupInstanceCustomImpl.h>
+ #include <tgcalls/VideoCaptureInterface.h>
+@@ -3008,6 +3009,7 @@ bool GroupCall::tryCreateController() {
+ 	}
+ 	const auto &settings = Core::App().settings();
+ 
++	const auto audioBand = Yukigram::Settings::PublishGroupCallBand();
+ 	const auto weak = base::make_weak(&_instanceGuard);
+ 	const auto myLevel = std::make_shared<tgcalls::GroupLevelValue>();
+ 	const auto playbackDeviceIdInitial = _playbackDeviceId.current();
+@@ -3105,6 +3107,10 @@ bool GroupCall::tryCreateController() {
+ 			});
+ 			return result;
+ 		},
++		.outgoingAudioBitrateKbit = std::max(
++			1,
++			(audioBand.mainBps + 500) / 1000),
++		.outgoingAudioBitrateBps = audioBand.mainBps,
+ 		.videoContentType = tgcalls::VideoContentType::Generic,
+ 		.initialEnableNoiseSuppression
+ 			= settings.groupCallNoiseSuppression(),
+@@ -3160,6 +3166,7 @@ bool GroupCall::tryCreateScreencast() {
+ 		return false;
+ 	}
+ 
++	const auto audioBand = Yukigram::Settings::PublishGroupCallBand();
+ 	const auto weak = base::make_weak(&_screenInstanceGuard);
+ 	tgcalls::GroupInstanceDescriptor descriptor = {
+ 		.threads = tgcalls::StaticThreads::getThreads(),
+@@ -3173,6 +3180,10 @@ bool GroupCall::tryCreateScreencast() {
+ 		},
+ 		.createAudioDeviceModule = Webrtc::LoopbackAudioDeviceModuleCreator(),
+ 		.videoCapture = _screenCapture,
++		.outgoingAudioBitrateKbit = std::max(
++			1,
++			(audioBand.mainBps + 500) / 1000),
++		.outgoingAudioBitrateBps = audioBand.mainBps,
+ 		.videoContentType = tgcalls::VideoContentType::Screencast,
+ 		.videoCodecPreferences = lookupVideoCodecPreferences(),
+ 		.e2eEncryptDecrypt = e2eEncryptDecrypt(),
+diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+index 43fbb3e3a5..147603b06a 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+@@ -8,6 +8,7 @@
+ #include "core/application.h"
+ #include "lang/lang_keys.h"
+ #include "yukigram/lang.h"
++#include "yukigram/settings/audio_bitrate.h"
+ #include "settings/settings_builder.h"
+ #include "settings/sections/settings_main.h"
+ #include "ui/boxes/confirm_box.h"
+@@ -316,6 +317,22 @@ void BuildRow(SectionBuilder &builder, Yukigram::Options::Option<T> &o) {
+ 	}
+ }
+ 
++void BuildAudioHint(SectionBuilder &builder) {
++	builder.addDividerText(rktr("settings/audio/hint"));
++	builder.addSkip(st::settingsCheckboxesSkip);
++}
++
++void BuildAudioReset(SectionBuilder &builder) {
++	builder.addButton({
++		.id = u"yukigram/audio-reset"_q,
++		.title = rktr("settings/audio/reset/title"),
++		.st = &st::settingsButtonNoIcon,
++		.onClick = [] { Yukigram::Settings::ResetAudioBitrate(); },
++		.keywords = { u"yukigram"_q, u"audio"_q, u"bitrate"_q, u"reset"_q },
++	});
++	builder.addSkip(st::settingsCheckboxesSkip);
++}
++
+ const std::string_view Categories[] = {
+ 	"interface",
+ 	"info",
+@@ -348,6 +365,9 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
+ 				.title = rktr(u"optgroup/%1"_q.arg(category)),
+ 				.keywords = { u"yukigram"_q, qs_sv(category) },
+ 			});
++			if (category == "audio") {
++				BuildAudioHint(builder);
++			}
+ 		}
+ 		for (const auto &key : options) {
+ 			v::match(Yukigram::Options::Options()[key], [&](Yukigram::Options::Option<bool> &o) {
+@@ -358,6 +378,9 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
+ 				BuildRow(builder, o);
+ 			});
+ 		}
++		if (category == "audio" && !options.empty()) {
++			BuildAudioReset(builder);
++		}
+ 	}
+ }
+ 
+diff --git a/Telegram/SourceFiles/yukigram/settings/audio_bitrate.cpp b/Telegram/SourceFiles/yukigram/settings/audio_bitrate.cpp
+index 6289374592..2f48c63bba 100644
+--- a/Telegram/SourceFiles/yukigram/settings/audio_bitrate.cpp
++++ b/Telegram/SourceFiles/yukigram/settings/audio_bitrate.cpp
+@@ -2,15 +2,34 @@
+ 
+ #include "yukigram/options.h"
+ 
+-#include <atomic>
++#include <tgcalls/AudioBitrateBand.h>
++
+ #include <algorithm>
++#include <atomic>
++#include <optional>
+ 
+ namespace Yukigram::Settings {
+ namespace {
+ 
+ constexpr auto kVoiceDefault = 32000;
++constexpr auto kCallDefault = 32768;
++constexpr auto kGroupCallDefault = 32000;
++constexpr auto kMinDefault = 6000;
+ constexpr auto kKbpsFrom = 16000;
+ 
++static_assert(kMinBitrateBps == tgcalls::kAudioBitrateMinBps);
++static_assert(kMaxBitrateBps == tgcalls::kAudioBitrateMaxBps);
++
++enum class Source {
++	Main,
++	Min,
++	Max,
++	Pin,
++};
++
++bool Syncing = false;
++std::optional<bool> LastPin;
++
+ std::atomic<int> VoiceBps = kVoiceDefault;
+ 
+ const auto bitrateCheckValid = Yukigram::Options::Valid::Bounded(kMinBitrateBps, kMaxBitrateBps);
+@@ -26,9 +45,74 @@ const auto bitrateValidHint = Yukigram::Options::Valid::BoundedHint(kMinBitrateB
+ 	}
+ 	return QString::number(bps / 1000., 'g', 3) + u" kbps"_q;
+ }
++
++void Apply(Source source) {
++	if (Syncing
++		|| !CallAudioBitrate
++		|| !CallBitrateMin
++		|| !CallBitrateMax
++		|| !CallBitratePin) {
++		return;
++	}
++	Syncing = true;
++
++	auto mainBps = ClampBps(CallAudioBitrate->current());
++	auto minBps = ClampBps(CallBitrateMin->current());
++	auto maxBps = ClampBps(CallBitrateMax->current());
++	const auto pin = CallBitratePin->current();
++	const auto justUnpinned = (source == Source::Pin)
++		&& LastPin.value_or(false)
++		&& !pin;
++	LastPin = pin;
++
++	if (pin) {
++		minBps = maxBps = mainBps;
++	} else if (justUnpinned) {
++		minBps = std::min(kMinDefault, mainBps);
++		maxBps = mainBps;
++	} else if (source == Source::Min) {
++		mainBps = std::max(mainBps, minBps);
++	} else if (source == Source::Max) {
++		mainBps = std::min(mainBps, maxBps);
++		minBps = std::min(minBps, maxBps);
++	}
++	if (!pin) {
++		minBps = std::min(minBps, mainBps);
++		maxBps = std::max(maxBps, mainBps);
++	}
++
++	*CallBitrateMin = minBps;
++	*CallBitrateMax = maxBps;
++	*CallAudioBitrate = mainBps;
++	Syncing = false;
++}
++
++[[nodiscard]] AudioBitrateBand Publish(int mainBps, bool stretch) {
++	auto band = AudioBitrateBand{
++		.minBps = ClampBps(CallBitrateMin->current()),
++		.mainBps = ClampBps(mainBps),
++		.maxBps = ClampBps(CallBitrateMax->current()),
++	};
++	if (CallBitratePin->current()) {
++		band.minBps = band.maxBps = band.mainBps;
++	} else if (stretch) {
++		band.minBps = std::min(band.minBps, band.mainBps);
++		band.maxBps = std::max(band.maxBps, band.mainBps);
++	} else {
++		band.mainBps = std::clamp(band.mainBps, band.minBps, band.maxBps);
++	}
++	tgcalls::SetAudioBitrateBand(band.minBps, band.mainBps, band.maxBps);
++	return band;
++}
++
+ } // namespace
+ 
+ const char kOptionVoiceBitrate[] = "voice-bitrate";
++const char kOptionCallAudioBitrate[] = "call-bitrate";
++const char kOptionGroupCallAudioBitrate[] = "group-call-bitrate";
++const char kOptionCallBitratePin[] = "call-bitrate-pin";
++const char kOptionCallBitrateMin[] = "call-bitrate-min";
++const char kOptionCallBitrateMax[] = "call-bitrate-max";
+ 
+ rpl::variable<int> *VoiceBitrate = Yukigram::Options::make<int>(kOptionVoiceBitrate, {
+ 	.keywords = { u"yukigram"_q, u"audio"_q, u"opus"_q, u"bitrate"_q, u"voice"_q },
+@@ -45,8 +129,94 @@ rpl::variable<int> *VoiceBitrate = Yukigram::Options::make<int>(kOptionVoiceBitr
+ 	},
+ });
+ 
++rpl::variable<int> *CallAudioBitrate = Yukigram::Options::make<int>(kOptionCallAudioBitrate, {
++	.keywords = { u"yukigram"_q, u"audio"_q, u"opus"_q, u"bitrate"_q, u"call"_q },
++	.category = "audio",
++	.defaultValue = kCallDefault,
++	.link = [](int) { Apply(Source::Main); },
++	.checkValid = bitrateCheckValid,
++	.validHint = bitrateValidHint,
++	.slider = Yukigram::Options::Slider{
++		.min = kMinBitrateBps,
++		.max = kMaxBitrateBps,
++		.logarithmic = true,
++		.format = FormatBitrate,
++	},
++});
++
++rpl::variable<int> *GroupCallAudioBitrate = Yukigram::Options::make<int>(kOptionGroupCallAudioBitrate, {
++	.keywords = { u"yukigram"_q, u"audio"_q, u"opus"_q, u"bitrate"_q, u"group"_q, u"call"_q },
++	.category = "audio",
++	.defaultValue = kGroupCallDefault,
++	.checkValid = bitrateCheckValid,
++	.validHint = bitrateValidHint,
++	.slider = Yukigram::Options::Slider{
++		.min = kMinBitrateBps,
++		.max = kMaxBitrateBps,
++		.logarithmic = true,
++		.format = FormatBitrate,
++	},
++});
++
++rpl::variable<bool> *CallBitratePin = Yukigram::Options::make<bool>(kOptionCallBitratePin, {
++	.keywords = { u"yukigram"_q, u"audio"_q, u"opus"_q, u"bitrate"_q, u"pin"_q },
++	.category = "audio",
++	.defaultValue = true,
++	.link = [](bool) { Apply(Source::Pin); },
++});
++
++rpl::variable<int> *CallBitrateMin = Yukigram::Options::make<int>(kOptionCallBitrateMin, {
++	.keywords = { u"yukigram"_q, u"audio"_q, u"opus"_q, u"bitrate"_q, u"min"_q },
++	.category = "audio",
++	.defaultValue = kCallDefault,
++	.link = [](int) { Apply(Source::Min); },
++	.checkValid = bitrateCheckValid,
++	.validHint = bitrateValidHint,
++	.slider = Yukigram::Options::Slider{
++		.min = kMinBitrateBps,
++		.max = kMaxBitrateBps,
++		.logarithmic = true,
++		.format = FormatBitrate,
++	},
++});
++
++rpl::variable<int> *CallBitrateMax = Yukigram::Options::make<int>(kOptionCallBitrateMax, {
++	.keywords = { u"yukigram"_q, u"audio"_q, u"opus"_q, u"bitrate"_q, u"max"_q },
++	.category = "audio",
++	.defaultValue = kCallDefault,
++	.link = [](int) { Apply(Source::Max); },
++	.checkValid = bitrateCheckValid,
++	.validHint = bitrateValidHint,
++	.slider = Yukigram::Options::Slider{
++		.min = kMinBitrateBps,
++		.max = kMaxBitrateBps,
++		.logarithmic = true,
++		.format = FormatBitrate,
++	},
++});
++
+ int VoiceMessageBitrateBps() {
+ 	return ClampBps(VoiceBps.load(std::memory_order_relaxed));
+ }
+ 
++AudioBitrateBand PublishCallBand() {
++	return Publish(CallAudioBitrate->current(), false);
++}
++
++AudioBitrateBand PublishGroupCallBand() {
++	return Publish(GroupCallAudioBitrate->current(), true);
++}
++
++void ResetAudioBitrate() {
++	Syncing = true;
++	*VoiceBitrate = kVoiceDefault;
++	*GroupCallAudioBitrate = kGroupCallDefault;
++	*CallBitratePin = true;
++	*CallBitrateMin = kCallDefault;
++	*CallBitrateMax = kCallDefault;
++	*CallAudioBitrate = kCallDefault;
++	Syncing = false;
++	Apply(Source::Pin);
++}
++
+ } // namespace Yukigram::Settings
+diff --git a/Telegram/SourceFiles/yukigram/settings/audio_bitrate.h b/Telegram/SourceFiles/yukigram/settings/audio_bitrate.h
+index 50c81c2650..bc2c574f3b 100644
+--- a/Telegram/SourceFiles/yukigram/settings/audio_bitrate.h
++++ b/Telegram/SourceFiles/yukigram/settings/audio_bitrate.h
+@@ -9,8 +9,30 @@ inline constexpr auto kMinBitrateBps = 500;
+ inline constexpr auto kMaxBitrateBps = 256000;
+ 
+ extern rpl::variable<int> *VoiceBitrate;
++extern rpl::variable<int> *CallAudioBitrate;
++extern rpl::variable<int> *GroupCallAudioBitrate;
++extern rpl::variable<bool> *CallBitratePin;
++extern rpl::variable<int> *CallBitrateMin;
++extern rpl::variable<int> *CallBitrateMax;
+ extern const char kOptionVoiceBitrate[];
++extern const char kOptionCallAudioBitrate[];
++extern const char kOptionGroupCallAudioBitrate[];
++extern const char kOptionCallBitratePin[];
++extern const char kOptionCallBitrateMin[];
++extern const char kOptionCallBitrateMax[];
+ 
+ [[nodiscard]] int VoiceMessageBitrateBps();
+ 
++struct AudioBitrateBand {
++	int minBps = 0;
++	int mainBps = 0;
++	int maxBps = 0;
++};
++
++AudioBitrateBand PublishCallBand();
++
++AudioBitrateBand PublishGroupCallBand();
++
++void ResetAudioBitrate();
++
+ } // namespace Yukigram::Settings
+diff --git a/Telegram/ThirdParty/tgcalls/tgcalls/AudioBitrateBand.h b/Telegram/ThirdParty/tgcalls/tgcalls/AudioBitrateBand.h
+new file mode 100644
+index 0000000000..d83f5ecd39
+--- /dev/null
++++ b/Telegram/ThirdParty/tgcalls/tgcalls/AudioBitrateBand.h
+@@ -0,0 +1,70 @@
++#ifndef TGCALLS_AUDIO_BITRATE_BAND_H
++#define TGCALLS_AUDIO_BITRATE_BAND_H
++
++#include <algorithm>
++#include <atomic>
++#include <list>
++#include <mutex>
++#include <string>
++
++namespace tgcalls {
++
++inline constexpr int kAudioBitrateMinBps = 500;
++inline constexpr int kAudioBitrateMaxBps = 256000;
++
++struct AudioBitrateBandState {
++    std::atomic<int> minBps{32768};
++    std::atomic<int> mainBps{32768};
++    std::atomic<int> maxBps{32768};
++};
++
++inline AudioBitrateBandState &AudioBitrateBand() {
++    static AudioBitrateBandState state;
++    return state;
++}
++
++inline void SetAudioBitrateBand(int minBps, int mainBps, int maxBps) {
++    auto &state = AudioBitrateBand();
++    state.minBps.store(minBps);
++    state.mainBps.store(mainBps);
++    state.maxBps.store(maxBps);
++}
++
++inline int AudioBitrateBandKbps(int bps) {
++    return std::max(1, (bps + 500) / 1000);
++}
++
++// WebRTC retains the raw char* pointer across threads, so keep strings alive.
++inline const char *YukigramAudioFieldTrials(const std::string &original) {
++    static std::mutex mutex;
++    static std::list<std::string> storage;
++
++    auto base = original;
++    const auto key = std::string("WebRTC-Audio-Allocation/");
++    const auto pos = base.find(key);
++    if (pos != std::string::npos) {
++        const auto end = base.find('/', pos + key.size());
++        if (end != std::string::npos) {
++            base.erase(pos, end + 1 - pos);
++        }
++    }
++    const auto minBps = AudioBitrateBand().minBps.load();
++    const auto maxBps = std::max(minBps, AudioBitrateBand().maxBps.load());
++    const auto result = "WebRTC-Audio-Allocation/min:"
++        + std::to_string(minBps) + "bps,max:"
++        + std::to_string(maxBps) + "bps/"
++        + base;
++
++    const auto guard = std::lock_guard(mutex);
++    for (const auto &existing : storage) {
++        if (existing == result) {
++            return existing.c_str();
++        }
++    }
++    storage.push_back(result);
++    return storage.back().c_str();
++}
++
++} // namespace tgcalls
++
++#endif // TGCALLS_AUDIO_BITRATE_BAND_H
+diff --git a/Telegram/ThirdParty/tgcalls/tgcalls/MediaManager.cpp b/Telegram/ThirdParty/tgcalls/tgcalls/MediaManager.cpp
+index 9ee29398ec..f34e454928 100644
+--- a/Telegram/ThirdParty/tgcalls/tgcalls/MediaManager.cpp
++++ b/Telegram/ThirdParty/tgcalls/tgcalls/MediaManager.cpp
+@@ -1,4 +1,5 @@
+ #include "MediaManager.h"
++#include "AudioBitrateBand.h"
+ 
+ #include "Instance.h"
+ #include "VideoCaptureInterfaceImpl.h"
+@@ -288,7 +289,7 @@ _enableHighBitrateVideo(enableHighBitrateVideo) {
+ 	_audioNetworkInterface = std::unique_ptr<MediaManager::NetworkInterfaceImpl>(new MediaManager::NetworkInterfaceImpl(this, false));
+ 	_videoNetworkInterface = std::unique_ptr<MediaManager::NetworkInterfaceImpl>(new MediaManager::NetworkInterfaceImpl(this, true));
+ 
+-	webrtc::field_trial::InitFieldTrialsFromString(
++	webrtc::field_trial::InitFieldTrialsFromString(tgcalls::YukigramAudioFieldTrials(
+ 		"WebRTC-Audio-SendSideBwe/Enabled/"
+ 		"WebRTC-Audio-Allocation/min:32kbps,max:32kbps/"
+ 		"WebRTC-Audio-OpusMinPacketLossRate/Enabled-1/"
+@@ -296,7 +297,7 @@ _enableHighBitrateVideo(enableHighBitrateVideo) {
+ 		"WebRTC-FlexFEC-03-Advertised/Enabled/"
+         "WebRTC-Turn-AllowSystemPorts/Enabled/"
+         "WebRTC-Audio-iOS-Holding/Enabled/"
+-	);
++	));
+     
+     _audioRtpHeaderExtensionMap.RegisterByUri(1, webrtc::RtpExtension::kTransportSequenceNumberUri);
+     
+diff --git a/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp b/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp
+index 0359c069de..207af01f7d 100644
+--- a/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp
++++ b/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp
+@@ -4,6 +4,7 @@
+ #include <iomanip>
+ 
+ #include "Instance.h"
++#include "AudioBitrateBand.h"
+ #include "VideoCaptureInterfaceImpl.h"
+ #include "VideoCapturerInterface.h"
+ #include "CodecSelectHelper.h"
+@@ -2097,6 +2098,12 @@ public:
+     _disableIncomingChannels(descriptor.disableIncomingChannels),
+     _useDummyChannel(descriptor.useDummyChannel),
+     _outgoingAudioBitrateKbit(descriptor.outgoingAudioBitrateKbit),
++    _outgoingAudioBitrateBps(std::clamp(
++        descriptor.outgoingAudioBitrateBps > 0
++            ? descriptor.outgoingAudioBitrateBps
++            : descriptor.outgoingAudioBitrateKbit * 1000,
++        kAudioBitrateMinBps,
++        kAudioBitrateMaxBps)),
+     _disableOutgoingAudioProcessing(descriptor.disableOutgoingAudioProcessing),
+ #ifdef WEBRTC_IOS
+     _disableAudioInput(descriptor.disableAudioInput),
+@@ -2170,7 +2177,7 @@ public:
+ 
+         const auto weak = std::weak_ptr<GroupInstanceCustomInternal>(shared_from_this());
+ 
+-        webrtc::field_trial::InitFieldTrialsFromString(
++        webrtc::field_trial::InitFieldTrialsFromString(tgcalls::YukigramAudioFieldTrials(
+             "WebRTC-DataChannel-Dcsctp/Enabled/"
+             "WebRTC-Audio-Allocation/min:32kbps,max:32kbps/"
+             "WebRTC-Audio-OpusMinPacketLossRate/Enabled-1/"
+@@ -2179,7 +2186,7 @@ public:
+             "WebRTC-Audio-MinimizeResamplingOnMobile/Enabled/"
+             "WebRTC-BweLossExperiment/Enabled/"
+             "WebRTC-Video-DiscardPacketsWithUnknownSsrc/Enabled/"
+-        );
++        ));
+ 
+         bool takeAudioLevelFromNetwork = _e2eEncryptDecrypt == nullptr;
+ 
+@@ -2710,9 +2717,16 @@ public:
+             _outgoingAudioChannel->SetRtpTransport(_rtpTransport);
+         });
+ 
+-        const uint8_t opusMinBitrateKbps = _outgoingAudioBitrateKbit;
+-        const uint8_t opusMaxBitrateKbps = _outgoingAudioBitrateKbit;
+-        const uint8_t opusStartBitrateKbps = _outgoingAudioBitrateKbit;
++        const auto &band = AudioBitrateBand();
++        const int opusMinBitrateKbps = AudioBitrateBandKbps(band.minBps.load());
++        const int opusMaxBitrateKbps = std::max(
++            opusMinBitrateKbps,
++            AudioBitrateBandKbps(band.maxBps.load()));
++        const int opusStartBitrateKbps = std::clamp(
++            AudioBitrateBandKbps(band.mainBps.load()),
++            opusMinBitrateKbps,
++            opusMaxBitrateKbps);
++        const int opusBitrateBps = band.mainBps.load();
+         const uint8_t opusPTimeMs = 120;
+ 
+         cricket::AudioCodec opusCodec = cricket::CreateAudioCodec(111, "opus", 48000, 2);
+@@ -2722,6 +2736,7 @@ public:
+         opusCodec.SetParam(cricket::kCodecParamMaxBitrate, opusMaxBitrateKbps);
+         opusCodec.SetParam(cricket::kCodecParamUseInbandFec, 1);
+         opusCodec.SetParam(cricket::kCodecParamPTime, opusPTimeMs);
++        opusCodec.SetParam("maxaveragebitrate", opusBitrateBps);
+ 
+         auto outgoingAudioDescription = std::make_unique<cricket::AudioContentDescription>();
+         outgoingAudioDescription->AddRtpHeaderExtension(webrtc::RtpExtension(webrtc::RtpExtension::kAudioLevelUri, 1));
+@@ -3182,16 +3197,17 @@ public:
+                 preferences.start_bitrate_bps = std::max(preferences.min_bitrate_bps, 400 * 1000);
+             }
+             if (_videoContentType == VideoContentType::Screencast) {
+-                preferences.max_bitrate_bps = std::max(preferences.min_bitrate_bps, (1020 + 32) * 1000);
++                preferences.max_bitrate_bps = std::max(preferences.min_bitrate_bps, (1020 * 1000) + _outgoingAudioBitrateBps);
+             } else {
+-                preferences.max_bitrate_bps = std::max(preferences.min_bitrate_bps, (1020 + 32) * 1000);
++                preferences.max_bitrate_bps = std::max(preferences.min_bitrate_bps, (1020 * 1000) + _outgoingAudioBitrateBps);
+             }
+         } else {
+-            preferences.min_bitrate_bps = 32000;
++            const auto &band = AudioBitrateBand();
++            preferences.min_bitrate_bps = band.minBps.load();
+             if (resetStartBitrate) {
+-                preferences.start_bitrate_bps = 32000;
++                preferences.start_bitrate_bps = band.mainBps.load();
+             }
+-            preferences.max_bitrate_bps = 32000;
++            preferences.max_bitrate_bps = band.maxBps.load();
+         }
+ 
+         settings.min_bitrate_bps = preferences.min_bitrate_bps;
+@@ -4407,6 +4423,7 @@ private:
+     bool _disableIncomingChannels = false;
+     bool _useDummyChannel{true};
+     int _outgoingAudioBitrateKbit{32};
++    int _outgoingAudioBitrateBps{32000};
+     bool _disableOutgoingAudioProcessing{false};
+ #ifdef WEBRTC_IOS
+     bool _disableAudioInput{false};
+diff --git a/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceImpl.h b/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceImpl.h
+index 962f192bfb..00169aa2b7 100644
+--- a/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceImpl.h
++++ b/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceImpl.h
+@@ -176,6 +176,7 @@ struct GroupInstanceDescriptor {
+     std::function<std::shared_ptr<BroadcastPartTask>(int64_t, int64_t, std::function<void(BroadcastPart &&)>)> requestAudioBroadcastPart;
+     std::function<std::shared_ptr<BroadcastPartTask>(int64_t, int64_t, int32_t, VideoChannelDescription::Quality, std::function<void(BroadcastPart &&)>)> requestVideoBroadcastPart;
+     int outgoingAudioBitrateKbit{32};
++    int outgoingAudioBitrateBps{0};
+     bool disableOutgoingAudioProcessing{false};
+     bool disableAudioInput{false};
+     bool ios_enableSystemMute{false};
+diff --git a/Telegram/ThirdParty/tgcalls/tgcalls/v2/InstanceV2Impl.cpp b/Telegram/ThirdParty/tgcalls/tgcalls/v2/InstanceV2Impl.cpp
+index f34c47562c..89e92a5132 100644
+--- a/Telegram/ThirdParty/tgcalls/tgcalls/v2/InstanceV2Impl.cpp
++++ b/Telegram/ThirdParty/tgcalls/tgcalls/v2/InstanceV2Impl.cpp
+@@ -1,6 +1,7 @@
+ #include "v2/InstanceV2Impl.h"
+ 
+ #include "LogSinkImpl.h"
++#include "AudioBitrateBand.h"
+ #include "VideoCaptureInterfaceImpl.h"
+ #include "VideoCapturerInterface.h"
+ #include "v2/NativeNetworkingImpl.h"
+@@ -161,6 +162,19 @@ public:
+ 
+                 codec.SetParam(cricket::kCodecParamUseInbandFec, 1);
+                 codec.SetParam(cricket::kCodecParamPTime, 60);
++                const auto &band = AudioBitrateBand();
++                const auto minKbps = AudioBitrateBandKbps(band.minBps.load());
++                const auto maxKbps = std::max(
++                    minKbps,
++                    AudioBitrateBandKbps(band.maxBps.load()));
++                const auto startKbps = std::clamp(
++                    AudioBitrateBandKbps(band.mainBps.load()),
++                    minKbps,
++                    maxKbps);
++                codec.SetParam(cricket::kCodecParamMinBitrate, minKbps);
++                codec.SetParam(cricket::kCodecParamStartBitrate, startKbps);
++                codec.SetParam(cricket::kCodecParamMaxBitrate, maxKbps);
++                codec.SetParam("maxaveragebitrate", band.mainBps.load());
+ 
+                 for (const auto &feedbackType : payloadType.feedbackTypes) {
+                     codec.AddFeedbackParam(cricket::FeedbackParam(feedbackType.type, feedbackType.subtype));
+@@ -928,12 +942,12 @@ public:
+     _initialInputDeviceId(std::move(descriptor.initialInputDeviceId)),
+     _initialOutputDeviceId(std::move(descriptor.initialOutputDeviceId)),
+     _videoCapture(descriptor.videoCapture) {
+-        webrtc::field_trial::InitFieldTrialsFromString(
++        webrtc::field_trial::InitFieldTrialsFromString(tgcalls::YukigramAudioFieldTrials(
+             "WebRTC-DataChannel-Dcsctp/Enabled/"
+             "WebRTC-Audio-MinimizeResamplingOnMobile/Enabled/"
+             "WebRTC-Audio-iOS-Holding/Enabled/"
+             "WebRTC-IceFieldTrials/skip_relay_to_non_relay_connections:true/"
+-        );
++        ));
+         
+         if (!descriptor.config.customParameters.empty()) {
+             std::string parsingError;
+@@ -2144,7 +2158,8 @@ public:
+ 
+     void adjustBitratePreferences(bool resetStartBitrate) {
+         if (_outgoingAudioChannel) {
+-            _outgoingAudioChannel->setMaxBitrate(32 * 1024);
++            _outgoingAudioChannel->setMaxBitrate(
++                AudioBitrateBand().maxBps.load());
+         }
+         if (_outgoingVideoChannel) {
+             _outgoingVideoChannel->setMaxBitrate(1000 * 1024);
+diff --git a/Telegram/ThirdParty/tgcalls/tgcalls/v2/InstanceV2ReferenceImpl.cpp b/Telegram/ThirdParty/tgcalls/tgcalls/v2/InstanceV2ReferenceImpl.cpp
+index dbaf093fcc..2694e96f1d 100644
+--- a/Telegram/ThirdParty/tgcalls/tgcalls/v2/InstanceV2ReferenceImpl.cpp
++++ b/Telegram/ThirdParty/tgcalls/tgcalls/v2/InstanceV2ReferenceImpl.cpp
+@@ -1,6 +1,7 @@
+ #include "v2/InstanceV2ReferenceImpl.h"
+ 
+ #include "LogSinkImpl.h"
++#include "AudioBitrateBand.h"
+ #include "VideoCaptureInterfaceImpl.h"
+ #include "VideoCapturerInterface.h"
+ #include "v2/NativeNetworkingImpl.h"
+@@ -392,10 +393,10 @@ public:
+ 
+         _useAddTrack = getCustomParameterBool(_customParameters, "network_reference_use_addtrack");
+ 
+-        webrtc::field_trial::InitFieldTrialsFromString(
++        webrtc::field_trial::InitFieldTrialsFromString(tgcalls::YukigramAudioFieldTrials(
+             "WebRTC-DataChannel-Dcsctp/Enabled/"
+             "WebRTC-Audio-iOS-Holding/Enabled/"
+-        );
++        ));
+     }
+ 
+     ~InstanceV2ReferenceImplInternal() {
+@@ -831,7 +832,8 @@ public:
+                 if (parameters.encodings.empty()) {
+                     parameters.encodings.push_back(webrtc::RtpEncodingParameters());
+                 }
+-                parameters.encodings[0].max_bitrate_bps = 32 * 1024;
++                parameters.encodings[0].min_bitrate_bps = AudioBitrateBand().minBps.load();
++                parameters.encodings[0].max_bitrate_bps = AudioBitrateBand().maxBps.load();
+                 _outgoingAudioTransceiver->sender()->SetParameters(parameters);
+ 
+                 _outgoingAudioTrack->set_enabled(true);
+diff --git a/Telegram/cmake/lib_tgcalls.cmake b/Telegram/cmake/lib_tgcalls.cmake
+index c6235e3ae1..6aacc44d69 100644
+--- a/Telegram/cmake/lib_tgcalls.cmake
++++ b/Telegram/cmake/lib_tgcalls.cmake
+@@ -20,6 +20,7 @@ PRIVATE
+ 
+ nice_target_sources(lib_tgcalls ${tgcalls_loc}
+ PRIVATE
++    AudioBitrateBand.h
+     AudioDeviceHelper.cpp
+     AudioDeviceHelper.h
+     ChannelManager.cpp
