@@ -100,6 +100,7 @@ path = [
     "tdesktop/cur/*-Style-Revert-restore-windows-pill.patch",
     "tdesktop/cur/*-Annoyances-Hide-Pasted-as-plain-text-toast.patch",
     "tdesktop/cur/*-Annoyances-Disable-proxy-sponsor.patch",
+    "tdesktop/cur/*-Audio-Opt-Opus-bitrate-for-voice-messages.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors <https://github.com/yukigram/yukigram>"

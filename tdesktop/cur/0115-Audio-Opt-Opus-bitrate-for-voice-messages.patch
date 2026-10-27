@@ -1,0 +1,107 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: zoh-li <i@zoh.li>
+Date: Tue, 27 Oct 2026 14:10:06 +0330
+Subject: [PATCH] (Audio)(Opt) Opus bitrate for voice messages
+
+
+diff --git a/Telegram/SourceFiles/media/audio/media_audio_capture.cpp b/Telegram/SourceFiles/media/audio/media_audio_capture.cpp
+index c816566339..bd82a9df76 100644
+--- a/Telegram/SourceFiles/media/audio/media_audio_capture.cpp
++++ b/Telegram/SourceFiles/media/audio/media_audio_capture.cpp
+@@ -12,6 +12,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "media/audio/media_audio_track.h"
+ #include "ffmpeg/ffmpeg_utility.h"
+ #include "base/timer.h"
++#include "yukigram/settings/audio_bitrate.h"
+ 
+ #include <al.h>
+ #include <alc.h>
+@@ -399,7 +400,7 @@ bool Instance::Inner::initializeFFmpeg() {
+ 	av_opt_set_int(d->codecContext, "refcounted_frames", 1, 0);
+ 
+ 	d->codecContext->sample_fmt = AV_SAMPLE_FMT_FLTP;
+-	d->codecContext->bit_rate = 32000;
++	d->codecContext->bit_rate = Yukigram::Settings::VoiceMessageBitrateBps();
+ 	d->codecContext->ch_layout = AV_CHANNEL_LAYOUT_MONO;
+ 	d->channels = d->codecContext->ch_layout.nb_channels;
+ 	d->codecContext->sample_rate = kCaptureFrequency;
+diff --git a/Telegram/SourceFiles/yukigram/settings/audio_bitrate.cpp b/Telegram/SourceFiles/yukigram/settings/audio_bitrate.cpp
+new file mode 100644
+index 0000000000..6289374592
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/audio_bitrate.cpp
+@@ -0,0 +1,52 @@
++#include "yukigram/settings/audio_bitrate.h"
++
++#include "yukigram/options.h"
++
++#include <atomic>
++#include <algorithm>
++
++namespace Yukigram::Settings {
++namespace {
++
++constexpr auto kVoiceDefault = 32000;
++constexpr auto kKbpsFrom = 16000;
++
++std::atomic<int> VoiceBps = kVoiceDefault;
++
++const auto bitrateCheckValid = Yukigram::Options::Valid::Bounded(kMinBitrateBps, kMaxBitrateBps);
++const auto bitrateValidHint = Yukigram::Options::Valid::BoundedHint(kMinBitrateBps, kMaxBitrateBps);
++
++[[nodiscard]] int ClampBps(int value) {
++	return std::clamp(value, kMinBitrateBps, kMaxBitrateBps);
++}
++
++[[nodiscard]] QString FormatBitrate(int bps) {
++	if (bps < kKbpsFrom) {
++		return QString::number(bps) + u" bps"_q;
++	}
++	return QString::number(bps / 1000., 'g', 3) + u" kbps"_q;
++}
++} // namespace
++
++const char kOptionVoiceBitrate[] = "voice-bitrate";
++
++rpl::variable<int> *VoiceBitrate = Yukigram::Options::make<int>(kOptionVoiceBitrate, {
++	.keywords = { u"yukigram"_q, u"audio"_q, u"opus"_q, u"bitrate"_q, u"voice"_q },
++	.category = "audio",
++	.defaultValue = kVoiceDefault,
++	.link = [](int value) { VoiceBps.store(value, std::memory_order_relaxed); },
++	.checkValid = bitrateCheckValid,
++	.validHint = bitrateValidHint,
++	.slider = Yukigram::Options::Slider{
++		.min = kMinBitrateBps,
++		.max = kMaxBitrateBps,
++		.logarithmic = true,
++		.format = FormatBitrate,
++	},
++});
++
++int VoiceMessageBitrateBps() {
++	return ClampBps(VoiceBps.load(std::memory_order_relaxed));
++}
++
++} // namespace Yukigram::Settings
+diff --git a/Telegram/SourceFiles/yukigram/settings/audio_bitrate.h b/Telegram/SourceFiles/yukigram/settings/audio_bitrate.h
+new file mode 100644
+index 0000000000..50c81c2650
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/audio_bitrate.h
+@@ -0,0 +1,16 @@
++#pragma once
++
++#include "rpl/rpl.h"
++#include "yukigram/options.h"
++
++namespace Yukigram::Settings {
++
++inline constexpr auto kMinBitrateBps = 500;
++inline constexpr auto kMaxBitrateBps = 256000;
++
++extern rpl::variable<int> *VoiceBitrate;
++extern const char kOptionVoiceBitrate[];
++
++[[nodiscard]] int VoiceMessageBitrateBps();
++
++} // namespace Yukigram::Settings

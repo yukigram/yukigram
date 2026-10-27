@@ -238,6 +238,11 @@ These are placed under `(Reactions)` category.
 
 These are placed under `(Compose)` category.
 
+## Audio
+- :gear: Opus bitrate for recorded voice messages
+
+These are placed under `(Audio)` category.
+
 ## Translations
 - English
 - Russian

@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) English
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 new file mode 100644
-index 0000000000..c5a3c98399
+index 0000000000..74bd78e50c
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -0,0 +1,186 @@
+@@ -0,0 +1,189 @@
 +{
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -83,6 +83,7 @@ index 0000000000..c5a3c98399
 +    "optgroup/reactions": "Reactions",
 +    "optgroup/compose": "Composing messages",
 +    "optgroup/picker": "Stickers and Emoji picker",
++    "optgroup/audio": "Audio",
 +    "optgroup/system": "System",
 +    "opt/always-show-scheduled/name": "Always show scheduled messages button",
 +    "opt/always-show-scheduled/desc": "",
@@ -176,6 +177,8 @@ index 0000000000..c5a3c98399
 +    "opt/use-small-msg-bubble-radius/desc": "",
 +    "opt/view-profile-in-chats-list-context-menu/name": "View profile button in context menu",
 +    "opt/view-profile-in-chats-list-context-menu/desc": "",
++    "opt/voice-bitrate/name": "Recorded voice bitrate",
++    "opt/voice-bitrate/desc": "",
 +    "opt/wide-messages/name": "Wide messages",
 +    "opt/wide-messages/desc": "",
 +    "settings/chat/mono-font/title": "Monospace font family",
