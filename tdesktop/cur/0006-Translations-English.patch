@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) English
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 new file mode 100644
-index 0000000000..cdb244d522
+index 0000000000..2e9b60ebaa
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -0,0 +1,201 @@
+@@ -0,0 +1,207 @@
 +{
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -87,6 +87,10 @@ index 0000000000..cdb244d522
 +    "optgroup/system": "System",
 +    "opt/always-show-scheduled/name": "Always show scheduled messages button",
 +    "opt/always-show-scheduled/desc": "",
++    "opt/bwe-log/name": "Record bandwidth drops",
++    "opt/bwe-log/desc": "",
++    "opt/bwe-show/name": "Show bandwidth estimate on calls",
++    "opt/bwe-show/desc": "Shown in bps. Red while the estimate is below the call bitrate, green for 5 seconds after it recovers.",
 +    "opt/call-bitrate/name": "Call audio bitrate",
 +    "opt/call-bitrate/desc": "",
 +    "opt/call-bitrate-max/name": "Call bitrate maximum",
@@ -193,6 +197,8 @@ index 0000000000..cdb244d522
 +    "opt/wide-messages/desc": "",
 +    "settings/audio/hint": "A higher bitrate sounds clearer and uses more upload traffic. Changes apply to the next recording or call. During a call, watch the bandwidth estimate (BWE): it should stay at or above the bitrate.",
 +    "settings/audio/reset/title": "Reset voice and call bitrate",
++    "settings/bwe/history/clear/title": "Clear bandwidth history",
++    "settings/bwe/history/open/title": "Open bandwidth history",
 +    "settings/chat/mono-font/title": "Monospace font family",
 +    "settings/for-inu/inu": "Inugram",
 +    "settings/for-inu/text": "This is a link to an {inu_link} setting",

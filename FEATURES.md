@@ -241,6 +241,7 @@ These are placed under `(Compose)` category.
 ## Audio
 - :gear: Opus bitrate for recorded voice messages
 - :gear: Opus bitrate band for voice, video and group calls
+- :zap: :gear: Live bandwidth estimate on calls
 
 These are placed under `(Audio)` category.
 

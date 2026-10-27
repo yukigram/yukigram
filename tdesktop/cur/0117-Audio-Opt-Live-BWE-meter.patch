@@ -1,0 +1,564 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: zoh-li <i@zoh.li>
+Date: Mon, 26 Oct 2026 02:40:00 +0330
+Subject: [PATCH] (Audio)(Opt) Live BWE meter
+
+
+diff --git a/Telegram/SourceFiles/calls/calls_panel.cpp b/Telegram/SourceFiles/calls/calls_panel.cpp
+index b5b1388be4..55838c2bbb 100644
+--- a/Telegram/SourceFiles/calls/calls_panel.cpp
++++ b/Telegram/SourceFiles/calls/calls_panel.cpp
+@@ -67,6 +67,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "webrtc/webrtc_create_adm.h"
+ #include "webrtc/webrtc_environment.h"
+ #include "webrtc/webrtc_video_track.h"
++#include "yukigram/settings/bwe_meter.h"
+ #include "styles/style_calls.h"
+ #include "styles/style_chat_helpers.h"
+ 
+@@ -1873,7 +1874,8 @@ void Panel::refreshAnswerHangupRedialLabel() {
+ }
+ 
+ void Panel::updateStatusText(State state) {
+-	auto statusText = [this, state]() -> QString {
++	auto bweColor = std::optional<QColor>();
++	auto statusText = [this, state, &bweColor]() -> QString {
+ 		if (_rateCall && _endedDuration > 0) {
+ 			return Ui::FormatDurationText(_endedDuration);
+ 		}
+@@ -1887,7 +1889,13 @@ void Panel::updateStatusText(State state) {
+ 				auto durationMs = _call->getDurationMs();
+ 				auto durationSeconds = durationMs / 1000;
+ 				startDurationUpdateTimer(durationMs);
+-				return Ui::FormatDurationText(durationSeconds);
++				const auto duration = Ui::FormatDurationText(durationSeconds);
++				const auto bwe = Yukigram::Calls::CurrentBweView();
++				if (!bwe.visible) {
++					return duration;
++				}
++				bweColor = bwe.color;
++				return duration + u" \u00B7 "_q + bwe.text;
+ 			}
+ 			return tr::lng_call_status_ended(tr::now);
+ 		} break;
+@@ -1910,6 +1918,11 @@ void Panel::updateStatusText(State state) {
+ 		Unexpected("State in stateChanged()");
+ 	};
+ 	_status->setText(statusText());
++	if (bweColor) {
++		_status->setTextColorOverride(bweColor);
++	} else {
++		updateTextColors();
++	}
+ 	updateStatusGeometry();
+ }
+ 
+diff --git a/Telegram/SourceFiles/calls/calls_top_bar.cpp b/Telegram/SourceFiles/calls/calls_top_bar.cpp
+index 5d7346df04..b100c155dd 100644
+--- a/Telegram/SourceFiles/calls/calls_top_bar.cpp
++++ b/Telegram/SourceFiles/calls/calls_top_bar.cpp
+@@ -34,6 +34,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "main/main_session.h"
+ #include "boxes/abstract_box.h"
+ #include "base/timer.h"
++#include "yukigram/settings/bwe_meter.h"
+ #include "styles/style_basic.h"
+ #include "styles/style_calls.h"
+ #include "styles/style_chat_helpers.h" // style::GroupCallUserpics
+@@ -262,6 +263,9 @@ TopBar::TopBar(
+ , _signalBars(_call
+ 	? object_ptr<SignalBars>(this, _call.get(), st::callBarSignalBars)
+ 	: object_ptr<SignalBars>(nullptr))
++, _bweLabel(_call
++	? object_ptr<Ui::FlatLabel>(this, st::callBarInfoLabel)
++	: object_ptr<Ui::FlatLabel>(nullptr))
+ , _fullInfoLabel(this, st::callBarInfoLabel)
+ , _shortInfoLabel(this, st::callBarInfoLabel)
+ , _hangupLabel(_call
+@@ -739,7 +743,21 @@ void TopBar::updateDurationText() {
+ 	auto durationSeconds = durationMs / 1000;
+ 	startDurationUpdateTimer(durationMs);
+ 	_durationLabel->setText(Ui::FormatDurationText(durationSeconds));
+-	if (_durationLabel->width() != wasWidth) {
++	auto geometryChanged = (_durationLabel->width() != wasWidth);
++	if (_bweLabel) {
++		const auto bwe = Yukigram::Calls::CurrentBweView();
++		const auto wasBweWidth = _bweLabel->textMaxWidth();
++		const auto wasBweHidden = _bweLabel->isHidden();
++		_bweLabel->setVisible(bwe.visible);
++		if (bwe.visible) {
++			_bweLabel->setText(bwe.text);
++			_bweLabel->setTextColorOverride(bwe.color);
++		}
++		geometryChanged = geometryChanged
++			|| (wasBweHidden != _bweLabel->isHidden())
++			|| (wasBweWidth != _bweLabel->textMaxWidth());
++	}
++	if (geometryChanged) {
+ 		updateControlsGeometry();
+ 	}
+ }
+@@ -773,6 +791,11 @@ void TopBar::updateControlsGeometry() {
+ 		_signalBars->moveToLeft(left, (height() - _signalBars->height()) / 2);
+ 		left += _signalBars->width() + st::callBarSkip;
+ 	}
++	if (_bweLabel && !_bweLabel->isHidden()) {
++		_bweLabel->resizeToNaturalWidth(_bweLabel->textMaxWidth());
++		_bweLabel->moveToLeft(left, st::callBarLabelTop);
++		left += _bweLabel->width() + st::callBarSkip;
++	}
+ 
+ 	auto right = st::callBarRightSkip;
+ 	if (_hangupLabel) {
+diff --git a/Telegram/SourceFiles/calls/calls_top_bar.h b/Telegram/SourceFiles/calls/calls_top_bar.h
+index fbc6438a05..4842be8de4 100644
+--- a/Telegram/SourceFiles/calls/calls_top_bar.h
++++ b/Telegram/SourceFiles/calls/calls_top_bar.h
+@@ -90,6 +90,7 @@ private:
+ 	int _userpicsWidth = 0;
+ 	object_ptr<Ui::LabelSimple> _durationLabel;
+ 	object_ptr<SignalBars> _signalBars;
++	object_ptr<Ui::FlatLabel> _bweLabel;
+ 	object_ptr<Ui::FlatLabel> _fullInfoLabel;
+ 	object_ptr<Ui::FlatLabel> _shortInfoLabel;
+ 	object_ptr<Ui::LabelSimple> _hangupLabel;
+diff --git a/Telegram/SourceFiles/calls/group/calls_group_panel.cpp b/Telegram/SourceFiles/calls/group/calls_group_panel.cpp
+index bb51956175..bc870c24e3 100644
+--- a/Telegram/SourceFiles/calls/group/calls_group_panel.cpp
++++ b/Telegram/SourceFiles/calls/group/calls_group_panel.cpp
+@@ -68,6 +68,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "webrtc/webrtc_audio_input_tester.h"
+ #include "webrtc/webrtc_create_adm.h"
+ #include "window/window_unlock_passcode_box.h"
++#include "yukigram/settings/bwe_meter.h"
+ #include "styles/style_calls.h"
+ #include "styles/style_chat_helpers.h"
+ #include "styles/style_layers.h"
+@@ -2989,6 +2990,41 @@ void Panel::refreshTitle() {
+ 			: (widget()->width() - _subtitle->width()) / 2;
+ 		_subtitle->moveToLeft(left, top);
+ 	}
++	refreshBwe();
++}
++
++void Panel::refreshBwe() {
++	if (!_subtitle) {
++		_bwe.destroy();
++		_bweTimer.cancel();
++		return;
++	}
++	if (!_bweTimer.isActive()) {
++		_bweTimer.setCallback([=] { refreshBwe(); });
++		_bweTimer.callEach(crl::time(500));
++	}
++	const auto view = Yukigram::Calls::CurrentBweView();
++	if (!view.visible) {
++		if (_bwe) {
++			_bwe->hide();
++		}
++		return;
++	}
++	if (!_bwe) {
++		_bwe.create(widget(), st::groupCallSubtitleLabel);
++		_bwe->setAttribute(Qt::WA_TransparentForMouseEvents);
++	}
++	_bwe->setText(view.text);
++	_bwe->setTextColorOverride(view.color);
++	_bwe->resizeToNaturalWidth(_bwe->textMaxWidth());
++	const auto top = (_title
++		? st::groupCallSubtitleTop
++		: st::groupCallTitleTop) + _subtitle->height();
++	const auto left = Platform::WindowTitleAlignsLeft()
++		? computeTitleRect().x()
++		: (widget()->width() - _bwe->width()) / 2;
++	_bwe->moveToLeft(left, top);
++	_bwe->show();
+ }
+ 
+ void Panel::refreshTitleGeometry() {
+diff --git a/Telegram/SourceFiles/calls/group/calls_group_panel.h b/Telegram/SourceFiles/calls/group/calls_group_panel.h
+index f1648aa90c..4b5863c7df 100644
+--- a/Telegram/SourceFiles/calls/group/calls_group_panel.h
++++ b/Telegram/SourceFiles/calls/group/calls_group_panel.h
+@@ -196,6 +196,7 @@ private:
+ 	[[nodiscard]] QRect computeTitleRect() const;
+ 	void refreshTitle();
+ 	void refreshTitleGeometry();
++	void refreshBwe();
+ 	void refreshTitleColors();
+ 	void setupRealCallViewers();
+ 	void subscribeToChanges(not_null<Data::GroupCall*> real);
+@@ -229,6 +230,8 @@ private:
+ 	object_ptr<Ui::FlatLabel> _titleSeparator = { nullptr };
+ 	object_ptr<Ui::FlatLabel> _viewers = { nullptr };
+ 	object_ptr<Ui::FlatLabel> _subtitle = { nullptr };
++	object_ptr<Ui::FlatLabel> _bwe = { nullptr };
++	base::Timer _bweTimer;
+ 	object_ptr<Ui::AbstractButton> _recordingMark = { nullptr };
+ 	object_ptr<Ui::IconButton> _menuToggle = { nullptr };
+ 	object_ptr<Ui::IconButton> _pinOnTop = { nullptr };
+diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+index 147603b06a..082ef249bb 100644
+--- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
++++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
+@@ -9,6 +9,7 @@
+ #include "lang/lang_keys.h"
+ #include "yukigram/lang.h"
+ #include "yukigram/settings/audio_bitrate.h"
++#include "yukigram/settings/bwe_meter.h"
+ #include "settings/settings_builder.h"
+ #include "settings/sections/settings_main.h"
+ #include "ui/boxes/confirm_box.h"
+@@ -323,6 +324,7 @@ void BuildAudioHint(SectionBuilder &builder) {
+ }
+ 
+ void BuildAudioReset(SectionBuilder &builder) {
++	Yukigram::Calls::AddBweHistoryButtons(builder);
+ 	builder.addButton({
+ 		.id = u"yukigram/audio-reset"_q,
+ 		.title = rktr("settings/audio/reset/title"),
+diff --git a/Telegram/SourceFiles/yukigram/settings/bwe_meter.cpp b/Telegram/SourceFiles/yukigram/settings/bwe_meter.cpp
+new file mode 100644
+index 0000000000..10b974518d
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/bwe_meter.cpp
+@@ -0,0 +1,160 @@
++#include "yukigram/settings/bwe_meter.h"
++
++#include "yukigram/options.h"
++#include "settings/settings_builder.h"
++#include "styles/palette.h"
++#include "styles/style_settings.h"
++#include "lang/lang_keys.h"
++#include "yukigram/lang.h"
++#include "settings.h"
++
++#include "crl/crl_async.h"
++#include "crl/crl_time.h"
++#include <tgcalls/AudioBitrateBand.h>
++#include <tgcalls/SendBandwidthEstimate.h>
++
++#include <QtCore/QDateTime>
++#include <QtCore/QFile>
++#include <QtCore/QStringList>
++#include <QtGui/QDesktopServices>
++#include <QtCore/QUrl>
++
++#include <chrono>
++#include <mutex>
++
++namespace Yukigram::Calls {
++namespace {
++
++constexpr auto kStale = std::chrono::seconds(2);
++constexpr auto kRecoveredShown = crl::time(5000);
++constexpr auto kHistoryLines = 500;
++
++std::mutex HistoryMutex;
++
++struct State {
++	bool below = false;
++	crl::time recoveredUntil = 0;
++};
++
++[[nodiscard]] State &CurrentState() {
++	static auto state = State();
++	return state;
++}
++
++[[nodiscard]] QString HistoryPath() {
++	return cWorkingDir() + u"yukigram-bwe-history.log"_q;
++}
++
++void AppendDrop(int bps, int mainBps) {
++	const auto line = u"%1  BWE %2 bps fell below main %3 bps"_q
++		.arg(QDateTime::currentDateTime().toString(u"yyyy-MM-dd HH:mm:ss"_q))
++		.arg(bps)
++		.arg(mainBps);
++	crl::async([=] {
++		const auto guard = std::lock_guard(HistoryMutex);
++		auto lines = QStringList();
++		auto file = QFile(HistoryPath());
++		if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
++			lines = QString::fromUtf8(file.readAll()).split(
++				u'\n',
++				Qt::SkipEmptyParts);
++			file.close();
++		}
++		lines.push_back(line);
++		if (lines.size() > kHistoryLines) {
++			lines = lines.mid(lines.size() - kHistoryLines);
++		}
++		if (file.open(QIODevice::WriteOnly
++				| QIODevice::Truncate
++				| QIODevice::Text)) {
++			file.write((lines.join(u'\n') + u'\n').toUtf8());
++		}
++	});
++}
++
++} // namespace
++
++const char kOptionBweShow[] = "bwe-show";
++const char kOptionBweLog[] = "bwe-log";
++
++rpl::variable<bool> *BweShow = Yukigram::Options::make<bool>(kOptionBweShow, {
++	.keywords = { u"yukigram"_q, u"audio"_q, u"bandwidth"_q, u"bwe"_q, u"call"_q },
++	.category = "audio",
++});
++
++rpl::variable<bool> *BweLog = Yukigram::Options::make<bool>(kOptionBweLog, {
++	.keywords = { u"yukigram"_q, u"audio"_q, u"bandwidth"_q, u"bwe"_q, u"history"_q },
++	.category = "audio",
++});
++
++BweView CurrentBweView() {
++	const auto estimate = tgcalls::LastSendBandwidthEstimate();
++	auto &state = CurrentState();
++	if (!estimate
++		|| estimate->bps <= 0
++		|| std::chrono::steady_clock::now() - estimate->at > kStale) {
++		state = State();
++		return {};
++	}
++	const auto bps = estimate->bps;
++	const auto mainBps = tgcalls::AudioBitrateBand().mainBps.load();
++	const auto now = crl::now();
++
++	auto color = std::optional<QColor>();
++	if (bps < mainBps) {
++		if (!state.below && BweLog->current()) {
++			AppendDrop(bps, mainBps);
++		}
++		state.below = true;
++		state.recoveredUntil = 0;
++		color = st::boxTextFgError->c;
++	} else {
++		if (state.below) {
++			state.below = false;
++			state.recoveredUntil = now + kRecoveredShown;
++		}
++		if (state.recoveredUntil > now) {
++			color = st::boxTextFgGood->c;
++		}
++	}
++	if (!BweShow->current()) {
++		return {};
++	}
++	return {
++		.visible = true,
++		.text = u"BWE %1"_q.arg(bps),
++		.color = color,
++	};
++}
++
++void AddBweHistoryButtons(::Settings::Builder::SectionBuilder &builder) {
++	builder.addButton({
++		.id = u"yukigram/bwe-history-open"_q,
++		.title = rktr("settings/bwe/history/open/title"),
++		.st = &st::settingsButtonNoIcon,
++		.onClick = [] {
++			const auto path = HistoryPath();
++			{
++				const auto guard = std::lock_guard(HistoryMutex);
++				auto file = QFile(path);
++				if (!file.exists() && !file.open(QIODevice::WriteOnly)) {
++					return;
++				}
++			}
++			QDesktopServices::openUrl(QUrl::fromLocalFile(path));
++		},
++		.keywords = { u"yukigram"_q, u"bwe"_q, u"history"_q },
++	});
++	builder.addButton({
++		.id = u"yukigram/bwe-history-clear"_q,
++		.title = rktr("settings/bwe/history/clear/title"),
++		.st = &st::settingsButtonNoIcon,
++		.onClick = [] {
++			const auto guard = std::lock_guard(HistoryMutex);
++			QFile::remove(HistoryPath());
++		},
++		.keywords = { u"yukigram"_q, u"bwe"_q, u"history"_q },
++	});
++}
++
++} // namespace Yukigram::Calls
+diff --git a/Telegram/SourceFiles/yukigram/settings/bwe_meter.h b/Telegram/SourceFiles/yukigram/settings/bwe_meter.h
+new file mode 100644
+index 0000000000..36d6a6b3fb
+--- /dev/null
++++ b/Telegram/SourceFiles/yukigram/settings/bwe_meter.h
+@@ -0,0 +1,31 @@
++#pragma once
++
++#include "rpl/rpl.h"
++
++#include <QtCore/QString>
++#include <QtGui/QColor>
++
++#include <optional>
++
++namespace Settings::Builder {
++class SectionBuilder;
++} // namespace Settings::Builder
++
++namespace Yukigram::Calls {
++
++extern rpl::variable<bool> *BweShow;
++extern rpl::variable<bool> *BweLog;
++extern const char kOptionBweShow[];
++extern const char kOptionBweLog[];
++
++struct BweView {
++	bool visible = false;
++	QString text;
++	std::optional<QColor> color;
++};
++
++[[nodiscard]] BweView CurrentBweView();
++
++void AddBweHistoryButtons(::Settings::Builder::SectionBuilder &builder);
++
++} // namespace Yukigram::Calls
+diff --git a/Telegram/ThirdParty/tgcalls/tgcalls/SendBandwidthEstimate.h b/Telegram/ThirdParty/tgcalls/tgcalls/SendBandwidthEstimate.h
+new file mode 100644
+index 0000000000..383dc3f450
+--- /dev/null
++++ b/Telegram/ThirdParty/tgcalls/tgcalls/SendBandwidthEstimate.h
+@@ -0,0 +1,44 @@
++#ifndef TGCALLS_SEND_BANDWIDTH_ESTIMATE_H
++#define TGCALLS_SEND_BANDWIDTH_ESTIMATE_H
++
++#include <chrono>
++#include <mutex>
++#include <optional>
++
++namespace tgcalls {
++
++struct SendBandwidthEstimate {
++    int bps = 0;
++    std::chrono::steady_clock::time_point at;
++};
++
++namespace details {
++
++inline std::mutex &SendBandwidthMutex() {
++    static std::mutex mutex;
++    return mutex;
++}
++
++inline std::optional<SendBandwidthEstimate> &SendBandwidthValue() {
++    static std::optional<SendBandwidthEstimate> value;
++    return value;
++}
++
++} // namespace details
++
++inline void NoteSendBandwidthEstimate(int bps) {
++    const auto guard = std::lock_guard(details::SendBandwidthMutex());
++    details::SendBandwidthValue() = SendBandwidthEstimate{
++        .bps = bps,
++        .at = std::chrono::steady_clock::now(),
++    };
++}
++
++[[nodiscard]] inline std::optional<SendBandwidthEstimate> LastSendBandwidthEstimate() {
++    const auto guard = std::lock_guard(details::SendBandwidthMutex());
++    return details::SendBandwidthValue();
++}
++
++} // namespace tgcalls
++
++#endif // TGCALLS_SEND_BANDWIDTH_ESTIMATE_H
+diff --git a/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp b/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp
+index 207af01f7d..a3e2ad6b57 100644
+--- a/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp
++++ b/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp
+@@ -5,6 +5,7 @@
+ 
+ #include "Instance.h"
+ #include "AudioBitrateBand.h"
++#include "SendBandwidthEstimate.h"
+ #include "VideoCaptureInterfaceImpl.h"
+ #include "VideoCapturerInterface.h"
+ #include "CodecSelectHelper.h"
+@@ -2378,6 +2379,9 @@ public:
+ 
+         beginNetworkStatusTimer(0);
+         beginLogTimer(0);
++        if (_videoContentType != VideoContentType::Screencast) {
++            beginBandwidthTimer();
++        }
+         //beginAudioChannelCleanupTimer(0);
+ 
+         adjustBitratePreferences(true);
+@@ -2385,6 +2389,18 @@ public:
+         beginRemoteConstraintsUpdateTimer(5000);
+     }
+ 
++    void beginBandwidthTimer() {
++        const auto weak = std::weak_ptr<GroupInstanceCustomInternal>(shared_from_this());
++        _threads->getWorkerThread()->PostDelayedTask([weak]() {
++            const auto strong = weak.lock();
++            if (!strong || !strong->_call) {
++                return;
++            }
++            NoteSendBandwidthEstimate(strong->_call->GetStats().send_bandwidth_bps);
++            strong->beginBandwidthTimer();
++        }, webrtc::TimeDelta::Millis(500));
++    }
++
+     void beginLogTimer(int delayMs) {
+         const auto weak = std::weak_ptr<GroupInstanceCustomInternal>(shared_from_this());
+         _threads->getMediaThread()->PostDelayedTask([weak]() {
+diff --git a/Telegram/ThirdParty/tgcalls/tgcalls/v2/InstanceV2Impl.cpp b/Telegram/ThirdParty/tgcalls/tgcalls/v2/InstanceV2Impl.cpp
+index 89e92a5132..176a6042b2 100644
+--- a/Telegram/ThirdParty/tgcalls/tgcalls/v2/InstanceV2Impl.cpp
++++ b/Telegram/ThirdParty/tgcalls/tgcalls/v2/InstanceV2Impl.cpp
+@@ -2,6 +2,7 @@
+ 
+ #include "LogSinkImpl.h"
+ #include "AudioBitrateBand.h"
++#include "SendBandwidthEstimate.h"
+ #include "VideoCaptureInterfaceImpl.h"
+ #include "VideoCapturerInterface.h"
+ #include "v2/NativeNetworkingImpl.h"
+@@ -1190,6 +1191,7 @@ public:
+ 
+         beginQualityTimer(0);
+         beginLogTimer(0);
++        beginBandwidthTimer();
+ 
+         InstanceNetworking::State initialNetworkState;
+         initialNetworkState.isReadyToSendData = false;
+@@ -1210,6 +1212,18 @@ public:
+         }, webrtc::TimeDelta::Millis(delayMs));
+     }
+ 
++    void beginBandwidthTimer() {
++        const auto weak = std::weak_ptr<InstanceV2ImplInternal>(shared_from_this());
++        _threads->getWorkerThread()->PostDelayedTask([weak]() {
++            const auto strong = weak.lock();
++            if (!strong || !strong->_call) {
++                return;
++            }
++            NoteSendBandwidthEstimate(strong->_call->GetStats().send_bandwidth_bps);
++            strong->beginBandwidthTimer();
++        }, webrtc::TimeDelta::Millis(500));
++    }
++
+     void beginLogTimer(int delayMs) {
+         const auto weak = std::weak_ptr<InstanceV2ImplInternal>(shared_from_this());
+         _threads->getMediaThread()->PostDelayedTask([weak]() {
+diff --git a/Telegram/cmake/lib_tgcalls.cmake b/Telegram/cmake/lib_tgcalls.cmake
+index 6aacc44d69..e78bf9caa8 100644
+--- a/Telegram/cmake/lib_tgcalls.cmake
++++ b/Telegram/cmake/lib_tgcalls.cmake
+@@ -50,6 +50,7 @@ PRIVATE
+     NetworkManager.h
+     SctpDataChannelProviderInterfaceImpl.cpp
+     SctpDataChannelProviderInterfaceImpl.h
++    SendBandwidthEstimate.h
+     StaticThreads.cpp
+     StaticThreads.h
+     ThreadLocalObject.h
