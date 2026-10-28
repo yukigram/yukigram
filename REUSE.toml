@@ -103,6 +103,7 @@ path = [
     "tdesktop/cur/*-Audio-Opt-Opus-bitrate-for-voice-messages.patch",
     "tdesktop/cur/*-Audio-Opt-Call-bitrate-band.patch",
     "tdesktop/cur/*-Audio-Opt-Live-BWE-meter.patch",
+    "tdesktop/cur/*-Audio-Opt-Voice-message-muted-start-and-fade.patch",
 ]
 SPDX-License-Identifier = "GPL-3.0-or-later WITH LicenseRef-sqlitestudio-OpenSSL-exception"
 SPDX-FileCopyrightText = "Yukigram contributors <https://github.com/yukigram/yukigram>"

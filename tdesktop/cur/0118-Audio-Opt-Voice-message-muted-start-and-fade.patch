@@ -1,0 +1,158 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: zoh-li <i@zoh.li>
+Date: Tue, 27 Oct 2026 17:47:21 +0330
+Subject: [PATCH] (Audio)(Opt) Voice message muted start and fade
+
+
+diff --git a/Telegram/SourceFiles/media/audio/media_audio_capture.cpp b/Telegram/SourceFiles/media/audio/media_audio_capture.cpp
+index bd82a9df76..357a759237 100644
+--- a/Telegram/SourceFiles/media/audio/media_audio_capture.cpp
++++ b/Telegram/SourceFiles/media/audio/media_audio_capture.cpp
+@@ -24,8 +24,6 @@ namespace Capture {
+ namespace {
+ 
+ constexpr auto kCaptureFrequency = Player::kDefaultFrequency;
+-constexpr auto kCaptureSkipDuration = crl::time(400);
+-constexpr auto kCaptureFadeInDuration = crl::time(300);
+ constexpr auto kCaptureBufferSlice = 256 * 1024;
+ constexpr auto kCaptureUpdateDelta = crl::time(100);
+ 
+@@ -501,7 +499,7 @@ void Instance::Inner::stop(Fn<void(Result&&)> callback) {
+ 
+ 	// Write what is left
+ 	if (needResult && !_captured.isEmpty()) {
+-		auto fadeSamples = kCaptureFadeInDuration * kCaptureFrequency / 1000;
++		auto fadeSamples = Yukigram::Settings::VoiceFadeMs() * kCaptureFrequency / 1000;
+ 		auto capturedSamples = static_cast<int>(_captured.size() / sizeof(short));
+ 		if ((_captured.size() % sizeof(short)) || (d->fullSamples + capturedSamples < kCaptureFrequency) || (capturedSamples < fadeSamples)) {
+ 			d->fullSamples = 0;
+@@ -661,8 +659,8 @@ void Instance::Inner::process() {
+ 		}
+ 
+ 		// Count new recording level and update view
+-		auto skipSamples = kCaptureSkipDuration * kCaptureFrequency / 1000;
+-		auto fadeSamples = kCaptureFadeInDuration * kCaptureFrequency / 1000;
++		auto skipSamples = Yukigram::Settings::VoiceSkipMs() * kCaptureFrequency / 1000;
++		auto fadeSamples = Yukigram::Settings::VoiceFadeMs() * kCaptureFrequency / 1000;
+ 		auto levelindex = d->fullSamples + static_cast<int>(s / sizeof(short));
+ 		for (auto ptr = (const short*)(_captured.constData() + s), end = (const short*)(_captured.constData() + news); ptr < end; ++ptr, ++levelindex) {
+ 			if (levelindex > skipSamples) {
+@@ -721,8 +719,8 @@ bool Instance::Inner::processFrame(int32 offset, int32 framesize) {
+ 	auto srcSamplesData = &srcSamplesDataChannel;
+ 
+ 	//	memcpy(d->srcSamplesData[0], _captured.constData() + offset, framesize);
+-	auto skipSamples = static_cast<int>(kCaptureSkipDuration * kCaptureFrequency / 1000);
+-	auto fadeSamples = static_cast<int>(kCaptureFadeInDuration * kCaptureFrequency / 1000);
++	auto skipSamples = static_cast<int>(Yukigram::Settings::VoiceSkipMs() * kCaptureFrequency / 1000);
++	auto fadeSamples = static_cast<int>(Yukigram::Settings::VoiceFadeMs() * kCaptureFrequency / 1000);
+ 	if (d->fullSamples < skipSamples + fadeSamples) {
+ 		int32 fadedCnt = std::min(
+ 			samplesCnt,
+diff --git a/Telegram/SourceFiles/yukigram/settings/audio_bitrate.cpp b/Telegram/SourceFiles/yukigram/settings/audio_bitrate.cpp
+index 2f48c63bba..2673e97d21 100644
+--- a/Telegram/SourceFiles/yukigram/settings/audio_bitrate.cpp
++++ b/Telegram/SourceFiles/yukigram/settings/audio_bitrate.cpp
+@@ -16,6 +16,9 @@ constexpr auto kCallDefault = 32768;
+ constexpr auto kGroupCallDefault = 32000;
+ constexpr auto kMinDefault = 6000;
+ constexpr auto kKbpsFrom = 16000;
++constexpr auto kFadeDefault = 300;
++constexpr auto kSkipDefault = 400;
++constexpr auto kMaxMs = 2000;
+ 
+ static_assert(kMinBitrateBps == tgcalls::kAudioBitrateMinBps);
+ static_assert(kMaxBitrateBps == tgcalls::kAudioBitrateMaxBps);
+@@ -31,9 +34,13 @@ bool Syncing = false;
+ std::optional<bool> LastPin;
+ 
+ std::atomic<int> VoiceBps = kVoiceDefault;
++std::atomic<int> FadeMs = kFadeDefault;
++std::atomic<int> SkipMs = kSkipDefault;
+ 
+ const auto bitrateCheckValid = Yukigram::Options::Valid::Bounded(kMinBitrateBps, kMaxBitrateBps);
+ const auto bitrateValidHint = Yukigram::Options::Valid::BoundedHint(kMinBitrateBps, kMaxBitrateBps);
++const auto durationCheckValid = Yukigram::Options::Valid::Bounded(0, kMaxMs);
++const auto durationValidHint = Yukigram::Options::Valid::BoundedHint(0, kMaxMs);
+ 
+ [[nodiscard]] int ClampBps(int value) {
+ 	return std::clamp(value, kMinBitrateBps, kMaxBitrateBps);
+@@ -108,6 +115,8 @@ void Apply(Source source) {
+ } // namespace
+ 
+ const char kOptionVoiceBitrate[] = "voice-bitrate";
++const char kOptionVoiceFadeDuration[] = "voice-fade-duration";
++const char kOptionVoiceSkipDuration[] = "voice-skip-duration";
+ const char kOptionCallAudioBitrate[] = "call-bitrate";
+ const char kOptionGroupCallAudioBitrate[] = "group-call-bitrate";
+ const char kOptionCallBitratePin[] = "call-bitrate-pin";
+@@ -129,6 +138,24 @@ rpl::variable<int> *VoiceBitrate = Yukigram::Options::make<int>(kOptionVoiceBitr
+ 	},
+ });
+ 
++rpl::variable<int> *VoiceFadeDuration = Yukigram::Options::make<int>(kOptionVoiceFadeDuration, {
++	.keywords = { u"yukigram"_q, u"audio"_q, u"voice"_q, u"fade"_q },
++	.category = "audio",
++	.defaultValue = kFadeDefault,
++	.link = [](int value) { FadeMs.store(value, std::memory_order_relaxed); },
++	.checkValid = durationCheckValid,
++	.validHint = durationValidHint,
++});
++
++rpl::variable<int> *VoiceSkipDuration = Yukigram::Options::make<int>(kOptionVoiceSkipDuration, {
++	.keywords = { u"yukigram"_q, u"audio"_q, u"voice"_q, u"skip"_q, u"mute"_q },
++	.category = "audio",
++	.defaultValue = kSkipDefault,
++	.link = [](int value) { SkipMs.store(value, std::memory_order_relaxed); },
++	.checkValid = durationCheckValid,
++	.validHint = durationValidHint,
++});
++
+ rpl::variable<int> *CallAudioBitrate = Yukigram::Options::make<int>(kOptionCallAudioBitrate, {
+ 	.keywords = { u"yukigram"_q, u"audio"_q, u"opus"_q, u"bitrate"_q, u"call"_q },
+ 	.category = "audio",
+@@ -219,4 +246,12 @@ void ResetAudioBitrate() {
+ 	Apply(Source::Pin);
+ }
+ 
++crl::time VoiceFadeMs() {
++	return FadeMs.load(std::memory_order_relaxed);
++}
++
++crl::time VoiceSkipMs() {
++	return SkipMs.load(std::memory_order_relaxed);
++}
++
+ } // namespace Yukigram::Settings
+diff --git a/Telegram/SourceFiles/yukigram/settings/audio_bitrate.h b/Telegram/SourceFiles/yukigram/settings/audio_bitrate.h
+index bc2c574f3b..9ee4620866 100644
+--- a/Telegram/SourceFiles/yukigram/settings/audio_bitrate.h
++++ b/Telegram/SourceFiles/yukigram/settings/audio_bitrate.h
+@@ -1,6 +1,7 @@
+ #pragma once
+ 
+ #include "rpl/rpl.h"
++#include "crl/crl_time.h"
+ #include "yukigram/options.h"
+ 
+ namespace Yukigram::Settings {
+@@ -14,14 +15,20 @@ extern rpl::variable<int> *GroupCallAudioBitrate;
+ extern rpl::variable<bool> *CallBitratePin;
+ extern rpl::variable<int> *CallBitrateMin;
+ extern rpl::variable<int> *CallBitrateMax;
++extern rpl::variable<int> *VoiceFadeDuration;
++extern rpl::variable<int> *VoiceSkipDuration;
+ extern const char kOptionVoiceBitrate[];
+ extern const char kOptionCallAudioBitrate[];
+ extern const char kOptionGroupCallAudioBitrate[];
+ extern const char kOptionCallBitratePin[];
+ extern const char kOptionCallBitrateMin[];
+ extern const char kOptionCallBitrateMax[];
++extern const char kOptionVoiceFadeDuration[];
++extern const char kOptionVoiceSkipDuration[];
+ 
+ [[nodiscard]] int VoiceMessageBitrateBps();
++[[nodiscard]] crl::time VoiceFadeMs();
++[[nodiscard]] crl::time VoiceSkipMs();
+ 
+ struct AudioBitrateBand {
+ 	int minBps = 0;

@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) English
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 new file mode 100644
-index 0000000000..2e9b60ebaa
+index 0000000000..afa6329124
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -0,0 +1,207 @@
+@@ -0,0 +1,211 @@
 +{
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -193,6 +193,10 @@ index 0000000000..2e9b60ebaa
 +    "opt/view-profile-in-chats-list-context-menu/desc": "",
 +    "opt/voice-bitrate/name": "Recorded voice bitrate",
 +    "opt/voice-bitrate/desc": "",
++    "opt/voice-fade-duration/name": "Voice message fade",
++    "opt/voice-fade-duration/desc": "Fades the volume in at the start\nof a recording and out at its end.\nIn milliseconds. 0 turns it off.",
++    "opt/voice-skip-duration/name": "Voice message muted start",
++    "opt/voice-skip-duration/desc": "Silences the start of a recording\nto hide the click of starting it.\nIn milliseconds. 0 turns it off.",
 +    "opt/wide-messages/name": "Wide messages",
 +    "opt/wide-messages/desc": "",
 +    "settings/audio/hint": "A higher bitrate sounds clearer and uses more upload traffic. Changes apply to the next recording or call. During a call, watch the bandwidth estimate (BWE): it should stay at or above the bitrate.",
