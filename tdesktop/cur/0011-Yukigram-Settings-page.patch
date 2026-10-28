@@ -58,13 +58,14 @@ index d78f63c2a1..b5878a6bc1 100644
  		.title = tr::lng_settings_language(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 new file mode 100644
-index 0000000000..12eb6e1a85
+index 0000000000..0052443023
 --- /dev/null
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-@@ -0,0 +1,306 @@
+@@ -0,0 +1,395 @@
 +#include "settings/sections/settings_yukigram.h"
 +#include "yukigram/options_database.h"
 +
++#include "settings/settings_common.h"
 +#include "settings/settings_common_session.h"
 +
 +#include "base/options.h"
@@ -77,7 +78,9 @@ index 0000000000..12eb6e1a85
 +#include "ui/ui_utility.h"
 +#include "ui/toast/toast.h"
 +#include "ui/widgets/buttons.h"
++#include "ui/widgets/continuous_sliders.h"
 +#include "ui/widgets/fields/input_field.h"
++#include "ui/widgets/labels.h"
 +#include "ui/wrap/vertical_layout.h"
 +#include "window/section_widget.h"
 +#include "window/window_session_controller.h"
@@ -87,6 +90,8 @@ index 0000000000..12eb6e1a85
 +#include "styles/style_settings.h"
 +
 +#include <QtGui/QGuiApplication>
++#include <algorithm>
++#include <cmath>
 +
 +namespace Settings {
 +
@@ -167,7 +172,7 @@ index 0000000000..12eb6e1a85
 +		InputBox,
 +		controller,
 +		rktr(u"opt/%1/name"_q.arg(key)),
-+		ktr(u"opt/%1/desc"_q.arg(key)),
++		d.slider ? QString() : ktr(u"opt/%1/desc"_q.arg(key)),
 +		d.validHint(),
 +		QString::number(v->current()),
 +		QString::number(d.defaultValue),
@@ -252,6 +257,84 @@ index 0000000000..12eb6e1a85
 +	}
 +}
 +
++[[nodiscard]] int ValueFromSlider(
++		const Yukigram::Options::Slider &slider,
++		float64 position) {
++	position = std::clamp(position, 0., 1.);
++	const auto value = slider.logarithmic
++		? std::exp(
++			std::log(double(slider.min))
++			+ (std::log(double(slider.max)) - std::log(double(slider.min)))
++				* position)
++		: slider.min + (slider.max - slider.min) * position;
++	return std::clamp(int(std::lround(value)), slider.min, slider.max);
++}
++
++[[nodiscard]] float64 SliderFromValue(
++		const Yukigram::Options::Slider &slider,
++		int value) {
++	value = std::clamp(value, slider.min, slider.max);
++	if (slider.min == slider.max) {
++		return 0.;
++	}
++	return slider.logarithmic
++		? (std::log(double(value)) - std::log(double(slider.min)))
++			/ (std::log(double(slider.max)) - std::log(double(slider.min)))
++		: double(value - slider.min) / (slider.max - slider.min);
++}
++
++[[nodiscard]] int SliderLabelWidth(const Yukigram::Options::Slider &slider) {
++	auto result = 0;
++	for (auto i = 0; i <= 32; ++i) {
++		result = std::max(result, st::settingsScaleLabel.style.font->width(
++			slider.format(ValueFromSlider(slider, i / 32.))));
++	}
++	return result;
++}
++
++void AddIntSlider(
++		SectionBuilder &builder,
++		const std::shared_ptr<rpl::variable<int>> &v,
++		const Yukigram::Options::Slider &options) {
++	const auto parent = builder.container();
++	auto sliderWithLabel = MakeSliderWithLabel(
++		parent,
++		st::settingsScale,
++		st::settingsScaleLabel,
++		st::settingsScalePadding.right(),
++		SliderLabelWidth(options));
++	const auto slider = sliderWithLabel.slider;
++	const auto label = sliderWithLabel.label;
++	const auto writing = slider->lifetime().make_state<bool>(false);
++	const auto write = [=](float64 position) {
++		if (*writing) {
++			return;
++		}
++		const auto value = ValueFromSlider(options, position);
++		label->setText(options.format(value));
++		if (v->current() != value) {
++			*writing = true;
++			*v = value;
++			*writing = false;
++		}
++	};
++	label->setText(options.format(v->current()));
++	slider->setAlwaysDisplayMarker(true);
++	slider->setValue(SliderFromValue(options, v->current()));
++	slider->setChangeProgressCallback(write);
++	slider->setChangeFinishedCallback(write);
++	v->value() | rpl::on_next([=](int value) {
++		label->setText(options.format(value));
++		if (*writing || slider->isChanging()) {
++			return;
++		}
++		*writing = true;
++		slider->setValue(SliderFromValue(options, value));
++		*writing = false;
++	}, slider->lifetime());
++	parent->add(std::move(sliderWithLabel.widget), st::settingsBigScalePadding);
++}
++
 +template<typename T>
 +void BuildRow(SectionBuilder &builder, Yukigram::Options::Option<T> &o) {
 +	auto button = BuildButton(builder, o);
@@ -273,6 +356,11 @@ index 0000000000..12eb6e1a85
 +		}, button->lifetime());
 +
 +		BuildDescription(builder, o.key);
++	} else if constexpr (std::is_same_v<T, int>) {
++		if (o.d.slider) {
++			AddIntSlider(builder, o.v, *o.d.slider);
++			BuildDescription(builder, o.key);
++		}
 +	}
 +}
 +
@@ -286,6 +374,7 @@ index 0000000000..12eb6e1a85
 +	"reactions",
 +	"compose",
 +	"picker",
++	"audio",
 +	"system",
 +};
 +

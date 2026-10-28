@@ -182,15 +182,18 @@ index 0000000000..0906c42cf8
 +} // namespace Yukigram::Options
 diff --git a/Telegram/SourceFiles/yukigram/options.h b/Telegram/SourceFiles/yukigram/options.h
 new file mode 100644
-index 0000000000..a99de07fd8
+index 0000000000..67a4bf9b0f
 --- /dev/null
 +++ b/Telegram/SourceFiles/yukigram/options.h
-@@ -0,0 +1,45 @@
+@@ -0,0 +1,56 @@
 +#pragma once
 +
 +#include "rpl/rpl.h"
 +
 +#include <QStringList>
++
++#include <functional>
++#include <optional>
 +#include <string_view>
 +
 +namespace Yukigram::Options {
@@ -206,6 +209,13 @@ index 0000000000..a99de07fd8
 +std::function<rpl::producer<QString>()> BoundedHint(int lower, int upper);
 +} // namespace Valid
 +
++struct Slider {
++	int min = 0;
++	int max = 0;
++	bool logarithmic = false;
++	std::function<QString(int)> format;
++};
++
 +template<typename T> struct Description {
 +	QStringList keywords;
 +	std::string_view category;
@@ -215,6 +225,7 @@ index 0000000000..a99de07fd8
 +	std::function<void(T)> link = [](T) {};
 +	CheckValid<T> checkValid = Valid::Always<T>;
 +	std::function<rpl::producer<QString>()> validHint = Valid::AlwaysHint;
++	std::optional<Slider> slider;
 +};
 +
 +template<typename T> rpl::variable<T> *make(const char *key, Description<T> &&d) {
