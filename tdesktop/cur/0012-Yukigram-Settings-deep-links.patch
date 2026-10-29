@@ -70,7 +70,7 @@ index ba9096429e..8f1e69a0a1 100644
  		.path = u"themes"_q,
  		.action = AliasTo{ u"settings"_q, u"appearance/themes"_q },
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-index 6b81776d53..f21f88edf4 100644
+index 6b81776d53..927151655b 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 @@ -17,6 +17,7 @@
@@ -81,7 +81,7 @@ index 6b81776d53..f21f88edf4 100644
  #include "ui/wrap/vertical_layout.h"
  #include "window/section_widget.h"
  #include "window/window_session_controller.h"
-@@ -279,6 +280,21 @@ void BuildRow(SectionBuilder &builder, Yukigram::Options::Option<T> &o) {
+@@ -279,6 +280,24 @@ void BuildRow(SectionBuilder &builder, Yukigram::Options::Option<T> &o) {
  		return;
  	}
  
@@ -90,8 +90,11 @@ index 6b81776d53..f21f88edf4 100644
 +	button->events(
 +	) | rpl::filter([](not_null<QEvent*> e) {
 +		return e->type() == QEvent::ContextMenu;
-+	}) | rpl::on_next([=](not_null<QEvent*> e) {
++	}) | rpl::on_next([=, v = o.v, d = o.d](not_null<QEvent*> e) {
 +		*menu = base::make_unique_q<Ui::PopupMenu>(button, st::popupMenuWithIcons);
++		(*menu)->addAction(ktr("input/reset"), [=] {
++			*v = d.defaultValue;
++		}, &st::menuIconRestore);
 +		(*menu)->addAction(ktr("settings/yukigram/deep-link/copy"), [=] {
 +			TextUtilities::SetClipboardText({ link });
 +			controller->showToast(ktr("settings/yukigram/deep-link/copy/done"));

@@ -198,7 +198,7 @@ index f1648aa90c..4b5863c7df 100644
  	object_ptr<Ui::IconButton> _menuToggle = { nullptr };
  	object_ptr<Ui::IconButton> _pinOnTop = { nullptr };
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-index 8a735173df..4cf9f9a6bf 100644
+index 8103217182..6d207b93c6 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 @@ -9,6 +9,7 @@
@@ -209,7 +209,7 @@ index 8a735173df..4cf9f9a6bf 100644
  #include "settings/settings_builder.h"
  #include "settings/sections/settings_main.h"
  #include "ui/boxes/confirm_box.h"
-@@ -323,6 +324,7 @@ void BuildAudioHint(SectionBuilder &builder) {
+@@ -326,6 +327,7 @@ void BuildAudioHint(SectionBuilder &builder) {
  }
  
  void BuildAudioReset(SectionBuilder &builder) {

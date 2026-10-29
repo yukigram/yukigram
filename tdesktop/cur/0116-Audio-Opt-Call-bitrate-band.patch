@@ -76,7 +76,7 @@ index a4f2b2d8f3..188dbe1fe5 100644
  		.videoCodecPreferences = lookupVideoCodecPreferences(),
  		.e2eEncryptDecrypt = e2eEncryptDecrypt(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-index f21f88edf4..8a735173df 100644
+index 927151655b..8103217182 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 @@ -8,6 +8,7 @@
@@ -87,7 +87,7 @@ index f21f88edf4..8a735173df 100644
  #include "settings/settings_builder.h"
  #include "settings/sections/settings_main.h"
  #include "ui/boxes/confirm_box.h"
-@@ -316,6 +317,22 @@ void BuildRow(SectionBuilder &builder, Yukigram::Options::Option<T> &o) {
+@@ -319,6 +320,22 @@ void BuildRow(SectionBuilder &builder, Yukigram::Options::Option<T> &o) {
  	}
  }
  
@@ -110,7 +110,7 @@ index f21f88edf4..8a735173df 100644
  const std::string_view Categories[] = {
  	"interface",
  	"info",
-@@ -348,6 +365,9 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
+@@ -351,6 +368,9 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
  				.title = rktr(u"optgroup/%1"_q.arg(category)),
  				.keywords = { u"yukigram"_q, qs_sv(category) },
  			});
@@ -120,7 +120,7 @@ index f21f88edf4..8a735173df 100644
  		}
  		for (const auto &key : options) {
  			v::match(Yukigram::Options::Options()[key], [&](Yukigram::Options::Option<bool> &o) {
-@@ -358,6 +378,9 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
+@@ -361,6 +381,9 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
  				BuildRow(builder, o);
  			});
  		}
