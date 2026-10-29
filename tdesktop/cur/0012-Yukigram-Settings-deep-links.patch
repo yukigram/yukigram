@@ -70,7 +70,7 @@ index ba9096429e..8f1e69a0a1 100644
  		.path = u"themes"_q,
  		.action = AliasTo{ u"settings"_q, u"appearance/themes"_q },
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-index 0052443023..43fbb3e3a5 100644
+index 6b81776d53..f21f88edf4 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 @@ -17,6 +17,7 @@

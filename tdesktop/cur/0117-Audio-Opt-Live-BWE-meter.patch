@@ -198,7 +198,7 @@ index f1648aa90c..4b5863c7df 100644
  	object_ptr<Ui::IconButton> _menuToggle = { nullptr };
  	object_ptr<Ui::IconButton> _pinOnTop = { nullptr };
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-index 147603b06a..082ef249bb 100644
+index 8a735173df..4cf9f9a6bf 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 @@ -9,6 +9,7 @@

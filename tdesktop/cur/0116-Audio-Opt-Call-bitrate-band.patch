@@ -76,7 +76,7 @@ index a4f2b2d8f3..188dbe1fe5 100644
  		.videoCodecPreferences = lookupVideoCodecPreferences(),
  		.e2eEncryptDecrypt = e2eEncryptDecrypt(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-index 43fbb3e3a5..147603b06a 100644
+index f21f88edf4..8a735173df 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 @@ -8,6 +8,7 @@
