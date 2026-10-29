@@ -58,10 +58,10 @@ index d78f63c2a1..b5878a6bc1 100644
  		.title = tr::lng_settings_language(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 new file mode 100644
-index 0000000000..6b81776d53
+index 0000000000..3b86b0654b
 --- /dev/null
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-@@ -0,0 +1,395 @@
+@@ -0,0 +1,404 @@
 +#include "settings/sections/settings_yukigram.h"
 +#include "yukigram/options_database.h"
 +
@@ -257,6 +257,14 @@ index 0000000000..6b81776d53
 +	}
 +}
 +
++void BuildGroupDescripiton(SectionBuilder &builder, std::string_view key) {
++	const auto descKey = u"optgroup/%1/desc"_q.arg(key);
++	if (!ktr(descKey).isEmpty()) {
++		builder.addDividerText(rktr(descKey));
++		builder.addSkip(st::settingsCheckboxesSkip);
++	}
++}
++
 +[[nodiscard]] int ValueFromSlider(
 +		const Yukigram::Options::Slider &slider,
 +		float64 position) {
@@ -396,6 +404,7 @@ index 0000000000..6b81776d53
 +				.title = rktr(u"optgroup/%1"_q.arg(category)),
 +				.keywords = { u"yukigram"_q, qs_sv(category) },
 +			});
++			BuildGroupDescripiton(builder, category);
 +		}
 +		for (const auto &key : options) {
 +			v::match(Yukigram::Options::Options()[key], [&](Yukigram::Options::Option<bool> &o) {

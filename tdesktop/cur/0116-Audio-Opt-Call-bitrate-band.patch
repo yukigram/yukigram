@@ -76,7 +76,7 @@ index a4f2b2d8f3..188dbe1fe5 100644
  		.videoCodecPreferences = lookupVideoCodecPreferences(),
  		.e2eEncryptDecrypt = e2eEncryptDecrypt(),
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-index 927151655b..8103217182 100644
+index 18dd087661..77110db0af 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 @@ -8,6 +8,7 @@
@@ -87,15 +87,10 @@ index 927151655b..8103217182 100644
  #include "settings/settings_builder.h"
  #include "settings/sections/settings_main.h"
  #include "ui/boxes/confirm_box.h"
-@@ -319,6 +320,22 @@ void BuildRow(SectionBuilder &builder, Yukigram::Options::Option<T> &o) {
+@@ -327,6 +328,17 @@ void BuildRow(SectionBuilder &builder, Yukigram::Options::Option<T> &o) {
  	}
  }
  
-+void BuildAudioHint(SectionBuilder &builder) {
-+	builder.addDividerText(rktr("settings/audio/hint"));
-+	builder.addSkip(st::settingsCheckboxesSkip);
-+}
-+
 +void BuildAudioReset(SectionBuilder &builder) {
 +	builder.addButton({
 +		.id = u"yukigram/audio-reset"_q,
@@ -110,17 +105,7 @@ index 927151655b..8103217182 100644
  const std::string_view Categories[] = {
  	"interface",
  	"info",
-@@ -351,6 +368,9 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
- 				.title = rktr(u"optgroup/%1"_q.arg(category)),
- 				.keywords = { u"yukigram"_q, qs_sv(category) },
- 			});
-+			if (category == "audio") {
-+				BuildAudioHint(builder);
-+			}
- 		}
- 		for (const auto &key : options) {
- 			v::match(Yukigram::Options::Options()[key], [&](Yukigram::Options::Option<bool> &o) {
-@@ -361,6 +381,9 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
+@@ -370,6 +382,9 @@ void BuildYukigramSectionContent(SectionBuilder &builder) {
  				BuildRow(builder, o);
  			});
  		}

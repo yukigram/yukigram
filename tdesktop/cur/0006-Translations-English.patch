@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) English
 
 diff --git a/Telegram/Resources/langs/yukigram/en.json b/Telegram/Resources/langs/yukigram/en.json
 new file mode 100644
-index 0000000000..afa6329124
+index 0000000000..fde4aad7d4
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/en.json
-@@ -0,0 +1,211 @@
+@@ -0,0 +1,221 @@
 +{
 +    "about/1/text": "Unofficial {tdesktop_link} fork\nthat adds features and removes annoyances.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -75,16 +75,27 @@ index 0000000000..afa6329124
 +    "menu/first-message/title": "First message",
 +    "nya": "Meow >.<",
 +    "optgroup/interface": "Interface",
++    "optgroup/interface/desc": "",
 +    "optgroup/info": "Information",
++    "optgroup/info/desc": "",
 +    "optgroup/dialogs": "Chat list",
++    "optgroup/dialogs/desc": "",
 +    "optgroup/style": "Style",
++    "optgroup/style/desc": "",
 +    "optgroup/chat": "Chat",
++    "optgroup/chat/desc": "",
 +    "optgroup/messages": "Messages",
++    "optgroup/messages/desc": "",
 +    "optgroup/reactions": "Reactions",
++    "optgroup/reactions/desc": "",
 +    "optgroup/compose": "Composing messages",
++    "optgroup/compose/desc": "",
 +    "optgroup/picker": "Stickers and Emoji picker",
++    "optgroup/picker/desc": "",
 +    "optgroup/audio": "Audio",
++    "optgroup/audio/desc": "A higher bitrate sounds clearer and uses more upload traffic. Changes apply to the next recording or call. During a call, watch the bandwidth estimate (BWE): it should stay at or above the bitrate.",
 +    "optgroup/system": "System",
++    "optgroup/system/desc": "",
 +    "opt/always-show-scheduled/name": "Always show scheduled messages button",
 +    "opt/always-show-scheduled/desc": "",
 +    "opt/bwe-log/name": "Record bandwidth drops",
@@ -199,7 +210,6 @@ index 0000000000..afa6329124
 +    "opt/voice-skip-duration/desc": "Silences the start of a recording\nto hide the click of starting it.\nIn milliseconds. 0 turns it off.",
 +    "opt/wide-messages/name": "Wide messages",
 +    "opt/wide-messages/desc": "",
-+    "settings/audio/hint": "A higher bitrate sounds clearer and uses more upload traffic. Changes apply to the next recording or call. During a call, watch the bandwidth estimate (BWE): it should stay at or above the bitrate.",
 +    "settings/audio/reset/title": "Reset voice and call bitrate",
 +    "settings/bwe/history/clear/title": "Clear bandwidth history",
 +    "settings/bwe/history/open/title": "Open bandwidth history",

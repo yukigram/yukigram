@@ -70,7 +70,7 @@ index ba9096429e..8f1e69a0a1 100644
  		.path = u"themes"_q,
  		.action = AliasTo{ u"settings"_q, u"appearance/themes"_q },
 diff --git a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
-index 6b81776d53..927151655b 100644
+index 3b86b0654b..18dd087661 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_yukigram.cpp
 @@ -17,6 +17,7 @@
@@ -81,7 +81,7 @@ index 6b81776d53..927151655b 100644
  #include "ui/wrap/vertical_layout.h"
  #include "window/section_widget.h"
  #include "window/window_session_controller.h"
-@@ -279,6 +280,24 @@ void BuildRow(SectionBuilder &builder, Yukigram::Options::Option<T> &o) {
+@@ -287,6 +288,24 @@ void BuildRow(SectionBuilder &builder, Yukigram::Options::Option<T> &o) {
  		return;
  	}
  
