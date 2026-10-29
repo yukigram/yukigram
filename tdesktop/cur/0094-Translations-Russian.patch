@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) Russian
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..dc2eb292b5
+index 0000000000..d2c5a1c405
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
-@@ -0,0 +1,192 @@
+@@ -0,0 +1,204 @@
 +{
 +    "about/1/text": "Неофициальный форк {tdesktop_link},\nкоторый добавляет фичи и убирает мусор.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -81,15 +81,27 @@ index 0000000000..dc2eb292b5
 +    "menu/first-message/title": "Начало истории",
 +    "nya": "Муррр >.<",
 +    "optgroup/interface": "Интерфейс",
++    "optgroup/interface/desc": "",
 +    "optgroup/info": "Информация",
++    "optgroup/info/desc": "",
 +    "optgroup/dialogs": "Список чатов",
++    "optgroup/dialogs/desc": "",
 +    "optgroup/style": "Стиль",
++    "optgroup/style/desc": "",
 +    "optgroup/chat": "Чат",
++    "optgroup/chat/desc": "",
 +    "optgroup/messages": "Сообщения",
++    "optgroup/messages/desc": "",
 +    "optgroup/reactions": "Реакции",
++    "optgroup/reactions/desc": "",
 +    "optgroup/compose": "Окно написания сообщений",
++    "optgroup/compose/desc": "",
 +    "optgroup/picker": "Палитра стикеров и эмодзи",
++    "optgroup/picker/desc": "",
++    "optgroup/audio": "Аудио",
++    "optgroup/audio/desc": "Более высокий битрейт увеличивает качество звука. Изменения применятся в следующей записи или звонке. Во время звонка можно следить за BWE, он должен оставаться на уровне заданного битрейта.",
 +    "optgroup/system": "Система",
++    "optgroup/system/desc": "",
 +    "opt/always-show-scheduled/name": "Всегда показвать отложенные сообщения",
 +    "opt/always-show-scheduled/desc": "",
 +    "opt/comments-button-always-right/name": "Кнопка комментариев справа",
