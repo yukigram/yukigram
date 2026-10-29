@@ -6,10 +6,10 @@ Subject: [PATCH] (Translations) Russian
 
 diff --git a/Telegram/Resources/langs/yukigram/ru.json b/Telegram/Resources/langs/yukigram/ru.json
 new file mode 100644
-index 0000000000..d2c5a1c405
+index 0000000000..81b5c0bc6b
 --- /dev/null
 +++ b/Telegram/Resources/langs/yukigram/ru.json
-@@ -0,0 +1,204 @@
+@@ -0,0 +1,227 @@
 +{
 +    "about/1/text": "Неофициальный форк {tdesktop_link},\nкоторый добавляет фичи и убирает мусор.",
 +    "about/1/tdesktop": "Telegram Desktop",
@@ -104,6 +104,18 @@ index 0000000000..d2c5a1c405
 +    "optgroup/system/desc": "",
 +    "opt/always-show-scheduled/name": "Всегда показвать отложенные сообщения",
 +    "opt/always-show-scheduled/desc": "",
++    "opt/bwe-log/name": "Записывать просадки битрейта",
++    "opt/bwe-log/desc": "",
++    "opt/bwe-show/name": "Индикатор битрейта в звонках",
++    "opt/bwe-show/desc": "(BWE). Красный, если падает ниже заданного битрейта; становится зелёным на 5 секунд после восстановления.",
++    "opt/call-bitrate/name": "Битрейт обычных звонков",
++    "opt/call-bitrate/desc": "",
++    "opt/call-bitrate-max/name": "Максимальный битрейт",
++    "opt/call-bitrate-max/desc": "",
++    "opt/call-bitrate-min/name": "Минимальный битрейт",
++    "opt/call-bitrate-min/desc": "",
++    "opt/call-bitrate-pin/name": "Фиксированный битрейт",
++    "opt/call-bitrate-pin/desc": "вкл: Звонки используют заданный битрейт, минимум и максимум следуют за битрейтом обычных звонков. выкл: Звонки используют любой битрейт из заданного диапазона, целятся на основной. Групповые звонки всегда используют свой битрейт",
 +    "opt/comments-button-always-right/name": "Кнопка комментариев справа",
 +    "opt/comments-button-always-right/desc": "",
 +    "opt/compact-chat-list/name": "Компактный список чатов",
@@ -122,6 +134,8 @@ index 0000000000..d2c5a1c405
 +    "opt/force-mobile-layout/desc": "",
 +    "opt/forum-hide-chats-list/name": "Скрыть список чатов в форумах",
 +    "opt/forum-hide-chats-list/desc": "",
++    "opt/group-call-bitrate/name": "Битрейт групповых звонков",
++    "opt/group-call-bitrate/desc": "",
 +    "opt/hide-bottom-bar/name": "Скрыть нижнюю панель с кнопками",
 +    "opt/hide-bottom-bar/desc": "",
 +    "opt/hide-message-tail/name": "Убрать хвост пузыря сообщения",
@@ -194,8 +208,17 @@ index 0000000000..d2c5a1c405
 +    "opt/use-small-msg-bubble-radius/desc": "",
 +    "opt/view-profile-in-chats-list-context-menu/name": "Открыть профиль из меню",
 +    "opt/view-profile-in-chats-list-context-menu/desc": "",
++    "opt/voice-bitrate/name": "Битрейт голосовых сообщений",
++    "opt/voice-bitrate/desc": "",
++    "opt/voice-fade-duration/name": "Fade-in/out при записи голосовых",
++    "opt/voice-fade-duration/desc": "Приглушает начало и конец записи.\nМиллисекунды. 0, чтобы выключить.",
++    "opt/voice-skip-duration/name": "Тишина при записи голосовых",
++    "opt/voice-skip-duration/desc": "Выключает звук в начале записи,\nчтобы скрыть \"щелчок\" начала записи.\nМиллисекунды. 0, чтобы выключить.",
 +    "opt/wide-messages/name": "Широкие сообщения",
 +    "opt/wide-messages/desc": "",
++    "settings/audio/reset/title": "Сбросить настройки битрейта",
++    "settings/bwe/history/clear/title": "Очистить историю битрейта",
++    "settings/bwe/history/open/title": "Открыть историю битрейта",
 +    "settings/chat/mono-font/title": "Моноширинный шрифт",
 +    "settings/for-inu/inu": "Inugram",
 +    "settings/for-inu/text": "Это ссылка на настройку из {inu_link}",
