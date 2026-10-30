@@ -12,7 +12,7 @@ telegram-desktop.overrideAttrs (final: prev: {
   pname = "yukigram";
   unwrapped = prev.unwrapped.overrideAttrs (final: prev: {
     pname = "yukigram-unwrapped";
-    version = "7.3.3.1";
+    version = "7.3.3.1+wip";
     src = prev.src.overrideAttrs {
       rev = "v7.3.3";
       hash = "sha256-tgOIYe6iMiCDphGmuNo3foM5udSWS1y8NDluV/ubNqE=";
@@ -20,7 +20,7 @@ telegram-desktop.overrideAttrs (final: prev: {
     cmakeFlags =
       prev.cmakeFlags
       ++ [
-        (lib.cmakeBool "DEVEL" false)
+        (lib.cmakeBool "DEVEL" true)
       ];
     patches = let
       readDir' = d: lib.pipe d [builtins.readDir builtins.attrNames (map (lib.path.append d))];
@@ -30,7 +30,7 @@ telegram-desktop.overrideAttrs (final: prev: {
       description = "Telegram Desktop, minus the bullshit, plus the features";
       homepage = "https://github.com/yukigram/yukigram";
       changelog = "https://github.com/yukigram/yukigram/releases";
-      mainProgram = "io.github.yukigram";
+      mainProgram = "io.github.yukigram.devel";
     };
     # 7.2 requires pango?
     buildInputs = [pango cairo tlottie] ++ prev.buildInputs;
