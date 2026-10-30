@@ -5,15 +5,11 @@ Subject: [PATCH] (Yukigram) Changelog
 
 
 diff --git a/changelog.txt b/changelog.txt
-index 41b7466f8a..d651c39c77 100644
+index 41b7466f8a..52a85a9d61 100644
 --- a/changelog.txt
 +++ b/changelog.txt
-@@ -1,3 +1,19 @@
-+9999 wip (01.01.99)
-+
-+- No changes
-+
-+7.3.3.1 rc.1 (30.10.26)
+@@ -1,3 +1,15 @@
++7.3.3.1 (30.10.26)
 +
 +- Reset any Yukigram setting from context menu (right-click on a setting and choose "Reset")
 +- A bunch of audio-recording-related options (tg://settings/yukigram/audio), namely
@@ -28,7 +24,7 @@ index 41b7466f8a..d651c39c77 100644
  7.3.3 (21.10.26)
  
  - Show TON DNS gift owners as links, not address groups.
-@@ -43,10 +59,24 @@
+@@ -43,10 +55,24 @@
  - Fix animated emoji effects autoplaying on already read messages.
  - Fix many crashes.
  
@@ -53,7 +49,7 @@ index 41b7466f8a..d651c39c77 100644
  7.2.8 (09.09.26)
  
  - Fix some more crashes with bad lottie files.
-@@ -93,6 +123,10 @@
+@@ -93,6 +119,10 @@
  
  - First version of v2 update system.
  
@@ -64,7 +60,7 @@ index 41b7466f8a..d651c39c77 100644
  7.1.5 (02.09.26)
  
  - Fix crash on Linux.
-@@ -111,6 +145,11 @@
+@@ -111,6 +141,11 @@
  - Fix window activation from the tray on X11.
  - Crash fixes.
  
@@ -76,7 +72,7 @@ index 41b7466f8a..d651c39c77 100644
  7.1.3 (27.08.26)
  
  - Add emoji status actions to the custom emoji context menu.
-@@ -133,6 +172,10 @@
+@@ -133,6 +168,10 @@
  - Warn about possible risks when adding a WEB proxy.
  - Crash fixes.
  
@@ -87,7 +83,7 @@ index 41b7466f8a..d651c39c77 100644
  7.1.1 (22.08.26)
  
  - Fix broken chats loading for some users.
-@@ -151,6 +194,10 @@
+@@ -151,6 +190,10 @@
  - Add new WEB proxy type to connection settings.
  - Crash fixes.
  
@@ -98,7 +94,7 @@ index 41b7466f8a..d651c39c77 100644
  7.0.9 (05.08.26)
  
  - Add saving rich messages to HTML and importing them back.
-@@ -171,6 +218,10 @@
+@@ -171,6 +214,10 @@
  - Fix Mini App cookies on Linux.
  - Crash fixes.
  
@@ -109,7 +105,7 @@ index 41b7466f8a..d651c39c77 100644
  7.0.6 (27.07.26)
  
  - Allow muting forever by left click on the profile mute button.
-@@ -178,6 +229,11 @@
+@@ -178,6 +225,11 @@
  - Fix adding admins in communities.
  - Crash fixes.
  
@@ -121,7 +117,7 @@ index 41b7466f8a..d651c39c77 100644
  7.0.5 (23.07.26)
  
  - Improve slideshow preload / animation / swipes in rich messages.
-@@ -196,6 +252,10 @@
+@@ -196,6 +248,10 @@
  
  - Fix media viewer freezes on macOS.
  
@@ -132,7 +128,7 @@ index 41b7466f8a..d651c39c77 100644
  7.0.2 (17.07.26)
  
  - Fix editing existing rich messages.
-@@ -203,6 +263,12 @@
+@@ -203,6 +259,12 @@
  - Improve rich messages editor (drag-n-drop, changing tables).
  - Allow forwarding to chats hidden inside a community.
  
@@ -145,7 +141,7 @@ index 41b7466f8a..d651c39c77 100644
  7.0.1 (14.07.26)
  
  - Rich Text Editor.
-@@ -215,6 +281,22 @@
+@@ -215,6 +277,22 @@
  - Ephemeral messages in groups.
  - Communities of chats.
  
@@ -168,7 +164,7 @@ index 41b7466f8a..d651c39c77 100644
  6.9.4 beta (02.07.26)
  
  - Add rich message editor with media, tables and math formulas.
-@@ -227,12 +309,39 @@
+@@ -227,12 +305,39 @@
  - Add alphabetical fast-scroll index to contacts box.
  - Improve screen reader accessibility for chats list and folders.
  
@@ -208,7 +204,7 @@ index 41b7466f8a..d651c39c77 100644
  6.9.2 (10.06.26)
  
  - Fix possible crash in OpenGL init (Linux).
-@@ -242,6 +351,24 @@
+@@ -242,6 +347,24 @@
  - Fix display of rich messages in Recent Actions.
  - Replace dispatch with TooManyCooks (Linux).
  
@@ -233,7 +229,7 @@ index 41b7466f8a..d651c39c77 100644
  6.9.1 (09.06.26)
  
  - Fix sending several same custom emoji.
-@@ -255,6 +382,10 @@
+@@ -255,6 +378,10 @@
  - Viewer for Markdown files in .md format.
  - Instant View that's really instant.
  
@@ -244,7 +240,7 @@ index 41b7466f8a..d651c39c77 100644
  6.8.5 beta (04.06.26)
  
  - Animated 3D objects on settings covers (premium star, coin, diamond).
-@@ -271,6 +402,54 @@
+@@ -271,6 +398,54 @@
  - Fix pause of animated reactions when opening their context menu.
  - Improve performance with RHI enabled.
  
@@ -299,7 +295,7 @@ index 41b7466f8a..d651c39c77 100644
  6.8.4 beta (27.05.26)
  
  - Drag-and-drop of photos into chats.
-@@ -283,6 +462,31 @@
+@@ -283,6 +458,31 @@
  - Fix borders in Instant View tables.
  - Fix several possible crashes.
  
@@ -331,7 +327,7 @@ index 41b7466f8a..d651c39c77 100644
  6.8.3 beta (19.05.26)
  
  - In-app markdown file viewer.
-@@ -293,6 +497,63 @@
+@@ -293,6 +493,63 @@
  - Upgrade to Qt 6.11.1 on macOS and Linux.
  - Test QRhi for Thanos effect on Qt 6.11.1.
  
@@ -395,7 +391,7 @@ index 41b7466f8a..d651c39c77 100644
  6.8.2 (12.05.26)
  
  - Fix non-premium sending of existing custom reactions.
-@@ -305,6 +566,23 @@
+@@ -305,6 +562,23 @@
  - Return "Chatbots" to Telegram Business.
  - Separate badge background color keys for sidebar buttons.
  
@@ -419,7 +415,7 @@ index 41b7466f8a..d651c39c77 100644
  6.8.1 (08.05.26)
  
  - Fix crash in anonymous group admins messages.
-@@ -322,6 +600,54 @@
+@@ -322,6 +596,54 @@
  - Fix tg:// link handling on cold start and login widget window activation.
  - Copy and paste formatting to and from HTML.
  
@@ -474,7 +470,7 @@ index 41b7466f8a..d651c39c77 100644
  6.7.8 (24.04.26)
  
  - Proxy auto-rotation option.
-@@ -338,6 +664,12 @@
+@@ -338,6 +660,12 @@
  - Fix crash in proxy sharing before auth.
  - Fix layout for RTL messages.
  
@@ -487,7 +483,7 @@ index 41b7466f8a..d651c39c77 100644
  6.7.7 beta (20.04.26)
  
  - Proxy auto-rotation option.
-@@ -352,6 +684,32 @@
+@@ -352,6 +680,32 @@
  - Fix stories in albums with reorder enabled.
  - Fix layout for RTL messages.
  
@@ -520,7 +516,7 @@ index 41b7466f8a..d651c39c77 100644
  6.7.6 (14.04.26)
  
  - Gradient-reveal animation for text appearing in messages.
-@@ -368,6 +726,40 @@
+@@ -368,6 +722,40 @@
  - Fix several poll display and voting menu issues.
  - Fix possible crashes in chats list, url auth and others.
  
@@ -561,7 +557,7 @@ index 41b7466f8a..d651c39c77 100644
  6.7.5 (07.04.26)
  
  - Support for gradual appearing of bot reply messages.
-@@ -387,6 +779,36 @@
+@@ -387,6 +775,36 @@
  - Fix tooltip crash in top peers selector with small width.
  - Fix preserving markers after video quality switch in media view.
  
