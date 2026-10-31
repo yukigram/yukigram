@@ -228,7 +228,7 @@ jobs:
         run: |
           set -exuo pipefail
 
-          nix-shell -p lixPackageSets.latest.nix-serve-ng --run 'NIX_SECRET_KEY_FILE=$PWD/bincache-key.priv nix-serve &'
+          nix-shell -p lixPackageSets.latest.nix-serve-ng --run 'NIX_SECRET_KEY_FILE=$PWD/bincache-key.priv nix-serve --priority 40 &'
           while ! curl http://127.0.0.1:5000/; do sleep 1; done
 
           mkdir -p out/nar
