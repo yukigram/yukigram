@@ -269,7 +269,6 @@ jobs:
           path: out
 
   website:
-    if: github.event_name != 'workflow_dispatch' || inputs.override_github_pages
     name: Website for hosting the repositories
     needs: [flatpak, nixos]
     runs-on: ubuntu-latest
@@ -316,11 +315,12 @@ jobs:
           path: website
 
       - name: Deploy GitHub Pages site
+        if: github.event_name != 'workflow_dispatch' || inputs.override_github_pages
         uses: actions/deploy-pages@v5
 
   release-branch:
     name: Update release branch
-    needs: [website]
+    needs: [release]
     runs-on: ubuntu-latest
 
     steps:
@@ -362,7 +362,7 @@ jobs:
   release:
     name: Release artifacts
     if: github.ref_type == 'tag'
-    needs: [binary, flatpak, nixos]
+    needs: [binary, flatpak, nixos, website]
     runs-on: ubuntu-latest
 
     steps:
