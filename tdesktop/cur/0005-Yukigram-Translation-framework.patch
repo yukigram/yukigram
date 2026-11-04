@@ -22,7 +22,7 @@ index 0000000000..9d9591e164
 +indent_style = space
 +indent_size = 4
 diff --git a/Telegram/SourceFiles/core/application.cpp b/Telegram/SourceFiles/core/application.cpp
-index 7172206f5c..2516b06452 100644
+index 47e4dda7a4..97f229413d 100644
 --- a/Telegram/SourceFiles/core/application.cpp
 +++ b/Telegram/SourceFiles/core/application.cpp
 @@ -54,6 +54,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

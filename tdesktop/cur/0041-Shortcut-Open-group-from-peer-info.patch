@@ -5,10 +5,10 @@ Subject: [PATCH] (Shortcut) Open group from peer info
 
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
-index 1355b902f6..c9e8ab5265 100644
+index 304a36fde5..36a7af629b 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_top_bar.cpp
-@@ -1019,7 +1019,12 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
+@@ -1041,7 +1041,12 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
  		addMore();
  		finalizeActions(buttons);
  	});
@@ -22,7 +22,7 @@ index 1355b902f6..c9e8ab5265 100644
  		const auto message = Ui::CreateChild<TopBarActionButton>(
  			this,
  			tr::lng_profile_action_short_message(tr::now),
-@@ -1032,6 +1037,9 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
+@@ -1054,6 +1059,9 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
  		message->setAccessibleName(tr::lng_profile_action_short_message(tr::now));
  		buttons.push_back(message);
  		_actions->add(message);
@@ -32,7 +32,7 @@ index 1355b902f6..c9e8ab5265 100644
  	}
  	const auto canJoin = (!sublist && !topic && channel && !channel->amIn());
  	if (canJoin) {
-@@ -1224,6 +1232,14 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
+@@ -1246,6 +1254,14 @@ void TopBar::setupActions(not_null<Window::SessionController*> controller) {
  	if (chechMax()) {
  		return;
  	}

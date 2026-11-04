@@ -5,7 +5,7 @@ Subject: [PATCH] (Info) Show mutual contacts
 
 
 diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
-index 9a3227b8e3..937eaec26c 100644
+index 380f9cd404..92054ce3d6 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 +++ b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 @@ -72,6 +72,42 @@ Data::CommunityInfo *JoinedCommunityChats(not_null<PeerData*> peer) {
@@ -61,7 +61,7 @@ index 9a3227b8e3..937eaec26c 100644
  
  RecipientMoneyRestrictionError WriteMoneyRestrictionError(
 diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.h b/Telegram/SourceFiles/boxes/peer_list_controllers.h
-index f238e858b1..e360797553 100644
+index f56d1d5f11..700f9eb2f1 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_controllers.h
 +++ b/Telegram/SourceFiles/boxes/peer_list_controllers.h
 @@ -40,6 +40,26 @@ namespace Window {

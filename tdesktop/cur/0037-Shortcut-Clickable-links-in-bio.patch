@@ -5,10 +5,10 @@ Subject: [PATCH] (Shortcut) Clickable links in bio
 
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_values.cpp b/Telegram/SourceFiles/info/profile/info_profile_values.cpp
-index af44e326c9..dc148e1cd8 100644
+index b5ce177822..4abbbb4b6c 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_values.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_values.cpp
-@@ -261,7 +261,7 @@ TextWithEntities AboutWithEntities(
+@@ -260,7 +260,7 @@ TextWithEntities AboutWithEntities(
  		|| (user && !isBot && !isPremium);
  	auto result = TextWithEntities{ value };
  	TextUtilities::ParseEntities(result, flags);

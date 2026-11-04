@@ -5,7 +5,7 @@ Subject: [PATCH] (Message)(Opt) Right action comments
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 790054daa8..c92b72f334 100644
+index 8b6fb7e5cd..f71a11f8b9 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -25,7 +25,7 @@ index 790054daa8..c92b72f334 100644
  			inner.setHeight(inner.height() - st::historyCommentsButtonHeight);
  		}
  		auto trect = inner.marginsRemoved(st::msgPadding);
-@@ -1873,7 +1874,7 @@ void Message::draw(Painter &p, const PaintContext &context) const {
+@@ -1876,7 +1877,7 @@ void Message::draw(Painter &p, const PaintContext &context) const {
  	const auto customHighlight = mediaDisplayed && media->customHighlight();
  	if (!mediaSelectionIntervals.empty() || customHighlight) {
  		auto localMediaBottom = gForIntervals.top() + gForIntervals.height();
@@ -34,7 +34,7 @@ index 790054daa8..c92b72f334 100644
  			localMediaBottom -= st::historyCommentsButtonHeight;
  		}
  		if (_viewButton) {
-@@ -2379,6 +2380,9 @@ void Message::paintCommentsButton(
+@@ -2382,6 +2383,9 @@ void Message::paintCommentsButton(
  	if (!hasCommentsButton()) {
  		return;
  	}
@@ -44,7 +44,7 @@ index 790054daa8..c92b72f334 100644
  	if (!_comments) {
  		_comments = std::make_unique<CommentsButton>();
  		history()->owner().registerHeavyViewPart(const_cast<Message*>(this));
-@@ -3263,7 +3267,7 @@ PointState Message::pointState(QPoint point) const {
+@@ -3267,7 +3271,7 @@ PointState Message::pointState(QPoint point) const {
  			auto mediaOnBottom = (mediaDisplayed && media->isBubbleBottom()) || check || (entry/* && entry->isBubbleBottom()*/);
  			auto mediaOnTop = (mediaDisplayed && media->isBubbleTop()) || (entry && entry->isBubbleTop());
  
@@ -53,7 +53,7 @@ index 790054daa8..c92b72f334 100644
  				g.setHeight(g.height() - st::historyCommentsButtonHeight);
  			}
  
-@@ -3658,7 +3662,7 @@ BottomRippleMask Message::bottomRippleMask(int buttonHeight) const {
+@@ -3667,7 +3671,7 @@ BottomRippleMask Message::bottomRippleMask(int buttonHeight) const {
  }
  
  void Message::createCommentsButtonRipple() {
@@ -62,7 +62,7 @@ index 790054daa8..c92b72f334 100644
  	_comments->ripple = std::make_unique<Ui::RippleAnimation>(
  		st::defaultRippleAnimation,
  		std::move(mask.image),
-@@ -5980,9 +5984,10 @@ bool Message::displayRightActionComments() const {
+@@ -6001,9 +6005,10 @@ bool Message::displayRightActionComments() const {
  	return !isPinnedContext()
  		&& (context() != Context::SavedSublist)
  		&& data()->repliesAreComments()
@@ -74,7 +74,7 @@ index 790054daa8..c92b72f334 100644
  }
  
  std::optional<QSize> Message::rightActionSize() const {
-@@ -6884,7 +6889,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -6911,7 +6916,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  			newHeight += (bottomInfoHeight - st::msgDateFont->height);
  		}
  

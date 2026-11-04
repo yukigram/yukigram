@@ -5,10 +5,10 @@ Subject: [PATCH] (Chat)(Opt) Hide bottom button bar
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 5169d0c3bd..8adc285e76 100644
+index 31f0a197fc..bf65017d72 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -108,6 +108,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -109,6 +109,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "data/data_premium_limits.h" // Data::PremiumLimits.
  #include "data/stickers/data_stickers.h"
  #include "data/stickers/data_custom_emoji.h"
@@ -16,7 +16,7 @@ index 5169d0c3bd..8adc285e76 100644
  #include "history/history.h"
  #include "history/history_item.h"
  #include "history/history_item_helpers.h" // GetErrorForSending.
-@@ -562,6 +563,12 @@ HistoryWidget::HistoryWidget(
+@@ -575,6 +576,12 @@ HistoryWidget::HistoryWidget(
  		updateControlsGeometry();
  	}, lifetime());
  
@@ -29,7 +29,7 @@ index 5169d0c3bd..8adc285e76 100644
  	_fieldChatStyle = InitMessageField(controller, _field, [=](
  			not_null<DocumentData*> document) {
  		if (_peer && Data::AllowEmojiWithoutPremium(_peer, document)) {
-@@ -6834,6 +6841,7 @@ bool HistoryWidget::isBotStart() const {
+@@ -6904,6 +6911,7 @@ bool HistoryWidget::isBotStart() const {
  	const auto user = _peer ? _peer->asUser() : nullptr;
  	if (!user
  		|| !user->isBot()
@@ -37,7 +37,7 @@ index 5169d0c3bd..8adc285e76 100644
  		|| !_canSendMessages) {
  		return false;
  	} else if (!user->botInfo->startToken.isEmpty()) {
-@@ -6849,10 +6857,12 @@ bool HistoryWidget::isReportMessages() const {
+@@ -6919,10 +6927,12 @@ bool HistoryWidget::isReportMessages() const {
  }
  
  bool HistoryWidget::isBlocked() const {
@@ -50,7 +50,7 @@ index 5169d0c3bd..8adc285e76 100644
  	if (const auto channel = _peer ? _peer->asChannel() : nullptr) {
  		return !channel->amIn() && !channel->isMonoforum() && !_canSendMessages;
  	}
-@@ -6864,6 +6874,7 @@ bool HistoryWidget::isChoosingTheme() const {
+@@ -6934,6 +6944,7 @@ bool HistoryWidget::isChoosingTheme() const {
  }
  
  bool HistoryWidget::isMuteUnmute() const {

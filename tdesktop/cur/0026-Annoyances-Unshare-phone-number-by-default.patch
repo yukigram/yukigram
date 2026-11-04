@@ -5,10 +5,10 @@ Subject: [PATCH] (Annoyances) Unshare phone number by default
 
 
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_contact_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_contact_box.cpp
-index 310f52d494..74dd5ba8f5 100644
+index 3f3cc72016..f8e36a2407 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_contact_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_contact_box.cpp
-@@ -784,7 +784,7 @@ void Controller::setupSharePhoneNumber() {
+@@ -788,7 +788,7 @@ void Controller::setupSharePhoneNumber() {
  		object_ptr<Ui::Checkbox>(
  			_box,
  			tr::lng_contact_share_phone(tr::now),

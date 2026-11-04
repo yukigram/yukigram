@@ -5,7 +5,7 @@ Subject: [PATCH] (Info) Community ID
 
 
 diff --git a/Telegram/SourceFiles/boxes/peers/community_box.cpp b/Telegram/SourceFiles/boxes/peers/community_box.cpp
-index e2673b619b..70f0b9d6ba 100644
+index d354a0f456..da8572ca09 100644
 --- a/Telegram/SourceFiles/boxes/peers/community_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/community_box.cpp
 @@ -26,6 +26,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

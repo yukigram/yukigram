@@ -6,7 +6,7 @@ Subject: [PATCH] (Style)(Opt) Custom emoji size
 WIP
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp b/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp
-index 67c31f4874..7075a61cfa 100644
+index cee68a8d5e..fcb54bfa0f 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp
 @@ -28,6 +28,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -17,7 +17,7 @@ index 67c31f4874..7075a61cfa 100644
  #include "data/data_session.h"
  #include "data/data_document.h"
  #include "data/data_document_media.h"
-@@ -232,7 +233,7 @@ QSize Sticker::MessageEffectSize() {
+@@ -227,7 +228,7 @@ QSize Sticker::MessageEffectSize() {
  }
  
  QSize Sticker::EmojiSize() {

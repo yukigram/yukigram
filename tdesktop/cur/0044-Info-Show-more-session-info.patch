@@ -5,7 +5,7 @@ Subject: [PATCH] (Info) Show more session info
 
 
 diff --git a/Telegram/SourceFiles/api/api_authorizations.cpp b/Telegram/SourceFiles/api/api_authorizations.cpp
-index 9652e7fedd..86d93f377c 100644
+index ed63b81173..b964f93579 100644
 --- a/Telegram/SourceFiles/api/api_authorizations.cpp
 +++ b/Telegram/SourceFiles/api/api_authorizations.cpp
 @@ -30,6 +30,7 @@ Authorizations::Entry ParseEntry(const MTPDauthorization &data) {
@@ -25,7 +25,7 @@ index 9652e7fedd..86d93f377c 100644
  		appName,
  		appVer.isEmpty() ? QString() : (' ' + appVer));
 diff --git a/Telegram/SourceFiles/api/api_authorizations.h b/Telegram/SourceFiles/api/api_authorizations.h
-index 25c97f3945..8663c2ac23 100644
+index ea0065fa68..b1ed991e54 100644
 --- a/Telegram/SourceFiles/api/api_authorizations.h
 +++ b/Telegram/SourceFiles/api/api_authorizations.h
 @@ -23,8 +23,10 @@ public:

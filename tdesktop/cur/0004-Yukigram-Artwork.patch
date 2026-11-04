@@ -5,10 +5,10 @@ Subject: [PATCH] (Yukigram) Artwork
 
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 1ed69158d4..3cb2c90481 100644
+index 5b15b42d45..b3f59b9728 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -2961,20 +2961,7 @@ if (LINUX AND DESKTOP_APP_USE_PACKAGED)
+@@ -3002,20 +3002,7 @@ if (LINUX AND DESKTOP_APP_USE_PACKAGED)
      configure_file("../lib/xdg/io.github.yukigram.metainfo.xml" "${CMAKE_CURRENT_BINARY_DIR}/${YUKIGRAM_APP_ID}.metainfo.xml" @ONLY)
      generate_appstream_changelog(Telegram "${CMAKE_SOURCE_DIR}/changelog.txt" "${CMAKE_CURRENT_BINARY_DIR}/${YUKIGRAM_APP_ID}.metainfo.xml")
      install(TARGETS Telegram RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" BUNDLE DESTINATION "${CMAKE_INSTALL_BINDIR}")
@@ -57,10 +57,10 @@ index b4f32ce533..8d3b3da382 100644
      <file alias="art/round_placeholder.jpg">../../art/round_placeholder.jpg</file>
      <file alias="art/cocoon.webp">../../art/cocoon.webp</file>
 diff --git a/Telegram/SourceFiles/platform/linux/specific_linux.cpp b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-index 5779a5ffdf..b9f2373e8e 100644
+index 026cf97c1c..a9be95a9fc 100644
 --- a/Telegram/SourceFiles/platform/linux/specific_linux.cpp
 +++ b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-@@ -492,7 +492,7 @@ void InstallLauncher() {
+@@ -493,7 +493,7 @@ void InstallLauncher() {
  	const auto icon = appIcons + ApplicationIconName() + u".png"_q;
  	QFile::remove(icon);
  	QFile::remove(icons + u"telegram.png"_q);
@@ -70,7 +70,7 @@ index 5779a5ffdf..b9f2373e8e 100644
  	}
  
 diff --git a/Telegram/SourceFiles/window/main_window.cpp b/Telegram/SourceFiles/window/main_window.cpp
-index 1fc83264f0..416562a497 100644
+index e7de87ccea..cf03c2831b 100644
 --- a/Telegram/SourceFiles/window/main_window.cpp
 +++ b/Telegram/SourceFiles/window/main_window.cpp
 @@ -141,7 +141,7 @@ const char kOptionNewWindowsSizeAsFirst[] = "new-windows-size-as-first";

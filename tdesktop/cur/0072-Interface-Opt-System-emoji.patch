@@ -40,10 +40,10 @@ index 0000000000..1bce51908a
 +extern const char kOptionSystemEmoji[];
 +}
 diff --git a/Telegram/lib_ui/ui/emoji_config.cpp b/Telegram/lib_ui/ui/emoji_config.cpp
-index 3cf3f2f568..cfc6aaef39 100644
+index 8df59bb698..5e186f90b2 100644
 --- a/Telegram/lib_ui/ui/emoji_config.cpp
 +++ b/Telegram/lib_ui/ui/emoji_config.cpp
-@@ -71,6 +71,7 @@ private:
+@@ -74,6 +74,7 @@ private:
  
  };
  
@@ -51,7 +51,7 @@ index 3cf3f2f568..cfc6aaef39 100644
  auto SizeNormal = -1;
  auto SizeLarge = -1;
  auto SpritesCount = -1;
-@@ -782,7 +783,18 @@ const QPixmap &SinglePixmap(EmojiPtr emoji, int fontHeight) {
+@@ -795,7 +796,18 @@ const QPixmap &SinglePixmap(EmojiPtr emoji, int fontHeight) {
  	).first->second;
  }
  

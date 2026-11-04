@@ -5,10 +5,10 @@ Subject: [PATCH] (Major) Split Stickers and GIFs chat permission toggle
 
 
 diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
-index c68b3dfb3a..2c5a27a152 100644
+index 0c079f6596..d622b87276 100644
 --- a/Telegram/Resources/langs/lang.strings
 +++ b/Telegram/Resources/langs/lang.strings
-@@ -7304,6 +7304,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -7297,6 +7297,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  "lng_admin_log_banned_send_voice_messages" = "Send voice messages";
  "lng_admin_log_banned_send_video_messages" = "Send video messages";
  "lng_admin_log_banned_send_stickers" = "Send stickers & GIFs";
@@ -81,7 +81,7 @@ index d44c251b14..5f720ca67f 100644
  	const auto fixOne = [&] {
  		for (const auto &[first, second] : dependencies) {
 diff --git a/Telegram/SourceFiles/history/admin_log/history_admin_log_item.cpp b/Telegram/SourceFiles/history/admin_log/history_admin_log_item.cpp
-index fe8d5e98db..4e3dc52faa 100644
+index 825b9b8389..3890048d5c 100644
 --- a/Telegram/SourceFiles/history/admin_log/history_admin_log_item.cpp
 +++ b/Telegram/SourceFiles/history/admin_log/history_admin_log_item.cpp
 @@ -347,10 +347,10 @@ QString GeneratePermissionsChangeText(
@@ -100,10 +100,10 @@ index fe8d5e98db..4e3dc52faa 100644
  		{ Flag::SendReactions, tr::lng_admin_log_banned_send_reactions },
  		{ Flag::SendPolls, tr::lng_admin_log_banned_send_polls },
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 440e1ac487..bf2a651ade 100644
+index bd69b830e3..d113559d15 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -10114,7 +10114,7 @@ bool HistoryWidget::sendExistingDocument(
+@@ -10312,7 +10312,7 @@ bool HistoryWidget::sendExistingDocument(
  	const auto ephemeralReply = session().ephemeralMessages()
  		.isEphemeralBotReply(messageToSend.action.replyTo.messageId);
  	const auto error = (_peer && !ephemeralReply)
@@ -113,10 +113,10 @@ index 440e1ac487..bf2a651ade 100644
  	if (error) {
  		Data::ShowSendErrorToast(controller(), _peer, error);
 diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-index d45b35fc34..75447fa71e 100644
+index 340648694f..0acdda6f2a 100644
 --- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-@@ -99,6 +99,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -101,6 +101,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "data/data_saved_messages.h"
  #include "data/data_saved_sublist.h"
  #include "data/data_session.h"
@@ -124,7 +124,7 @@ index d45b35fc34..75447fa71e 100644
  #include "data/data_user.h"
  #include "data/data_chat.h"
  #include "data/data_channel.h"
-@@ -3133,7 +3134,7 @@ bool ChatWidget::sendExistingDocument(
+@@ -3216,7 +3217,7 @@ bool ChatWidget::sendExistingDocument(
  	const auto ephemeralReply = session().ephemeralMessages()
  		.isEphemeralBotReply(messageToSend.action.replyTo.messageId);
  	const auto error = !ephemeralReply
@@ -134,10 +134,10 @@ index d45b35fc34..75447fa71e 100644
  	if (error) {
  		Data::ShowSendErrorToast(controller(), _peer, error);
 diff --git a/Telegram/SourceFiles/history/view/history_view_scheduled_section.cpp b/Telegram/SourceFiles/history/view/history_view_scheduled_section.cpp
-index 64f6a26ddd..3a55e1a33c 100644
+index 1b1e43f646..82b079899c 100644
 --- a/Telegram/SourceFiles/history/view/history_view_scheduled_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_scheduled_section.cpp
-@@ -888,7 +888,7 @@ bool ScheduledWidget::sendExistingDocument(
+@@ -913,7 +913,7 @@ bool ScheduledWidget::sendExistingDocument(
  		Api::MessageToSend messageToSend) {
  	const auto error = Data::RestrictionError(
  		_history->peer,
@@ -147,7 +147,7 @@ index 64f6a26ddd..3a55e1a33c 100644
  		Data::ShowSendErrorToast(controller(), _history->peer, error);
  		return false;
 diff --git a/Telegram/SourceFiles/media/stories/media_stories_reply.cpp b/Telegram/SourceFiles/media/stories/media_stories_reply.cpp
-index bca7823440..731a360b8c 100644
+index f78ac5280d..9cf036a50b 100644
 --- a/Telegram/SourceFiles/media/stories/media_stories_reply.cpp
 +++ b/Telegram/SourceFiles/media/stories/media_stories_reply.cpp
 @@ -376,7 +376,7 @@ bool ReplyArea::sendExistingDocument(

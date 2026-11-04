@@ -6,10 +6,10 @@ Subject: [PATCH] (Yukigram) Settings page
 Co-Authored-By: Lunya <241520024+lunya-miaou@users.noreply.github.com>
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 3cb2c90481..7e472c68d6 100644
+index b3f59b9728..b5162d7794 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -1987,6 +1987,8 @@ PRIVATE
+@@ -1997,6 +1997,8 @@ PRIVATE
      settings/sections/settings_shortcuts.h
      settings/sections/settings_websites.cpp
      settings/sections/settings_websites.h
@@ -19,7 +19,7 @@ index 3cb2c90481..7e472c68d6 100644
      storage/details/storage_file_utilities.h
      storage/details/storage_settings_scheme.cpp
 diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
-index 855a381a74..c68b3dfb3a 100644
+index 31fd8203e4..0c079f6596 100644
 --- a/Telegram/Resources/langs/lang.strings
 +++ b/Telegram/Resources/langs/lang.strings
 @@ -882,6 +882,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -31,7 +31,7 @@ index 855a381a74..c68b3dfb3a 100644
  "lng_settings_messages" = "Messages";
  "lng_settings_themes" = "Themes";
 diff --git a/Telegram/SourceFiles/settings/sections/settings_main.cpp b/Telegram/SourceFiles/settings/sections/settings_main.cpp
-index d78f63c2a1..b5878a6bc1 100644
+index b452a175cb..f65f25e5a0 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_main.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_main.cpp
 @@ -62,6 +62,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -42,7 +42,7 @@ index d78f63c2a1..b5878a6bc1 100644
  #include "storage/localstorage.h"
  #include "ui/basic_click_handlers.h"
  #include "ui/boxes/confirm_box.h"
-@@ -456,6 +457,13 @@ void BuildSectionButtons(SectionBuilder &builder) {
+@@ -457,6 +458,13 @@ void BuildSectionButtons(SectionBuilder &builder) {
  		.keywords = { u"battery"_q, u"animations"_q, u"power"_q, u"saving"_q },
  	});
  

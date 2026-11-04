@@ -5,7 +5,7 @@ Subject: [PATCH] (Annoyances) Disable proxy sponsor
 
 
 diff --git a/Telegram/SourceFiles/history/history.cpp b/Telegram/SourceFiles/history/history.cpp
-index 27c0d3c3f9..75e00cc7e9 100644
+index 85240fe631..16c9d1ecd5 100644
 --- a/Telegram/SourceFiles/history/history.cpp
 +++ b/Telegram/SourceFiles/history/history.cpp
 @@ -4573,7 +4573,7 @@ void History::cacheTopPromoted(bool promoted) {

@@ -5,7 +5,7 @@ Subject: [PATCH] (Info)(Opt) Show inferred peer DC
 
 
 diff --git a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
-index 80175f9d65..5252e5f6b1 100644
+index 35e2db7bf2..2e04c67a23 100644
 --- a/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 +++ b/Telegram/SourceFiles/info/profile/info_profile_actions.cpp
 @@ -44,6 +44,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 80175f9d65..5252e5f6b1 100644
  #include "data/data_saved_sublist.h"
  #include "data/data_session.h"
  #include "data/data_user.h"
-@@ -105,6 +106,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -106,6 +107,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "window/window_peer_menu.h"
  #include "window/window_separate_id.h"
  #include "window/window_session_controller.h"
@@ -24,7 +24,7 @@ index 80175f9d65..5252e5f6b1 100644
  #include "styles/style_boxes.h"
  #include "styles/style_channel_earn.h" // st::channelEarnCurrencyCommonMargins
  #include "styles/style_chat_helpers.h"
-@@ -1635,6 +1637,22 @@ Section DetailsFiller::makeInfo() {
+@@ -1636,6 +1638,22 @@ Section DetailsFiller::makeInfo() {
  			);
  		}
  	};
@@ -47,7 +47,7 @@ index 80175f9d65..5252e5f6b1 100644
  	const auto setupJoinDate = [&] {
  		if (ShowChannelJoinedBelowAbout.value()) {
  			if (const auto channel = _peer->asChannel()) {
-@@ -1758,6 +1776,7 @@ Section DetailsFiller::makeInfo() {
+@@ -1759,6 +1777,7 @@ Section DetailsFiller::makeInfo() {
  		qrButton->setClickedCallback(showQr);
  
  		setupPeerId();
@@ -55,7 +55,7 @@ index 80175f9d65..5252e5f6b1 100644
  
  		if (!user->isBot()) {
  			tracker.track(result->add(
-@@ -1879,6 +1898,7 @@ Section DetailsFiller::makeInfo() {
+@@ -1880,6 +1899,7 @@ Section DetailsFiller::makeInfo() {
  		}
  
  		setupPeerId();

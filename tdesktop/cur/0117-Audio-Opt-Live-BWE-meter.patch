@@ -123,7 +123,7 @@ index fbc6438a05..4842be8de4 100644
  	object_ptr<Ui::FlatLabel> _shortInfoLabel;
  	object_ptr<Ui::LabelSimple> _hangupLabel;
 diff --git a/Telegram/SourceFiles/calls/group/calls_group_panel.cpp b/Telegram/SourceFiles/calls/group/calls_group_panel.cpp
-index bb51956175..bc870c24e3 100644
+index 130df11ace..00732220e8 100644
 --- a/Telegram/SourceFiles/calls/group/calls_group_panel.cpp
 +++ b/Telegram/SourceFiles/calls/group/calls_group_panel.cpp
 @@ -68,6 +68,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -134,7 +134,7 @@ index bb51956175..bc870c24e3 100644
  #include "styles/style_calls.h"
  #include "styles/style_chat_helpers.h"
  #include "styles/style_layers.h"
-@@ -2989,6 +2990,41 @@ void Panel::refreshTitle() {
+@@ -2998,6 +2999,41 @@ void Panel::refreshTitle() {
  			: (widget()->width() - _subtitle->width()) / 2;
  		_subtitle->moveToLeft(left, top);
  	}

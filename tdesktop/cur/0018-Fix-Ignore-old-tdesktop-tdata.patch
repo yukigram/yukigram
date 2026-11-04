@@ -5,10 +5,10 @@ Subject: [PATCH] (Fix) Ignore old tdesktop tdata
 
 
 diff --git a/Telegram/SourceFiles/platform/linux/specific_linux.cpp b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-index ba61d9a814..24c1ec6803 100644
+index 39c846d2e4..2d43da3130 100644
 --- a/Telegram/SourceFiles/platform/linux/specific_linux.cpp
 +++ b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-@@ -700,16 +700,6 @@ QString psAppDataPath() {
+@@ -726,16 +726,6 @@ QString psAppDataPath() {
  		return false;
  	};
  

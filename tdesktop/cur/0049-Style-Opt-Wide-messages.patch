@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Wide messages
 
 
 diff --git a/Telegram/SourceFiles/data/data_media_types.cpp b/Telegram/SourceFiles/data/data_media_types.cpp
-index 3f64b411f4..aecfbf1933 100644
+index 28a481c9b2..9701795cd7 100644
 --- a/Telegram/SourceFiles/data/data_media_types.cpp
 +++ b/Telegram/SourceFiles/data/data_media_types.cpp
 @@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index 3f64b411f4..aecfbf1933 100644
  #include "history/history.h"
  #include "history/history_item.h" // CreateMedia.
  #include "history/history_item_components.h"
-@@ -1066,7 +1067,7 @@ std::unique_ptr<HistoryView::Media> MediaPhoto::createView(
+@@ -1073,7 +1074,7 @@ std::unique_ptr<HistoryView::Media> MediaPhoto::createView(
  					message,
  					_chat,
  					_photo,
@@ -26,7 +26,7 @@ index 3f64b411f4..aecfbf1933 100644
  		return std::make_unique<HistoryView::Photo>(
  			message,
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 55b9b49cf1..a1ff0952f0 100644
+index 34d1516944..6cc171c491 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
 @@ -15,6 +15,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -37,7 +37,7 @@ index 55b9b49cf1..a1ff0952f0 100644
  #include "history/history_item_helpers.h"
  #include "history/view/controls/history_view_forward_panel.h"
  #include "history/view/controls/history_view_draft_options.h"
-@@ -5544,7 +5545,7 @@ void HistoryInner::mouseActionUpdate() {
+@@ -5573,7 +5574,7 @@ void HistoryInner::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = _contentWidth;
@@ -47,7 +47,7 @@ index 55b9b49cf1..a1ff0952f0 100644
  							maxwidth,
  							int32(st::msgMaxWidth
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index f89b658873..063c7e075c 100644
+index b62e3a995e..c1639328e7 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -9,6 +9,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -68,7 +68,7 @@ index f89b658873..063c7e075c 100644
  			maxwidth,
  			st::msgMaxWidth
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 7732cec77a..60770be981 100644
+index 6ba665ed46..3a57b275c1 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -79,7 +79,7 @@ index 7732cec77a..60770be981 100644
  #include "history/history.h"
  #include "history/history_item.h"
  #include "history/history_item_components.h"
-@@ -5163,7 +5164,7 @@ void ListWidget::mouseActionUpdate() {
+@@ -5561,7 +5562,7 @@ void ListWidget::mouseActionUpdate() {
  					dateWidth += st::msgServicePadding.left() + st::msgServicePadding.right();
  					auto dateLeft = st::msgServiceMargin.left();
  					auto maxwidth = view->width();
@@ -89,7 +89,7 @@ index 7732cec77a..60770be981 100644
  							maxwidth,
  							int32(st::msgMaxWidth
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index c92b72f334..9ff14379ec 100644
+index f71a11f8b9..0706ec5edf 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -16,6 +16,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -100,7 +100,7 @@ index c92b72f334..9ff14379ec 100644
  #include "history/view/history_view_cursor_state.h"
  #include "history/history_item_components.h"
  #include "history/history_item_helpers.h"
-@@ -6698,7 +6699,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -6719,7 +6720,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  		}
  	}
  	accumulate_min(contentWidth, maxWidth());
@@ -109,7 +109,7 @@ index c92b72f334..9ff14379ec 100644
  		? 0x3FFFFFF
  		: std::max({
  			st::msgMaxWidth,
-@@ -6782,7 +6783,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -6803,7 +6804,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  		if (reactionsInBubble) {
  			_reactions->resizeGetHeight(textWidth);
  		}
@@ -158,7 +158,7 @@ index 29bef2aec9..4e3e26d273 100644
  	}
  	contentWidth -= st::msgServiceMargin.left() + st::msgServiceMargin.left(); // two small margins
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_document.cpp b/Telegram/SourceFiles/history/view/media/history_view_document.cpp
-index 80074274ef..0fd0a37835 100644
+index d5275ebe70..445136c5cc 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_document.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_document.cpp
 @@ -18,6 +18,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -334,7 +334,7 @@ index e3b4e274d5..7f4e56327a 100644
  	auto newHeight = 0;
  
 diff --git a/Telegram/SourceFiles/iv/markdown/iv_markdown_article.cpp b/Telegram/SourceFiles/iv/markdown/iv_markdown_article.cpp
-index 1177128464..60fdf58499 100644
+index 3aa1d096a2..0094e5ed09 100644
 --- a/Telegram/SourceFiles/iv/markdown/iv_markdown_article.cpp
 +++ b/Telegram/SourceFiles/iv/markdown/iv_markdown_article.cpp
 @@ -18,6 +18,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -434,7 +434,7 @@ index 1ed17984a1..97148ec117 100644
  	int aspectHeight);
  
 diff --git a/Telegram/SourceFiles/window/themes/window_theme_preview.cpp b/Telegram/SourceFiles/window/themes/window_theme_preview.cpp
-index df6755bfa0..5a856456ce 100644
+index e6e36389bf..bae300637f 100644
 --- a/Telegram/SourceFiles/window/themes/window_theme_preview.cpp
 +++ b/Telegram/SourceFiles/window/themes/window_theme_preview.cpp
 @@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

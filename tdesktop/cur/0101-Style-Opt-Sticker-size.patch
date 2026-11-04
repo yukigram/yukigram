@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Sticker size
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp b/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp
-index 4ef4cc7be1..67c31f4874 100644
+index 49c64497a0..cee68a8d5e 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_sticker.cpp
 @@ -50,6 +50,7 @@ constexpr auto kMessageEffectMultiplier = 2;

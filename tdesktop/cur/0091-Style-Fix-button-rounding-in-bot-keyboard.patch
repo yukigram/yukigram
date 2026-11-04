@@ -5,7 +5,7 @@ Subject: [PATCH] (Style) Fix button rounding in bot keyboard
 
 
 diff --git a/Telegram/SourceFiles/chat_helpers/bot_keyboard.cpp b/Telegram/SourceFiles/chat_helpers/bot_keyboard.cpp
-index 0f56999b9e..33405424b4 100644
+index 2022e12db8..160cad2a40 100644
 --- a/Telegram/SourceFiles/chat_helpers/bot_keyboard.cpp
 +++ b/Telegram/SourceFiles/chat_helpers/bot_keyboard.cpp
 @@ -26,10 +26,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
