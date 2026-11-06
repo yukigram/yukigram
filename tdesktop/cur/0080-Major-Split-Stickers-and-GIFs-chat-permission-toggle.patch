@@ -113,7 +113,7 @@ index bd69b830e3..d113559d15 100644
  	if (error) {
  		Data::ShowSendErrorToast(controller(), _peer, error);
 diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-index 340648694f..0acdda6f2a 100644
+index 03d16a587e..d9d2aff038 100644
 --- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 @@ -101,6 +101,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

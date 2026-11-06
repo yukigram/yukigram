@@ -206,6 +206,135 @@ index 6369a0fcf7..6833b3a813 100644
  	void confirmDeleteSelected();
  	void clearSelected();
  
+diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
+index 340648694f..03d16a587e 100644
+--- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
+@@ -6187,8 +6187,8 @@ void ChatWidget::confirmDeleteSelected() {
+ 	ConfirmDeleteSelectedItems(_inner);
+ }
+ 
+-void ChatWidget::confirmForwardSelected() {
+-	ConfirmForwardSelectedItems(_inner);
++void ChatWidget::confirmForwardSelected(int steal) {
++	ConfirmForwardSelectedItems(_inner, steal);
+ }
+ 
+ void ChatWidget::clearSelected() {
+@@ -6243,6 +6243,18 @@ void ChatWidget::setupShortcuts() {
+ 			&& (Core::App().activeWindow() == &controller()->window());
+ 	}) | rpl::on_next([=](not_null<Shortcuts::Request*> request) {
+ 		using Command = Shortcuts::Command;
++		request->check(Command::FastForward, 1) && request->handle([=] {
++			confirmForwardSelected(0);
++			return true;
++		});
++		request->check(Command::FastCopy, 1) && request->handle([=] {
++			confirmForwardSelected(1);
++			return true;
++		});
++		request->check(Command::FastSteal, 1) && request->handle([=] {
++			confirmForwardSelected(2);
++			return true;
++		});
+ 		request->check(Command::Search, 1) && request->handle([=] {
+ 			searchRequested();
+ 			return true;
+diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.h b/Telegram/SourceFiles/history/view/history_view_chat_section.h
+index 2b9756d622..5817a73c53 100644
+--- a/Telegram/SourceFiles/history/view/history_view_chat_section.h
++++ b/Telegram/SourceFiles/history/view/history_view_chat_section.h
+@@ -369,7 +369,7 @@ private:
+ 	void updatePinnedVisibility();
+ 
+ 	void confirmDeleteSelected();
+-	void confirmForwardSelected();
++	void confirmForwardSelected(int steal = 0);
+ 	void clearSelected();
+ 	void setPinnedVisibility(bool shown);
+ 
+diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
+index 6ba665ed46..1e52626d60 100644
+--- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
+@@ -7088,7 +7088,7 @@ void ConfirmDeleteSelectedItems(not_null<ListWidget*> widget) {
+ 	}
+ }
+ 
+-void ConfirmForwardSelectedItems(not_null<ListWidget*> widget) {
++void ConfirmForwardSelectedItems(not_null<ListWidget*> widget, int steal) {
+ 	const auto items = widget->getSelectedItems();
+ 	if (items.empty()) {
+ 		return;
+@@ -7104,7 +7104,7 @@ void ConfirmForwardSelectedItems(not_null<ListWidget*> widget) {
+ 		if (const auto strong = weak.get()) {
+ 			strong->cancelSelection();
+ 		}
+-	});
++	}, steal);
+ }
+ 
+ void ConfirmSendNowSelectedItems(not_null<ListWidget*> widget) {
+diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.h b/Telegram/SourceFiles/history/view/history_view_list_widget.h
+index 6591327c6c..b29d37d728 100644
+--- a/Telegram/SourceFiles/history/view/history_view_list_widget.h
++++ b/Telegram/SourceFiles/history/view/history_view_list_widget.h
+@@ -1150,7 +1150,7 @@ private:
+ };
+ 
+ void ConfirmDeleteSelectedItems(not_null<ListWidget*> widget);
+-void ConfirmForwardSelectedItems(not_null<ListWidget*> widget);
++void ConfirmForwardSelectedItems(not_null<ListWidget*> widget, int steal = 0);
+ void ConfirmSendNowSelectedItems(not_null<ListWidget*> widget);
+ 
+ [[nodiscard]] CopyRestrictionType CopyRestrictionTypeFor(
+diff --git a/Telegram/SourceFiles/history/view/history_view_pinned_section.cpp b/Telegram/SourceFiles/history/view/history_view_pinned_section.cpp
+index 8557b61bc3..f2dc35ef0d 100644
+--- a/Telegram/SourceFiles/history/view/history_view_pinned_section.cpp
++++ b/Telegram/SourceFiles/history/view/history_view_pinned_section.cpp
+@@ -363,6 +363,18 @@ void PinnedWidget::setupShortcuts() {
+ 			&& !_history->peer->isSelf();
+ 	}) | rpl::on_next([=](not_null<Shortcuts::Request*> request) {
+ 		using Command = Shortcuts::Command;
++		request->check(Command::FastForward, 1) && request->handle([=] {
++			confirmForwardSelected(0);
++			return true;
++		});
++		request->check(Command::FastCopy, 1) && request->handle([=] {
++			confirmForwardSelected(1);
++			return true;
++		});
++		request->check(Command::FastSteal, 1) && request->handle([=] {
++			confirmForwardSelected(2);
++			return true;
++		});
+ 		request->check(Command::Search, 1) && request->handle([=] {
+ 			searchInPinned();
+ 			return true;
+@@ -952,8 +964,8 @@ void PinnedWidget::confirmDeleteSelected() {
+ 	ConfirmDeleteSelectedItems(_inner);
+ }
+ 
+-void PinnedWidget::confirmForwardSelected() {
+-	ConfirmForwardSelectedItems(_inner);
++void PinnedWidget::confirmForwardSelected(int steal) {
++	ConfirmForwardSelectedItems(_inner, steal);
+ }
+ 
+ void PinnedWidget::clearSelected() {
+diff --git a/Telegram/SourceFiles/history/view/history_view_pinned_section.h b/Telegram/SourceFiles/history/view/history_view_pinned_section.h
+index 079cb38dd8..47adf26503 100644
+--- a/Telegram/SourceFiles/history/view/history_view_pinned_section.h
++++ b/Telegram/SourceFiles/history/view/history_view_pinned_section.h
+@@ -185,7 +185,7 @@ private:
+ 	void searchInPinned();
+ 
+ 	void confirmDeleteSelected();
+-	void confirmForwardSelected();
++	void confirmForwardSelected(int steal = 0);
+ 	void clearSelected();
+ 	void recountChatWidth();
+ 
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
 index 25a3d52d0e..32c90c344a 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp

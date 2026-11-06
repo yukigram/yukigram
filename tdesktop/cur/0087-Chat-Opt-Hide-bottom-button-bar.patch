@@ -95,7 +95,7 @@ index c34d06a26e..7d3f3057b5 100644
  		|| (_peer->isGigagroup() && !Data::CanSendAnything(_peer))
  		|| _peer->isRepliesChat()
 diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-index 0acdda6f2a..b8a26b07a9 100644
+index d9d2aff038..4412b99794 100644
 --- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 @@ -38,6 +38,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
