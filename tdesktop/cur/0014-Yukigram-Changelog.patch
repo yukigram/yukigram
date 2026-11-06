@@ -5,11 +5,11 @@ Subject: [PATCH] (Yukigram) Changelog
 
 
 diff --git a/changelog.txt b/changelog.txt
-index 3ef439bd97..87428a6b93 100644
+index 3ef439bd97..b270a59e07 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,3 +1,12 @@
-+9999 wip (01.01.99)
++7.3.5.1 rc.1 (06.11.26)
 +
 +- Fix forward, copy, and steal shortcuts with "New chat view"
 +- Better "Hide bottom bar" with "New chat view"
