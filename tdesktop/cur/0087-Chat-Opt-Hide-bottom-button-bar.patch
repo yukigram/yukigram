@@ -95,7 +95,7 @@ index c34d06a26e..7d3f3057b5 100644
  		|| (_peer->isGigagroup() && !Data::CanSendAnything(_peer))
  		|| _peer->isRepliesChat()
 diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-index d9d2aff038..4412b99794 100644
+index d9d2aff038..bf0fceb8fa 100644
 --- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 @@ -38,6 +38,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -106,18 +106,15 @@ index d9d2aff038..4412b99794 100644
  #include "iv/iv_rich_message_serializer.h"
  #include "iv/iv_rich_page.h"
  #include "ui/chat/choose_theme_controller.h"
-@@ -1585,6 +1586,11 @@ void ChatWidget::setupComposeControls() {
+@@ -1581,6 +1582,8 @@ void ChatWidget::setupComposeControls() {
+ 				? restriction
+ 				: topicRestriction
+ 				? std::move(topicRestriction)
++				: Yukigram::Settings::HideBottomBar->current()
++				? u""_q
+ 				: tr::lng_group_not_accessible(tr::now))
  			: topicRestriction
  			? std::move(topicRestriction)
- 			: Data::SendError();
-+		if (Yukigram::Settings::HideBottomBar->current() && *text == tr::lng_group_not_accessible(tr::now)) {
-+			return Controls::WriteRestriction{
-+				.type = Controls::WriteRestrictionType::Hidden,
-+			};
-+		}
- 		return text ? Controls::WriteRestriction{
- 			.text = std::move(*text),
- 			.type = Controls::WriteRestrictionType::Rights,
 diff --git a/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp b/Telegram/SourceFiles/yukigram/settings/hide_bottom_bar.cpp
 new file mode 100644
 index 0000000000..a48a380230
