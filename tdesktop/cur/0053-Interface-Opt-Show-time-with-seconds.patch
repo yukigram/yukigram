@@ -75,10 +75,10 @@ index d43652efde..b14f929fd1 100644
  }
  
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
-index 815bbe4285..c696b4abd1 100644
+index cab3b5d729..ce1bd1ca8a 100644
 --- a/Telegram/SourceFiles/history/history_item.cpp
 +++ b/Telegram/SourceFiles/history/history_item.cpp
-@@ -1545,7 +1545,7 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
+@@ -1553,7 +1553,7 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
  
  QString GenerateServiceTime(TimeId date) {
  	if (date > 0) {
@@ -87,7 +87,7 @@ index 815bbe4285..c696b4abd1 100644
  	}
  	return QString();
  }
-@@ -8972,7 +8972,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
+@@ -8978,7 +8978,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
  	};
  	const auto time = QLocale().toString(
  		scheduled.time(),
@@ -110,10 +110,10 @@ index feace09174..db623ee6f6 100644
  	const auto size = time.size()
  		+ author.size()
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-index 9971a38282..7b100f2bd6 100644
+index 76ba89ec88..cec6097221 100644
 --- a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-@@ -505,7 +505,7 @@ void BottomInfo::layoutDateText() {
+@@ -510,7 +510,7 @@ void BottomInfo::layoutDateText() {
  		: edited + ((_data.flags
  			& (Data::Flag::ForwardedDate | Data::Flag::FullDate))
  		? Ui::FormatDateTimeSavedFrom(_data.date)
@@ -123,10 +123,10 @@ index 9971a38282..7b100f2bd6 100644
  	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
  	const auto authorWidth = st::msgDateFont->width(author);
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_call.cpp b/Telegram/SourceFiles/history/view/media/history_view_call.cpp
-index 0e58229f31..df1d4da4d4 100644
+index 47a15b4d16..e070c3afd9 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_call.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_call.cpp
-@@ -50,7 +50,7 @@ Call::Call(
+@@ -51,7 +51,7 @@ Call::Call(
  	_text = Data::MediaCall::Text(item, _state, _conference, _video);
  	_status = QLocale().toString(
  		parent->dateTime().time(),
@@ -234,10 +234,10 @@ index 6851dee06d..f4e23c02a0 100644
  		width(tr::lng_contacts_loading(tr::now)),
  		(width(tr::lng_context_read_hidden(tr::now))
 diff --git a/Telegram/SourceFiles/ui/text/format_values.cpp b/Telegram/SourceFiles/ui/text/format_values.cpp
-index 96a776b01f..947a8befca 100644
+index d98d2db4ad..b992ac6cae 100644
 --- a/Telegram/SourceFiles/ui/text/format_values.cpp
 +++ b/Telegram/SourceFiles/ui/text/format_values.cpp
-@@ -83,23 +83,14 @@ QString FormatProgressText(qint64 ready, qint64 total) {
+@@ -81,23 +81,14 @@ QString FormatProgressText(qint64 ready, qint64 total) {
  
  QString FormatDateTime(QDateTime date) {
  	const auto now = QDateTime::currentDateTime();
@@ -266,7 +266,7 @@ index 96a776b01f..947a8befca 100644
  	}
  }
  
-@@ -716,7 +707,7 @@ QString FormatDialogsDate(const QDateTime &lastTime) {
+@@ -731,7 +722,7 @@ QString FormatDialogsDate(const QDateTime &lastTime) {
  
  	if ((lastDate == nowDate)
  		|| (std::abs(lastTime.secsTo(now)) < kRecentlyInSeconds)) {

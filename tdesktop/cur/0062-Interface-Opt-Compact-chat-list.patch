@@ -99,7 +99,7 @@ index 7e55ae6cda..f2f6f51373 100644
  	const auto updateRect = QRect(
  		_st->photoSize - skip.x() - size,
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_row.cpp b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
-index 716b24f50c..f7a667eadd 100644
+index 78c1fcbee2..254332ccdb 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_row.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

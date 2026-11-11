@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
-index 7b100f2bd6..6145810801 100644
+index cec6097221..ba9f2ee287 100644
 --- a/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.cpp
 @@ -24,6 +24,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -18,7 +18,7 @@ index 7b100f2bd6..6145810801 100644
  #include "base/unixtime.h"
  #include "chat_helpers/emoji_interactions.h"
  #include "core/click_handler_types.h"
-@@ -505,7 +506,8 @@ void BottomInfo::layoutDateText() {
+@@ -510,7 +511,8 @@ void BottomInfo::layoutDateText() {
  		: edited + ((_data.flags
  			& (Data::Flag::ForwardedDate | Data::Flag::FullDate))
  		? Ui::FormatDateTimeSavedFrom(_data.date)
@@ -28,7 +28,7 @@ index 7b100f2bd6..6145810801 100644
  	const auto afterAuthor = prefix + date;
  	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
  	const auto authorWidth = st::msgDateFont->width(author);
-@@ -750,6 +752,9 @@ BottomInfo::Data BottomInfoDataFromMessage(not_null<Message*> message) {
+@@ -755,6 +757,9 @@ BottomInfo::Data BottomInfoDataFromMessage(not_null<Message*> message) {
  			result.flags |= Flag::Silent;
  		}
  	}
@@ -39,7 +39,7 @@ index 7b100f2bd6..6145810801 100644
  		return result;
  	}
 diff --git a/Telegram/SourceFiles/history/view/history_view_bottom_info.h b/Telegram/SourceFiles/history/view/history_view_bottom_info.h
-index f38195faa2..b3a2ccf484 100644
+index 2aee60b483..98981df29f 100644
 --- a/Telegram/SourceFiles/history/view/history_view_bottom_info.h
 +++ b/Telegram/SourceFiles/history/view/history_view_bottom_info.h
 @@ -56,6 +56,7 @@ public:
@@ -51,7 +51,7 @@ index f38195faa2..b3a2ccf484 100644
  		int64 tonStake = 0;
  		int stars = 0;
 diff --git a/Telegram/SourceFiles/history/view/history_view_element.cpp b/Telegram/SourceFiles/history/view/history_view_element.cpp
-index c1639328e7..2a676d31d5 100644
+index b4f5bf90db..324252e698 100644
 --- a/Telegram/SourceFiles/history/view/history_view_element.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_element.cpp
 @@ -40,6 +40,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

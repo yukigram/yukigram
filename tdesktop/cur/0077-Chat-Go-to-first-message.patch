@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index a4ce407935..5e1b543d39 100644
+index 3c1b9eb710..231922acb4 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
 @@ -25,6 +25,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -18,7 +18,7 @@ index a4ce407935..5e1b543d39 100644
  #include "lottie/lottie_icon.h"
  #include "ui/boxes/confirm_box.h"
  #include "base/random.h"
-@@ -327,6 +328,7 @@ private:
+@@ -328,6 +329,7 @@ private:
  	void addBlockUser();
  	void addBanFromChannel();
  	void addViewDiscussion();
@@ -26,7 +26,7 @@ index a4ce407935..5e1b543d39 100644
  	void addDirectMessages();
  	void addToggleTopicClosed();
  	void addExportChat();
-@@ -1043,6 +1045,20 @@ void Filler::addViewDiscussion() {
+@@ -1044,6 +1046,20 @@ void Filler::addViewDiscussion() {
  	}, &st::menuIconDiscussion);
  }
  
@@ -47,7 +47,7 @@ index a4ce407935..5e1b543d39 100644
  void Filler::addDirectMessages() {
  	const auto channel = _peer->asBroadcast();
  	if (!channel) {
-@@ -1941,6 +1957,7 @@ void Filler::fillHistoryActions() {
+@@ -1942,6 +1958,7 @@ void Filler::fillHistoryActions() {
  	addViewAsTopics();
  	addManageChat();
  	addViewStatistics();

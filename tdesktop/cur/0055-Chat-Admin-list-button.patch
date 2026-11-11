@@ -20,7 +20,7 @@ index 0000000000..07bc0f276e
 +    " stroke="#fff" fill="#0000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
 +</svg>
 diff --git a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
-index 3358ae1a77..e2f00a9525 100644
+index b2af945260..03f15c6e2e 100644
 --- a/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_top_bar_widget.cpp
 @@ -12,6 +12,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -31,7 +31,7 @@ index 3358ae1a77..e2f00a9525 100644
  #include "info/info_memento.h"
  #include "info/info_controller.h"
  #include "info/profile/info_profile_values.h"
-@@ -62,6 +63,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -63,6 +64,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "data/data_send_action.h"
  #include "dialogs/dialogs_main_list.h"
  #include "chat_helpers/emoji_interactions.h"
@@ -39,7 +39,7 @@ index 3358ae1a77..e2f00a9525 100644
  #include "yukigram/settings/quick_recent_actions.h"
  #include "base/call_delayed.h"
  #include "base/unixtime.h"
-@@ -130,6 +132,7 @@ TopBarWidget::TopBarWidget(
+@@ -131,6 +133,7 @@ TopBarWidget::TopBarWidget(
  , _groupCall(this, st::topBarGroupCall)
  , _search(this, st::topBarSearch)
  , _recentActions(this, st::topBarRecentActions)
@@ -47,7 +47,7 @@ index 3358ae1a77..e2f00a9525 100644
  , _infoToggle(this, st::topBarInfo)
  , _menuToggle(this, st::topBarMenuToggle)
  , _titlePeerText(st::windowMinWidth / 3)
-@@ -167,6 +170,12 @@ TopBarWidget::TopBarWidget(
+@@ -168,6 +171,12 @@ TopBarWidget::TopBarWidget(
  		const auto channel = _activeChat.key.peer()->asChannel();
  		_controller->showSection(std::make_shared<AdminLog::SectionMemento>(channel));
  	});
@@ -60,7 +60,7 @@ index 3358ae1a77..e2f00a9525 100644
  	_infoToggle->setClickedCallback([=] { toggleInfoSection(); });
  	_back->setAcceptBoth();
  	_back->addClickHandler([=](Qt::MouseButton) {
-@@ -1302,6 +1311,10 @@ void TopBarWidget::updateControlsGeometry() {
+@@ -1310,6 +1319,10 @@ void TopBarWidget::updateControlsGeometry() {
  		_infoToggle->moveToRight(_rightTaken, otherButtonsTop);
  		_rightTaken += _infoToggle->width();
  	}
@@ -71,7 +71,7 @@ index 3358ae1a77..e2f00a9525 100644
  	_recentActions->moveToRight(_rightTaken, otherButtonsTop);
  	if (!_recentActions->isHidden()) {
  		_rightTaken += _recentActions->width() + st::topBarSkip;
-@@ -1449,6 +1462,30 @@ void TopBarWidget::updateControlsVisibility() {
+@@ -1457,6 +1470,30 @@ void TopBarWidget::updateControlsVisibility() {
  		return false;
  	}();
  	_recentActions->setVisible(isAdmin);

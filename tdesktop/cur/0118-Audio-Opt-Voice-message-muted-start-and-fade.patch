@@ -5,7 +5,7 @@ Subject: [PATCH] (Audio)(Opt) Voice message muted start and fade
 
 
 diff --git a/Telegram/SourceFiles/media/audio/media_audio_capture.cpp b/Telegram/SourceFiles/media/audio/media_audio_capture.cpp
-index bd82a9df76..357a759237 100644
+index 5f0d8e82b1..741aa5b4fd 100644
 --- a/Telegram/SourceFiles/media/audio/media_audio_capture.cpp
 +++ b/Telegram/SourceFiles/media/audio/media_audio_capture.cpp
 @@ -24,8 +24,6 @@ namespace Capture {

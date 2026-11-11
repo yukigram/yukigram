@@ -61,7 +61,7 @@ index eb4e5bc609..9ceb059601 100644
  			return "https://www.microsoft.com/en-us/store/p/telegram-desktop/9nztwsqntd0s";
  #elif defined OS_MAC_STORE // OS_WIN_STORE
 diff --git a/Telegram/SourceFiles/history/history_item_helpers.cpp b/Telegram/SourceFiles/history/history_item_helpers.cpp
-index 10f5e5b9d2..f554d0896c 100644
+index 024506de0b..3646285982 100644
 --- a/Telegram/SourceFiles/history/history_item_helpers.cpp
 +++ b/Telegram/SourceFiles/history/history_item_helpers.cpp
 @@ -57,6 +57,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -72,7 +72,7 @@ index 10f5e5b9d2..f554d0896c 100644
  
  #include "styles/style_layers.h"
  
-@@ -1450,10 +1451,7 @@ bool CanHoldItemNotification(not_null<const HistoryItem*> item) {
+@@ -1452,10 +1453,7 @@ bool CanHoldItemNotification(not_null<const HistoryItem*> item) {
  }
  
  [[nodiscard]] TextWithEntities UnsupportedMessageText() {

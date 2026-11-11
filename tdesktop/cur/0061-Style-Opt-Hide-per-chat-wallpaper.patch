@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Hide per-chat wallpaper
 
 
 diff --git a/Telegram/SourceFiles/data/data_channel.cpp b/Telegram/SourceFiles/data/data_channel.cpp
-index b260d1ef48..5f5be2fc30 100644
+index 6444659d32..7219aee51f 100644
 --- a/Telegram/SourceFiles/data/data_channel.cpp
 +++ b/Telegram/SourceFiles/data/data_channel.cpp
 @@ -30,6 +30,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index b260d1ef48..5f5be2fc30 100644
  #include "base/unixtime.h"
  #include "core/application.h"
  #include "history/history.h"
-@@ -1562,7 +1563,7 @@ void ApplyChannelUpdate(
+@@ -1564,7 +1565,7 @@ void ApplyChannelUpdate(
  		session->sendAsPeers().setChosen(channel, PeerId());
  	}
  

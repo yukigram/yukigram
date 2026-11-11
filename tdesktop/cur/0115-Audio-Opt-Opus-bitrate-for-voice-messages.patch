@@ -5,7 +5,7 @@ Subject: [PATCH] (Audio)(Opt) Opus bitrate for voice messages
 
 
 diff --git a/Telegram/SourceFiles/media/audio/media_audio_capture.cpp b/Telegram/SourceFiles/media/audio/media_audio_capture.cpp
-index c816566339..bd82a9df76 100644
+index f4b6c964a5..5f0d8e82b1 100644
 --- a/Telegram/SourceFiles/media/audio/media_audio_capture.cpp
 +++ b/Telegram/SourceFiles/media/audio/media_audio_capture.cpp
 @@ -12,6 +12,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

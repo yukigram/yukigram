@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Old-style spoilers
 
 
 diff --git a/Telegram/SourceFiles/history/view/media/history_view_media.cpp b/Telegram/SourceFiles/history/view/media/history_view_media.cpp
-index 485adea6f9..e6151ef6c0 100644
+index 9453ef69a2..fa2bcbfc47 100644
 --- a/Telegram/SourceFiles/history/view/media/history_view_media.cpp
 +++ b/Telegram/SourceFiles/history/view/media/history_view_media.cpp
 @@ -24,6 +24,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -24,7 +24,7 @@ index 485adea6f9..e6151ef6c0 100644
  #include "core/ui_integration.h"
  #include "styles/style_chat.h"
  #include "styles/style_chat_helpers.h"
-@@ -364,6 +366,18 @@ void Media::fillImageSpoiler(
+@@ -365,6 +367,18 @@ void Media::fillImageSpoiler(
  		Ui::DefaultImageSpoiler().frame(
  			spoiler->animation->index(context.now, pausedSpoiler)),
  		spoiler->cornerCache);
@@ -125,7 +125,7 @@ index 61edbb2345..6a06670438 100644
  	const auto source = frame.source;
  	const auto ratio = style::DevicePixelRatio();
 diff --git a/Telegram/lib_ui/ui/text/text_renderer.cpp b/Telegram/lib_ui/ui/text/text_renderer.cpp
-index ddf9c45f60..065af11c3c 100644
+index df65125ee9..d00a9112b5 100644
 --- a/Telegram/lib_ui/ui/text/text_renderer.cpp
 +++ b/Telegram/lib_ui/ui/text/text_renderer.cpp
 @@ -14,6 +14,10 @@
@@ -139,7 +139,7 @@ index ddf9c45f60..065af11c3c 100644
  namespace Ui::Text {
  namespace {
  
-@@ -1891,7 +1895,7 @@ void Renderer::paintSpoilerRects(
+@@ -1894,7 +1898,7 @@ void Renderer::paintSpoilerRects(
  	if (_spoilerCache) {
  		const auto frame = _spoilerCache->lookup(color->c)->frame(index);
  		for (const auto &rect : rects) {

@@ -5,10 +5,10 @@ Subject: [PATCH] (Message) "unofficial client user" peer type icon
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 4176f20189..8e8c668347 100644
+index bc258c3493..41794100bb 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
-@@ -487,6 +487,11 @@ std::optional<style::icon> ChatTypeIcon(HistoryItem *item, bool *shouldOverrideC
+@@ -500,6 +500,11 @@ std::optional<style::icon> ChatTypeIcon(HistoryItem *item, bool *shouldOverrideC
  				return st::msgNameDeletedIcon;
  			} else if (user->isBot() && !user->isSupport() && !user->isRepliesChat()) {
  				return st::msgNameBotIcon;
@@ -21,10 +21,10 @@ index 4176f20189..8e8c668347 100644
  		}
  	}
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index 6efc8bf1a5..17b964748e 100644
+index f544f581e5..41d6d1a935 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
-@@ -592,6 +592,8 @@ msgNameDeletedIcon: icon {{ "dialogs/dialogs_sending", attentionButtonFg, point(
+@@ -593,6 +593,8 @@ msgNameDeletedIcon: icon {{ "dialogs/dialogs_sending", attentionButtonFg, point(
  msgNameDeletedIconSelected: icon {{ "dialogs/dialogs_sending", attentionButtonFgOver, point(4px, 4px) }};
  msgNameForumIcon: icon {{ "dialogs/dialogs_forum", historyPeer4NameFg, point(1px, 4px) }};
  msgNameForumIconSelected: icon {{ "dialogs/dialogs_forum", historyPeer4NameFgSelected, point(1px, 4px) }};

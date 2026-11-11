@@ -5,10 +5,10 @@ Subject: [PATCH] (Annoyances) Remove copy restrictions
 
 
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 40897a8df1..47da73b7c1 100644
+index 64e31c6eef..cabf8ca9cf 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3955,12 +3955,12 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+@@ -3978,12 +3978,12 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
  }
  
  bool HistoryInner::hasCopyRestriction(HistoryItem *item) const {
@@ -23,7 +23,7 @@ index 40897a8df1..47da73b7c1 100644
  }
  
  bool HistoryInner::showCopyRestriction(HistoryItem *item) {
-@@ -3988,6 +3988,7 @@ bool HistoryInner::showCopyMediaRestriction(not_null<HistoryItem*> item) {
+@@ -4011,6 +4011,7 @@ bool HistoryInner::showCopyMediaRestriction(not_null<HistoryItem*> item) {
  }
  
  bool HistoryInner::hasCopyRestrictionForSelected() const {
@@ -32,10 +32,10 @@ index 40897a8df1..47da73b7c1 100644
  		return true;
  	}
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index 555a33ee0a..6ba665ed46 100644
+index f309b8bf9d..01317ad330 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-@@ -2303,18 +2303,16 @@ bool ListWidget::isEmpty() const {
+@@ -2371,13 +2371,11 @@ bool ListWidget::isEmpty() const {
  }
  
  bool ListWidget::hasCopyRestriction(HistoryItem *item) const {
@@ -51,13 +51,7 @@ index 555a33ee0a..6ba665ed46 100644
  }
  
  bool ListWidget::showCopyRestriction(HistoryItem *item) {
- 	const auto type = _delegate->listCopyRestrictionType(item);
--	if (type == CopyRestrictionType::None) {
-+	if (true) {
- 		return false;
- 	}
- 	_delegate->listUiShow()->showToast((type == CopyRestrictionType::Channel)
-@@ -2327,7 +2325,7 @@ bool ListWidget::showCopyRestriction(HistoryItem *item) {
+@@ -2388,7 +2386,7 @@ bool ListWidget::showCopyRestriction(HistoryItem *item) {
  
  bool ListWidget::showCopyMediaRestriction(not_null<HistoryItem*> item) {
  	const auto type = _delegate->listCopyMediaRestrictionType(item);
@@ -66,7 +60,7 @@ index 555a33ee0a..6ba665ed46 100644
  		return false;
  	}
  	_delegate->listUiShow()->showToast((type == CopyRestrictionType::Channel)
-@@ -2339,6 +2337,7 @@ bool ListWidget::showCopyMediaRestriction(not_null<HistoryItem*> item) {
+@@ -2400,6 +2398,7 @@ bool ListWidget::showCopyMediaRestriction(not_null<HistoryItem*> item) {
  }
  
  bool ListWidget::hasCopyRestrictionForSelected() const {
@@ -74,7 +68,7 @@ index 555a33ee0a..6ba665ed46 100644
  	if (hasCopyRestriction()) {
  		return true;
  	}
-@@ -2372,9 +2371,7 @@ bool ListWidget::showCopyRestrictionForSelected() {
+@@ -2435,9 +2434,7 @@ bool ListWidget::showCopyRestrictionForSelected() {
  }
  
  bool ListWidget::hasSelectRestriction() const {
@@ -85,8 +79,24 @@ index 555a33ee0a..6ba665ed46 100644
  }
  
  Element *ListWidget::lookupItemByY(int y) const {
+@@ -7286,6 +7283,7 @@ void ConfirmSendNowSelectedItems(not_null<ListWidget*> widget) {
+ CopyRestrictionType CopyRestrictionTypeFor(
+ 		not_null<PeerData*> peer,
+ 		HistoryItem *item) {
++	return CopyRestrictionType::None;
+ 	return (peer->allowsForwarding() && (!item || !item->forbidsForward()))
+ 		? CopyRestrictionType::None
+ 		: peer->isUser()
+@@ -7298,6 +7296,7 @@ CopyRestrictionType CopyRestrictionTypeFor(
+ CopyRestrictionType CopyMediaRestrictionTypeFor(
+ 		not_null<PeerData*> peer,
+ 		not_null<HistoryItem*> item) {
++	return CopyRestrictionType::None;
+ 	if (const auto all = CopyRestrictionTypeFor(peer, item)
+ 		; all != CopyRestrictionType::None) {
+ 		return all;
 diff --git a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-index a0f076ca98..bab5348dd9 100644
+index 31ab501b05..bd7a2d746f 100644
 --- a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 +++ b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 @@ -1474,6 +1474,7 @@ QSize OverlayWidget::flipSizeByRotation(QSize size) const {

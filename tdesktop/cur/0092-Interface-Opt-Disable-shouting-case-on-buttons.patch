@@ -40,7 +40,7 @@ index 0000000000..d9d0a2842a
 +extern const char kOptionNoShoutButtons[];
 +}
 diff --git a/Telegram/lib_ui/ui/widgets/buttons.cpp b/Telegram/lib_ui/ui/widgets/buttons.cpp
-index 690ba6f5e4..cc84e9b61f 100644
+index a9f44e91c6..7b0dba44da 100644
 --- a/Telegram/lib_ui/ui/widgets/buttons.cpp
 +++ b/Telegram/lib_ui/ui/widgets/buttons.cpp
 @@ -410,8 +410,11 @@ void RoundButton::setCornerRadii(

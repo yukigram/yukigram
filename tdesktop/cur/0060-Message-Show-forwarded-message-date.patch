@@ -7,7 +7,7 @@ This patch is adapted from Forkgram.
 Original author: 23rd <23rd@vivaldi.net>
 
 diff --git a/Telegram/SourceFiles/history/history_item_components.cpp b/Telegram/SourceFiles/history/history_item_components.cpp
-index fb76cf37b4..a19969709a 100644
+index 18081cb70d..8f70d07dbf 100644
 --- a/Telegram/SourceFiles/history/history_item_components.cpp
 +++ b/Telegram/SourceFiles/history/history_item_components.cpp
 @@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

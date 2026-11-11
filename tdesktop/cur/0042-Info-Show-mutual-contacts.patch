@@ -5,10 +5,10 @@ Subject: [PATCH] (Info) Show mutual contacts
 
 
 diff --git a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
-index 380f9cd404..92054ce3d6 100644
+index fde27df051..24c3d0ea37 100644
 --- a/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
 +++ b/Telegram/SourceFiles/boxes/peer_list_controllers.cpp
-@@ -72,6 +72,42 @@ Data::CommunityInfo *JoinedCommunityChats(not_null<PeerData*> peer) {
+@@ -118,6 +118,42 @@ Data::CommunityInfo *JoinedCommunityChats(not_null<PeerData*> peer) {
  	return (info && !info->histories().empty()) ? info : nullptr;
  }
  
@@ -51,7 +51,7 @@ index 380f9cd404..92054ce3d6 100644
  object_ptr<Ui::BoxContent> PrepareContactsBox(
  		not_null<Window::SessionController*> window) {
  	using Mode = ContactsBoxController::SortMode;
-@@ -823,7 +859,7 @@ bool ContactsBoxController::appendRow(not_null<UserData*> user) {
+@@ -869,7 +905,7 @@ bool ContactsBoxController::appendRow(not_null<UserData*> user) {
  
  std::unique_ptr<PeerListRow> ContactsBoxController::createRow(
  		not_null<UserData*> user) {
