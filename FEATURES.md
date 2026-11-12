@@ -77,6 +77,7 @@ This is what I mean by "minus the bullshit"
 - :zap: Disable AI Instant View summaries
 - :zap: Hide "Pasted as plain text" toast
 - No proxy sponsored channels
+- :star: Disable Widgets
 
 [OpenStreetMap]: https://openstreetmap.org
 
