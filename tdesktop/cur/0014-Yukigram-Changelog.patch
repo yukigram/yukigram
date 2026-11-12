@@ -5,11 +5,11 @@ Subject: [PATCH] (Yukigram) Changelog
 
 
 diff --git a/changelog.txt b/changelog.txt
-index 94111f36ef..38647bb303 100644
+index 94111f36ef..28f8f24e83 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,3 +1,8 @@
-+9999 wip (01.01.99)
++7.4.2.0 rc.1 (12.11.26)
 +
 +- Upstream updated to 7.4.2
 +- HTML widgets are rendered as "Unsupported message"
