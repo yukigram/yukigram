@@ -5,7 +5,7 @@ Subject: [PATCH] (Message)(Opt) Right action comments
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index c77aa3775a..daaa5a3294 100644
+index 591887cfc8..5e8addf74a 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -74,7 +74,7 @@ index c77aa3775a..daaa5a3294 100644
  }
  
  std::optional<QSize> Message::rightActionSize() const {
-@@ -6929,7 +6934,7 @@ int Message::resizeContentGetHeight(int newWidth) {
+@@ -6931,7 +6936,7 @@ int Message::resizeContentGetHeight(int newWidth) {
  			newHeight += (bottomInfoHeight - st::msgDateFont->height);
  		}
  

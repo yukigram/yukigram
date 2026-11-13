@@ -18,10 +18,10 @@ index 0000000000..a57e7ca362
 +  }
 +}
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 1ef9528411..fed76e7cb8 100644
+index 1601b50812..2d2c0d9dad 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -2619,6 +2619,9 @@ PRIVATE
+@@ -2629,6 +2629,9 @@ PRIVATE
      tray.h
  )
  
@@ -101,5 +101,5 @@ index 0000000000..02c74d433d
 +    ghcr.io/telegramdesktop/tdesktop/centos_env@sha256:1d1b0f2efbcc106fc9f56ab90602d45bd2820bb0035d26755eca46f23d303e51 \
 +    "$@"
 
-base-commit: 2b502b26e1b85b502df70c4c048f44f02657af75
-prerequisite-patch-id: 4c593c49cad55da95c2b4beb67c0733c385c3f53
+base-commit: 346f10fde53c499ad50de8708a99e3c003bc1cf3
+prerequisite-patch-id: a75b175b256acbdf1025ac27b28798b3c19bf04d

@@ -5,10 +5,10 @@ Subject: [PATCH] (Annoyances) Remove copy restrictions
 
 
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 64e31c6eef..cabf8ca9cf 100644
+index cc9af61374..39a394913f 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3978,12 +3978,12 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+@@ -3985,12 +3985,12 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
  }
  
  bool HistoryInner::hasCopyRestriction(HistoryItem *item) const {
@@ -23,7 +23,7 @@ index 64e31c6eef..cabf8ca9cf 100644
  }
  
  bool HistoryInner::showCopyRestriction(HistoryItem *item) {
-@@ -4011,6 +4011,7 @@ bool HistoryInner::showCopyMediaRestriction(not_null<HistoryItem*> item) {
+@@ -4018,6 +4018,7 @@ bool HistoryInner::showCopyMediaRestriction(not_null<HistoryItem*> item) {
  }
  
  bool HistoryInner::hasCopyRestrictionForSelected() const {
@@ -32,7 +32,7 @@ index 64e31c6eef..cabf8ca9cf 100644
  		return true;
  	}
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index f309b8bf9d..01317ad330 100644
+index ca4a29ebab..67a5f0a347 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 @@ -2371,13 +2371,11 @@ bool ListWidget::isEmpty() const {
@@ -79,7 +79,7 @@ index f309b8bf9d..01317ad330 100644
  }
  
  Element *ListWidget::lookupItemByY(int y) const {
-@@ -7286,6 +7283,7 @@ void ConfirmSendNowSelectedItems(not_null<ListWidget*> widget) {
+@@ -7304,6 +7301,7 @@ void ConfirmSendNowSelectedItems(not_null<ListWidget*> widget) {
  CopyRestrictionType CopyRestrictionTypeFor(
  		not_null<PeerData*> peer,
  		HistoryItem *item) {
@@ -87,7 +87,7 @@ index f309b8bf9d..01317ad330 100644
  	return (peer->allowsForwarding() && (!item || !item->forbidsForward()))
  		? CopyRestrictionType::None
  		: peer->isUser()
-@@ -7298,6 +7296,7 @@ CopyRestrictionType CopyRestrictionTypeFor(
+@@ -7316,6 +7314,7 @@ CopyRestrictionType CopyRestrictionTypeFor(
  CopyRestrictionType CopyMediaRestrictionTypeFor(
  		not_null<PeerData*> peer,
  		not_null<HistoryItem*> item) {
@@ -96,7 +96,7 @@ index f309b8bf9d..01317ad330 100644
  		; all != CopyRestrictionType::None) {
  		return all;
 diff --git a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-index 31ab501b05..bd7a2d746f 100644
+index 227b52c641..eb379fbdaf 100644
 --- a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 +++ b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 @@ -1474,6 +1474,7 @@ QSize OverlayWidget::flipSizeByRotation(QSize size) const {

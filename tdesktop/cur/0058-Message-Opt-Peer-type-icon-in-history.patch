@@ -7,7 +7,7 @@ This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 647284f3d3..bc258c3493 100644
+index f3c6c00767..54a808e924 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -62,6 +62,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

@@ -5,10 +5,10 @@ Subject: [PATCH] (Major) Split Stickers and GIFs chat permission toggle
 
 
 diff --git a/Telegram/Resources/langs/lang.strings b/Telegram/Resources/langs/lang.strings
-index 20e8837599..85580aa7ef 100644
+index 41475720a4..eac8e72811 100644
 --- a/Telegram/Resources/langs/lang.strings
 +++ b/Telegram/Resources/langs/lang.strings
-@@ -7127,6 +7127,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -7134,6 +7134,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  "lng_admin_log_banned_send_voice_messages" = "Send voice messages";
  "lng_admin_log_banned_send_video_messages" = "Send video messages";
  "lng_admin_log_banned_send_stickers" = "Send stickers & GIFs";
@@ -100,10 +100,10 @@ index 038a29c8d5..148da82c81 100644
  		{ Flag::SendReactions, tr::lng_admin_log_banned_send_reactions },
  		{ Flag::SendPolls, tr::lng_admin_log_banned_send_polls },
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index e17c7107df..3b7e983c11 100644
+index f184d4ed22..ffb39e488f 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -10364,7 +10364,7 @@ bool HistoryWidget::sendExistingDocument(
+@@ -10372,7 +10372,7 @@ bool HistoryWidget::sendExistingDocument(
  	const auto ephemeralReply = session().ephemeralMessages()
  		.isEphemeralBotReply(messageToSend.action.replyTo.messageId);
  	const auto error = (_peer && !ephemeralReply)
@@ -113,10 +113,10 @@ index e17c7107df..3b7e983c11 100644
  	if (error) {
  		Data::ShowSendErrorToast(controller(), _peer, error);
 diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-index 8555d04dee..7e046fabb4 100644
+index 5e7a1eccf3..7a66fab041 100644
 --- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-@@ -101,6 +101,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -102,6 +102,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "data/data_saved_messages.h"
  #include "data/data_saved_sublist.h"
  #include "data/data_session.h"
@@ -124,7 +124,7 @@ index 8555d04dee..7e046fabb4 100644
  #include "data/data_user.h"
  #include "data/data_chat.h"
  #include "data/data_channel.h"
-@@ -3219,7 +3220,7 @@ bool ChatWidget::sendExistingDocument(
+@@ -3257,7 +3258,7 @@ bool ChatWidget::sendExistingDocument(
  	const auto ephemeralReply = session().ephemeralMessages()
  		.isEphemeralBotReply(messageToSend.action.replyTo.messageId);
  	const auto error = !ephemeralReply

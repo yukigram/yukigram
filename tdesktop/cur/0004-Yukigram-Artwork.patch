@@ -5,10 +5,10 @@ Subject: [PATCH] (Yukigram) Artwork
 
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index 57c8eeb6cc..9875be9253 100644
+index c27a264bc4..ce928706fd 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -3122,20 +3122,7 @@ if (LINUX AND DESKTOP_APP_USE_PACKAGED)
+@@ -3132,20 +3132,7 @@ if (LINUX AND DESKTOP_APP_USE_PACKAGED)
      configure_file("../lib/xdg/io.github.yukigram.metainfo.xml" "${CMAKE_CURRENT_BINARY_DIR}/${YUKIGRAM_APP_ID}.metainfo.xml" @ONLY)
      generate_appstream_changelog(Telegram "${CMAKE_SOURCE_DIR}/changelog.txt" "${CMAKE_CURRENT_BINARY_DIR}/${YUKIGRAM_APP_ID}.metainfo.xml")
      install(TARGETS Telegram RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" BUNDLE DESTINATION "${CMAKE_INSTALL_BINDIR}")
@@ -70,7 +70,7 @@ index 026cf97c1c..a9be95a9fc 100644
  	}
  
 diff --git a/Telegram/SourceFiles/window/main_window.cpp b/Telegram/SourceFiles/window/main_window.cpp
-index 791e23bbb6..87bd5dbb24 100644
+index 62f8c797ca..b848f62f48 100644
 --- a/Telegram/SourceFiles/window/main_window.cpp
 +++ b/Telegram/SourceFiles/window/main_window.cpp
 @@ -141,7 +141,7 @@ const char kOptionNewWindowsSizeAsFirst[] = "new-windows-size-as-first";

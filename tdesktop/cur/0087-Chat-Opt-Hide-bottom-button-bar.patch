@@ -5,7 +5,7 @@ Subject: [PATCH] (Chat)(Opt) Hide bottom button bar
 
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 7116fd439c..43473c880f 100644
+index 0587031d07..cb9628bb16 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -109,6 +109,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -29,7 +29,7 @@ index 7116fd439c..43473c880f 100644
  	_fieldChatStyle = InitMessageField(controller, _field, [=](
  			not_null<DocumentData*> document) {
  		if (_peer && Data::AllowEmojiWithoutPremium(_peer, document)) {
-@@ -6944,6 +6951,7 @@ bool HistoryWidget::isBotStart() const {
+@@ -6952,6 +6959,7 @@ bool HistoryWidget::isBotStart() const {
  	const auto user = _peer ? _peer->asUser() : nullptr;
  	if (!user
  		|| !user->isBot()
@@ -37,7 +37,7 @@ index 7116fd439c..43473c880f 100644
  		|| !_canSendMessages) {
  		return false;
  	} else if (!user->botInfo->startToken.isEmpty()) {
-@@ -6959,10 +6967,12 @@ bool HistoryWidget::isReportMessages() const {
+@@ -6967,10 +6975,12 @@ bool HistoryWidget::isReportMessages() const {
  }
  
  bool HistoryWidget::isBlocked() const {
@@ -50,7 +50,7 @@ index 7116fd439c..43473c880f 100644
  	if (const auto channel = _peer ? _peer->asChannel() : nullptr) {
  		return !channel->amIn() && !channel->isMonoforum() && !_canSendMessages;
  	}
-@@ -6974,6 +6984,7 @@ bool HistoryWidget::isChoosingTheme() const {
+@@ -6982,6 +6992,7 @@ bool HistoryWidget::isChoosingTheme() const {
  }
  
  bool HistoryWidget::isMuteUnmute() const {
@@ -95,7 +95,7 @@ index c34d06a26e..7d3f3057b5 100644
  		|| (_peer->isGigagroup() && !Data::CanSendAnything(_peer))
  		|| _peer->isRepliesChat()
 diff --git a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
-index 7e046fabb4..da112fddd3 100644
+index 7a66fab041..395977aa65 100644
 --- a/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_chat_section.cpp
 @@ -38,6 +38,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -106,7 +106,7 @@ index 7e046fabb4..da112fddd3 100644
  #include "iv/iv_rich_message_serializer.h"
  #include "iv/iv_rich_page.h"
  #include "ui/chat/choose_theme_controller.h"
-@@ -1581,6 +1582,8 @@ void ChatWidget::setupComposeControls() {
+@@ -1582,6 +1583,8 @@ void ChatWidget::setupComposeControls() {
  				? restriction
  				: topicRestriction
  				? std::move(topicRestriction)

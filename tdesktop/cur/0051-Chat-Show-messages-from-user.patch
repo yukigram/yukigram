@@ -21,10 +21,10 @@ index 9231ef3737..274d07e329 100644
  	if (user && SupportsMemberTags(_peer)) {
  		const auto isSelf = user->isSelf();
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index b35b185ab6..121a17b7ff 100644
+index c02492d880..5d07ba20c7 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3124,6 +3124,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+@@ -3131,6 +3131,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
  				std::move(callback),
  				&st::menuIconStats);
  		}

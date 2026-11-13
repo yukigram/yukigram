@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Hide reply background emoji
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_reply.cpp b/Telegram/SourceFiles/history/view/history_view_reply.cpp
-index 3a43755210..ca6446148b 100644
+index 0b546cacad..b596166a92 100644
 --- a/Telegram/SourceFiles/history/view/history_view_reply.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_reply.cpp
 @@ -36,6 +36,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

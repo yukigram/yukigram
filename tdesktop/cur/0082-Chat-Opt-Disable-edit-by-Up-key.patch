@@ -7,7 +7,7 @@ This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 3b7e983c11..7116fd439c 100644
+index ffb39e488f..0587031d07 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
 @@ -18,6 +18,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -18,7 +18,7 @@ index 3b7e983c11..7116fd439c 100644
  #include "ui/boxes/confirm_box.h"
  #include "boxes/delete_messages_box.h"
  #include "boxes/send_credits_box.h"
-@@ -9489,6 +9490,7 @@ void HistoryWidget::keyPressEvent(QKeyEvent *e) {
+@@ -9497,6 +9498,7 @@ void HistoryWidget::keyPressEvent(QKeyEvent *e) {
  		scrollByKey();
  	} else if (e->key() == Qt::Key_Up && !commonModifiers) {
  		if (!_field->empty()
@@ -27,10 +27,10 @@ index 3b7e983c11..7116fd439c 100644
  			|| _editMsgId
  			|| _replyTo) {
 diff --git a/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp b/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp
-index 09565bbbb2..593a0a3da1 100644
+index 5110a9ed7c..982147a37f 100644
 --- a/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp
 +++ b/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp
-@@ -114,6 +114,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -115,6 +115,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "settings/sections/settings_premium.h"
  #include "support/support_common.h"
  #include "support/support_helper.h"
@@ -38,8 +38,8 @@ index 09565bbbb2..593a0a3da1 100644
  #include "ui/item_text_options.h"
  #include "ui/text/text_options.h"
  #include "ui/text/text_utilities.h"
-@@ -3129,7 +3130,7 @@ void ComposeControls::initKeyHandler() {
- 			_attachRequests.fire({});
+@@ -3150,7 +3151,7 @@ void ComposeControls::initKeyHandler() {
+ 			}
  			return;
  		}
 -		if (key == Qt::Key_Up && !hasModifiers) {

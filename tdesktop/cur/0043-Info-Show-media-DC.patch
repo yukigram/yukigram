@@ -5,7 +5,7 @@ Subject: [PATCH] (Info) Show media DC
 
 
 diff --git a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-index bd7a2d746f..11cd428538 100644
+index eb379fbdaf..f2efa166e6 100644
 --- a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 +++ b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 @@ -1877,6 +1877,17 @@ void OverlayWidget::updateControls() {

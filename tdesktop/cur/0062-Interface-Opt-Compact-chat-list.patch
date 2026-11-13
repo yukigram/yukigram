@@ -51,7 +51,7 @@ index 2fe437a3ed..8660e400f7 100644
  		return false;
  	}
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-index 7e55ae6cda..f2f6f51373 100644
+index 0bd31c7b76..8e559cc88c 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 @@ -42,6 +42,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -62,15 +62,15 @@ index 7e55ae6cda..f2f6f51373 100644
  #include "data/components/sponsored_messages.h"
  #include "data/data_document.h"
  #include "data/data_drafts.h"
-@@ -407,6 +408,7 @@ InnerWidget::InnerWidget(
- 	Ui::ScheduleThanosEffectWarmUp(&session(), lifetime());
+@@ -426,6 +427,7 @@ InnerWidget::InnerWidget(
+ 	}, lifetime());
  
  	rpl::merge(
-+		Yukigram::Settings::CompactChatList->changes() | rpl::map_to(true),
- 		session().settings().archiveCollapsedChanges() | rpl::map_to(false),
- 		session().data().chatsFilters().changed() | rpl::map_to(true),
- 		session().data().chatsFilters().tagsEnabledChanges(
-@@ -1113,7 +1115,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
++		Yukigram::Settings::CompactChatList->changes() | rpl::to_empty,
+ 		session().data().chatsFilters().changed(),
+ 		session().data().chatsFilters().tagsEnabledChanges() | rpl::to_empty
+ 	) | rpl::on_next([=] {
+@@ -1172,7 +1174,9 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
  			}
  		}
  
@@ -80,7 +80,7 @@ index 7e55ae6cda..f2f6f51373 100644
  
  		const auto videoUserpic = validateVideoUserpic(row);
  		const auto cacheRatio = style::DevicePixelRatio();
-@@ -2157,7 +2161,7 @@ void InnerWidget::performDrag() {
+@@ -2246,7 +2250,7 @@ void InnerWidget::performDrag() {
  			('@' + u).toUtf8());
  	}
  
@@ -89,7 +89,7 @@ index 7e55ae6cda..f2f6f51373 100644
  	auto pixmap = QPixmap(Size(st.height * style::DevicePixelRatio()));
  	pixmap.setDevicePixelRatio(style::DevicePixelRatio());
  	pixmap.fill(Qt::transparent);
-@@ -6284,7 +6288,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
+@@ -6398,7 +6402,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
  		: st::dialogsCallBadgeSize;
  	const auto stroke = st::dialogsOnlineBadgeStroke;
  	const auto skip = user
@@ -148,7 +148,7 @@ index 78c1fcbee2..254332ccdb 100644
  		|| (activeMatters && _cornerBadgeUserpic->active != active)
  		|| _cornerBadgeUserpic->hidden != (hidden ? 1 : 0)
 diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
-index dd2fd649a7..8d1be1a55c 100644
+index 5528058df7..7fa2661e1c 100644
 --- a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 +++ b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -220,7 +220,7 @@ index dd2fd649a7..8d1be1a55c 100644
  	const auto sendStateIcon = [&]() -> const style::icon* {
  		if (!thread) {
  			return nullptr;
-@@ -1249,6 +1268,7 @@ void RowPainter::Paint(
+@@ -1242,6 +1261,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,
@@ -228,7 +228,7 @@ index dd2fd649a7..8d1be1a55c 100644
  		QRect(0, 0, context.width, row->height()),
  		entry,
  		videoUserpic,
-@@ -1361,6 +1381,7 @@ void RowPainter::Paint(
+@@ -1354,6 +1374,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,

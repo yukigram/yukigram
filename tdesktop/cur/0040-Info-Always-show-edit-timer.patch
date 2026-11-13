@@ -7,10 +7,10 @@ This patch is adapted from Kotatogram.
 Original author: RadRussianRus <radrussianrus@gmail.com>
 
 diff --git a/Telegram/SourceFiles/history/history_widget.cpp b/Telegram/SourceFiles/history/history_widget.cpp
-index 083bca3ab3..e28b2e6353 100644
+index 0408733615..98649692a3 100644
 --- a/Telegram/SourceFiles/history/history_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_widget.cpp
-@@ -11725,10 +11725,6 @@ void HistoryWidget::paintEditHeader(
+@@ -11733,10 +11733,6 @@ void HistoryWidget::paintEditHeader(
  		- timeSinceMessage;
  	if (editTimeLeft < 2) {
  		editTimeLeftText = u"0:00"_q;
@@ -21,7 +21,7 @@ index 083bca3ab3..e28b2e6353 100644
  	} else {
  		updateIn = static_cast<int>(editTimeLeft % 1000);
  		if (!updateIn) {
-@@ -11737,9 +11733,9 @@ void HistoryWidget::paintEditHeader(
+@@ -11745,9 +11741,9 @@ void HistoryWidget::paintEditHeader(
  		++updateIn;
  
  		editTimeLeft = (editTimeLeft - 1) / 1000; // seconds
@@ -35,10 +35,10 @@ index 083bca3ab3..e28b2e6353 100644
  
  	// Restart timer only if we are sure that we've painted the whole timer.
 diff --git a/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp b/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp
-index af2b1f7699..09565bbbb2 100644
+index b6aa03ebc2..5110a9ed7c 100644
 --- a/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp
 +++ b/Telegram/SourceFiles/history/view/controls/history_view_compose_controls.cpp
-@@ -860,10 +860,6 @@ void FieldHeader::paintEditTimeLeft(
+@@ -861,10 +861,6 @@ void FieldHeader::paintEditTimeLeft(
  		* 1000LL) - timeSinceMessage;
  	if (editTimeLeft < 2) {
  		editTimeLeftText = u"0:00"_q;
@@ -49,7 +49,7 @@ index af2b1f7699..09565bbbb2 100644
  	} else {
  		updateIn = static_cast<int>(editTimeLeft % 1000);
  		if (!updateIn) {
-@@ -872,9 +868,9 @@ void FieldHeader::paintEditTimeLeft(
+@@ -873,9 +869,9 @@ void FieldHeader::paintEditTimeLeft(
  		++updateIn;
  
  		editTimeLeft = (editTimeLeft - 1) / 1000; // seconds

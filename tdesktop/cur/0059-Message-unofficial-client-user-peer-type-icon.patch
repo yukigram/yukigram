@@ -5,7 +5,7 @@ Subject: [PATCH] (Message) "unofficial client user" peer type icon
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index bc258c3493..41794100bb 100644
+index 54a808e924..e7f4e85d65 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -500,6 +500,11 @@ std::optional<style::icon> ChatTypeIcon(HistoryItem *item, bool *shouldOverrideC
