@@ -438,7 +438,7 @@ index 461532a599..9c285fa9a7 100644
  
  base::weak_qptr<Ui::BoxContent> ShowShareGameBox(
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.h b/Telegram/SourceFiles/window/window_peer_menu.h
-index e0388c7bf7..ade54dc538 100644
+index 63b218487a..c0a477dcb9 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.h
 +++ b/Telegram/SourceFiles/window/window_peer_menu.h
 @@ -204,15 +204,18 @@ base::weak_qptr<Ui::BoxContent> ShowChooseRecipientBox(
@@ -460,6 +460,6 @@ index e0388c7bf7..ade54dc538 100644
 -	Fn<void()> &&successCallback = nullptr);
 +	Fn<void()> &&successCallback = nullptr,
 +	int steal = 0);
- base::weak_qptr<Ui::BoxContent> ShowShareUrlBox(
+ base::weak_qptr<Ui::BoxContent> ShowShareGameBox(
  	not_null<Window::SessionNavigation*> navigation,
- 	const QString &url,
+ 	not_null<UserData*> bot,
