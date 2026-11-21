@@ -232,7 +232,11 @@ jobs:
           while ! curl http://127.0.0.1:5000/; do sleep 1; done
 
           mkdir -p out/nar
-          wget http://127.0.0.1:5000/nix-cache-info -O out/nix-cache-info
+          cat >out/nix-cache-info <<EOF
+          StoreDir: /nix/store
+          WantMassQuery: 0
+          Priority: 42
+          EOF
           <built-paths sed 's:/nix/store/\([^-]*\)-.*:\1:' | while read path; do
             wget http://127.0.0.1:5000/$path.narinfo -O out/$path.narinfo
             nar="$(grep '^URL: ' out/$path.narinfo | cut -d ' ' -f 2-2)"
