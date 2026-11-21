@@ -5,11 +5,11 @@ Subject: [PATCH] (Yukigram) Changelog
 
 
 diff --git a/changelog.txt b/changelog.txt
-index 8534ccdc3a..389723ba2d 100644
+index 8534ccdc3a..5c64d90799 100644
 --- a/changelog.txt
 +++ b/changelog.txt
 @@ -1,11 +1,28 @@
-+9999 wip (01.01.99)
++7.4.4.1 rc.1 (21.11.26)
 +
 +- Fix 'Hide "Join group" bottom button when it is possible to send messages without joining' on new chat view
 +
