@@ -59,7 +59,7 @@ index 0587031d07..cb9628bb16 100644
  		&& ((_peer->isBroadcast() && !_peer->asChannel()->canPostMessages())
  			|| (_peer->isGigagroup() && !Data::CanSendAnything(_peer))
 diff --git a/Telegram/SourceFiles/history/view/controls/history_view_bottom_controls.cpp b/Telegram/SourceFiles/history/view/controls/history_view_bottom_controls.cpp
-index c34d06a26e..7d3f3057b5 100644
+index 6a3f6b0820..dfd2415846 100644
 --- a/Telegram/SourceFiles/history/view/controls/history_view_bottom_controls.cpp
 +++ b/Telegram/SourceFiles/history/view/controls/history_view_bottom_controls.cpp
 @@ -21,6 +21,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -76,9 +76,9 @@ index c34d06a26e..7d3f3057b5 100644
  	if (const auto channel = _peer->asChannel()) {
 +		if (Yukigram::Settings::HideBottomBar->current()) return false;
  		return !channel->amIn() && !channel->isMonoforum();
- 	}
- 	return false;
-@@ -560,6 +562,7 @@ bool BottomControls::isJoinGroup() const {
+ 		const auto canSend = !channel->isForum()
+ 			? Data::CanSendAnything(channel)
+@@ -564,6 +566,7 @@ bool BottomControls::isJoinGroup() const {
  	const auto canSend = !channel->isForum()
  		? Data::CanSendAnything(channel)
  		: (_topic && Data::CanSendAnything(_topic));
@@ -86,7 +86,7 @@ index c34d06a26e..7d3f3057b5 100644
  	return !channel->amIn() && !canSend;
  }
  
-@@ -567,6 +570,7 @@ bool BottomControls::isMuteUnmute() const {
+@@ -571,6 +574,7 @@ bool BottomControls::isMuteUnmute() const {
  	if (_mode != BottomControlsMode::History) {
  		return false;
  	}
