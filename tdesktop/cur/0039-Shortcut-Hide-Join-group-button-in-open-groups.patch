@@ -18,13 +18,14 @@ index e3181e8437..fbe3bde3db 100644
  	return false;
  }
 diff --git a/Telegram/SourceFiles/history/view/controls/history_view_bottom_controls.cpp b/Telegram/SourceFiles/history/view/controls/history_view_bottom_controls.cpp
-index acbad4909e..644ddda655 100644
+index acbad4909e..19efafccdf 100644
 --- a/Telegram/SourceFiles/history/view/controls/history_view_bottom_controls.cpp
 +++ b/Telegram/SourceFiles/history/view/controls/history_view_bottom_controls.cpp
-@@ -546,6 +546,10 @@ bool BottomControls::isJoinChannel() const {
+@@ -545,7 +545,10 @@ bool BottomControls::isJoinChannel() const {
+ 		return false;
  	}
  	if (const auto channel = _peer->asChannel()) {
- 		return !channel->amIn() && !channel->isMonoforum();
+-		return !channel->amIn() && !channel->isMonoforum();
 +		const auto canSend = !channel->isForum()
 +			? Data::CanSendAnything(channel)
 +			: (_topic && Data::CanSendAnything(_topic));
