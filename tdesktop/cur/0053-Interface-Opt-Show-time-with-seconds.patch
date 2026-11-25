@@ -75,7 +75,7 @@ index d43652efde..b14f929fd1 100644
  }
  
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
-index cab3b5d729..ce1bd1ca8a 100644
+index 6484278350..f465825339 100644
 --- a/Telegram/SourceFiles/history/history_item.cpp
 +++ b/Telegram/SourceFiles/history/history_item.cpp
 @@ -1553,7 +1553,7 @@ void HistoryItem::setCommentsItemId(FullMsgId id) {
@@ -87,7 +87,7 @@ index cab3b5d729..ce1bd1ca8a 100644
  	}
  	return QString();
  }
-@@ -8978,7 +8978,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
+@@ -8992,7 +8992,7 @@ PreparedServiceText HistoryItem::prepareCallScheduledText(
  	};
  	const auto time = QLocale().toString(
  		scheduled.time(),
@@ -149,18 +149,18 @@ index 41c02b815a..a1f17d97c6 100644
  	if (voteDate == nowDate) {
  		return;
 diff --git a/Telegram/SourceFiles/lang/lang_keys.cpp b/Telegram/SourceFiles/lang/lang_keys.cpp
-index c77367b4af..67c382f7e3 100644
+index 69c9cd0116..2372148a54 100644
 --- a/Telegram/SourceFiles/lang/lang_keys.cpp
 +++ b/Telegram/SourceFiles/lang/lang_keys.cpp
-@@ -10,6 +10,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "base/const_string.h"
+@@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "lang/lang_file_parser.h"
  #include "ui/integration.h"
+ #include "ui/text/text_utilities.h"
 +#include "yukigram/settings/time_with_seconds.h"
  
  #include <QtCore/QLocale>
  
-@@ -174,7 +175,7 @@ QString langDateTime(const QDateTime &date) {
+@@ -179,7 +180,7 @@ QString langDateTime(const QDateTime &date) {
  		lt_date,
  		langDayOfMonth(date.date()),
  		lt_time,
@@ -169,7 +169,7 @@ index c77367b4af..67c382f7e3 100644
  }
  
  QString langDateTimeFull(const QDateTime &date) {
-@@ -183,11 +184,35 @@ QString langDateTimeFull(const QDateTime &date) {
+@@ -188,11 +189,35 @@ QString langDateTimeFull(const QDateTime &date) {
  		lt_date,
  		langDayOfMonthFull(date.date()),
  		lt_time,

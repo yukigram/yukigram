@@ -9,10 +9,10 @@ file handles them just fine.
 Type "registertg" in settings to clean leftover files.
 
 diff --git a/Telegram/SourceFiles/core/application.cpp b/Telegram/SourceFiles/core/application.cpp
-index 9ccfd9fb5a..db9f915506 100644
+index 95bfe807f3..d78fc3f5b8 100644
 --- a/Telegram/SourceFiles/core/application.cpp
 +++ b/Telegram/SourceFiles/core/application.cpp
-@@ -2187,7 +2187,7 @@ void Application::RegisterUrlScheme() {
+@@ -2213,7 +2213,7 @@ void Application::RegisterUrlScheme() {
  		? u"-workdir \"%1\""_q.arg(cWorkingDir())
  		: QString();
  
@@ -21,7 +21,7 @@ index 9ccfd9fb5a..db9f915506 100644
  		.executable = Platform::ExecutablePathForShortcuts(),
  		.arguments = arguments,
  		.protocol = u"tg"_q,
-@@ -2198,7 +2198,7 @@ void Application::RegisterUrlScheme() {
+@@ -2224,7 +2224,7 @@ void Application::RegisterUrlScheme() {
  		.displayAppDescription = AppName.utf16(),
  	});
  
@@ -31,7 +31,7 @@ index 9ccfd9fb5a..db9f915506 100644
  		.arguments = arguments,
  		.protocol = u"tonsite"_q,
 diff --git a/Telegram/SourceFiles/settings/settings_codes.cpp b/Telegram/SourceFiles/settings/settings_codes.cpp
-index 78c43922d8..61533716d8 100644
+index 73a6f77d8d..cf3cf5dcd9 100644
 --- a/Telegram/SourceFiles/settings/settings_codes.cpp
 +++ b/Telegram/SourceFiles/settings/settings_codes.cpp
 @@ -166,7 +166,7 @@ auto GenerateCodes() {

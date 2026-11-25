@@ -5,10 +5,10 @@ Subject: [PATCH] (Annoyances) Remove copy restrictions
 
 
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index cc9af61374..39a394913f 100644
+index 29286f1660..f6dabaff26 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3985,12 +3985,12 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+@@ -3991,12 +3991,12 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
  }
  
  bool HistoryInner::hasCopyRestriction(HistoryItem *item) const {
@@ -23,7 +23,7 @@ index cc9af61374..39a394913f 100644
  }
  
  bool HistoryInner::showCopyRestriction(HistoryItem *item) {
-@@ -4018,6 +4018,7 @@ bool HistoryInner::showCopyMediaRestriction(not_null<HistoryItem*> item) {
+@@ -4024,6 +4024,7 @@ bool HistoryInner::showCopyMediaRestriction(not_null<HistoryItem*> item) {
  }
  
  bool HistoryInner::hasCopyRestrictionForSelected() const {
@@ -32,10 +32,10 @@ index cc9af61374..39a394913f 100644
  		return true;
  	}
 diff --git a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-index ca4a29ebab..67a5f0a347 100644
+index 924b017e8e..f17493dd74 100644
 --- a/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_list_widget.cpp
-@@ -2371,13 +2371,11 @@ bool ListWidget::isEmpty() const {
+@@ -2378,13 +2378,11 @@ bool ListWidget::isEmpty() const {
  }
  
  bool ListWidget::hasCopyRestriction(HistoryItem *item) const {
@@ -51,7 +51,7 @@ index ca4a29ebab..67a5f0a347 100644
  }
  
  bool ListWidget::showCopyRestriction(HistoryItem *item) {
-@@ -2388,7 +2386,7 @@ bool ListWidget::showCopyRestriction(HistoryItem *item) {
+@@ -2395,7 +2393,7 @@ bool ListWidget::showCopyRestriction(HistoryItem *item) {
  
  bool ListWidget::showCopyMediaRestriction(not_null<HistoryItem*> item) {
  	const auto type = _delegate->listCopyMediaRestrictionType(item);
@@ -60,7 +60,7 @@ index ca4a29ebab..67a5f0a347 100644
  		return false;
  	}
  	_delegate->listUiShow()->showToast((type == CopyRestrictionType::Channel)
-@@ -2400,6 +2398,7 @@ bool ListWidget::showCopyMediaRestriction(not_null<HistoryItem*> item) {
+@@ -2407,6 +2405,7 @@ bool ListWidget::showCopyMediaRestriction(not_null<HistoryItem*> item) {
  }
  
  bool ListWidget::hasCopyRestrictionForSelected() const {
@@ -68,7 +68,7 @@ index ca4a29ebab..67a5f0a347 100644
  	if (hasCopyRestriction()) {
  		return true;
  	}
-@@ -2435,9 +2434,7 @@ bool ListWidget::showCopyRestrictionForSelected() {
+@@ -2442,9 +2441,7 @@ bool ListWidget::showCopyRestrictionForSelected() {
  }
  
  bool ListWidget::hasSelectRestriction() const {
@@ -79,7 +79,7 @@ index ca4a29ebab..67a5f0a347 100644
  }
  
  Element *ListWidget::lookupItemByY(int y) const {
-@@ -7304,6 +7301,7 @@ void ConfirmSendNowSelectedItems(not_null<ListWidget*> widget) {
+@@ -7316,6 +7313,7 @@ void ConfirmSendNowSelectedItems(not_null<ListWidget*> widget) {
  CopyRestrictionType CopyRestrictionTypeFor(
  		not_null<PeerData*> peer,
  		HistoryItem *item) {
@@ -87,7 +87,7 @@ index ca4a29ebab..67a5f0a347 100644
  	return (peer->allowsForwarding() && (!item || !item->forbidsForward()))
  		? CopyRestrictionType::None
  		: peer->isUser()
-@@ -7316,6 +7314,7 @@ CopyRestrictionType CopyRestrictionTypeFor(
+@@ -7328,6 +7326,7 @@ CopyRestrictionType CopyRestrictionTypeFor(
  CopyRestrictionType CopyMediaRestrictionTypeFor(
  		not_null<PeerData*> peer,
  		not_null<HistoryItem*> item) {
@@ -96,10 +96,10 @@ index ca4a29ebab..67a5f0a347 100644
  		; all != CopyRestrictionType::None) {
  		return all;
 diff --git a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-index 227b52c641..eb379fbdaf 100644
+index 19a08bea71..b59593e603 100644
 --- a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 +++ b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-@@ -1474,6 +1474,7 @@ QSize OverlayWidget::flipSizeByRotation(QSize size) const {
+@@ -1481,6 +1481,7 @@ QSize OverlayWidget::flipSizeByRotation(QSize size) const {
  }
  
  bool OverlayWidget::hasCopyMediaRestriction(bool skipPremiumCheck) const {

@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface)(Opt) Custom monospace font
 
 
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
-index 61c32520cf..7e21330b7a 100644
+index b820176f74..35096c8a2d 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
 +++ b/Telegram/SourceFiles/core/launcher.cpp
 @@ -30,6 +30,10 @@ extern "C" {
@@ -198,7 +198,7 @@ index ed79f9bc40..14f0c56f07 100644
  
  } // namespace Ui
 diff --git a/Telegram/lib_ui/ui/style/style_core_font.cpp b/Telegram/lib_ui/ui/style/style_core_font.cpp
-index e179ece941..623537a7f8 100644
+index 66b322a678..248f1f8019 100644
 --- a/Telegram/lib_ui/ui/style/style_core_font.cpp
 +++ b/Telegram/lib_ui/ui/style/style_core_font.cpp
 @@ -58,6 +58,10 @@ void SetCustomFont(const QString &font) {

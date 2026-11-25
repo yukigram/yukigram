@@ -465,7 +465,7 @@ index 9ee29398ec..f34e454928 100644
      _audioRtpHeaderExtensionMap.RegisterByUri(1, webrtc::RtpExtension::kTransportSequenceNumberUri);
      
 diff --git a/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp b/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp
-index 0359c069de..207af01f7d 100644
+index c8b7e8abaa..449fd8b9b2 100644
 --- a/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp
 +++ b/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp
 @@ -4,6 +4,7 @@
@@ -476,7 +476,7 @@ index 0359c069de..207af01f7d 100644
  #include "VideoCaptureInterfaceImpl.h"
  #include "VideoCapturerInterface.h"
  #include "CodecSelectHelper.h"
-@@ -2097,6 +2098,12 @@ public:
+@@ -2100,6 +2101,12 @@ public:
      _disableIncomingChannels(descriptor.disableIncomingChannels),
      _useDummyChannel(descriptor.useDummyChannel),
      _outgoingAudioBitrateKbit(descriptor.outgoingAudioBitrateKbit),
@@ -489,7 +489,7 @@ index 0359c069de..207af01f7d 100644
      _disableOutgoingAudioProcessing(descriptor.disableOutgoingAudioProcessing),
  #ifdef WEBRTC_IOS
      _disableAudioInput(descriptor.disableAudioInput),
-@@ -2170,7 +2177,7 @@ public:
+@@ -2173,7 +2180,7 @@ public:
  
          const auto weak = std::weak_ptr<GroupInstanceCustomInternal>(shared_from_this());
  
@@ -498,7 +498,7 @@ index 0359c069de..207af01f7d 100644
              "WebRTC-DataChannel-Dcsctp/Enabled/"
              "WebRTC-Audio-Allocation/min:32kbps,max:32kbps/"
              "WebRTC-Audio-OpusMinPacketLossRate/Enabled-1/"
-@@ -2179,7 +2186,7 @@ public:
+@@ -2182,7 +2189,7 @@ public:
              "WebRTC-Audio-MinimizeResamplingOnMobile/Enabled/"
              "WebRTC-BweLossExperiment/Enabled/"
              "WebRTC-Video-DiscardPacketsWithUnknownSsrc/Enabled/"
@@ -507,7 +507,7 @@ index 0359c069de..207af01f7d 100644
  
          bool takeAudioLevelFromNetwork = _e2eEncryptDecrypt == nullptr;
  
-@@ -2710,9 +2717,16 @@ public:
+@@ -2713,9 +2720,16 @@ public:
              _outgoingAudioChannel->SetRtpTransport(_rtpTransport);
          });
  
@@ -527,7 +527,7 @@ index 0359c069de..207af01f7d 100644
          const uint8_t opusPTimeMs = 120;
  
          cricket::AudioCodec opusCodec = cricket::CreateAudioCodec(111, "opus", 48000, 2);
-@@ -2722,6 +2736,7 @@ public:
+@@ -2725,6 +2739,7 @@ public:
          opusCodec.SetParam(cricket::kCodecParamMaxBitrate, opusMaxBitrateKbps);
          opusCodec.SetParam(cricket::kCodecParamUseInbandFec, 1);
          opusCodec.SetParam(cricket::kCodecParamPTime, opusPTimeMs);
@@ -535,7 +535,7 @@ index 0359c069de..207af01f7d 100644
  
          auto outgoingAudioDescription = std::make_unique<cricket::AudioContentDescription>();
          outgoingAudioDescription->AddRtpHeaderExtension(webrtc::RtpExtension(webrtc::RtpExtension::kAudioLevelUri, 1));
-@@ -3182,16 +3197,17 @@ public:
+@@ -3185,16 +3200,17 @@ public:
                  preferences.start_bitrate_bps = std::max(preferences.min_bitrate_bps, 400 * 1000);
              }
              if (_videoContentType == VideoContentType::Screencast) {
@@ -558,7 +558,7 @@ index 0359c069de..207af01f7d 100644
          }
  
          settings.min_bitrate_bps = preferences.min_bitrate_bps;
-@@ -4407,6 +4423,7 @@ private:
+@@ -4410,6 +4426,7 @@ private:
      bool _disableIncomingChannels = false;
      bool _useDummyChannel{true};
      int _outgoingAudioBitrateKbit{32};
@@ -671,7 +671,7 @@ index dbaf093fcc..2694e96f1d 100644
  
                  _outgoingAudioTrack->set_enabled(true);
 diff --git a/Telegram/cmake/lib_tgcalls.cmake b/Telegram/cmake/lib_tgcalls.cmake
-index c6235e3ae1..6aacc44d69 100644
+index 9207524e7d..2110fa613b 100644
 --- a/Telegram/cmake/lib_tgcalls.cmake
 +++ b/Telegram/cmake/lib_tgcalls.cmake
 @@ -20,6 +20,7 @@ PRIVATE

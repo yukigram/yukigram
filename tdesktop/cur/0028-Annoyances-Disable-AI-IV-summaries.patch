@@ -5,7 +5,7 @@ Subject: [PATCH] (Annoyances) Disable AI IV summaries
 
 
 diff --git a/Telegram/SourceFiles/iv/iv_rich_page.cpp b/Telegram/SourceFiles/iv/iv_rich_page.cpp
-index 1687dde95d..7a94e43b87 100644
+index 15d35cd7a1..b2f306720c 100644
 --- a/Telegram/SourceFiles/iv/iv_rich_page.cpp
 +++ b/Telegram/SourceFiles/iv/iv_rich_page.cpp
 @@ -1779,7 +1779,9 @@ void AppendBlock(
@@ -18,4 +18,4 @@ index 1687dde95d..7a94e43b87 100644
 +		}
  	}, [&](const MTPDpageBlockBlockquoteBlocks &data) {
  		auto parsed = MakeBlock(BlockKind::Quote);
- 		{
+ 		parsed.collapsed = data.is_collapsed();

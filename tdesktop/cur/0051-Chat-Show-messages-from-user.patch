@@ -21,10 +21,10 @@ index 9231ef3737..274d07e329 100644
  	if (user && SupportsMemberTags(_peer)) {
  		const auto isSelf = user->isSelf();
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index c02492d880..5d07ba20c7 100644
+index 3949570ee0..06c460353a 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -3131,6 +3131,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+@@ -3137,6 +3137,17 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
  				std::move(callback),
  				&st::menuIconStats);
  		}
@@ -83,10 +83,10 @@ index 5e6d2e171a..162223faa7 100644
  	AddDeleteAction(menu, request, list);
  	AddDownloadFilesAction(menu, request, list);
 diff --git a/Telegram/SourceFiles/window/window_session_controller.cpp b/Telegram/SourceFiles/window/window_session_controller.cpp
-index f002707396..9c008af391 100644
+index e0db18b88f..5d5a239f6f 100644
 --- a/Telegram/SourceFiles/window/window_session_controller.cpp
 +++ b/Telegram/SourceFiles/window/window_session_controller.cpp
-@@ -1670,6 +1670,15 @@ void SessionNavigation::searchMessages(
+@@ -1677,6 +1677,15 @@ void SessionNavigation::searchMessages(
  	parentController()->content()->searchMessages(query, inChat, searchFrom);
  }
  
@@ -103,10 +103,10 @@ index f002707396..9c008af391 100644
  -> base::weak_ptr<Ui::Toast::Instance> {
  	return uiShow()->showToast(std::move(config));
 diff --git a/Telegram/SourceFiles/window/window_session_controller.h b/Telegram/SourceFiles/window/window_session_controller.h
-index b6ea7ec9e9..77d5047219 100644
+index 6e04afc29d..486c275f5b 100644
 --- a/Telegram/SourceFiles/window/window_session_controller.h
 +++ b/Telegram/SourceFiles/window/window_session_controller.h
-@@ -312,6 +312,8 @@ public:
+@@ -313,6 +313,8 @@ public:
  		Dialogs::Key inChat,
  		PeerData *searchFrom = nullptr);
  

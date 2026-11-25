@@ -40,7 +40,7 @@ index 0000000000..1bce51908a
 +extern const char kOptionSystemEmoji[];
 +}
 diff --git a/Telegram/lib_ui/ui/emoji_config.cpp b/Telegram/lib_ui/ui/emoji_config.cpp
-index 8df59bb698..5e186f90b2 100644
+index 116a850dea..7be79a0661 100644
 --- a/Telegram/lib_ui/ui/emoji_config.cpp
 +++ b/Telegram/lib_ui/ui/emoji_config.cpp
 @@ -74,6 +74,7 @@ private:
@@ -67,6 +67,6 @@ index 8df59bb698..5e186f90b2 100644
 +		p.setFont(oldFont);
 +		return;
 +	}
- #ifdef Q_OS_MAC
+ #ifdef Q_OS_MACOS
  	const auto s = (style::Scale() == kScaleForTouchBar)
  		? SizeLarge

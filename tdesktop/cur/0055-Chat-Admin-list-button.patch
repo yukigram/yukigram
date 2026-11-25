@@ -115,10 +115,10 @@ index 379f468954..8b3221f8e6 100644
  	object_ptr<Ui::IconButton> _menuToggle;
  	base::unique_qptr<Ui::PopupMenu> _menu;
 diff --git a/Telegram/SourceFiles/info/info.style b/Telegram/SourceFiles/info/info.style
-index ea7bbff580..e16feb8366 100644
+index 06a6d2fb9f..0692d3c69c 100644
 --- a/Telegram/SourceFiles/info/info.style
 +++ b/Telegram/SourceFiles/info/info.style
-@@ -972,6 +972,10 @@ topBarRecentActions: IconButton(topBarSearch) {
+@@ -953,6 +953,10 @@ topBarRecentActions: IconButton(topBarSearch) {
  	icon: icon {{ "info/edit/group_manage_actions_topbar", menuIconFg }};
  	iconOver: icon {{ "info/edit/group_manage_actions_topbar", menuIconFgOver }};
  }

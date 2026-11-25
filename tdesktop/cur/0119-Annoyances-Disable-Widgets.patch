@@ -5,7 +5,7 @@ Subject: [PATCH] (Annoyances) Disable Widgets
 
 
 diff --git a/Telegram/SourceFiles/history/history_item.cpp b/Telegram/SourceFiles/history/history_item.cpp
-index ce1bd1ca8a..c0e8d9d149 100644
+index f465825339..ea5b0f8029 100644
 --- a/Telegram/SourceFiles/history/history_item.cpp
 +++ b/Telegram/SourceFiles/history/history_item.cpp
 @@ -561,6 +561,7 @@ std::unique_ptr<Data::Media> HistoryItem::CreateMedia(
@@ -17,10 +17,10 @@ index ce1bd1ca8a..c0e8d9d149 100644
  			item,
  			Tgw::ParseWidgetFields(media));
 diff --git a/Telegram/SourceFiles/history/history_item_helpers.cpp b/Telegram/SourceFiles/history/history_item_helpers.cpp
-index 3646285982..83bf316fa2 100644
+index 5a658717b4..53d8f0b4ce 100644
 --- a/Telegram/SourceFiles/history/history_item_helpers.cpp
 +++ b/Telegram/SourceFiles/history/history_item_helpers.cpp
-@@ -1154,6 +1154,7 @@ MediaCheckResult CheckMessageMedia(const MTPMessageMedia &media) {
+@@ -1157,6 +1157,7 @@ MediaCheckResult CheckMessageMedia(const MTPMessageMedia &media) {
  	}, [](const MTPDmessageMediaVideoStream &) {
  		return Result::Good;
  	}, [](const MTPDmessageMediaWidget &) {

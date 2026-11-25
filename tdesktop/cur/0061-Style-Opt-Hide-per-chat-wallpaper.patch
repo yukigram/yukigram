@@ -5,7 +5,7 @@ Subject: [PATCH] (Style)(Opt) Hide per-chat wallpaper
 
 
 diff --git a/Telegram/SourceFiles/data/data_channel.cpp b/Telegram/SourceFiles/data/data_channel.cpp
-index 6444659d32..7219aee51f 100644
+index 56ed65c07f..a6a6854729 100644
 --- a/Telegram/SourceFiles/data/data_channel.cpp
 +++ b/Telegram/SourceFiles/data/data_channel.cpp
 @@ -30,6 +30,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -26,7 +26,7 @@ index 6444659d32..7219aee51f 100644
  			Data::WallPaper::Create(&channel->session(), *paper));
  	} else {
 diff --git a/Telegram/SourceFiles/data/data_user.cpp b/Telegram/SourceFiles/data/data_user.cpp
-index a912e38bec..01e67342b9 100644
+index cd2e898438..7c9e99115f 100644
 --- a/Telegram/SourceFiles/data/data_user.cpp
 +++ b/Telegram/SourceFiles/data/data_user.cpp
 @@ -18,6 +18,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -37,7 +37,7 @@ index a912e38bec..01e67342b9 100644
  #include "main/main_app_config.h"
  #include "main/main_session.h"
  #include "data/business/data_business_common.h"
-@@ -1046,7 +1047,7 @@ void ApplyUserUpdate(
+@@ -1066,7 +1067,7 @@ void ApplyUserUpdate(
  		}
  	}
  

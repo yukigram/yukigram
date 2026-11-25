@@ -7,7 +7,7 @@ This patch is adapted from 64Gram.
 Original author: c0re100 <corehusky@gmail.com>
 
 diff --git a/Telegram/SourceFiles/core/local_url_handlers.cpp b/Telegram/SourceFiles/core/local_url_handlers.cpp
-index f2f7f4c819..402ade0748 100644
+index 4d3f5ba6fa..2b424f5b49 100644
 --- a/Telegram/SourceFiles/core/local_url_handlers.cpp
 +++ b/Telegram/SourceFiles/core/local_url_handlers.cpp
 @@ -61,6 +61,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -18,7 +18,7 @@ index f2f7f4c819..402ade0748 100644
  #include "storage/storage_account.h"
  #include "storage/storage_shared_media.h"
  #include "mainwidget.h"
-@@ -1906,6 +1907,55 @@ bool ShowWoof(
+@@ -1864,6 +1865,55 @@ bool ShowWoof(
  	return true;
  }
  
@@ -74,7 +74,7 @@ index f2f7f4c819..402ade0748 100644
  } // namespace
  
  bool TryRouterForLocalUrl(
-@@ -1924,6 +1974,14 @@ const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
+@@ -1882,6 +1932,14 @@ const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
  			u"^woof$"_q,
  			ShowWoof
  		},

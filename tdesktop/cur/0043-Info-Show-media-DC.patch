@@ -5,10 +5,10 @@ Subject: [PATCH] (Info) Show media DC
 
 
 diff --git a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-index eb379fbdaf..f2efa166e6 100644
+index b59593e603..3c12976366 100644
 --- a/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
 +++ b/Telegram/SourceFiles/media/view/media_view_overlay_widget.cpp
-@@ -1877,6 +1877,17 @@ void OverlayWidget::updateControls() {
+@@ -1888,6 +1888,17 @@ void OverlayWidget::updateControls() {
  		_ttlTimer.cancel();
  	}
  	refreshTtlBadge(destroyAt);

@@ -5,10 +5,10 @@ Subject: [PATCH] (Yukigram) Artwork
 
 
 diff --git a/Telegram/CMakeLists.txt b/Telegram/CMakeLists.txt
-index c27a264bc4..ce928706fd 100644
+index 71d33a9c39..5cfc8349ee 100644
 --- a/Telegram/CMakeLists.txt
 +++ b/Telegram/CMakeLists.txt
-@@ -3132,20 +3132,7 @@ if (LINUX AND DESKTOP_APP_USE_PACKAGED)
+@@ -3299,20 +3299,7 @@ if (LINUX AND DESKTOP_APP_USE_PACKAGED)
      configure_file("../lib/xdg/io.github.yukigram.metainfo.xml" "${CMAKE_CURRENT_BINARY_DIR}/${YUKIGRAM_APP_ID}.metainfo.xml" @ONLY)
      generate_appstream_changelog(Telegram "${CMAKE_SOURCE_DIR}/changelog.txt" "${CMAKE_CURRENT_BINARY_DIR}/${YUKIGRAM_APP_ID}.metainfo.xml")
      install(TARGETS Telegram RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" BUNDLE DESTINATION "${CMAKE_INSTALL_BINDIR}")
@@ -57,10 +57,10 @@ index c13d09fcc3..437cb93dfa 100644
      <file alias="art/round_placeholder.jpg">../../art/round_placeholder.jpg</file>
      <file alias="art/cocoon.webp">../../art/cocoon.webp</file>
 diff --git a/Telegram/SourceFiles/platform/linux/specific_linux.cpp b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-index 026cf97c1c..a9be95a9fc 100644
+index 3bde10254f..0b61100ffb 100644
 --- a/Telegram/SourceFiles/platform/linux/specific_linux.cpp
 +++ b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
-@@ -493,7 +493,7 @@ void InstallLauncher() {
+@@ -494,7 +494,7 @@ void InstallLauncher() {
  	const auto icon = appIcons + ApplicationIconName() + u".png"_q;
  	QFile::remove(icon);
  	QFile::remove(icons + u"telegram.png"_q);
@@ -70,10 +70,10 @@ index 026cf97c1c..a9be95a9fc 100644
  	}
  
 diff --git a/Telegram/SourceFiles/window/main_window.cpp b/Telegram/SourceFiles/window/main_window.cpp
-index 62f8c797ca..b848f62f48 100644
+index 75038d5548..29bf4fdd98 100644
 --- a/Telegram/SourceFiles/window/main_window.cpp
 +++ b/Telegram/SourceFiles/window/main_window.cpp
-@@ -141,7 +141,7 @@ const char kOptionNewWindowsSizeAsFirst[] = "new-windows-size-as-first";
+@@ -146,7 +146,7 @@ const char kOptionNewWindowsSizeAsFirst[] = "new-windows-size-as-first";
  const char kOptionDisableTouchbar[] = "touchbar-disabled";
  
  const QImage &Logo() {

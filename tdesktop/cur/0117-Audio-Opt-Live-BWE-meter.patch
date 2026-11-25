@@ -5,7 +5,7 @@ Subject: [PATCH] (Audio)(Opt) Live BWE meter
 
 
 diff --git a/Telegram/SourceFiles/calls/calls_panel.cpp b/Telegram/SourceFiles/calls/calls_panel.cpp
-index b5b1388be4..55838c2bbb 100644
+index 7d713be375..f5541fc8fb 100644
 --- a/Telegram/SourceFiles/calls/calls_panel.cpp
 +++ b/Telegram/SourceFiles/calls/calls_panel.cpp
 @@ -67,6 +67,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -16,7 +16,7 @@ index b5b1388be4..55838c2bbb 100644
  #include "styles/style_calls.h"
  #include "styles/style_chat_helpers.h"
  
-@@ -1873,7 +1874,8 @@ void Panel::refreshAnswerHangupRedialLabel() {
+@@ -1877,7 +1878,8 @@ void Panel::refreshAnswerHangupRedialLabel() {
  }
  
  void Panel::updateStatusText(State state) {
@@ -26,7 +26,7 @@ index b5b1388be4..55838c2bbb 100644
  		if (_rateCall && _endedDuration > 0) {
  			return Ui::FormatDurationText(_endedDuration);
  		}
-@@ -1887,7 +1889,13 @@ void Panel::updateStatusText(State state) {
+@@ -1891,7 +1893,13 @@ void Panel::updateStatusText(State state) {
  				auto durationMs = _call->getDurationMs();
  				auto durationSeconds = durationMs / 1000;
  				startDurationUpdateTimer(durationMs);
@@ -41,7 +41,7 @@ index b5b1388be4..55838c2bbb 100644
  			}
  			return tr::lng_call_status_ended(tr::now);
  		} break;
-@@ -1910,6 +1918,11 @@ void Panel::updateStatusText(State state) {
+@@ -1914,6 +1922,11 @@ void Panel::updateStatusText(State state) {
  		Unexpected("State in stateChanged()");
  	};
  	_status->setText(statusText());
@@ -123,7 +123,7 @@ index fbc6438a05..4842be8de4 100644
  	object_ptr<Ui::FlatLabel> _shortInfoLabel;
  	object_ptr<Ui::LabelSimple> _hangupLabel;
 diff --git a/Telegram/SourceFiles/calls/group/calls_group_panel.cpp b/Telegram/SourceFiles/calls/group/calls_group_panel.cpp
-index 130df11ace..00732220e8 100644
+index 78b4eb95f7..0db7e88a06 100644
 --- a/Telegram/SourceFiles/calls/group/calls_group_panel.cpp
 +++ b/Telegram/SourceFiles/calls/group/calls_group_panel.cpp
 @@ -68,6 +68,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -134,7 +134,7 @@ index 130df11ace..00732220e8 100644
  #include "styles/style_calls.h"
  #include "styles/style_chat_helpers.h"
  #include "styles/style_layers.h"
-@@ -2998,6 +2999,41 @@ void Panel::refreshTitle() {
+@@ -3002,6 +3003,41 @@ void Panel::refreshTitle() {
  			: (widget()->width() - _subtitle->width()) / 2;
  		_subtitle->moveToLeft(left, top);
  	}
@@ -471,7 +471,7 @@ index 0000000000..383dc3f450
 +
 +#endif // TGCALLS_SEND_BANDWIDTH_ESTIMATE_H
 diff --git a/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp b/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp
-index 207af01f7d..a3e2ad6b57 100644
+index 449fd8b9b2..6969fbee9f 100644
 --- a/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp
 +++ b/Telegram/ThirdParty/tgcalls/tgcalls/group/GroupInstanceCustomImpl.cpp
 @@ -5,6 +5,7 @@
@@ -482,7 +482,7 @@ index 207af01f7d..a3e2ad6b57 100644
  #include "VideoCaptureInterfaceImpl.h"
  #include "VideoCapturerInterface.h"
  #include "CodecSelectHelper.h"
-@@ -2378,6 +2379,9 @@ public:
+@@ -2381,6 +2382,9 @@ public:
  
          beginNetworkStatusTimer(0);
          beginLogTimer(0);
@@ -492,7 +492,7 @@ index 207af01f7d..a3e2ad6b57 100644
          //beginAudioChannelCleanupTimer(0);
  
          adjustBitratePreferences(true);
-@@ -2385,6 +2389,18 @@ public:
+@@ -2388,6 +2392,18 @@ public:
          beginRemoteConstraintsUpdateTimer(5000);
      }
  
@@ -551,7 +551,7 @@ index 89e92a5132..176a6042b2 100644
          const auto weak = std::weak_ptr<InstanceV2ImplInternal>(shared_from_this());
          _threads->getMediaThread()->PostDelayedTask([weak]() {
 diff --git a/Telegram/cmake/lib_tgcalls.cmake b/Telegram/cmake/lib_tgcalls.cmake
-index 6aacc44d69..e78bf9caa8 100644
+index 2110fa613b..bf7126d09a 100644
 --- a/Telegram/cmake/lib_tgcalls.cmake
 +++ b/Telegram/cmake/lib_tgcalls.cmake
 @@ -50,6 +50,7 @@ PRIVATE

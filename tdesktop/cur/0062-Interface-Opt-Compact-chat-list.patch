@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface)(Opt) Compact chat list
 
 
 diff --git a/Telegram/SourceFiles/dialogs/dialogs.style b/Telegram/SourceFiles/dialogs/dialogs.style
-index 922cac2f4e..b432cd3578 100644
+index 7c25601857..6185a9602d 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs.style
 +++ b/Telegram/SourceFiles/dialogs/dialogs.style
 @@ -101,6 +101,11 @@ defaultDialogRow: DialogRow {
@@ -51,7 +51,7 @@ index 2fe437a3ed..8660e400f7 100644
  		return false;
  	}
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
-index 0bd31c7b76..8e559cc88c 100644
+index 7a940701a6..a4080199b7 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_inner_widget.cpp
 @@ -42,6 +42,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -89,7 +89,7 @@ index 0bd31c7b76..8e559cc88c 100644
  	auto pixmap = QPixmap(Size(st.height * style::DevicePixelRatio()));
  	pixmap.setDevicePixelRatio(style::DevicePixelRatio());
  	pixmap.fill(Qt::transparent);
-@@ -6398,7 +6402,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
+@@ -6406,7 +6410,7 @@ void InnerWidget::repaintDialogRowCornerStatus(not_null<History*> history) {
  		: st::dialogsCallBadgeSize;
  	const auto stroke = st::dialogsOnlineBadgeStroke;
  	const auto skip = user
@@ -148,7 +148,7 @@ index 78c1fcbee2..254332ccdb 100644
  		|| (activeMatters && _cornerBadgeUserpic->active != active)
  		|| _cornerBadgeUserpic->hidden != (hidden ? 1 : 0)
 diff --git a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
-index 5528058df7..7fa2661e1c 100644
+index d05a02fd6e..746b2bc41e 100644
 --- a/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 +++ b/Telegram/SourceFiles/dialogs/ui/dialogs_layout.cpp
 @@ -20,6 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -168,7 +168,7 @@ index 5528058df7..7fa2661e1c 100644
  		p.drawImage(
  			left,
  			top,
-@@ -440,6 +441,7 @@ template <typename PaintItemCallback>
+@@ -454,6 +455,7 @@ template <typename PaintItemCallback>
  void PaintRow(
  		Painter &p,
  		not_null<const BasicRow*> row,
@@ -176,7 +176,7 @@ index 5528058df7..7fa2661e1c 100644
  		QRect geometry,
  		not_null<Entry*> entry,
  		VideoUserpic *videoUserpic,
-@@ -451,11 +453,23 @@ void PaintRow(
+@@ -465,11 +467,23 @@ void PaintRow(
  		HistoryItem *item,
  		const Data::Draft *draft,
  		TimeId date,
@@ -201,7 +201,7 @@ index 5528058df7..7fa2661e1c 100644
  	const auto supportMode = entry->session().supportMode();
  	if (supportMode) {
  		draft = nullptr;
-@@ -605,6 +619,7 @@ void PaintRow(
+@@ -623,6 +637,7 @@ void PaintRow(
  				+ st::dialogsChatTypeSkip);
  		}
  	}
@@ -209,9 +209,9 @@ index 5528058df7..7fa2661e1c 100644
  	auto texttop = context.st->textTop;
  	if (const auto folder = entry->asFolder()) {
  		const auto availableWidth = PaintWideCounter(
-@@ -822,6 +837,10 @@ void PaintRow(
- 			texttop,
- 			context.width);
+@@ -849,6 +864,10 @@ void PaintRow(
+ 				context.width);
+ 		}
  	}
 +} else {
 +	const auto displayPinnedIcon = badgesState.empty() && entry->isPinnedDialog(context.filter) && (context.filter || !entry->fixedOnTopIndex());
@@ -220,7 +220,7 @@ index 5528058df7..7fa2661e1c 100644
  	const auto sendStateIcon = [&]() -> const style::icon* {
  		if (!thread) {
  			return nullptr;
-@@ -1242,6 +1261,7 @@ void RowPainter::Paint(
+@@ -1283,6 +1302,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,
@@ -228,7 +228,7 @@ index 5528058df7..7fa2661e1c 100644
  		QRect(0, 0, context.width, row->height()),
  		entry,
  		videoUserpic,
-@@ -1354,6 +1374,7 @@ void RowPainter::Paint(
+@@ -1395,6 +1415,7 @@ void RowPainter::Paint(
  	PaintRow(
  		p,
  		row,

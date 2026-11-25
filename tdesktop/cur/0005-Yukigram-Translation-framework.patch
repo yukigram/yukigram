@@ -22,10 +22,10 @@ index 0000000000..9d9591e164
 +indent_style = space
 +indent_size = 4
 diff --git a/Telegram/SourceFiles/core/application.cpp b/Telegram/SourceFiles/core/application.cpp
-index 94b64dc33f..9ccfd9fb5a 100644
+index a611b97d55..95bfe807f3 100644
 --- a/Telegram/SourceFiles/core/application.cpp
 +++ b/Telegram/SourceFiles/core/application.cpp
-@@ -54,6 +54,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -55,6 +55,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "lang/lang_cloud_manager.h"
  #include "lang/lang_hardcoded.h"
  #include "lang/lang_instance.h"
@@ -33,7 +33,7 @@ index 94b64dc33f..9ccfd9fb5a 100644
  #include "inline_bots/bot_attach_web_view.h"
  #include "mainwidget.h"
  #include "tray.h"
-@@ -323,6 +324,7 @@ void Application::run() {
+@@ -325,6 +326,7 @@ void Application::run() {
  	Test::ApplyStartupOverrides();
  
  	ValidateScale();
@@ -42,18 +42,18 @@ index 94b64dc33f..9ccfd9fb5a 100644
  	refreshGlobalProxy(); // Depends on app settings being read.
  
 diff --git a/Telegram/SourceFiles/lang/lang_instance.cpp b/Telegram/SourceFiles/lang/lang_instance.cpp
-index e131bdce76..170ea4a702 100644
+index 7cd0a3df76..4874102cdf 100644
 --- a/Telegram/SourceFiles/lang/lang_instance.cpp
 +++ b/Telegram/SourceFiles/lang/lang_instance.cpp
-@@ -13,6 +13,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
- #include "ui/boxes/confirm_box.h"
+@@ -14,6 +14,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ #include "ui/text/text_utilities.h"
  #include "lang/lang_file_parser.h"
  #include "lang/lang_tag.h" // kTextCommandLangTag.
 +#include "yukigram/lang.h"
  #include "base/platform/base_platform_info.h"
  #include "base/qthelp_regex.h"
  #include "test/test_l10n_seams.h"
-@@ -250,6 +251,7 @@ Instance::Instance(not_null<Instance*> derived, const PrivateTag &)
+@@ -251,6 +252,7 @@ Instance::Instance(not_null<Instance*> derived, const PrivateTag &)
  
  void Instance::switchToId(const Language &data) {
  	reset(data);
@@ -61,7 +61,7 @@ index e131bdce76..170ea4a702 100644
  	if (_id == u"#TEST_X"_q || _id == u"#TEST_0"_q) {
  		for (auto &value : _values) {
  			value = PrepareTestValue(value, _id[5]);
-@@ -275,6 +277,7 @@ void Instance::setBaseId(const QString &baseId, const QString &pluralId) {
+@@ -276,6 +278,7 @@ void Instance::setBaseId(const QString &baseId, const QString &pluralId) {
  void Instance::switchToCustomFile(const QString &filePath) {
  	if (loadFromCustomFile(filePath)) {
  		Local::writeLangPack();

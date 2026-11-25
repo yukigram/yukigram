@@ -5,7 +5,7 @@ Subject: [PATCH] (Shortcut) Immediate restart
 
 
 diff --git a/Telegram/SourceFiles/settings/sections/settings_main.cpp b/Telegram/SourceFiles/settings/sections/settings_main.cpp
-index f65f25e5a0..58da972e27 100644
+index 70e1b9542c..120734b0ea 100644
 --- a/Telegram/SourceFiles/settings/sections/settings_main.cpp
 +++ b/Telegram/SourceFiles/settings/sections/settings_main.cpp
 @@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -29,4 +29,4 @@ index f65f25e5a0..58da972e27 100644
 +	restart->setProperty("highlight-control-id", u"settings/restart"_q);
  	const auto logout = addAction({
  		.text = tr::lng_settings_logout(tr::now),
- 		.handler = [=] { window->showLogoutConfirmation(); },
+ 		.handler = [=] { window->showLogoutOptions(); },

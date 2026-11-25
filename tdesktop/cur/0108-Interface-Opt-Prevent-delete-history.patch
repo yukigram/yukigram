@@ -5,7 +5,7 @@ Subject: [PATCH] (Interface)(Opt) Prevent delete history
 
 
 diff --git a/Telegram/SourceFiles/boxes/moderate_messages_box.cpp b/Telegram/SourceFiles/boxes/moderate_messages_box.cpp
-index ddd4401536..58d86cee8a 100644
+index 6942b5b798..476fc62973 100644
 --- a/Telegram/SourceFiles/boxes/moderate_messages_box.cpp
 +++ b/Telegram/SourceFiles/boxes/moderate_messages_box.cpp
 @@ -33,6 +33,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -24,7 +24,7 @@ index ddd4401536..58d86cee8a 100644
  #include "ui/widgets/buttons.h"
  #include "ui/widgets/checkbox.h"
  #include "ui/widgets/expandable_peer_list.h"
-@@ -1617,6 +1619,11 @@ void DeleteChatBox(
+@@ -1620,6 +1622,11 @@ void DeleteChatBox(
  		not_null<Ui::GenericBox*> box,
  		not_null<PeerData*> peer,
  		Fn<void(Fn<void()> leave)> leaveAsCreator) {
@@ -36,7 +36,7 @@ index ddd4401536..58d86cee8a 100644
  	const auto container = box->verticalLayout();
  
  	const auto userpicPeer = peer->userpicPaintingPeer();
-@@ -1772,6 +1779,11 @@ void DeleteChatBox(
+@@ -1775,6 +1782,11 @@ void DeleteChatBox(
  void DeleteSublistBox(
  		not_null<Ui::GenericBox*> box,
  		not_null<Data::SavedSublist*> sublist) {
@@ -49,10 +49,10 @@ index ddd4401536..58d86cee8a 100644
  
  	const auto weak = base::make_weak(sublist.get());
 diff --git a/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp b/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
-index d4b2b99ea1..cc26dd2a5b 100644
+index 4e22420d2a..cec4d4679c 100644
 --- a/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
 +++ b/Telegram/SourceFiles/boxes/peers/edit_peer_info_box.cpp
-@@ -65,6 +65,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -67,6 +67,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "info/info_memento.h"
  #include "lang/lang_hardcoded.h"
  #include "lang/lang_keys.h"
@@ -60,15 +60,15 @@ index d4b2b99ea1..cc26dd2a5b 100644
  #include "mtproto/sender.h"
  #include "main/main_app_config.h"
  #include "settings/settings_common.h"
-@@ -84,6 +85,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+@@ -86,6 +87,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
  #include "ui/widgets/labels.h"
  #include "ui/wrap/padding_wrap.h"
  #include "ui/wrap/slide_wrap.h"
 +#include "yukigram/settings/prevent_delete.h"
+ #include "ui/wrap/vertical_blocks.h"
  #include "ui/wrap/vertical_layout.h"
  #include "ui/ui_utility.h"
- #include "window/window_session_controller.h"
-@@ -3069,6 +3071,11 @@ void Controller::savePhoto() {
+@@ -3042,6 +3044,11 @@ void Controller::savePhoto() {
  }
  
  void Controller::deleteWithConfirmation() {
@@ -80,7 +80,7 @@ index d4b2b99ea1..cc26dd2a5b 100644
  	const auto text = (_isGroup
  		? tr::lng_sure_delete_group
  		: tr::lng_sure_delete_channel)(tr::now);
-@@ -3087,6 +3094,10 @@ void Controller::deleteWithConfirmation() {
+@@ -3060,6 +3067,10 @@ void Controller::deleteWithConfirmation() {
  void Controller::deletePeer() {
  	Expects(_peer->isChat() || _peer->isChannel());
  
@@ -92,7 +92,7 @@ index d4b2b99ea1..cc26dd2a5b 100644
  	const auto chat = peer->asChat();
  	const auto channel = peer->asChannel();
 diff --git a/Telegram/SourceFiles/window/window_peer_menu.cpp b/Telegram/SourceFiles/window/window_peer_menu.cpp
-index 0490326504..ed35fd6f72 100644
+index 6f4cf7b588..8d1ae04f38 100644
 --- a/Telegram/SourceFiles/window/window_peer_menu.cpp
 +++ b/Telegram/SourceFiles/window/window_peer_menu.cpp
 @@ -50,6 +50,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
@@ -103,7 +103,7 @@ index 0490326504..ed35fd6f72 100644
  #include "inline_bots/bot_attach_web_view.h" // InlineBots::PeerType.
  #include "ui/toast/toast.h"
  #include "ui/text/format_values.h"
-@@ -4359,6 +4360,10 @@ Fn<void()> ClearHistoryHandler(
+@@ -4393,6 +4394,10 @@ Fn<void()> ClearHistoryHandler(
  		not_null<PeerData*> peer) {
  	return [=] {
  		if (!controller->showFrozenError()) {

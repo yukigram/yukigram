@@ -5,7 +5,7 @@ Subject: [PATCH] (Message) "unofficial client user" peer type icon
 
 
 diff --git a/Telegram/SourceFiles/history/view/history_view_message.cpp b/Telegram/SourceFiles/history/view/history_view_message.cpp
-index 54a808e924..e7f4e85d65 100644
+index c7137dfa78..05cfb68e94 100644
 --- a/Telegram/SourceFiles/history/view/history_view_message.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_message.cpp
 @@ -500,6 +500,11 @@ std::optional<style::icon> ChatTypeIcon(HistoryItem *item, bool *shouldOverrideC
@@ -21,7 +21,7 @@ index 54a808e924..e7f4e85d65 100644
  		}
  	}
 diff --git a/Telegram/SourceFiles/ui/chat/chat.style b/Telegram/SourceFiles/ui/chat/chat.style
-index f544f581e5..41d6d1a935 100644
+index 602d86f1a0..52e61da6c9 100644
 --- a/Telegram/SourceFiles/ui/chat/chat.style
 +++ b/Telegram/SourceFiles/ui/chat/chat.style
 @@ -593,6 +593,8 @@ msgNameDeletedIcon: icon {{ "dialogs/dialogs_sending", attentionButtonFg, point(

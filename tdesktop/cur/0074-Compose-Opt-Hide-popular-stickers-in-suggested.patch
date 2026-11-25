@@ -5,7 +5,7 @@ Subject: [PATCH] (Compose)(Opt) Hide popular stickers in suggested
 
 
 diff --git a/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp b/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp
-index 416b167977..6643b51a4a 100644
+index d35f358239..0f030f8084 100644
 --- a/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp
 +++ b/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp
 @@ -33,6 +33,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL

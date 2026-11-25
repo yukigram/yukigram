@@ -6,7 +6,7 @@ Subject: [PATCH] (Shortcut) Mention by name with right-click
 Vanilla way (Ctrl + Left click) still works
 
 diff --git a/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp b/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp
-index 6643b51a4a..184f9c5bae 100644
+index 0f030f8084..d5a327eca8 100644
 --- a/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp
 +++ b/Telegram/SourceFiles/chat_helpers/field_autocomplete.cpp
 @@ -1685,6 +1685,8 @@ void FieldAutocomplete::Inner::mousePressEvent(QMouseEvent *e) {
